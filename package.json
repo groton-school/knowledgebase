@@ -19,20 +19,23 @@
     "css-minimizer-webpack-plugin": "^4.2.2",
     "dotenv-webpack": "^8.0.1",
     "mini-css-extract-plugin": "^2.7.5",
-    "postcss": "^8.4.21",
-    "postcss-loader": "^7.1.0",
-    "postcss-preset-env": "^8.0.1",
-    "rimraf": "^4.4.0",
-    "sass": "^1.59.3",
-    "sass-loader": "^13.2.1",
+    "postcss": "^8.4.22",
+    "postcss-loader": "^7.2.4",
+    "postcss-preset-env": "^8.3.1",
+    "rimraf": "^4.4.1",
+    "sass": "^1.62.0",
+    "sass-loader": "^13.2.2",
     "style-loader": "^3.3.2",
-    "webpack": "^5.76.3",
+    "webpack": "^5.79.0",
     "webpack-cli": "^5.0.1"
   },
   "prettier": "@battis/prettier-config",
   "eslintConfig": {
     "extends": [
       "@battis/eslint-config"
-    ]
+    ],
+    "env": {
+      "browser": true
+    }
   }
 }

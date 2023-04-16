@@ -7,7 +7,7 @@ const GA4ID = 'G-LW51J2WF8M';
   document.getElementsByTagName('head')[0].appendChild(s);
   window.dataLayer = window.dataLayer || [];
   function gtag() {
-    dataLayer.push(arguments);
+    window.dataLayer.push(arguments);
   }
   gtag('js', new Date());
   gtag('config', id);
