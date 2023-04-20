@@ -9,7 +9,7 @@
   "license": "GPL-3.0",
   "scripts": {
     "clean": "rimraf build",
-    "build": "npx webpack"
+    "build": "npx webpack; rimraf build/stylesheet.*.js"
   },
   "devDependencies": {
     "@battis/eslint-config": "github:battis/eslint-config",
