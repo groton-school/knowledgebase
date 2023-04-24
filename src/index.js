@@ -1,3 +1,5 @@
 require('./google-analytics');
-require('./embed-youtube-links');
-require('./embed-iframe');
+require('./embed-youtube');
+require('./embed-iframes');
+require('./embed-swank');
+require('./google-analytics');
