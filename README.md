@@ -19,4 +19,4 @@ Update `./.env` to contain correct values
 npm run build
 ```
 
-In Site Settings > Developer, paste the contents of `./build/script.[contenthash].js` into the JS field and the contents of `./build/stylesheet.[contenthash].css` into the CSS field and click Save.
+In Site Settings > Developer, paste the contents of `./build/main.[contenthash].js` into the JS field and the contents of `./build/main.[contenthash].css` into the CSS field and click Save.
