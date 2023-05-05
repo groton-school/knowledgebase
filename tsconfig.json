@@ -1,3 +1,4 @@
 {
-  "extends": "@tsconfig/recommended"
+  "extends": "@tsconfig/recommended",
+  "include": ["src/index.ts"]
 }
