@@ -8,26 +8,29 @@
   },
   "license": "GPL-3.0",
   "scripts": {
-    "clean": "rimraf build/*",
-    "build": "npx webpack; rimraf build/stylesheet.*.js"
+    "build": "npx webpack"
   },
   "devDependencies": {
     "@battis/eslint-config": "github:battis/eslint-config",
     "@battis/prettier-config": "github:battis/prettier-config",
+    "@battis/webpack": "github:battis/webpack",
+    "@types/gapi": "^0.0.44",
+    "@types/gtag.js": "^0.0.12",
+    "@types/node": "^20.0.0",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.3",
     "css-minimizer-webpack-plugin": "^4.2.2",
     "dotenv-webpack": "^8.0.1",
     "mini-css-extract-plugin": "^2.7.5",
-    "postcss": "^8.4.22",
-    "postcss-loader": "^7.2.4",
-    "postcss-preset-env": "^8.3.1",
+    "postcss": "^8.4.23",
+    "postcss-loader": "^7.3.0",
+    "postcss-preset-env": "^8.3.2",
     "rimraf": "^4.4.1",
-    "sass": "^1.62.0",
+    "sass": "^1.62.1",
     "sass-loader": "^13.2.2",
     "style-loader": "^3.3.2",
-    "webpack": "^5.79.0",
-    "webpack-cli": "^5.0.1"
+    "webpack": "^5.82.0",
+    "webpack-cli": "^5.0.2"
   },
   "prettier": "@battis/prettier-config",
   "eslintConfig": {
@@ -36,6 +39,12 @@
     ],
     "env": {
       "browser": true
+    },
+    "globals": {
+      "gapi": true
     }
+  },
+  "dependencies": {
+    "googleapis": "^118.0.0"
   }
 }
