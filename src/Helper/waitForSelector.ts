@@ -11,13 +11,13 @@ const process = (parent: HTMLElement, selector: string): HTMLElement[] =>
  *
  * @param selector Selector for child elements to be returned
  * @param parentSelector Selector of DOM element to wait for
- *   (Optional, defaults to `'.CMSgoogledocembed'` matching an embedded
+ *   (Optional, defaults to `'.od-doc-document'` matching an embedded
  *   Google Doc page)
  * @returns An array of elements matching `selector`
  */
 export default function waitForSelector(
   selector: string,
-  parentSelector = '.CMSgoogledocembed'
+  parentSelector = '.od-doc-document'
 ): Promise<HTMLElement[]> {
   return new Promise((resolve) => {
     const parent = document.querySelector(parentSelector) as HTMLElement;

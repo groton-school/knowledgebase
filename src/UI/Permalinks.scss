@@ -1,0 +1,31 @@
+:root {
+  --permalink-selected: rgb(255, 216, 78);
+}
+
+.od-doc-document {
+  a.permalink {
+    margin-left: 0.5em;
+    font-size: small;
+  }
+
+  h1:has(> a.permalink.selected),
+  h2:has(> a.permalink.selected),
+  h3:has(> a.permalink.selected),
+  h4:has(> a.permalink.selected),
+  h5:has(> a.permalink.selected),
+  h6:has(> a.permalink.selected) {
+    animation: 2s fadeOut 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    background: var(--permalink-selected);
+  }
+  50% {
+    background: var(--permalink-selected);
+  }
+  100% {
+    background: transparent;
+  }
+}
