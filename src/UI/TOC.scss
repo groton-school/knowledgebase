@@ -1,10 +1,5 @@
 #gs-toc {
-  border-bottom: solid 1px darkgray;
-  padding: 1em;
-  padding-bottom: 2em;
-  margin-top: 2em;
-  margin-bottom: 1em;
-  margin-right: 1em;
+  margin: 2em 0 1em 1em;
 
   div {
     white-space: nowrap;
@@ -16,7 +11,7 @@
   $indent: 0.5em;
   @mixin define-depth($depth) {
     .gs-h#{$depth} {
-      margin-left: $indent * ($depth - 1);
+      margin-left: $indent * $depth;
     }
   }
   @for $i from 1 through 6 {
@@ -25,6 +20,22 @@
   .gs-h1 {
     font-weight: bold;
   }
+}
+
+#gs-toc::before {
+  content: 'On this page';
+}
+
+#od-subnav::before {
+  content: 'Other topics';
+}
+
+#gs-toc::before,
+#od-subnav::before {
+  font-size: small;
+  color: darkgray;
+  display: block;
+  margin-bottom: 1em;
 }
 
 #gs-toc:not(:has(a)) {
