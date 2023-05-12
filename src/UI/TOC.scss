@@ -13,28 +13,17 @@
     margin-bottom: 0.5em;
   }
 
+  $indent: 0.5em;
+  @mixin define-depth($depth) {
+    .gs-h#{$depth} {
+      margin-left: $indent * ($depth - 1);
+    }
+  }
+  @for $i from 1 through 6 {
+    @include define-depth($i);
+  }
   .gs-h1 {
     font-weight: bold;
-  }
-
-  .gs-h2 {
-    margin-left: 1em;
-  }
-
-  .gs-h3 {
-    margin-left: 2em;
-  }
-
-  .gs-h4 {
-    margin-left: 3em;
-  }
-
-  .gs-h5 {
-    margin-left: 4em;
-  }
-
-  .gs-h6 {
-    margin-left: 5em;
   }
 }
 
