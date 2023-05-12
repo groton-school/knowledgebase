@@ -7,17 +7,18 @@ export default function Permalinks() {
   ).then((headers: HTMLElement[]) => {
     headers.forEach((h) => {
       const a = document.createElement('a');
-      a.id = `${h.id.replace('.', '')}`;
-      a.href = `#${a.id}`;
+      a.href = `#${h.id}`;
       a.innerHTML = '<i class="fas fa-link"></i>';
-      a.classList.add('permalink');
+      a.classList.add('gs-permalink');
       h.append(a);
     });
 
     if (window.location.hash.length) {
-      const anchor = document.querySelector(window.location.hash);
+      const anchor = document.querySelector(
+        window.location.hash.replace('.', '\\.')
+      );
       anchor?.scrollIntoView();
-      anchor?.classList.add('selected');
+      anchor?.classList.add('gs-selected');
     }
   });
 }

@@ -1,19 +1,17 @@
-:root {
+.CMSgoogledocembed {
   --permalink-selected: rgb(255, 216, 78);
-}
 
-.od-doc-document {
-  a.permalink {
+  a.gs-permalink {
     margin-left: 0.5em;
     font-size: small;
   }
 
-  h1:has(> a.permalink.selected),
-  h2:has(> a.permalink.selected),
-  h3:has(> a.permalink.selected),
-  h4:has(> a.permalink.selected),
-  h5:has(> a.permalink.selected),
-  h6:has(> a.permalink.selected) {
+  h1.gs-selected:has(> a.gs-permalink),
+  h2.gs-selected:has(> a.gs-permalink),
+  h3.gs-selected:has(> a.gs-permalink),
+  h4.gs-selected:has(> a.gs-permalink),
+  h5.gs-selected:has(> a.gs-permalink),
+  h6.gs-selected:has(> a.gs-permalink) {
     animation: 2s fadeOut 1;
   }
 }

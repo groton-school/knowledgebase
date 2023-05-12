@@ -1,0 +1,43 @@
+#gs-toc {
+  border-bottom: solid 1px darkgray;
+  padding: 1em;
+  padding-bottom: 2em;
+  margin-top: 2em;
+  margin-bottom: 1em;
+  margin-right: 1em;
+
+  div {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0.5em;
+  }
+
+  .gs-h1 {
+    font-weight: bold;
+  }
+
+  .gs-h2 {
+    margin-left: 1em;
+  }
+
+  .gs-h3 {
+    margin-left: 2em;
+  }
+
+  .gs-h4 {
+    margin-left: 3em;
+  }
+
+  .gs-h5 {
+    margin-left: 4em;
+  }
+
+  .gs-h6 {
+    margin-left: 5em;
+  }
+}
+
+#gs-toc:not(:has(a)) {
+  display: none;
+}

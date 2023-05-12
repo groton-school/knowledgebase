@@ -2,6 +2,8 @@
  * Wait for a selector to appear on the page
  */
 
+const parentSelector = '.CMSgoogledocembed';
+
 const process = (parent: HTMLElement, selector: string): HTMLElement[] =>
   Array.from(parent.querySelectorAll(selector));
 
@@ -11,20 +13,19 @@ const process = (parent: HTMLElement, selector: string): HTMLElement[] =>
  *
  * @param selector Selector for child elements to be returned
  * @param parentSelector Selector of DOM element to wait for
- *   (Optional, defaults to `'.od-doc-document'` matching an embedded
+ *   (Optional, defaults to `'.CMSgoogledocembed'` matching an embedded
  *   Google Doc page)
  * @returns An array of elements matching `selector`
  */
 export default function waitForSelector(
-  selector: string,
-  parentSelector = '.od-doc-document'
+  selector: string
 ): Promise<HTMLElement[]> {
   return new Promise((resolve) => {
     const parent = document.querySelector(parentSelector) as HTMLElement;
     if (parent) {
       return resolve(process(parent, selector));
     }
-
+    // FIXME detect framed document and abort waiting for embed
     const observer = new MutationObserver(() => {
       const parent = document.querySelector(parentSelector) as HTMLElement;
       if (parent) {
