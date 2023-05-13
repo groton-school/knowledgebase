@@ -1,3 +1,5 @@
+const disclosureTriangleOffset = 10;
+
 class Stack extends Array {
   public top = () => this[this.length - 1];
   public isEmpty = () => !this.length;
@@ -31,7 +33,7 @@ export class Builder {
     node.append(a);
     node.dataset.level = level.toString();
     node.addEventListener('click', (e) => {
-      if (e.x < node.getBoundingClientRect().left) {
+      if (e.x - disclosureTriangleOffset < node.getBoundingClientRect().left) {
         if (node.className == 'active') {
           node.className = '';
         } else {

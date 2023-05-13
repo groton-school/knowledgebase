@@ -16,7 +16,7 @@
     "@battis/webpack": "github:battis/webpack",
     "@types/gapi": "^0.0.44",
     "@types/gtag.js": "^0.0.12",
-    "@types/node": "^20.0.0",
+    "@types/node": "^20.1.4",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.3",
     "css-minimizer-webpack-plugin": "^4.2.2",
@@ -29,8 +29,8 @@
     "sass": "^1.62.1",
     "sass-loader": "^13.2.2",
     "style-loader": "^3.3.2",
-    "webpack": "^5.82.0",
-    "webpack-cli": "^5.0.2"
+    "webpack": "^5.82.1",
+    "webpack-cli": "^5.1.1"
   },
   "prettier": "@battis/prettier-config",
   "eslintConfig": {
