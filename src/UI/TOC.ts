@@ -13,7 +13,7 @@ export default function TOC() {
     panel.append(builder.finalize());
     document.querySelector('#od-col-subnav')?.prepend(panel);
     const subnav = document.querySelector('#od-subnav-heading');
-    subnav!.innerHTML = 'Topics';
+    subnav!.innerHTML = 'Topics'; // TODO is it possible set subnav title properly?
     Helper.log('TOC built');
 
     // FIXME update TOC if scrolling through folder
