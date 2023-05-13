@@ -1,43 +1,59 @@
-#gs-toc {
-  margin: 2em 0 1em 1em;
-
-  div {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-bottom: 0.5em;
+.panel:has(#gs-toc) + .panel:has(#od-subnav) {
+  #od-subnav-heading {
+    display: block !important;
   }
+}
 
-  $indent: 0.5em;
-  @mixin define-depth($depth) {
-    .gs-h#{$depth} {
-      margin-left: $indent * $depth;
+.od-container {
+  .col-subnav {
+    .panel > .panel-body {
+      #gs-toc-menu {
+        width: 90%;
+        margin: 0px auto;
+        padding-bottom: 10px;
+      }
+
+      a {
+        display: inline-block;
+      }
+
+      span.od-page-icon {
+        width: 25px;
+        display: inline-block;
+        text-align: center;
+      }
+      li {
+        padding-left: 0px;
+
+        .caret-right {
+          margin-top: 9px !important;
+          margin-left: 0px !important;
+        }
+        a {
+          padding: 5px 5px;
+          margin-left: 15px !important;
+          white-space: normal;
+          width: calc(100% - 15px);
+        }
+      }
+
+      li[data-child-count]:not([data-child-count='0']):before {
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        content: '\f0da';
+        cursor: pointer;
+        position: absolute;
+        margin-top: 4px;
+        pointer-events: all;
+      }
+
+      li[data-child-count]:not([data-child-count='0']).active:before {
+        content: '\f0d7';
+      }
     }
   }
-  @for $i from 1 through 6 {
-    @include define-depth($i);
-  }
-  .gs-h1 {
-    font-weight: bold;
-  }
 }
 
-#gs-toc::before {
-  content: 'On this page';
-}
-
-#od-subnav::before {
-  content: 'Other topics';
-}
-
-#gs-toc::before,
-#od-subnav::before {
-  font-size: small;
-  color: darkgray;
-  display: block;
-  margin-bottom: 1em;
-}
-
-#gs-toc:not(:has(a)) {
-  display: none;
+[od-subnav-options-nowrap='1'] .col-subnav .panel > .panel-body #gs-toc li a {
+  white-space: nowrap;
 }

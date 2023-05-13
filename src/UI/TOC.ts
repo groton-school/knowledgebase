@@ -1,16 +1,21 @@
 import Helper from '../Helper';
+import * as OverDrive from '../OverDrive';
 import './TOC.scss';
 
 export default function TOC() {
   Helper.waitForSelector('h1, h2, h3' /*, h4, h5, h6'*/).then((headings) => {
-    const toc = document.createElement('div');
-    toc.id = 'gs-toc';
+    const panel = OverDrive.Panel.panel();
+    panel.append(OverDrive.Panel.heading('On this page', '#'));
+    const builder = new OverDrive.SubNav.Builder('gs-toc');
     headings.forEach((h) => {
-      const hElt = document.createElement('div');
-      hElt.innerHTML = `<a href="#${h.id}">${h.innerText}</a>`;
-      hElt.classList.add(`gs-${h.tagName.toLowerCase()}`);
-      toc.append(hElt);
+      builder.add(h.innerText, `#${h.id}`, parseInt(h.tagName.substr(-1)) - 1);
     });
-    document.querySelector('#od-col-subnav')?.prepend(toc);
+    panel.append(builder.finalize());
+    document.querySelector('#od-col-subnav')?.prepend(panel);
+    const subnav = document.querySelector('#od-subnav-heading');
+    subnav!.innerHTML = 'Topics';
+    Helper.log('TOC built');
+
+    // FIXME update TOC if scrolling through folder
   });
 }
