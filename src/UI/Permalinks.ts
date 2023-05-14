@@ -1,16 +1,23 @@
 import Helper from '../Helper';
 import './Permalinks.scss';
 
+const PERMALINK_SELECTOR = 'gs-permalink';
+
 export default function Permalinks() {
   Helper.waitForSelector(
-    'h1:not([id=""]), h2:not([id=""]), h3:not([id=""]), h4:not([id=""]), h5:not([id=""]), h6:not([id=""])'
+    Array.from(Array(6).keys()).reduce(
+      (selector, level) => [selector, `h${level + 1}:not([id=""])`].join(','),
+      '.gs-add-permalink'
+    )
   ).then((headers: HTMLElement[]) => {
-    headers.forEach((h) => {
-      const a = document.createElement('a');
-      a.href = `#${h.id}`;
-      a.innerHTML = '<i class="fas fa-link"></i>';
-      a.classList.add('gs-permalink');
-      h.append(a);
-    });
+    if (!document.querySelector(`.${PERMALINK_SELECTOR}`)) {
+      headers.forEach((h) => {
+        const a = document.createElement('a');
+        a.href = `#${h.id}`;
+        a.innerHTML = Helper.fa('link');
+        a.classList.add(PERMALINK_SELECTOR);
+        h.append(a);
+      });
+    }
   });
 }
