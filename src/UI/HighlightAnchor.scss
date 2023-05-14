@@ -1,0 +1,20 @@
+.CMSgoogledocembed {
+  $highlight: #337ab7;
+
+  .gs-highlight {
+    animation: 0.5s fadeOut 5;
+  }
+
+  @keyframes fadeOut {
+    0% {
+      text-shadow: transparent;
+    }
+
+    50% {
+      text-shadow: $highlight 0 0 0.25em;
+    }
+    100% {
+      text-shadow: transparent;
+    }
+  }
+}

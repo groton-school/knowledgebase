@@ -12,13 +12,5 @@ export default function Permalinks() {
       a.classList.add('gs-permalink');
       h.append(a);
     });
-
-    if (window.location.hash.length) {
-      const anchor = document.querySelector(
-        window.location.hash.replace('.', '\\.')
-      );
-      anchor?.scrollIntoView();
-      anchor?.classList.add('gs-selected');
-    }
   });
 }
