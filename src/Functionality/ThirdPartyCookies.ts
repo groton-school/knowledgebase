@@ -1,10 +1,20 @@
 import Helper from '../Helper';
 
+function iframeMessage() {
+  Helper.onSelectorReady('.od-iframe-loader').then((frame) => {
+    frame.innerHTML =
+      process.env.THIRD_PARTY_COOKIES_CONTENT ||
+      '<h1>Please enable third-party cookies</h1>';
+    frame.classList.add('loaded');
+  });
+}
+
 function receiveMessage(e: MessageEvent) {
   if (e.data === 'MM:3PCunsupported') {
-    Helper.log('Third party cookies are not enabled');
+    Helper.log('Third-party cookies are not enabled');
+    iframeMessage();
   } else if (e.data === 'MM:3PCsupported') {
-    Helper.log('Third party cookies are enabled');
+    // Helper.log('Third-party cookies are enabled');
   }
 }
 
