@@ -10,7 +10,7 @@ const SUBNAV_HEADING = 'Topics';
 const removeTOC = () => document.querySelector(`#${WRAPPER_ID}`)?.remove();
 
 export default function TOC() {
-  Helper.waitForSelector('h1, h2, h3' /*, h4, h5, h6'*/).then((headings) => {
+  Helper.onGoogleDocEmbed('h1, h2, h3' /*, h4, h5, h6'*/).then((headings) => {
     if (headings.length === 0) {
       removeTOC();
     } else {

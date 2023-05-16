@@ -4,7 +4,7 @@ import './Permalinks.scss';
 const PERMALINK_SELECTOR = 'gs-permalink';
 
 export default function Permalinks() {
-  Helper.waitForSelector(
+  Helper.onGoogleDocEmbed(
     Array.from(Array(6).keys()).reduce(
       (selector, level) => [selector, `h${level + 1}:not([id=""])`].join(','),
       '.gs-add-permalink'
@@ -14,7 +14,7 @@ export default function Permalinks() {
       headers.forEach((h) => {
         const a = document.createElement('a');
         a.href = `#${h.id}`;
-        a.innerHTML = Helper.fa('link');
+        a.innerHTML = Helper.fontAwesome('link');
         a.classList.add(PERMALINK_SELECTOR);
         h.append(a);
       });

@@ -23,7 +23,7 @@ import Helper from '../Helper';
  * Doc.
  */
 export default function IFrames() {
-  Helper.waitForSelector('p').then((paragraphs: HTMLElement[]) => {
+  Helper.onGoogleDocEmbed('p').then((paragraphs: HTMLElement[]) => {
     paragraphs.forEach((p) => {
       if (/^<iframe.*<\/iframe>$/.test(p.innerText)) {
         const url = p.innerText.replace(/^.*src="([^"]+)".*$/, '$1');

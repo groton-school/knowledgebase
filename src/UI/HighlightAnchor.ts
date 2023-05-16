@@ -23,5 +23,5 @@ function scrollToHash() {
 
 export default function HighlightAnchor() {
   addEventListener('hashchange', scrollToHash);
-  Helper.waitForSelector('h1').then(scrollToHash);
+  Helper.onGoogleDocEmbed('h1').then(scrollToHash);
 }

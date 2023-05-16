@@ -1,12 +1,14 @@
-import fa from './fa';
+import fontAwesome from './fontAwesome';
 import log from './log';
+import onGoogleDocEmbed from './onGoogleDocEmbed';
 import * as onLoad from './onLoad';
-import waitForSelector from './waitForSelector';
+import onSelectorReady from './onSelectorReady';
 
 const Helper = {
-  waitForSelector,
+  onLoad,
+  onSelectorReady,
+  onGoogleDocEmbed,
   log,
-  fa,
-  onLoad
+  fontAwesome
 };
 export default Helper;

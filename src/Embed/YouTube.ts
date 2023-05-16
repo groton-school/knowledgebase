@@ -13,7 +13,7 @@ const youTubeLink = 'a[href^="https://youtu"]';
  * ```
  */
 export default function YouTube() {
-  Helper.waitForSelector(`p:has(${youTubeLink})`).then((paragraphs) => {
+  Helper.onGoogleDocEmbed(`p:has(${youTubeLink})`).then((paragraphs) => {
     paragraphs.forEach((p) => {
       const link = p.querySelector(youTubeLink) as HTMLAnchorElement;
       const url = link.href;
