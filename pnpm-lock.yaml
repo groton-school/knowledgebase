@@ -14,7 +14,7 @@ devDependencies:
     version: github.com/battis/prettier-config/a475934b67f82eac8e5e0b7c53fc1ab58c33e946(@prettier/plugin-xml@2.2.0)(prettier-plugin-sql@0.13.0)(prettier@2.8.8)
   '@battis/webpack':
     specifier: github:battis/webpack
-    version: github.com/battis/webpack/e0465baf6bcd62d63943ed4e7faab82b0e5f57b8(@battis/eslint-config@1.0.0)(@battis/prettier-config@1.1.0)(clean-webpack-plugin@4.0.0)(copy-webpack-plugin@11.0.0)(css-loader@6.7.3)(css-minimizer-webpack-plugin@4.2.2)(dotenv-webpack@8.0.1)(favicons-webpack-plugin@6.0.0)(favicons@7.1.2)(file-loader@6.2.0)(html-webpack-plugin@5.5.1)(image-minimizer-webpack-plugin@3.8.2)(imagemin-gifsicle@7.0.0)(imagemin-jpegtran@7.0.0)(imagemin-optipng@8.0.0)(imagemin-svgo@10.0.1)(imagemin@8.0.1)(mini-css-extract-plugin@2.7.5)(postcss-loader@7.3.0)(postcss-preset-env@8.3.2)(postcss@8.4.23)(raw-loader@4.0.2)(sass-loader@13.2.2)(sass@1.62.1)(style-loader@3.3.2)(terser-webpack-plugin@5.3.8)(ts-loader@9.4.2)(webpack-cli@5.1.1)(webpack-dev-server@4.15.0)(webpack@5.82.1)
+    version: github.com/battis/webpack/7d549ba13241dde3c5c49750b9db6b689e908b7b(@battis/eslint-config@1.0.0)(@battis/prettier-config@1.1.0)(clean-webpack-plugin@4.0.0)(copy-webpack-plugin@11.0.0)(css-loader@6.7.3)(css-minimizer-webpack-plugin@4.2.2)(dotenv-webpack@8.0.1)(favicons-webpack-plugin@6.0.0)(favicons@7.1.2)(file-loader@6.2.0)(html-webpack-plugin@5.5.1)(image-minimizer-webpack-plugin@3.8.2)(imagemin-gifsicle@7.0.0)(imagemin-jpegtran@7.0.0)(imagemin-optipng@8.0.0)(imagemin-svgo@10.0.1)(imagemin@8.0.1)(mini-css-extract-plugin@2.7.5)(postcss-loader@7.3.0)(postcss-preset-env@8.3.2)(postcss@8.4.23)(raw-loader@4.0.2)(sass-loader@13.2.2)(sass@1.62.1)(style-loader@3.3.2)(terser-webpack-plugin@5.3.8)(ts-loader@9.4.2)(webpack-cli@5.1.1)(webpack-dev-server@4.15.0)(webpack@5.82.1)
   '@types/gtag.js':
     specifier: ^0.0.12
     version: 0.0.12
@@ -119,9 +119,9 @@ packages:
     peerDependencies:
       postcss: ^8.4
     dependencies:
-      '@csstools/selector-specificity': 2.2.0(postcss-selector-parser@6.0.12)
+      '@csstools/selector-specificity': 2.2.0(postcss-selector-parser@6.0.13)
       postcss: 8.4.23
-      postcss-selector-parser: 6.0.12
+      postcss-selector-parser: 6.0.13
     dev: true
 
   /@csstools/postcss-color-function@2.2.1(postcss@8.4.23):
@@ -202,9 +202,9 @@ packages:
     peerDependencies:
       postcss: ^8.4
     dependencies:
-      '@csstools/selector-specificity': 2.2.0(postcss-selector-parser@6.0.12)
+      '@csstools/selector-specificity': 2.2.0(postcss-selector-parser@6.0.13)
       postcss: 8.4.23
-      postcss-selector-parser: 6.0.12
+      postcss-selector-parser: 6.0.13
     dev: true
 
   /@csstools/postcss-logical-float-and-clear@1.0.1(postcss@8.4.23):
@@ -311,7 +311,7 @@ packages:
       postcss: ^8.4
     dependencies:
       postcss: 8.4.23
-      postcss-selector-parser: 6.0.12
+      postcss-selector-parser: 6.0.13
     dev: true
 
   /@csstools/postcss-stepped-value-functions@2.1.1(postcss@8.4.23):
@@ -358,13 +358,13 @@ packages:
       postcss: 8.4.23
     dev: true
 
-  /@csstools/selector-specificity@2.2.0(postcss-selector-parser@6.0.12):
+  /@csstools/selector-specificity@2.2.0(postcss-selector-parser@6.0.13):
     resolution: {integrity: sha512-+OJ9konv95ClSTOJCmMZqpd5+YGsB2S+x6w3E1oaM8UuR5j8nTNHYSz8c9BEPGDOCMQYIEEGlVPj/VY64iTbGw==}
     engines: {node: ^14 || ^16 || >=18}
     peerDependencies:
       postcss-selector-parser: ^6.0.10
     dependencies:
-      postcss-selector-parser: 6.0.12
+      postcss-selector-parser: 6.0.13
     dev: true
 
   /@discoveryjs/json-ext@0.5.7:
@@ -1398,7 +1398,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001487
-      electron-to-chromium: 1.4.394
+      electron-to-chromium: 1.4.397
       node-releases: 2.0.10
       update-browserslist-db: 1.0.11(browserslist@4.21.5)
     dev: true
@@ -1810,7 +1810,7 @@ packages:
       postcss: ^8.4
     dependencies:
       postcss: 8.4.23
-      postcss-selector-parser: 6.0.12
+      postcss-selector-parser: 6.0.13
     dev: true
 
   /css-declaration-sorter@6.4.0(postcss@8.4.23):
@@ -1828,9 +1828,9 @@ packages:
     peerDependencies:
       postcss: ^8.4
     dependencies:
-      '@csstools/selector-specificity': 2.2.0(postcss-selector-parser@6.0.12)
+      '@csstools/selector-specificity': 2.2.0(postcss-selector-parser@6.0.13)
       postcss: 8.4.23
-      postcss-selector-parser: 6.0.12
+      postcss-selector-parser: 6.0.13
       postcss-value-parser: 4.2.0
     dev: true
 
@@ -1917,8 +1917,8 @@ packages:
     engines: {node: '>= 6'}
     dev: true
 
-  /cssdb@7.5.4:
-    resolution: {integrity: sha512-fGD+J6Jlq+aurfE1VDXlLS4Pt0VtNlu2+YgfGOdMxRyl/HQ9bDiHTwSck1Yz8A97Dt/82izSK6Bp/4nVqacOsg==}
+  /cssdb@7.6.0:
+    resolution: {integrity: sha512-Nna7rph8V0jC6+JBY4Vk4ndErUmfJfV6NJCaZdurL0omggabiy+QB2HCQtu5c/ACLZ0I7REv7A4QyPIoYzZx0w==}
     dev: true
 
   /cssesc@3.0.0:
@@ -2319,8 +2319,8 @@ packages:
     resolution: {integrity: sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=}
     dev: true
 
-  /electron-to-chromium@1.4.394:
-    resolution: {integrity: sha512-0IbC2cfr8w5LxTz+nmn2cJTGafsK9iauV2r5A5scfzyovqLrxuLoxOHE5OBobP3oVIggJT+0JfKnw9sm87c8Hw==}
+  /electron-to-chromium@1.4.397:
+    resolution: {integrity: sha512-jwnPxhh350Q/aMatQia31KAIQdhEsYS0fFZ0BQQlN9tfvOEwShu6ZNwI4kL/xBabjcB/nTy6lSt17kNIluJZ8Q==}
     dev: true
 
   /emojis-list@3.0.0:
@@ -4800,7 +4800,7 @@ packages:
       postcss: ^8.4
     dependencies:
       postcss: 8.4.23
-      postcss-selector-parser: 6.0.12
+      postcss-selector-parser: 6.0.13
     dev: true
 
   /postcss-calc@8.2.4(postcss@8.4.23):
@@ -4809,7 +4809,7 @@ packages:
       postcss: ^8.2.2
     dependencies:
       postcss: 8.4.23
-      postcss-selector-parser: 6.0.12
+      postcss-selector-parser: 6.0.13
       postcss-value-parser: 4.2.0
     dev: true
 
@@ -4913,7 +4913,7 @@ packages:
       '@csstools/css-parser-algorithms': 2.1.1(@csstools/css-tokenizer@2.1.1)
       '@csstools/css-tokenizer': 2.1.1
       postcss: 8.4.23
-      postcss-selector-parser: 6.0.12
+      postcss-selector-parser: 6.0.13
     dev: true
 
   /postcss-dir-pseudo-class@7.0.2(postcss@8.4.23):
@@ -4923,7 +4923,7 @@ packages:
       postcss: ^8.4
     dependencies:
       postcss: 8.4.23
-      postcss-selector-parser: 6.0.12
+      postcss-selector-parser: 6.0.13
     dev: true
 
   /postcss-discard-comments@5.1.2(postcss@8.4.23):
@@ -4980,7 +4980,7 @@ packages:
       postcss: ^8.4
     dependencies:
       postcss: 8.4.23
-      postcss-selector-parser: 6.0.12
+      postcss-selector-parser: 6.0.13
     dev: true
 
   /postcss-focus-within@7.0.2(postcss@8.4.23):
@@ -4990,7 +4990,7 @@ packages:
       postcss: ^8.4
     dependencies:
       postcss: 8.4.23
-      postcss-selector-parser: 6.0.12
+      postcss-selector-parser: 6.0.13
     dev: true
 
   /postcss-font-variant@5.0.0(postcss@8.4.23):
@@ -5087,7 +5087,7 @@ packages:
       caniuse-api: 3.0.0
       cssnano-utils: 3.1.0(postcss@8.4.23)
       postcss: 8.4.23
-      postcss-selector-parser: 6.0.12
+      postcss-selector-parser: 6.0.13
     dev: true
 
   /postcss-minify-font-values@5.1.0(postcss@8.4.23):
@@ -5131,7 +5131,7 @@ packages:
       postcss: ^8.2.15
     dependencies:
       postcss: 8.4.23
-      postcss-selector-parser: 6.0.12
+      postcss-selector-parser: 6.0.13
     dev: true
 
   /postcss-modules-extract-imports@3.0.0(postcss@8.4.23):
@@ -5151,7 +5151,7 @@ packages:
     dependencies:
       icss-utils: 5.1.0(postcss@8.4.23)
       postcss: 8.4.23
-      postcss-selector-parser: 6.0.12
+      postcss-selector-parser: 6.0.13
       postcss-value-parser: 4.2.0
     dev: true
 
@@ -5162,7 +5162,7 @@ packages:
       postcss: ^8.1.0
     dependencies:
       postcss: 8.4.23
-      postcss-selector-parser: 6.0.12
+      postcss-selector-parser: 6.0.13
     dev: true
 
   /postcss-modules-values@4.0.0(postcss@8.4.23):
@@ -5181,9 +5181,9 @@ packages:
     peerDependencies:
       postcss: ^8.4
     dependencies:
-      '@csstools/selector-specificity': 2.2.0(postcss-selector-parser@6.0.12)
+      '@csstools/selector-specificity': 2.2.0(postcss-selector-parser@6.0.13)
       postcss: 8.4.23
-      postcss-selector-parser: 6.0.12
+      postcss-selector-parser: 6.0.13
     dev: true
 
   /postcss-normalize-charset@5.1.0(postcss@8.4.23):
@@ -5358,7 +5358,7 @@ packages:
       css-blank-pseudo: 5.0.2(postcss@8.4.23)
       css-has-pseudo: 5.0.2(postcss@8.4.23)
       css-prefers-color-scheme: 8.0.2(postcss@8.4.23)
-      cssdb: 7.5.4
+      cssdb: 7.6.0
       postcss: 8.4.23
       postcss-attribute-case-insensitive: 6.0.2(postcss@8.4.23)
       postcss-clamp: 4.1.0(postcss@8.4.23)
@@ -5396,7 +5396,7 @@ packages:
       postcss: ^8.4
     dependencies:
       postcss: 8.4.23
-      postcss-selector-parser: 6.0.12
+      postcss-selector-parser: 6.0.13
     dev: true
 
   /postcss-reduce-initial@5.1.2(postcss@8.4.23):
@@ -5435,11 +5435,11 @@ packages:
       postcss: ^8.4
     dependencies:
       postcss: 8.4.23
-      postcss-selector-parser: 6.0.12
+      postcss-selector-parser: 6.0.13
     dev: true
 
-  /postcss-selector-parser@6.0.12:
-    resolution: {integrity: sha512-NdxGCAZdRrwVI1sy59+Wzrh+pMMHxapGnpfenDVlMEXoOcvt4pGE0JLK9YY2F5dLxcFYA/YbVQKhcGU+FtSYQg==}
+  /postcss-selector-parser@6.0.13:
+    resolution: {integrity: sha512-EaV1Gl4mUEV4ddhDnv/xtj7sxwrwxdetHdWUGnT4VJQf+4d05v6lHYZr8N573k5Z0BViss7BDhfWtKS3+sfAqQ==}
     engines: {node: '>=4'}
     dependencies:
       cssesc: 3.0.0
@@ -5464,7 +5464,7 @@ packages:
       postcss: ^8.2.15
     dependencies:
       postcss: 8.4.23
-      postcss-selector-parser: 6.0.12
+      postcss-selector-parser: 6.0.13
     dev: true
 
   /postcss-value-parser@4.2.0:
@@ -6338,7 +6338,7 @@ packages:
     dependencies:
       browserslist: 4.21.5
       postcss: 8.4.23
-      postcss-selector-parser: 6.0.12
+      postcss-selector-parser: 6.0.13
     dev: true
 
   /supports-color@2.0.0:
@@ -7011,9 +7011,9 @@ packages:
       prettier-plugin-sql: 0.13.0(prettier@2.8.8)
     dev: true
 
-  github.com/battis/webpack/e0465baf6bcd62d63943ed4e7faab82b0e5f57b8(@battis/eslint-config@1.0.0)(@battis/prettier-config@1.1.0)(clean-webpack-plugin@4.0.0)(copy-webpack-plugin@11.0.0)(css-loader@6.7.3)(css-minimizer-webpack-plugin@4.2.2)(dotenv-webpack@8.0.1)(favicons-webpack-plugin@6.0.0)(favicons@7.1.2)(file-loader@6.2.0)(html-webpack-plugin@5.5.1)(image-minimizer-webpack-plugin@3.8.2)(imagemin-gifsicle@7.0.0)(imagemin-jpegtran@7.0.0)(imagemin-optipng@8.0.0)(imagemin-svgo@10.0.1)(imagemin@8.0.1)(mini-css-extract-plugin@2.7.5)(postcss-loader@7.3.0)(postcss-preset-env@8.3.2)(postcss@8.4.23)(raw-loader@4.0.2)(sass-loader@13.2.2)(sass@1.62.1)(style-loader@3.3.2)(terser-webpack-plugin@5.3.8)(ts-loader@9.4.2)(webpack-cli@5.1.1)(webpack-dev-server@4.15.0)(webpack@5.82.1):
-    resolution: {tarball: https://codeload.github.com/battis/webpack/tar.gz/e0465baf6bcd62d63943ed4e7faab82b0e5f57b8}
-    id: github.com/battis/webpack/e0465baf6bcd62d63943ed4e7faab82b0e5f57b8
+  github.com/battis/webpack/7d549ba13241dde3c5c49750b9db6b689e908b7b(@battis/eslint-config@1.0.0)(@battis/prettier-config@1.1.0)(clean-webpack-plugin@4.0.0)(copy-webpack-plugin@11.0.0)(css-loader@6.7.3)(css-minimizer-webpack-plugin@4.2.2)(dotenv-webpack@8.0.1)(favicons-webpack-plugin@6.0.0)(favicons@7.1.2)(file-loader@6.2.0)(html-webpack-plugin@5.5.1)(image-minimizer-webpack-plugin@3.8.2)(imagemin-gifsicle@7.0.0)(imagemin-jpegtran@7.0.0)(imagemin-optipng@8.0.0)(imagemin-svgo@10.0.1)(imagemin@8.0.1)(mini-css-extract-plugin@2.7.5)(postcss-loader@7.3.0)(postcss-preset-env@8.3.2)(postcss@8.4.23)(raw-loader@4.0.2)(sass-loader@13.2.2)(sass@1.62.1)(style-loader@3.3.2)(terser-webpack-plugin@5.3.8)(ts-loader@9.4.2)(webpack-cli@5.1.1)(webpack-dev-server@4.15.0)(webpack@5.82.1):
+    resolution: {tarball: https://codeload.github.com/battis/webpack/tar.gz/7d549ba13241dde3c5c49750b9db6b689e908b7b}
+    id: github.com/battis/webpack/7d549ba13241dde3c5c49750b9db6b689e908b7b
     name: '@battis/webpack'
     version: 0.1.0
     peerDependencies:
