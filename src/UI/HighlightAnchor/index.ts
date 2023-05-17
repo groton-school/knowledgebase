@@ -1,6 +1,6 @@
-import * as Constants from '../Constants';
-import Helper from '../Helper';
-import './HighlightAnchor.scss';
+import * as Constants from '../../Constants';
+import Helper from '../../Helper';
+import './styles.scss';
 
 const highlight = 'gs-highlight';
 

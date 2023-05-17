@@ -1,5 +1,5 @@
-import Helper from '../Helper';
-import './Permalinks.scss';
+import Helper from '../../Helper';
+import './styles.scss';
 
 const PERMALINK_SELECTOR = 'gs-permalink';
 

@@ -1,6 +1,6 @@
-import * as Constants from '../Constants';
-import Helper from '../Helper';
-import './UnstackMobile.scss';
+import * as Constants from '../../Constants';
+import Helper from '../../Helper';
+import './styles.scss';
 
 export default function UnstackMobile() {
   if (window.innerWidth <= Constants.mobileWidth) {

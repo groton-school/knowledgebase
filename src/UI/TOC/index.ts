@@ -1,6 +1,6 @@
-import Helper from '../Helper';
-import * as OverDrive from '../OverDrive';
-import './TOC.scss';
+import Helper from '../../Helper';
+import * as OverDrive from '../../OverDrive';
+import './styles.scss';
 
 const TOC_ID = 'gs-toc';
 const WRAPPER_ID = `${TOC_ID}-wrapper`;
