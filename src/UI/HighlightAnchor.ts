@@ -1,3 +1,4 @@
+import * as Constants from '../Constants';
 import Helper from '../Helper';
 import './HighlightAnchor.scss';
 
@@ -10,7 +11,7 @@ function scrollToHash() {
     );
     if (anchor) {
       anchor.scrollIntoView();
-      if (window.innerWidth <= 576) {
+      if (window.innerWidth <= Constants.mobileWidth) {
         window.scrollBy(
           0,
           -1 * (document.querySelector('#od-navbar')?.clientHeight || 0)

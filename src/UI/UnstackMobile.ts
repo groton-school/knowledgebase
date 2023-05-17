@@ -1,8 +1,9 @@
+import * as Constants from '../Constants';
 import Helper from '../Helper';
 import './UnstackMobile.scss';
 
 export default function UnstackMobile() {
-  if (window.innerWidth <= 576) {
+  if (window.innerWidth <= Constants.mobileWidth) {
     Helper.onSelectorReady('.grid-stack-item-content').then(() =>
       Array.from(document.querySelectorAll('.grid-stack-item-content')).forEach(
         (item) => {
