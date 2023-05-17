@@ -10,6 +10,12 @@ function scrollToHash() {
     );
     if (anchor) {
       anchor.scrollIntoView();
+      if (window.innerWidth <= 576) {
+        window.scrollBy(
+          0,
+          -1 * (document.querySelector('#od-navbar')?.clientHeight || 0)
+        );
+      }
       const clone = anchor.cloneNode(true) as HTMLElement;
       anchor.parentNode?.replaceChild(clone, anchor);
       if (clone.classList) {
