@@ -1,0 +1,54 @@
+.CMSgoogledocembed {
+  .gs-app-links {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+
+    .gs-apple,
+    .gs-play {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      canvas.gs-qr {
+        min-width: 200px;
+        min-height: 200px;
+      }
+    }
+
+    .gs-apple {
+      a {
+        display: inline-block;
+        overflow: hidden;
+        border-radius: 13px;
+        width: 250px;
+        height: 83px;
+
+        img {
+          border-radius: 13px;
+          width: 250px;
+          height: 83px;
+        }
+      }
+    }
+
+    .gs-play {
+      a {
+        width: 279px;
+        height: 83px;
+        overflow: hidden;
+
+        img {
+          width: 319px;
+          margin: -20px 0 0 -20px;
+        }
+      }
+    }
+  }
+  div.gs-qr {
+    text-align: center;
+    color: darkgray;
+  }
+}

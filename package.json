@@ -15,7 +15,7 @@
     "@battis/prettier-config": "github:battis/prettier-config",
     "@battis/webpack": "github:battis/webpack",
     "@types/gtag.js": "^0.0.12",
-    "@types/node": "^20.1.5",
+    "@types/node": "^20.1.7",
     "rimraf": "^4.4.1"
   },
   "prettier": "@battis/prettier-config",
@@ -25,12 +25,6 @@
     ],
     "env": {
       "browser": true
-    },
-    "globals": {
-      "gapi": true
     }
-  },
-  "dependencies": {
-    "googleapis": "^118.0.0"
   }
 }

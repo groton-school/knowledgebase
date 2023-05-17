@@ -8,7 +8,6 @@ const queue: LocationChangeEventHandler[] = [];
  * @see https://stackoverflow.com/a/46428962/294171
  */
 function observeUrlChange() {
-  const body = document.querySelector('body');
   const observer = new MutationObserver((mutations) => {
     mutations.forEach(() => {
       if (PREV_PATH !== window.location.pathname) {
@@ -17,7 +16,7 @@ function observeUrlChange() {
       }
     });
   });
-  body && observer.observe(body, { childList: true, subtree: true });
+  observer.observe(document.body, { childList: true, subtree: true });
 }
 
 export function activate() {

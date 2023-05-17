@@ -32,5 +32,5 @@ export default function ThirdPartyCookies() {
   const iframe = document.createElement('iframe');
   iframe.src = `${process.env.THIRD_PARTY_COOKIES}/start.html`;
   iframe.style.display = 'none';
-  document.querySelector('body')?.append(iframe);
+  document.body.append(iframe);
 }
