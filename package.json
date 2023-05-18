@@ -16,6 +16,7 @@
     "@battis/webpack": "github:battis/webpack",
     "@types/gtag.js": "^0.0.12",
     "@types/node": "^20.1.7",
+    "@types/qrcode": "^1.5.0",
     "rimraf": "^4.4.1"
   },
   "prettier": "@battis/prettier-config",
@@ -26,5 +27,8 @@
     "env": {
       "browser": true
     }
+  },
+  "dependencies": {
+    "qrcode": "^1.5.3"
   }
 }

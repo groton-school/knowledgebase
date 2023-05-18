@@ -2,5 +2,6 @@ const config = require('@battis/webpack/ts/vanilla');
 
 module.exports = config({
   root: __dirname,
-  bundle: 'kb'
+  bundle: 'kb',
+  externals: { qrcode: 'QRCode' }
 });

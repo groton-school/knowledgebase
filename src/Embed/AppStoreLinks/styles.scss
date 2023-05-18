@@ -5,48 +5,51 @@
     flex-wrap: wrap;
     justify-content: space-around;
     width: 100%;
+    margin: 1em inherit;
 
-    .gs-apple,
-    .gs-play {
+    a.gs-apple,
+    a.gs-play {
       display: flex;
       flex-direction: column;
       align-items: center;
+      min-height: 67px;
+      background-repeat: no-repeat;
+      margin: 0.5em;
 
-      canvas.gs-qr {
-        min-width: 200px;
-        min-height: 200px;
+      canvas {
+        margin-top: calc(67px + 0.5em);
+        min-width: 100px;
+        aspect-ratio: 1;
+        background: gray;
       }
-    }
 
-    .gs-apple {
-      a {
-        display: inline-block;
-        overflow: hidden;
-        border-radius: 13px;
-        width: 250px;
-        height: 83px;
-
-        img {
-          border-radius: 13px;
-          width: 250px;
-          height: 83px;
+      @media (max-width: 576px) {
+        canvas {
+          display: none;
         }
       }
     }
 
-    .gs-play {
-      a {
-        width: 279px;
-        height: 83px;
-        overflow: hidden;
+    a.gs-apple {
+      // intrinsic 120px x 40px
+      // svg
+      width: 200px;
+      background-image: url('https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1320192000');
+      background-size: 100%;
+    }
 
-        img {
-          width: 319px;
-          margin: -20px 0 0 -20px;
-        }
-      }
+    a.gs-play {
+      // content 563px x 169px
+      // intrinsic 646px x 250px
+      // margin: 91.5px x 40.5px
+      // png
+      width: 224px;
+      background-image: url('https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png');
+      background-size: 115%;
+      background-position: 50% -17px;
     }
   }
+
   div.gs-qr {
     text-align: center;
     color: darkgray;
