@@ -13,8 +13,8 @@ function embed(paragraphs: HTMLElement[]) {
     p.outerHTML =
       `<div id="${id}">` +
       `<div class="gs-app-links">` +
-      (ios && `<a class="gs-apple" href="${ios.href}"></a>`) +
-      (android && `<a class="gs-play" href="${android.href}"></a>`) +
+      (ios ? `<a class="gs-apple" href="${ios.href}"></a>` : '') +
+      (android ? `<a class="gs-play" href="${android.href}"></a>` : '') +
       `</div>` +
       `</div>`;
 
