@@ -1,4 +1,3 @@
 {
-  "extends": "@tsconfig/recommended",
-  "include": ["src/index.ts"]
+  "extends": "@battis/webpack/ts/tsconfig.json"
 }
