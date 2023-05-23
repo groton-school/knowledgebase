@@ -35,8 +35,8 @@ function embed(paragraphs: HTMLElement[]) {
       android.href
     );
     */
+    Helper.log('embedded app store links');
   });
-  Helper.log('embedded app store links');
 }
 
 /*
