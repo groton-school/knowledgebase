@@ -4,8 +4,6 @@ import './styles.scss';
 
 const TOC_ID = 'gs-toc';
 const WRAPPER_ID = `${TOC_ID}-wrapper`;
-const TOC_HEADING = 'On this page';
-const SUBNAV_HEADING = 'Topics';
 
 const removeTOC = () => document.querySelector(`#${WRAPPER_ID}`)?.remove();
 
@@ -15,7 +13,7 @@ export default function TOC() {
       removeTOC();
     } else {
       const panel = OverDrive.Panel.panel(WRAPPER_ID);
-      panel.append(OverDrive.Panel.heading(TOC_HEADING));
+      panel.append(OverDrive.Panel.heading('On this page'));
       const builder = new OverDrive.SubNav.Builder(TOC_ID);
       headings.forEach((h) => {
         builder.add(
@@ -31,8 +29,6 @@ export default function TOC() {
       } else {
         document.querySelector('#od-col-subnav')?.prepend(panel);
       }
-      const subnav = document.querySelector('#od-subnav-heading');
-      subnav && (subnav.innerHTML = SUBNAV_HEADING); // TODO is it possible set subnav title properly?
       Helper.log('TOC built');
     }
   }, removeTOC);
