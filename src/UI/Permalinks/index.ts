@@ -1,13 +1,13 @@
 import Helper from '../../Helper';
 import './styles.scss';
 
-const PERMALINK_SELECTOR = 'gs-permalink';
+const PERMALINK_SELECTOR = 'kb-permalink';
 
 export default function Permalinks() {
   Helper.onGoogleDocEmbed(
     Array.from(Array(6).keys()).reduce(
       (selector, level) => [selector, `h${level + 1}:not([id=""])`].join(','),
-      '.gs-add-permalink'
+      '.kb-add-permalink'
     )
   ).then((headers: HTMLElement[]) => {
     if (!document.querySelector(`.${PERMALINK_SELECTOR}`)) {

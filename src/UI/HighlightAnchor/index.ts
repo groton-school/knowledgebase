@@ -2,7 +2,7 @@ import * as Constants from '../../Constants';
 import Helper from '../../Helper';
 import './styles.scss';
 
-const highlight = 'gs-highlight';
+const highlight = 'kb-highlight';
 
 function scrollToHash() {
   if (window.location.hash.length) {

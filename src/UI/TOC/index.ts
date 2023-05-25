@@ -2,7 +2,7 @@ import Helper from '../../Helper';
 import * as OverDrive from '../../OverDrive';
 import './styles.scss';
 
-const TOC_ID = 'gs-toc';
+const TOC_ID = 'kb-toc';
 const WRAPPER_ID = `${TOC_ID}-wrapper`;
 
 const removeTOC = () => document.querySelector(`#${WRAPPER_ID}`)?.remove();

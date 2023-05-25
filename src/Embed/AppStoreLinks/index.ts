@@ -12,9 +12,9 @@ function embed(paragraphs: HTMLElement[]) {
     const id = crypto.randomUUID();
     p.outerHTML =
       `<div id="${id}">` +
-      `<div class="gs-app-links">` +
-      (ios ? `<a class="gs-apple" href="${ios.href}"></a>` : '') +
-      (android ? `<a class="gs-play" href="${android.href}"></a>` : '') +
+      `<div class="kb-app-links">` +
+      (ios ? `<a class="kb-apple" href="${ios.href}"></a>` : '') +
+      (android ? `<a class="kb-play" href="${android.href}"></a>` : '') +
       `</div>` +
       `</div>`;
 
@@ -27,11 +27,11 @@ function embed(paragraphs: HTMLElement[]) {
      */
     /*
     QRCode.toCanvas(
-      document.querySelector(`#${id} .gs-apple canvas`) as HTMLCanvasElement,
+      document.querySelector(`#${id} .kb-apple canvas`) as HTMLCanvasElement,
       ios.href
     );
     QRCode.toCanvas(
-      document.querySelector(`#${id} .gs-android canvas`) as HTMLCanvasElement,
+      document.querySelector(`#${id} .kb-android canvas`) as HTMLCanvasElement,
       android.href
     );
     */
