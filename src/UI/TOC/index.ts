@@ -8,7 +8,7 @@ const WRAPPER_ID = `${TOC_ID}-wrapper`;
 const removeTOC = () => document.querySelector(`#${WRAPPER_ID}`)?.remove();
 
 export default function TOC() {
-  Helper.onGoogleDocEmbed('h1, h2, h3' /*, h4, h5, h6'*/).then((headings) => {
+  Helper.onGoogleDocEmbed('h1, h2, h3' /*, h4, h5, h6'*/, (headings) => {
     if (headings.length === 0) {
       removeTOC();
     } else {
@@ -31,5 +31,6 @@ export default function TOC() {
       }
       Helper.log('TOC built');
     }
-  }, removeTOC);
+  });
+  document.body.addEventListener(Helper.onLoad.GoogleDocRemoveEvent, removeTOC);
 }

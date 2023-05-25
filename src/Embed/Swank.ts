@@ -24,7 +24,7 @@ const swankLink = 'a[href^="https://swank.hubs.vidyard.com"]';
  *
  */
 export default function Swank() {
-  Helper.onGoogleDocEmbed(`p:has(${swankLink})`).then((paragraphs) => {
+  Helper.onGoogleDocEmbed(`p:has(${swankLink})`, (paragraphs) => {
     paragraphs.forEach((p) => {
       const url = (document.querySelector(swankLink) as HTMLAnchorElement).href;
       const id = url.replace(/.*\/watch\/(.*)\??/, '$1');

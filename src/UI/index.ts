@@ -1,4 +1,3 @@
-import Helper from '../Helper';
 import './fixed-background.scss';
 //import './hide-topnav.scss';
 import HighlightAnchor from './HighlightAnchor';
@@ -9,10 +8,8 @@ import TOC from './TOC';
 import UnstackMobile from './UnstackMobile';
 
 export default function UI() {
-  Helper.onLoad.addCallback(() => {
-    Permalinks();
-    TOC();
-    HighlightAnchor();
-    UnstackMobile();
-  });
+  Permalinks();
+  TOC();
+  HighlightAnchor();
+  UnstackMobile();
 }

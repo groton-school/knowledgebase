@@ -50,7 +50,8 @@ function waitForLib(paragraphs: HTMLElement[]) {
 */
 
 export default function AppStoreLinks() {
-  Helper.onGoogleDocEmbed(`p:has(${appStore}), p:has(${playStore})`).then(
+  Helper.onGoogleDocEmbed(
+    `p:has(${appStore}), p:has(${playStore})`,
     (paragraphs) => {
       /*
       const lib = document.createElement('script') as HTMLScriptElement;

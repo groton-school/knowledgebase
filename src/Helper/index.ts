@@ -11,6 +11,7 @@ const Helper = {
   onGoogleDocEmbed,
   log,
   fontAwesome,
-  require: libRequire
+  require: libRequire,
+  googleDocEmbed: 'googleDocEmbed'
 };
 export default Helper;

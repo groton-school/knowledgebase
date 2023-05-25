@@ -1,15 +1,12 @@
-import onSelectorReady from './onSelectorReady';
+import { GoogleDocEmbedEvent } from './onLoad';
 
-export default function onGoogleDocEmbed(
-  selector: string
-): Promise<HTMLElement[]> {
-  return new Promise((resolve, reject) => {
-    onSelectorReady(
-      '.CMSgoogledocembed',
-      '.od-iframe-loader, .folder-item'
-    ).then(
-      (embed) => resolve(Array.from(embed.querySelectorAll(selector))),
-      () => reject()
-    );
+export default function onGoogleDocEmned(
+  selector: string,
+  callback: (elts: HTMLElement[]) => any
+) {
+  document.body.addEventListener(GoogleDocEmbedEvent, (e) => {
+    if (e instanceof CustomEvent) {
+      callback(Array.from(e.detail.querySelectorAll(selector)));
+    }
   });
 }
