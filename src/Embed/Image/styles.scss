@@ -1,7 +1,11 @@
 .CMSgoogledocembed {
   img.kb-fit {
-    max-height: 100%;
-    max-width: 100%;
+    /*
+     * pixel values based on 12x7 gridstack on standard MacBook screen (min
+     * with percentages is the same as saying auto)
+     */
+    max-height: min(100vh, 480px);
+    max-width: min(100vw, 830px);
     margin: auto;
   }
 }

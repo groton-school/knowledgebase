@@ -37,7 +37,7 @@
         }
       }
 
-      li[data-child-count]:not([data-child-count='0']):before {
+      li[data-child-count]:not([data-child-count='0'])::before {
         font-family: 'Font Awesome 5 Free';
         font-weight: 900;
         content: '\f0da';
@@ -47,7 +47,7 @@
         pointer-events: all;
       }
 
-      li[data-child-count]:not([data-child-count='0']).active:before {
+      li[data-child-count]:not([data-child-count='0']).active::before {
         content: '\f0d7';
       }
     }

@@ -48,10 +48,11 @@ export class Builder {
     parseInt(node.dataset.level || '-1');
 
   private calcChildCount(elt: HTMLElement) {
+    const childCount = 'data-child-count';
     if (elt.lastChild instanceof HTMLUListElement) {
-      elt.dataset.childCount = elt.lastChild.childElementCount.toString();
+      elt.setAttribute(childCount, elt.lastChild.childElementCount.toString());
     } else {
-      elt.dataset.childCount = '0';
+      elt.setAttribute(childCount, '0');
     }
   }
 

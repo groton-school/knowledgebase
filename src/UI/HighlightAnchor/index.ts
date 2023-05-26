@@ -19,6 +19,9 @@ function scrollToHash() {
       }
       const clone = anchor.cloneNode(true) as HTMLElement;
       anchor.parentNode?.replaceChild(clone, anchor);
+      Array.from(document.querySelectorAll(`.${highlight}`)).forEach((h) =>
+        h.classList.remove(highlight)
+      );
       if (clone.classList) {
         clone.classList.add(highlight);
       } else {
