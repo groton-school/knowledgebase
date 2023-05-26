@@ -2,7 +2,7 @@
 import Helper from '../../Helper';
 import './styles.scss';
 
-const appStore = 'a[href^="https://apps.apple.com/"]';
+const appStore = 'a[href^="https://apps.apple.com/"]'; // TODO handle iTunes links too?
 const playStore = 'a[href^="https://play.google.com/"]';
 
 function embed(paragraphs: HTMLElement[]) {
