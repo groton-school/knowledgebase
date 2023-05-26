@@ -1,6 +1,8 @@
 import Helper from '../Helper';
 
-const youTubeLink = 'a[href^="https://youtu"]';
+// TODO handle YouTube playlists
+
+const youTubeLink = 'a[href*="youtu.be"], a[href*="youtube.com"]';
 
 /**
  * Replace YouTube links with the embedded video
@@ -21,7 +23,12 @@ export default function YouTube() {
         /^https:\/\/(?:youtu\.be)|(?:(?:www\.)?youtube\.com\/watch\?v=)\/(.+)\/?/,
         '$1'
       );
-      p.outerHTML = `<iframe width="100%" height="315" src="https://www.youtube-nocookie.com/embed/${id}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+      p.replaceWith(
+        Helper.iframe(
+          `https://www.youtube-nocookie.com/embed/${id}`,
+          'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+        )
+      );
       Helper.log(`embedded ${url}`);
     });
   });

@@ -28,15 +28,7 @@ export default function Swank() {
     paragraphs.forEach((p) => {
       const url = (document.querySelector(swankLink) as HTMLAnchorElement).href;
       const id = url.replace(/.*\/watch\/(.*)\??/, '$1');
-      const title = (
-        Array.from(p.querySelectorAll(swankLink)) as HTMLAnchorElement[]
-      ).reduce((title, link: HTMLAnchorElement) => {
-        if (link.innerText.trim().length && !/^http.*/.test(link.innerText)) {
-          return link.innerText;
-        }
-        return title;
-      }, '');
-      p.outerHTML = `<iframe class="vidyard_iframe" title="${title}" src="https://play.vidyard.com/${id}?autoplay=0" width=100% height=360 scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen></iframe>`;
+      p.replaceWith(Helper.iframe(`https://play.vidyard.com/${id}?autoplay=0`));
       Helper.log(`embedded ${url}`);
     });
   });

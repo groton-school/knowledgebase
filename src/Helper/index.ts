@@ -1,4 +1,4 @@
-import fontAwesome from './fontAwesome';
+import iframe from './iframe';
 import log from './log';
 import onGoogleDocEmbed from './onGoogleDocEmbed';
 import * as onLoad from './onLoad';
@@ -10,8 +10,7 @@ const Helper = {
   onSelectorReady,
   onGoogleDocEmbed,
   log,
-  fontAwesome,
-  require: libRequire,
-  googleDocEmbed: 'googleDocEmbed'
+  iframe,
+  require: libRequire
 };
 export default Helper;

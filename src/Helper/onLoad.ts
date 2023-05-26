@@ -1,5 +1,6 @@
-export const GoogleDocEmbedEvent = 'GoogleDocEmbed';
-export const GoogleDocRemoveEvent = 'GoogleDocRemove';
+export const GoogleDocEmbedEvent = 'kbe';
+export const GoogleDocRemoveEvent = 'kbr';
+export const GoogleDocEmbedSelector = '.CMSgoogledocembed';
 
 function observe() {
   const observer = new MutationObserver((mutations) => {
@@ -27,7 +28,7 @@ function observe() {
             if (!embedded) {
               const elt = node as HTMLElement;
               if (elt.id === 'od-doc-document-first') {
-                return elt.querySelector('.CMSgoogledocembed');
+                return elt.querySelector(GoogleDocEmbedSelector);
               }
             }
             return embedded;

@@ -11,7 +11,7 @@ function iframeMessage() {
 
 function receiveMessage(e: MessageEvent) {
   if (e.data === 'MM:3PCunsupported') {
-    Helper.log('Third-party cookies are not enabled');
+    Helper.log('3rd-party cookies disenabled');
     iframeMessage();
   } else if (e.data === 'MM:3PCsupported') {
     // Helper.log('Third-party cookies are enabled');
@@ -29,8 +29,11 @@ function receiveMessage(e: MessageEvent) {
  */
 export default function ThirdPartyCookies() {
   window.addEventListener('message', receiveMessage, false);
-  const iframe = document.createElement('iframe');
-  iframe.src = `${process.env.THIRD_PARTY_COOKIES}/start.html`;
-  iframe.style.display = 'none';
-  document.body.append(iframe);
+  document.body.append(
+    Helper.iframe(
+      `${process.env.THIRD_PARTY_COOKIES}/start.html`,
+      undefined,
+      false
+    )
+  );
 }

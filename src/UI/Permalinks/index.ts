@@ -14,7 +14,7 @@ export default function Permalinks() {
         headers.forEach((h) => {
           const a = document.createElement('a');
           a.href = `#${h.id}`;
-          a.innerHTML = Helper.fontAwesome('link');
+          a.innerHTML = `<i class="fas fa-link"></i>`;
           a.classList.add(PERMALINK_SELECTOR);
           h.append(a);
         });
