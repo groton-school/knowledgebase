@@ -1,0 +1,19 @@
+$groups: 'for-teachers/' 'Faculty', 'for-students/' 'Students',
+  'for-staff/' 'Staff';
+
+@each $url, $label, $color, $text in $groups {
+  a[href$='#{$url}'] {
+    div.media.well::before {
+      content: $label;
+      color: $text or white;
+      background: $color or goldenrod;
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-size: small;
+      border-radius: 0 7px;
+      padding: 0.25em 0.75em;
+      margin: 0 5px 0 0;
+    }
+  }
+}
