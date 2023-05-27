@@ -8,14 +8,17 @@
   },
   "license": "GPL-3.0",
   "scripts": {
-    "build": "npx webpack"
+    "build": "npx webpack",
+    "deploy": "node ./scripts/deploy.js"
   },
   "devDependencies": {
     "@battis/eslint-config": "github:battis/eslint-config",
     "@battis/prettier-config": "github:battis/prettier-config",
     "@battis/webpack": "github:battis/webpack",
+    "@google-cloud/storage": "^6.10.1",
     "@types/gtag.js": "^0.0.12",
-    "@types/node": "^20.1.7"
+    "@types/node": "^20.2.5",
+    "dotenv": "^16.0.3"
   },
   "prettier": "@battis/prettier-config",
   "eslintConfig": {

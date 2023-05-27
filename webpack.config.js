@@ -1,5 +1,6 @@
 module.exports = require('@battis/webpack/ts/vanilla')({
   root: __dirname,
   bundle: 'kb',
-  externals: { requirejs: 'requirejs', jQuery: '$' }
+  externals: { requirejs: 'requirejs', jQuery: '$' },
+  config: { extractCSS: false }
 });
