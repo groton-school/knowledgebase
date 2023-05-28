@@ -1,7 +1,12 @@
 @use '../../Constants';
 
+$apps: Constants.$prefix + 'apps';
+$ios: Constants.$prefix + 'ios';
+$android: Constants.$prefix + 'android';
+$qr: Constants.$prefix + 'qr';
+
 #{Constants.$googleDocEmbed} {
-  .#{Constants.$prefix}app-links {
+  .#{$apps} {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -9,8 +14,8 @@
     width: 100%;
     margin: 1em inherit;
 
-    a.#{Constants.$prefix}apple,
-    a.#{Constants.$prefix}play {
+    a.#{$ios},
+    a.#{$android} {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -32,7 +37,7 @@
       }
     }
 
-    a.#{Constants.$prefix}apple {
+    a.#{$ios} {
       // intrinsic 120px x 40px
       // svg
       width: 200px;
@@ -40,7 +45,7 @@
       background-size: 100%;
     }
 
-    a.#{Constants.$prefix}play {
+    a.#{$android} {
       // content 563px x 169px
       // intrinsic 646px x 250px
       // margin: 91.5px x 40.5px
@@ -52,7 +57,7 @@
     }
   }
 
-  div.#{Constants.$prefix}qr {
+  div.#{$qr} {
     text-align: center;
     color: darkgray;
   }

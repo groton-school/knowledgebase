@@ -1,7 +1,6 @@
 import Helper from '../../Helper';
+import styles from './styles.module.scss';
 import './styles.scss';
-
-const PERMALINK_SELECTOR = 'kb-permalink';
 
 export default function Permalinks() {
   Helper.onGoogleDocEmbed(
@@ -10,12 +9,12 @@ export default function Permalinks() {
       '.kb-add-permalink'
     ),
     (headers: HTMLElement[]) => {
-      if (!document.querySelector(`.${PERMALINK_SELECTOR}`)) {
+      if (!document.querySelector(`.${styles.permalink}`)) {
         headers.forEach((h) => {
           const a = document.createElement('a');
           a.href = `#${h.id}`;
           a.innerHTML = `<i class="fas fa-link"></i>`;
-          a.classList.add(PERMALINK_SELECTOR);
+          a.classList.add(styles.permalink);
           h.append(a);
         });
       }

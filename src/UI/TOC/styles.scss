@@ -1,6 +1,10 @@
 @use '../../Constants';
 
-.panel:has(##{Constants.$prefix}toc) + .panel:has(#od-subnav) {
+$toc: Constants.$prefix + 'toc';
+$menu: $toc + '-menu';
+$wrapper: $toc + '-wrapper';
+
+.panel:has(##{$toc}) + .panel:has(#od-subnav) {
   #od-subnav-heading {
     display: block !important;
   }
@@ -9,7 +13,7 @@
 .od-container {
   .col-subnav {
     .panel > .panel-body {
-      ##{Constants.$prefix}toc-menu {
+      ##{$menu} {
         width: 90%;
         margin: 0px auto;
         padding-bottom: 10px;
@@ -56,6 +60,6 @@
   }
 }
 
-[od-subnav-options-nowrap='1'] .col-subnav .panel > .panel-body #kb-toc li a {
+[od-subnav-options-nowrap='1'] .col-subnav .panel > .panel-body ##{$toc} li a {
   white-space: nowrap;
 }

@@ -1,7 +1,9 @@
 @use '../../Constants';
 
+$fit: Constants.$prefix + 'fit';
+
 #{Constants.$googleDocEmbed} {
-  img.#{Constants.$prefix}fit {
+  img.#{$fit} {
     /*
      * pixel values based on 12x7 gridstack on standard MacBook screen (min
      * with percentages is the same as saying auto)

@@ -1,8 +1,7 @@
 import * as Constants from '../../Constants';
 import Helper from '../../Helper';
+import styles from './styles.module.scss';
 import './styles.scss';
-
-const highlight = 'kb-highlight';
 
 function scrollToHash() {
   if (window.location.hash.length) {
@@ -19,13 +18,13 @@ function scrollToHash() {
       }
       const clone = anchor.cloneNode(true) as HTMLElement;
       anchor.parentNode?.replaceChild(clone, anchor);
-      Array.from(document.querySelectorAll(`.${highlight}`)).forEach((h) =>
-        h.classList.remove(highlight)
+      Array.from(document.querySelectorAll(`.${styles.highlight}`)).forEach(
+        (h) => h.classList.remove(styles.highlight)
       );
       if (clone.classList) {
-        clone.classList.add(highlight);
+        clone.classList.add(styles.highlight);
       } else {
-        clone.className = highlight;
+        clone.className = styles.highlight;
       }
     }
   }

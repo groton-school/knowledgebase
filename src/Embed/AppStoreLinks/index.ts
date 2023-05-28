@@ -1,5 +1,6 @@
 //import * as QRCode from 'qrcode';
 import Helper from '../../Helper';
+import styles from './styles.module.scss';
 import './styles.scss';
 
 const appStore = 'a[href^="https://apps.apple.com/"]'; // TODO handle iTunes links too?
@@ -12,9 +13,11 @@ function embed(paragraphs: HTMLElement[]) {
     const id = crypto.randomUUID();
     p.outerHTML =
       `<div id="${id}">` +
-      `<div class="kb-app-links">` +
-      (ios ? `<a class="kb-apple" href="${ios.href}"></a>` : '') +
-      (android ? `<a class="kb-play" href="${android.href}"></a>` : '') +
+      `<div class="${styles.apps}">` +
+      (ios ? `<a class="${styles.ios}" href="${ios.href}"></a>` : '') +
+      (android
+        ? `<a class="${styles.android}" href="${android.href}"></a>`
+        : '') +
       `</div>` +
       `</div>`;
 

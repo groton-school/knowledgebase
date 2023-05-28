@@ -1,7 +1,9 @@
 @use '../../Constants';
 
+$permalink: Constants.$prefix + 'permalink';
+
 #{Constants.$googleDocEmbed} {
-  a.#{Constants.$prefix}permalink {
+  a.#{$permalink} {
     margin-left: 0.5em;
     font-size: small;
   }
