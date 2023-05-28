@@ -1,4 +1,4 @@
-import Helper from '../Helper';
+import Helper from '../../Helper';
 
 /**
  * Replace `iframe` HTML tags with the actual HMTL
@@ -22,7 +22,7 @@ import Helper from '../Helper';
  * HTML code itself is 1px and white to make it less obtrusive in the Google
  * Doc.
  */
-export default function IFrames() {
+export default function IFrame() {
   Helper.onGoogleDocEmbed('p', (paragraphs: HTMLElement[]) => {
     paragraphs.forEach((p) => {
       if (/^<iframe.*<\/iframe>$/.test(p.innerText)) {

@@ -1,5 +1,5 @@
 //import * as QRCode from 'qrcode';
-import Helper from '../../Helper';
+import Helper from '../../../Helper';
 import styles from './styles.module.scss';
 import './styles.scss';
 
@@ -52,7 +52,7 @@ function waitForLib(paragraphs: HTMLElement[]) {
 }
 */
 
-export default function AppStoreLinks() {
+export default function AppStore() {
   Helper.onGoogleDocEmbed(
     `p:has(${appStore}), p:has(${playStore})`,
     (paragraphs) => {

@@ -11,6 +11,12 @@ import './styles.scss';
 const GRID_STACK_ITEM_CONTENT = 'grid-stack-item-content';
 const GRID_STACK_ITEM_CONTENT_SELECTOR = `.${GRID_STACK_ITEM_CONTENT}`;
 
+/**
+ * Disable GridStack for content on mobile devices
+ *
+ * Rather than having to scroll inside of a constrained portion of the already
+ * tiny screen, just scroll the whole screen.
+ */
 export default function UnstackMobile() {
   if (window.innerWidth <= Constants.mobileWidth) {
     Helper.onSelectorReady(GRID_STACK_ITEM_CONTENT_SELECTOR).then(() =>

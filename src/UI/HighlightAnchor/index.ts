@@ -30,6 +30,9 @@ function scrollToHash() {
   }
 }
 
+/**
+ * Scroll to anchor element in embedded Google Doc when loaded
+ */
 export default function HighlightAnchor() {
   addEventListener('hashchange', scrollToHash);
   Helper.onGoogleDocEmbed('h1, h2, h3, h4, h5, h6', scrollToHash);

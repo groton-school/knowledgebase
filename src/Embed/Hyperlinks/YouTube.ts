@@ -1,4 +1,4 @@
-import Helper from '../Helper';
+import Helper from '../../Helper';
 
 // TODO handle YouTube playlists
 

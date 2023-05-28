@@ -1,5 +1,21 @@
 @use '../Constants';
 
+/**
+ * Link groups to label
+ *
+ * Formatted as:
+ * ```
+ *  end-of-url label label-color text-color border-color
+ * ```
+ *
+ * Colors can be omitted, but not skipped
+ *
+ * `end-of-url` - pattern to match end of URL
+ * `label` - text to display in label
+ * `label-color` (Optional) defaults to Groton red
+ * `text-color` (Optional) defaults to white
+ * `border-color` (Optional) defaults to text-color, if present, or transparent
+ */
 $groups: 'for-teachers/' 'Faculty',
   'for-students/' 'Students' white Constants.$grotonRed, 'for-staff/' 'Staff';
 

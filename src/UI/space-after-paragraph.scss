@@ -1,5 +1,8 @@
 @use '../Constants';
 
+/**
+ * Add space after paragraphs in embedded Google Docs
+ */
 #{Constants.$googleDocEmbed} {
   p {
     margin-bottom: 0.75em !important;

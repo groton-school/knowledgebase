@@ -1,3 +1,9 @@
+/**
+ * Create an OverDrive panel component
+ *
+ * @param {string} id (Optional) DOM ID
+ * @returns {HTMLDivElement}
+ */
 export function panel(id?: string): HTMLDivElement {
   const panel = document.createElement('div');
   id && (panel.id = id);
@@ -6,6 +12,15 @@ export function panel(id?: string): HTMLDivElement {
   return panel;
 }
 
+/**
+ * Create an Overdrive panel heading
+ *
+ * @param {string} innerText Text of the heading
+ * @param {string} href (Optional) hyperlink target
+ * @param {string} title (Optional) hyperlink title
+ * @param {string} id (Optional) DOM ID
+ * @returns {HTMLDivElement}
+ */
 export function heading(
   innerText: string,
   href?: string,

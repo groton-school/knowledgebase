@@ -1,4 +1,4 @@
-import Helper from '../Helper';
+import Helper from '../../Helper';
 
 const swankLink = 'a[href^="https://swank.hubs.vidyard.com"]';
 

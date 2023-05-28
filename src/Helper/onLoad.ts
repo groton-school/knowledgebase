@@ -1,7 +1,19 @@
+/** @type {string} Name of the Google Doc embed custom event */
 export const GoogleDocEmbedEvent = 'kbe';
+
+/** @type {string} Name of the Google Doc remove event */
 export const GoogleDocRemoveEvent = 'kbr';
+
+/** @type {string} CSS selector for root of embedded Google Doc */
 export const GoogleDocEmbedSelector = '.CMSgoogledocembed';
 
+/**
+ * Observe the DOM for added or removed Google Doc embeds
+ *
+ * Embedding a Google Doc fires a custom event with the `details` property
+ * referencing the embedded doc. Removing an embedded doc fires a simple
+ * event with no `details` property.
+ */
 function observe() {
   const observer = new MutationObserver((mutations) => {
     let embed = undefined;
@@ -45,6 +57,9 @@ function observe() {
   observer.observe(document.body, { childList: true, subtree: true });
 }
 
+/**
+ * Load the core MutationObservers on the page when loaded
+ */
 export function activate() {
   if (document.readyState === 'loading') {
     window.addEventListener('load', observe);

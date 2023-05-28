@@ -8,7 +8,9 @@ declare global {
  * Add Google Analytics tracking to pages
  *
  * The tracking ID for the analytics account is stored in `.env` file at the
- * project root in the `GOOGLE_ANALYTICS_G4_ID` value.
+ * project root in the `GOOGLE_ANALYTICS_G4_ID` value. This uses the modern
+ * G4-style tracking ID rather than the old-style UA ID that Overdrive
+ * provides built-in support for.
  */
 export default function GoogleAnalytics() {
   const id = process.env.GOOGLE_ANALYTICS_G4_ID || '';

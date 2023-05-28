@@ -3,11 +3,17 @@ import * as OverDrive from '../../OverDrive';
 import styles from './styles.module.scss';
 import './styles.scss';
 
+/** @type {string} Title text for table of contents */
 const TOC_TITLE = 'On this page';
+
+/** @type {number} Maximum header level to display */
 const MAX_DEPTH = 3;
 
 const removeTOC = () => document.querySelector(`#${styles.wrapper}`)?.remove();
 
+/**
+ * Generate Google Doc-style outline as a second subnav
+ */
 export default function TOC() {
   Helper.onGoogleDocEmbed(
     [...Array(Math.min(6, Math.max(0, MAX_DEPTH))).keys()]

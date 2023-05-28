@@ -2,19 +2,19 @@ import Helper from '../../Helper';
 import styles from './styles.module.scss';
 import './styles.scss';
 
+/**
+ * Display permalinks to embedded Google doc headers
+ */
 export default function Permalinks() {
   Helper.onGoogleDocEmbed(
-    Array.from(Array(6).keys()).reduce(
-      (selector, level) => [selector, `h${level + 1}:not([id=""])`].join(','),
-      '.kb-add-permalink'
-    ),
+    [...Array(6).keys()].map((level) => `h${level + 1}:not([id=""])`).join(','),
     (headers: HTMLElement[]) => {
       if (!document.querySelector(`.${styles.permalink}`)) {
         headers.forEach((h) => {
           const a = document.createElement('a');
+          a.append(Helper.fontAwesome(''));
           a.href = `#${h.id}`;
-          a.innerHTML = `<i class="fas fa-link"></i>`;
-          a.classList.add(styles.permalink);
+          a.className = styles.permalink;
           h.append(a);
         });
       }
