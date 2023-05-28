@@ -60,12 +60,27 @@ async function uploadDirectory() {
     `${successfulUploads} files uploaded to ${bucketName} successfully.`
   );
   console.log(
-    `\n\nPaste the following line into Site Settings/Developers/JS:\n\nrequirejs([\`https://${path.join(
+    `
+
+Paste the following JavaScript into Site Settings/Developers/JS:
+
+// production
+requirejs([\`https://${path.join(
       'storage.googleapis.com',
       bucketName,
       path.relative(process.cwd(), directoryPath),
       `kb-${pkg.version}.js`
-    )}\`]);\n\n(Hint: you can bypass caching by appending \`?cache=\${crypto.randomUUID()}\` to the URL.)\n\n`
+    )}\`]);
+
+// development (disable GSC caching)
+// requirejs([\`https://${path.join(
+      'storage.googleapis.com',
+      bucketName,
+      path.relative(process.cwd(), directoryPath),
+      `kb-${pkg.version}.js`
+    )}\`]);
+
+`
   );
 }
 
