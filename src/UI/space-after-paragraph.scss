@@ -1,6 +1,6 @@
-@import '../Constants';
+@use '../Constants';
 
-#{$googleDocEmbed} {
+#{Constants.$googleDocEmbed} {
   p {
     margin-bottom: 0.75em !important;
   }

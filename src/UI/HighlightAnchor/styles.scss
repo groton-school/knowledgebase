@@ -1,9 +1,9 @@
-@import '../../Constants';
+@use '../../Constants';
 
-#{$googleDocEmbed} {
+#{Constants.$googleDocEmbed} {
   $highlight: #337ab7;
 
-  .#{$prefix}highlight {
+  .#{Constants.$prefix}highlight {
     animation: 0.25s fadeOut 8;
   }
 

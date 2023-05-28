@@ -1,7 +1,7 @@
-@import '../../Constants';
+@use '../../Constants';
 
-#{$googleDocEmbed} {
-  .#{$prefix}app-links {
+#{Constants.$googleDocEmbed} {
+  .#{Constants.$prefix}app-links {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -9,8 +9,8 @@
     width: 100%;
     margin: 1em inherit;
 
-    a.#{$prefix}apple,
-    a.#{$prefix}play {
+    a.#{Constants.$prefix}apple,
+    a.#{Constants.$prefix}play {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -32,7 +32,7 @@
       }
     }
 
-    a.#{$prefix}apple {
+    a.#{Constants.$prefix}apple {
       // intrinsic 120px x 40px
       // svg
       width: 200px;
@@ -40,7 +40,7 @@
       background-size: 100%;
     }
 
-    a.#{$prefix}play {
+    a.#{Constants.$prefix}play {
       // content 563px x 169px
       // intrinsic 646px x 250px
       // margin: 91.5px x 40.5px
@@ -52,7 +52,7 @@
     }
   }
 
-  div.#{$prefix}qr {
+  div.#{Constants.$prefix}qr {
     text-align: center;
     color: darkgray;
   }

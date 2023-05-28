@@ -1,7 +1,7 @@
-@import '../../Constants';
+@use '../../Constants';
 
-#{$googleDocEmbed} {
-  .#{$prefix}frame {
+#{Constants.$googleDocEmbed} {
+  .#{Constants.$prefix}frame {
     border: none;
     height: min(300px, 50vh);
     width: 100%;

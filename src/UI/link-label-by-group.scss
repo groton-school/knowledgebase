@@ -1,14 +1,14 @@
-@import '../Constants';
+@use '../Constants';
 
-$groups: 'for-teachers/' 'Faculty', 'for-students/' 'Students' white $grotonRed,
-  'for-staff/' 'Staff';
+$groups: 'for-teachers/' 'Faculty',
+  'for-students/' 'Students' white Constants.$grotonRed, 'for-staff/' 'Staff';
 
 @each $url, $label, $color, $text, $border in $groups {
   a[href$='#{$url}'] {
     div.media.well::before {
       content: $label;
       color: $text or white;
-      background: $color or $grotonRed;
+      background: $color or Constants.$grotonRed;
       position: absolute;
       top: 0;
       right: 0;
