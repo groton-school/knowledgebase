@@ -1,0 +1,9 @@
+@import '../../Constants';
+
+#{$googleDocEmbed} {
+  .#{$prefix}frame {
+    border: none;
+    height: min(300px, 50vh);
+    width: 100%;
+  }
+}

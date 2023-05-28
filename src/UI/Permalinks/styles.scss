@@ -1,5 +1,7 @@
-.CMSgoogledocembed {
-  a.kb-permalink {
+@import '../../Constants';
+
+#{$googleDocEmbed} {
+  a.#{$prefix}permalink {
     margin-left: 0.5em;
     font-size: small;
   }

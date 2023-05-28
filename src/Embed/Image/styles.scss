@@ -1,5 +1,7 @@
-.CMSgoogledocembed {
-  img.kb-fit {
+@import '../../Constants';
+
+#{$googleDocEmbed} {
+  img.#{$prefix}fit {
     /*
      * pixel values based on 12x7 gridstack on standard MacBook screen (min
      * with percentages is the same as saying auto)

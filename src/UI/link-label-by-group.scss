@@ -1,17 +1,20 @@
-$groups: 'for-teachers/' 'Faculty', 'for-students/' 'Students',
+@import '../Constants';
+
+$groups: 'for-teachers/' 'Faculty', 'for-students/' 'Students' white $grotonRed,
   'for-staff/' 'Staff';
 
-@each $url, $label, $color, $text in $groups {
+@each $url, $label, $color, $text, $border in $groups {
   a[href$='#{$url}'] {
     div.media.well::before {
       content: $label;
       color: $text or white;
-      background: $color or goldenrod;
+      background: $color or $grotonRed;
       position: absolute;
       top: 0;
       right: 0;
       font-size: small;
       border-radius: 0 7px;
+      border: solid 1px ($border or $text or transparent);
       padding: 0.25em 0.75em;
       margin: 0 5px 0 0;
     }

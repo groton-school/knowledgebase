@@ -1,5 +1,7 @@
+@import '../../Constants';
+
 @media (max-width: 576px) {
-  .CMSgoogledocembed {
+  #{$googleDocEmbed} {
     margin: inherit 1em;
   }
 }

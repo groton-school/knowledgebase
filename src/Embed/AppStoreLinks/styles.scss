@@ -1,5 +1,7 @@
-.CMSgoogledocembed {
-  .kb-app-links {
+@import '../../Constants';
+
+#{$googleDocEmbed} {
+  .#{$prefix}app-links {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -7,8 +9,8 @@
     width: 100%;
     margin: 1em inherit;
 
-    a.kb-apple,
-    a.kb-play {
+    a.#{$prefix}apple,
+    a.#{$prefix}play {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -30,7 +32,7 @@
       }
     }
 
-    a.kb-apple {
+    a.#{$prefix}apple {
       // intrinsic 120px x 40px
       // svg
       width: 200px;
@@ -38,7 +40,7 @@
       background-size: 100%;
     }
 
-    a.kb-play {
+    a.#{$prefix}play {
       // content 563px x 169px
       // intrinsic 646px x 250px
       // margin: 91.5px x 40.5px
@@ -50,7 +52,7 @@
     }
   }
 
-  div.kb-qr {
+  div.#{$prefix}qr {
     text-align: center;
     color: darkgray;
   }

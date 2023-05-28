@@ -1,7 +1,9 @@
-.CMSgoogledocembed {
+@import '../../Constants';
+
+#{$googleDocEmbed} {
   $highlight: #337ab7;
 
-  .kb-highlight {
+  .#{$prefix}highlight {
     animation: 0.25s fadeOut 8;
   }
 

@@ -1,5 +1,4 @@
 import './fixed-background.scss';
-//import './hide-topnav.scss';
 import HighlightAnchor from './HighlightAnchor';
 import './link-label-by-group.scss';
 import Permalinks from './Permalinks';

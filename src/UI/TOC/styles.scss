@@ -1,4 +1,6 @@
-.panel:has(#kb-toc) + .panel:has(#od-subnav) {
+@import '../../Constants';
+
+.panel:has(##{$prefix}toc) + .panel:has(#od-subnav) {
   #od-subnav-heading {
     display: block !important;
   }
@@ -7,7 +9,7 @@
 .od-container {
   .col-subnav {
     .panel > .panel-body {
-      #kb-toc-menu {
+      ##{$prefix}toc-menu {
         width: 90%;
         margin: 0px auto;
         padding-bottom: 10px;
