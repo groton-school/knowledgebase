@@ -9,7 +9,7 @@
   "license": "GPL-3.0",
   "scripts": {
     "build": "npx webpack",
-    "deploy": "node ./scripts/deploy.js"
+    "deploy": "node scripts/deploy.js"
   },
   "devDependencies": {
     "@battis/eslint-config": "github:battis/eslint-config",
