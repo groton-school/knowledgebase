@@ -1,6 +1,6 @@
 import GoogleAnalytics from './GoogleAnalytics';
 import ThirdPartyCookies from './ThirdPartyCookies';
-import UnstackMobile from './UnstackMobile';
+import './unstack-mobile.scss';
 
 /**
  * Expand the functionality of Overdrive
@@ -13,5 +13,4 @@ import UnstackMobile from './UnstackMobile';
 export default function Functionality() {
   GoogleAnalytics();
   ThirdPartyCookies();
-  UnstackMobile();
 }

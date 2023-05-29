@@ -10,7 +10,9 @@ function scrollToHash() {
     );
     if (anchor) {
       anchor.scrollIntoView();
-      if (window.innerWidth <= Constants.mobileWidth) {
+      if (
+        window.innerWidth <= parseInt(Constants.styles.MobileContentWidthInPx)
+      ) {
         window.scrollBy(
           0,
           -1 * (document.querySelector('#od-navbar')?.clientHeight || 0)

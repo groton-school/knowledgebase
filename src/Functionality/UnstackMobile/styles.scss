@@ -1,7 +1,0 @@
-@use '../../Constants';
-
-@media (max-width: 576px) {
-  #{Constants.$googleDocEmbed} {
-    margin: inherit 1em;
-  }
-}

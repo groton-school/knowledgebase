@@ -77,7 +77,7 @@ requirejs([\`https://${path.join(
       'storage.googleapis.com',
       bucketName,
       path.relative(process.cwd(), directoryPath),
-      `kb-${pkg.version}.js`
+      `kb-${pkg.version}.js?cache=\${crypto.randomUUID()}`
     )}\`]);
 
 `
