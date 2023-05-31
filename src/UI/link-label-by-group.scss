@@ -17,7 +17,8 @@
  * `border-color` (Optional) defaults to text-color, if present, or transparent
  */
 $groups: 'for-teachers/' 'Faculty',
-  'for-students/' 'Students' white Constants.$grotonRed, 'for-staff/' 'Staff';
+  'for-students/' 'Students' white Constants.$grotonRed, 'for-staff/' 'Staff',
+  'for-employees/' 'Faculty & Staff';
 
 @each $url, $label, $color, $text, $border in $groups {
   a[href$='#{$url}'] {
