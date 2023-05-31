@@ -6,6 +6,9 @@ $frame: Constants.$prefix + 'frame';
   .#{$frame} {
     border: none;
     width: 100%;
+    max-height: 300px;
     aspect-ratio: 16 / 9;
+    display: block;
+    margin: auto;
   }
 }
