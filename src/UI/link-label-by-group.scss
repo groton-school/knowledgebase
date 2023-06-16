@@ -22,7 +22,8 @@ $groups: 'for-teachers/' 'Faculty',
 
 @each $url, $label, $color, $text, $border in $groups {
   a[href$='#{$url}'] {
-    div.media.well::before {
+    div.media.well::before,
+    .thumbnail::after {
       content: $label;
       color: $text or white;
       background: $color or Constants.$grotonRed;
@@ -33,7 +34,64 @@ $groups: 'for-teachers/' 'Faculty',
       border-radius: 0 7px;
       border: solid 1px ($border or $text or transparent);
       padding: 0.25em 0.75em;
+    }
+
+    div.media.well::before {
       margin: 0 5px 0 0;
+    }
+
+    .thumbnail::after {
+      margin: -1px -1px 0 0;
+    }
+  }
+
+  div.row.folder-small-icons {
+    a[href$='#{$url}'] {
+      .thumbnail::after {
+        font-size: x-small;
+      }
+    }
+  }
+
+  div.row.folder-extra-small-icons {
+    a[href$='#{$url}'] {
+      .thumbnail::after {
+        font-size: xx-small;
+      }
+    }
+  }
+
+  #od-searchform-results {
+    a[href$='#{$url}']::after {
+      content: $label;
+      color: $text or white;
+      background: $color or Constants.$grotonRed;
+      font-size: xx-small;
+      border-radius: 7px;
+      border: solid 1px ($border or $text or transparent);
+      padding: 0.25em 0.75em;
+      vertical-align: text-bottom;
+      margin-left: 0.5em;
+      text-decoration: none;
+    }
+  }
+
+  td.title {
+    a[href$='#{$url}'] {
+      span.text-overflow-dynamic-ellipsis::before {
+        content: $label;
+        color: $text or white;
+        background: $color or Constants.$grotonRed;
+        font-size: xx-small;
+        border-radius: 7px;
+        border: solid 1px ($border or $text or transparent);
+        padding: 0.25em 0.75em;
+        margin: auto 0;
+        height: 2em;
+        text-decoration: none;
+        position: absolute;
+        right: 0;
+      }
     }
   }
 }
