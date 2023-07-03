@@ -1,8 +1,8 @@
 import Helper from '../../Helper';
 
-// TODO handle YouTube playlists
-
-const youTubeLink = 'a[href*="youtu.be"], a[href*="youtube.com"]';
+const youTubeLink =
+  'a[href*="youtu.be"]:not([href*="playlist"]), a[href*="youtube.com"]:not([href*="playlist"])';
+const playlistLink = 'a[href^="https://youtube.com/playlist"]';
 
 /**
  * Replace YouTube links with the embedded video
@@ -27,6 +27,24 @@ export default function YouTube() {
         Helper.iframe(
           `https://www.youtube-nocookie.com/embed/${id}`,
           'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+        )
+      );
+      Helper.log(`embedded ${url}`);
+    });
+  });
+  Helper.onGoogleDocEmbed(`p:has(${playlistLink})`, (paragraphs) => {
+    paragraphs.forEach((p) => {
+      const link = p.querySelector(playlistLink) as HTMLAnchorElement;
+      const url = link.href;
+      const id = link.href.replace(
+        /^https:\/\/youtube.com\/playlist\?list=(.+)\/?/,
+        '$1'
+      );
+      Helper.log(`I think ${id} is the playlis id?`);
+      p.replaceWith(
+        Helper.iframe(
+          `https://www.youtube.com/embed/videoseries?list=${id}`,
+          'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
         )
       );
       Helper.log(`embedded ${url}`);
