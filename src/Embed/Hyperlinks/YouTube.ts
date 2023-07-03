@@ -40,7 +40,6 @@ export default function YouTube() {
         /^https:\/\/youtube.com\/playlist\?list=(.+)\/?/,
         '$1'
       );
-      Helper.log(`I think ${id} is the playlis id?`);
       p.replaceWith(
         Helper.iframe(
           `https://www.youtube.com/embed/videoseries?list=${id}`,
