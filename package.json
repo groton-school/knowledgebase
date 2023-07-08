@@ -8,17 +8,17 @@
   },
   "license": "GPL-3.0",
   "scripts": {
-    "build": "npx webpack",
-    "deploy": "node scripts/deploy.js"
+    "build": "webpack",
+    "deploy": "./bin/deploy.js"
   },
   "devDependencies": {
-    "@battis/eslint-config": "github:battis/eslint-config",
-    "@battis/prettier-config": "github:battis/prettier-config",
-    "@battis/webpack": "github:battis/webpack",
-    "@google-cloud/storage": "^6.10.1",
+    "@battis/eslint-config": "latest",
+    "@battis/prettier-config": "latest",
+    "@battis/webpack": "latest",
+    "@google-cloud/storage": "^6.11.0",
     "@types/gtag.js": "^0.0.12",
-    "@types/node": "^20.2.5",
-    "dotenv": "^16.0.3"
+    "@types/node": "^20.4.1",
+    "dotenv": "^16.3.1"
   },
   "prettier": "@battis/prettier-config",
   "eslintConfig": {
@@ -26,7 +26,8 @@
       "@battis/eslint-config"
     ],
     "env": {
-      "browser": true
+      "browser": true,
+      "node": false
     }
   }
 }
