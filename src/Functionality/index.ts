@@ -1,4 +1,5 @@
 import GoogleAnalytics from './GoogleAnalytics';
+import MissingImages from './MissingImages';
 import ThirdPartyCookies from './ThirdPartyCookies';
 //import './unstack-mobile.scss';
 
@@ -13,4 +14,5 @@ import ThirdPartyCookies from './ThirdPartyCookies';
 export default function Functionality() {
   GoogleAnalytics();
   ThirdPartyCookies();
+  MissingImages();
 }

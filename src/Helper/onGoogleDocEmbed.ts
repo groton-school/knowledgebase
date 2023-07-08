@@ -9,13 +9,13 @@ import { GoogleDocEmbedEvent } from './onLoad';
  * @param {string} selector Valid CSS selector
  * @param {Function} handler
  */
-export default function onGoogleDocEmned(
+export default function onGoogleDocEmbed<T extends HTMLElement>(
   selector: string,
-  handler: (elts: HTMLElement[]) => any
+  handler: (elts: T[]) => any
 ) {
   document.body.addEventListener(GoogleDocEmbedEvent, (e) => {
     if (e instanceof CustomEvent) {
-      handler(Array.from(e.detail.querySelectorAll(selector)));
+      handler(Array.from(e.detail.querySelectorAll(selector)) as T[]);
     }
   });
 }

@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // assumes gcloud is installed and authenticated
 
 'use strict';
