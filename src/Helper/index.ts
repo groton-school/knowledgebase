@@ -1,3 +1,4 @@
+import * as Cookies from './Cookies';
 import fontAwesome from './fontAwesome';
 import iframe from './iframe';
 import log from './log';
@@ -10,6 +11,7 @@ import libRequire from './require';
  * Helper functions used across all plugins
  */
 const Helper = {
+  Cookies,
   onLoad,
   onSelectorReady,
   onGoogleDocEmbed,
