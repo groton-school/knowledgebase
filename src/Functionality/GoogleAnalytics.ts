@@ -1,8 +1,4 @@
-declare global {
-  interface Window {
-    dataLayer: any;
-  }
-}
+// @ts-nocheck
 
 /**
  * Add Google Analytics tracking to pages
@@ -13,16 +9,16 @@ declare global {
  * provides built-in support for.
  */
 export default function GoogleAnalytics() {
-  const id = process.env.GOOGLE_ANALYTICS_G4_ID || '';
+  const tag = process.env.GOOGLE_ANALYTICS_TAG || '';
   const lib: HTMLScriptElement = document.createElement('script');
   lib.async = true;
-  lib.src = `https://www.googletagmanager.com/gtag/js?id=${id}`;
+  lib.src = `https://www.googletagmanager.com/gtag/js?id=${tag}`;
   document.head.appendChild(lib);
   window.dataLayer = window.dataLayer || [];
 
-  function gtag(...args: (string | Date)[]) {
-    window.dataLayer.push(args);
+  function gtag() {
+    window.dataLayer.push(arguments);
   }
   gtag('js', new Date());
-  gtag('config', id);
+  gtag('config', tag);
 }
