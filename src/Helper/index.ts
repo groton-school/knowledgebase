@@ -6,6 +6,7 @@ import onGoogleDocEmbed from './onGoogleDocEmbed';
 import * as onLoad from './onLoad';
 import onSelectorReady from './onSelectorReady';
 import libRequire from './require';
+import vanity from './vanity';
 
 /**
  * Helper functions used across all plugins
@@ -18,6 +19,7 @@ const Helper = {
   log,
   iframe,
   fontAwesome,
+  vanity,
   require: libRequire
 };
 export default Helper;

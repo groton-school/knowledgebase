@@ -1,5 +1,8 @@
+require('dotenv').config();
+
 module.exports = require('@battis/webpack/ts/vanilla')({
   root: __dirname,
   bundle: 'kb',
-  externals: { requirejs: 'requirejs', jQuery: '$' } // reuse Overdrive dependencies
+  mode: JSON.parse(process.env.DEBUGGING) ? 'development' : 'production',
+  externals: { requirejs: 'requirejs' } // reuse Overdrive dependencies
 });

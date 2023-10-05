@@ -1,3 +1,7 @@
 {
-  "extends": "@battis/webpack/ts/tsconfig.json"
+  "extends": "@battis/webpack/ts/tsconfig.json",
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "esModuleInterop": true
+  }
 }
