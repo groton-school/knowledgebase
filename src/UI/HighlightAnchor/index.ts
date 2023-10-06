@@ -1,26 +1,16 @@
 import Helper from '../../Helper';
 import styles from './styles.module.scss';
 import './styles.scss';
-/* global $ */
-declare const $: any;
 
-function scrollToHash() {
+function scrollToHash(e: any) {
   if (window.location.hash.length) {
+    console.log(`hashchange: ${window.location.hash}`);
     const anchor = document.querySelector(
       window.location.hash.replace('.', '\\.')
     );
     if (anchor) {
-      $('[data-mimetypeshort="google-apps.document"]').scrollTop(anchor);
-      /*      anchor.scrollIntoView();
-      if (
-        window.innerWidth <= parseInt(Constants.styles.MobileContentWidthInPx)
-      ) {
-        window.scrollBy(
-          0,
-          -1 * (document.querySelector('#od-navbar')?.clientHeight || 0)
-        );
-      }
-      */
+      anchor.scrollIntoView();
+      window.scrollTo(0, 0);
       const clone = anchor.cloneNode(true) as HTMLElement;
       anchor.parentNode?.replaceChild(clone, anchor);
       Array.from(document.querySelectorAll(`.${styles.highlight}`)).forEach(

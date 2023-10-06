@@ -87,8 +87,16 @@ export class Builder {
    * @param {string} href Hyperlink target
    * @param {number} level Depth (like H1, H2, H3)
    */
-  public add(innerText: string, href: string, level: number) {
+  public add(
+    innerText: string,
+    href: string,
+    level: number,
+    eventListeners: Record<string, (e: Event) => void> = {}
+  ) {
     const elt = this.node(innerText, href, level);
+    for (const event in eventListeners) {
+      elt.addEventListener(event, eventListeners[event]);
+    }
     while (
       this.stack.top() != this.wrapper &&
       this.nodeLevel(this.stack.top()) >= this.nodeLevel(elt)

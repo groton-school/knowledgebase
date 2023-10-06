@@ -6,19 +6,19 @@
  *    that, if found, indicate that the target element will not be found and
  *    the observer should be discontinued
  */
-export default function onSelectorReady(
+export default function onSelectorReady<T extends HTMLElement>(
   selector: string,
   rejectSelector?: string
-): Promise<Element[]> {
+): Promise<T[]> {
   return new Promise((resolve, reject) => {
-    const elts = Array.from(document.querySelectorAll(selector));
+    const elts = Array.from(document.querySelectorAll(selector)) as T[];
     if (elts.length) {
       return resolve(elts);
     } else if (rejectSelector && document.querySelector(rejectSelector)) {
       reject();
     }
     const observer = new MutationObserver(() => {
-      const elts = Array.from(document.querySelectorAll(selector));
+      const elts = Array.from(document.querySelectorAll(selector)) as T[];
       if (elts) {
         resolve(elts);
         observer.disconnect();
