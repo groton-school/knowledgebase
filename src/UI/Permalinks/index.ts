@@ -16,7 +16,7 @@ export default function Permalinks() {
           a.href = `#${h.id}`;
           a.className = styles.permalink;
           h.append(a);
-          Helper.log(`permalink ${h.innerText}`);
+          Helper.log(`${h.innerText} 🔗`);
         });
       }
     }
