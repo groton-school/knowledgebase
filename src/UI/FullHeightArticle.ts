@@ -11,7 +11,7 @@ export default function FullHeightArticle() {
       ) as HTMLElement)!.style.height = 'fit-content';
       (item.querySelector('.panel-body') as HTMLElement)!.style.height =
         'fit-content';
-      console.log('full height article');
+      Helper.log('full height article');
     });
   });
 }

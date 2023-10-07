@@ -5,8 +5,14 @@ import UI from './UI';
 import pkg from '../package.json';
 
 Helper.vanity(
-  `${pkg.name}\nv${pkg.version} # ${__webpack_hash__}\n${
+  `🦓 ${pkg.name}\nv${pkg.version} # ${__webpack_hash__}\nwebpack.mode ${
     JSON.parse(process.env.DEBUGGING!) ? 'development' : 'production'
+  }\nGSC caching ${
+    /\?cache=/.test(
+      (document.querySelector('script[src*="kb-"]') as HTMLScriptElement).src
+    )
+      ? 'disabled'
+      : 'enabled'
   }`
 );
 Helper.onLoad.activate();

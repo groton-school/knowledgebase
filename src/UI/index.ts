@@ -4,6 +4,7 @@ import './link-label-by-group.scss';
 import Permalinks from './Permalinks';
 import './space-after-paragraph.scss';
 import TOC from './TOC';
+// import FullHeightArticle from './FullHeightArticle';
 
 /**
  * Extend and enhance the user interface of Overdrive
@@ -12,6 +13,7 @@ import TOC from './TOC';
  * make the site unusable if removed.
  */
 export default function UI() {
+  //FullHeightArticle();
   Permalinks();
   TOC();
   HighlightAnchor();

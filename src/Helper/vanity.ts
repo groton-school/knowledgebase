@@ -5,11 +5,10 @@ export default function Vanity(text: string) {
       width > line.length ? new Array(width - line.length + 1).join(' ') : ''
     }`;
   console.log(
-    '%c ' +
+    '%c' +
       lines
         .map(pad.bind(null, Math.max(...lines.map((line) => line.length))))
-        .join(' \n ') +
-      ' ',
-    'padding: 2px; color: white; background: #a6093d'
+        .join('\n'),
+    'margin: -1px; padding: 2px 10px; color: white; background: #a6093d'
   );
 }

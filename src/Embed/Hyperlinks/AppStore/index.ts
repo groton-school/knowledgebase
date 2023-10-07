@@ -38,7 +38,8 @@ function embed(paragraphs: HTMLElement[]) {
       android.href
     );
     */
-    Helper.log('embedded app store links');
+    ios && Helper.log('embedded iOS app store');
+    android && Helper.log('embedded Android app store');
   });
 }
 

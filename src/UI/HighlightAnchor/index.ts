@@ -4,11 +4,11 @@ import './styles.scss';
 
 function scrollToHash(e: any) {
   if (window.location.hash.length) {
-    console.log(`hashchange: ${window.location.hash}`);
     const anchor = document.querySelector(
       window.location.hash.replace('.', '\\.')
-    );
+    ) as HTMLElement;
     if (anchor) {
+      Helper.log(`scroll to ${anchor.innerText}`);
       anchor.scrollIntoView();
       window.scrollTo(0, 0);
       const clone = anchor.cloneNode(true) as HTMLElement;
