@@ -5,6 +5,7 @@ import Permalinks from './Permalinks';
 import './space-after-paragraph.scss';
 import TOC from './TOC';
 // import FullHeightArticle from './FullHeightArticle';
+import './fix-inline-image-offset.scss';
 
 /**
  * Extend and enhance the user interface of Overdrive
