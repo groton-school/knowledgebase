@@ -29,9 +29,10 @@ export default function YouTube() {
           'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
         )
       );
-      Helper.log(`embedded ${url}`);
+      Helper.log(`embedded 🎬 ${p.innerText}`);
     });
   });
+
   Helper.onGoogleDocEmbed(`p:has(${playlistLink})`, (paragraphs) => {
     paragraphs.forEach((p) => {
       const link = p.querySelector(playlistLink) as HTMLAnchorElement;
@@ -46,7 +47,7 @@ export default function YouTube() {
           'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
         )
       );
-      Helper.log(`embedded ${url}`);
+      Helper.log(`embedded 🎬🎬🎬 ${p.innerText}`);
     });
   });
 }

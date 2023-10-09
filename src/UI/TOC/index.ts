@@ -42,7 +42,7 @@ export default function TOC() {
         } else {
           document.querySelector('#od-col-subnav')?.prepend(panel);
         }
-        Helper.log('TOC built');
+        Helper.log('built “On this page”');
       }
     }
   );

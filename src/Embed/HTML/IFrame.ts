@@ -26,9 +26,12 @@ export default function IFrame() {
   Helper.onGoogleDocEmbed('p', (paragraphs: HTMLElement[]) => {
     paragraphs.forEach((p) => {
       if (/^<iframe.*<\/iframe>$/.test(p.innerText)) {
-        const url = p.innerText.replace(/^.*src="([^"]+)".*$/, '$1');
-        p.outerHTML = p.innerText;
-        Helper.log(`embedded ${url}`);
+        const url = Helper.straightenCurlyQuotes(p.innerText).replace(
+          /^.*src="([^"]+)".*$/,
+          '$1'
+        );
+        p.outerHTML = Helper.straightenCurlyQuotes(p.innerText);
+        Helper.log(`embedded <iframe> ${url}`);
       }
     });
   });

@@ -29,7 +29,7 @@ export default function Swank() {
       const url = (document.querySelector(swankLink) as HTMLAnchorElement).href;
       const id = url.replace(/.*\/watch\/(.*)\??/, '$1');
       p.replaceWith(Helper.iframe(`https://play.vidyard.com/${id}?autoplay=0`));
-      Helper.log(`embedded ${url}`);
+      Helper.log(`embedded 🎬 ${p.innerText}`);
     });
   });
 }

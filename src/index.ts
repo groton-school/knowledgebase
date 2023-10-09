@@ -5,7 +5,7 @@ import UI from './UI';
 import pkg from '../package.json';
 
 Helper.vanity(
-  `🦓 ${pkg.name}\nv${pkg.version} # ${__webpack_hash__}\nwebpack.mode ${
+  `🦓 ${pkg.name}\nv${pkg.version}.${__webpack_hash__}\nwebpack.mode ${
     JSON.parse(process.env.DEBUGGING!) ? 'development' : 'production'
   }\nGSC caching ${
     /\?cache=/.test(
@@ -15,7 +15,6 @@ Helper.vanity(
       : 'enabled'
   }`
 );
-Helper.onLoad.activate();
 
 Helper.require([
   `https://storage.googleapis.com/${
@@ -28,3 +27,5 @@ Helper.require([
 Functionality();
 UI();
 Embed();
+
+Helper.onLoad.activate();

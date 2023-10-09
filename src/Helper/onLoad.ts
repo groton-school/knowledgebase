@@ -1,10 +1,10 @@
-/** @type {string} Name of the Google Doc embed custom event */
+/** Name of the Google Doc embed custom event */
 export const GoogleDocEmbedEvent = 'kbe';
 
-/** @type {string} Name of the Google Doc remove event */
+/** Name of the Google Doc remove event */
 export const GoogleDocRemoveEvent = 'kbr';
 
-/** @type {string} CSS selector for root of embedded Google Doc */
+/** CSS selector for root of embedded Google Doc */
 export const GoogleDocEmbedSelector = '.CMSgoogledocembed';
 
 /**
@@ -54,6 +54,12 @@ function observe() {
       }
     });
   });
+  const embedded = document.querySelector(GoogleDocEmbedSelector);
+  if (embedded) {
+    document.body.dispatchEvent(
+      new CustomEvent(GoogleDocEmbedEvent, { detail: embedded })
+    );
+  }
   observer.observe(document.body, { childList: true, subtree: true });
 }
 

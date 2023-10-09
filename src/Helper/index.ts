@@ -7,6 +7,7 @@ import * as onLoad from './onLoad';
 import onSelectorReady from './onSelectorReady';
 import libRequire from './require';
 import vanity from './vanity';
+import straightenCurlyQuotes from './straightenCurlyQuotes';
 
 /**
  * Helper functions used across all plugins
@@ -20,6 +21,7 @@ const Helper = {
   iframe,
   fontAwesome,
   vanity,
+  straightenCurlyQuotes,
   require: libRequire
 };
 export default Helper;

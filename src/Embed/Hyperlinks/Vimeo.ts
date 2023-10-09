@@ -28,7 +28,7 @@ export default function Vimeo() {
           'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
         )
       );
-      Helper.log(`embedded ${url}`);
+      Helper.log(`embedded 🎬 ${p.innerText}`);
     });
   });
 }

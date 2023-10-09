@@ -8,7 +8,13 @@ export default function Vanity(text: string) {
     '%c' +
       lines
         .map(pad.bind(null, Math.max(...lines.map((line) => line.length))))
-        .join('\n'),
-    'margin: -1px; padding: 2px 10px; color: white; background: #a6093d'
+        .join('%c\n%c'),
+    'margin: -1px; padding: 5px 8.5px; color: #a6093d; border: solid 1px #a6093d',
+    ...new Array(lines.length)
+      .join(
+        'VANITYVANITYmargin: -1px; padding: 2px 10px; color: white; background: #a6093d'
+      )
+      .split('VANITY')
+      .slice(1)
   );
 }
