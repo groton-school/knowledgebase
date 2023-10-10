@@ -5,14 +5,16 @@ import UI from './UI';
 import pkg from '../package.json';
 
 Helper.vanity(
-  `🦓 ${pkg.name}\nv${pkg.version}.${__webpack_hash__}\nwebpack.mode ${
+  `${pkg.name}\nv${pkg.version}.${__webpack_hash__}\n${
+    JSON.parse(process.env.DEBUGGING || '') ? 'X' : '✓'
+  } webpack.mode ${
     JSON.parse(process.env.DEBUGGING!) ? 'development' : 'production'
-  }\nGSC caching ${
+  }\n${
     /\?cache=/.test(
       (document.querySelector('script[src*="kb-"]') as HTMLScriptElement).src
     )
-      ? 'disabled'
-      : 'enabled'
+      ? 'X GSC caching disabled'
+      : '✓ GSC caching enabled'
   }`
 );
 

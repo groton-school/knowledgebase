@@ -7,6 +7,10 @@ export const GoogleDocRemoveEvent = 'kbr';
 /** CSS selector for root of embedded Google Doc */
 export const GoogleDocEmbedSelector = '.CMSgoogledocembed';
 
+function dispatchGoogleDocEmbed(detail: Element) {
+  document.body.dispatchEvent(new CustomEvent(GoogleDocEmbedEvent, { detail }));
+}
+
 /**
  * Observe the DOM for added or removed Google Doc embeds
  *
@@ -48,17 +52,13 @@ function observe() {
           null
         ))
       ) {
-        document.body.dispatchEvent(
-          new CustomEvent(GoogleDocEmbedEvent, { detail: embed })
-        );
+        dispatchGoogleDocEmbed(embed);
       }
     });
   });
   const embedded = document.querySelector(GoogleDocEmbedSelector);
   if (embedded) {
-    document.body.dispatchEvent(
-      new CustomEvent(GoogleDocEmbedEvent, { detail: embedded })
-    );
+    dispatchGoogleDocEmbed(embedded);
   }
   observer.observe(document.body, { childList: true, subtree: true });
 }

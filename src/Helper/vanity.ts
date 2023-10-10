@@ -9,9 +9,10 @@ export default function Vanity(text: string) {
       lines
         .map(pad.bind(null, Math.max(...lines.map((line) => line.length))))
         .join('%c\n%c'),
-    'margin: -1px; padding: 5px 8.5px; color: #a6093d; border: solid 1px #a6093d',
+    'margin: -1px; padding: 5px 9px; color: #a6093d; background: white; border: solid 1px #a6093d',
     ...new Array(lines.length)
       .join(
+        // double VANITY to insert blank styling for newlines
         'VANITYVANITYmargin: -1px; padding: 2px 10px; color: white; background: #a6093d'
       )
       .split('VANITY')

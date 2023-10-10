@@ -4,5 +4,6 @@ module.exports = require('@battis/webpack/ts/vanilla')({
   root: __dirname,
   bundle: 'kb',
   mode: JSON.parse(process.env.DEBUGGING) ? 'development' : 'production',
-  externals: { requirejs: 'requirejs' } // reuse Overdrive dependencies
+  externals: { requirejs: 'requirejs' }, // reuse Overdrive dependencies
+  production: !JSON.parse(process.env.DEBUGGING)
 });

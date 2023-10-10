@@ -13,14 +13,17 @@
   "license": "GPL-3.0",
   "scripts": {
     "build": "webpack",
-    "deploy": "./bin/deploy.js"
+    "deploy": "run-s deploy:*",
+    "deploy:build": "npm run build",
+    "deploy:deploy": "./bin/deploy.js"
   },
   "devDependencies": {
     "@battis/eslint-config": "latest",
     "@battis/prettier-config": "latest",
     "@battis/webpack": "latest",
     "@google-cloud/storage": "^6.12.0",
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "npm-run-all": "^4.1.5"
   },
   "prettier": "@battis/prettier-config",
   "eslintConfig": {
@@ -34,7 +37,7 @@
   },
   "dependencies": {
     "@types/gtag.js": "^0.0.12",
-    "@types/node": "^20.8.3",
+    "@types/node": "^20.8.4",
     "requirejs": "^2.3.6"
   }
 }
