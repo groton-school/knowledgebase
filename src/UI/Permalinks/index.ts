@@ -7,7 +7,7 @@ import './styles.scss';
  */
 export default function Permalinks() {
   Helper.onGoogleDocEmbed(
-    [...Array(6).keys()].map((level) => `h${level + 1}:not([id=""])`).join(','),
+    [...Array(5).keys()].map((level) => `h${level + 1}:not([id=""])`).join(','),
     (headers: HTMLElement[]) => {
       if (!document.querySelector(`.${styles.permalink}`)) {
         headers.forEach((h) => {

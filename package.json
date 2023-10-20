@@ -1,6 +1,6 @@
 {
   "name": "@groton/knowledgebase",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Configuration and scripting for Overdrive.io integration",
   "author": {
     "name": "Seth Battis",

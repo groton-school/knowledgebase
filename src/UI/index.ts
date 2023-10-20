@@ -4,6 +4,8 @@ import './link-label-by-group.scss';
 import Permalinks from './Permalinks';
 import TOC from './TOC';
 import './inline-images-match-text-size.scss';
+import './hide-header-and-footer.scss';
+import H6IsNormalText from './H6IsNormalText';
 
 /**
  * Extend and enhance the user interface of Overdrive
@@ -14,5 +16,6 @@ import './inline-images-match-text-size.scss';
 export default function UI() {
   Permalinks();
   TOC();
+  H6IsNormalText();
   HighlightAnchor();
 }

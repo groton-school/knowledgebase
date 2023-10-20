@@ -1,7 +1,9 @@
 @use '../Constants';
 
 /**
- * Add space after paragraphs in embedded Google Docs
+ * Adjust inline images to match the text size in embedded Google Docs.
+ * Images that are the only element in a paragraph/table cell/bullet item
+ * will be unscaled.
  */
 [data-od-subtype='document'] .od-pb-panel-body #{Constants.$googleDocEmbed} {
   --inline-image-size: 0.7em;
