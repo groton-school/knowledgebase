@@ -1,0 +1,40 @@
+@use '../Constants';
+
+/**
+ * Add space after paragraphs in embedded Google Docs
+ */
+[data-od-subtype='document'] .od-pb-panel-body #{Constants.$googleDocEmbed} {
+  --inline-image-size: 0.7em;
+  .title,
+  .subtitle,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  li {
+    span:not(:only-child) {
+      img {
+        //margin-top: 10px !important;
+        height: var(--inline-image-size) !important;
+        width: auto !important;
+        vertical-align: bottom !important;
+      }
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  li {
+    span:not(:only-child):has(> img) {
+      height: calc(1em / var(--inline-image-size)) !important;
+      position: relative;
+    }
+  }
+}
