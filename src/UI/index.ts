@@ -2,7 +2,6 @@ import './fixed-background.scss';
 import HighlightAnchor from './HighlightAnchor';
 import './link-label-by-group.scss';
 import Permalinks from './Permalinks';
-// import './space-after-paragraph.scss';
 import TOC from './TOC';
 import './inline-images-match-text-size.scss';
 
