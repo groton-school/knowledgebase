@@ -6,6 +6,7 @@ import TOC from './TOC';
 import './inline-images-match-text-size.scss';
 import './hide-header-and-footer.scss';
 import H6IsNormalText from './H6IsNormalText';
+import TitleCaseAllCapsHeaders from './TitleCaseAllCapsHeaders';
 
 /**
  * Extend and enhance the user interface of Overdrive
@@ -14,6 +15,7 @@ import H6IsNormalText from './H6IsNormalText';
  * make the site unusable if removed.
  */
 export default function UI() {
+  TitleCaseAllCapsHeaders();
   Permalinks();
   TOC();
   H6IsNormalText();
