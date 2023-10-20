@@ -7,6 +7,7 @@ import './inline-images-match-text-size.scss';
 import './hide-header-and-footer.scss';
 import H6IsNormalText from './H6IsNormalText';
 import TitleCaseAllCapsHeaders from './TitleCaseAllCapsHeaders';
+import './google-docs.scss';
 
 /**
  * Extend and enhance the user interface of Overdrive

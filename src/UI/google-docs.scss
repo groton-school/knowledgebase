@@ -1,0 +1,74 @@
+@use '../Constants';
+
+/**
+ * Adjust inline images to match the text size in embedded Google Docs.
+ * Images that are the only element in a paragraph/table cell/bullet item
+ * will be unscaled.
+ */
+[data-od-subtype='document'] .od-pb-panel-body #{Constants.$googleDocEmbed} {
+  .title {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    color: rgb(0, 0, 0);
+    font-size: 26pt;
+    font-weight: 500;
+  }
+
+  .subtitle {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 15pt;
+    color: rgb(102, 102, 102);
+  }
+
+  h1 {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    color: rgb(0, 0, 0);
+    font-size: 20pt;
+    font-weight: 500;
+  }
+
+  h2 {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16pt;
+    font-weight: 500;
+    color: rgb(85, 85, 85);
+  }
+
+  h3 {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 14pt;
+    color: rgb(67, 67, 67);
+  }
+
+  h4 {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 12pt;
+    color: rgb(102, 102, 102);
+  }
+
+  h5 {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 11pt;
+    font-weight: 400;
+    color: rgb(102, 102, 102);
+  }
+  h6 {
+    //    font-style: italic;
+    //    color: rgb (102, 102, 102);
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 11pt;
+    font-weight: 400;
+    color: rgb(0, 0, 0);
+  }
+
+  p,
+  li,
+  td {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 11pt;
+    font-weight: 400;
+    color: rgb(0, 0, 0);
+  }
+}
