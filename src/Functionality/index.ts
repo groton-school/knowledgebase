@@ -2,7 +2,6 @@ import GoogleAnalytics from './GoogleAnalytics';
 import MissingImages from './MissingImages';
 import RedirectBrokenLinkToSearch from './RedirectBrokenLinkToSearch';
 import ThirdPartyCookies from './ThirdPartyCookies';
-//import './unstack-mobile.scss';
 
 /**
  * Expand the functionality of Overdrive
