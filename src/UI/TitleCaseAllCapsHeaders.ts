@@ -8,6 +8,7 @@ const properNouns = [
   'Dell',
   'DVD',
   'HDMI',
+  'I',
   'iOS',
   'iPadOS',
   'Epson',
