@@ -8,6 +8,7 @@ import H6IsNormalText from './H6IsNormalText';
 import TitleCaseAllCapsHeaders from './TitleCaseAllCapsHeaders';
 import './google-docs.scss';
 import HideHeaderAndFooter from './HideHeaderAndFooter';
+import './unlock-img-width.scss';
 
 /**
  * Extend and enhance the user interface of Overdrive

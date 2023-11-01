@@ -1,0 +1,17 @@
+@use '../Constants';
+
+/**
+ * Overdrive (probably reasonably) sets the max-width of images in embedded
+ * documents to 100%. However, when tables with text in one column and a lot
+ * of text in another column, Chrome tries to balance the column widths to get
+ * the image and the text to take up roughly the same space, so the image
+ * taking up 100% of its available table column space does us… no good.
+ *
+ * Long term, the fix would be to get the table column widths from the Google
+ * Doc and inline them into the table HTML… I guess?
+ */
+[data-od-subtype='document'] .od-pb-panel-body #{Constants.$googleDocEmbed} {
+  img {
+    max-width: fit-content !important;
+  }
+}
