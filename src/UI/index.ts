@@ -4,10 +4,10 @@ import './link-label-by-group.scss';
 import Permalinks from './Permalinks';
 import TOC from './TOC';
 import './inline-images-match-text-size.scss';
-import './hide-header-and-footer.scss';
 import H6IsNormalText from './H6IsNormalText';
 import TitleCaseAllCapsHeaders from './TitleCaseAllCapsHeaders';
 import './google-docs.scss';
+import HideHeaderAndFooter from './HideHeaderAndFooter';
 
 /**
  * Extend and enhance the user interface of Overdrive
@@ -16,6 +16,7 @@ import './google-docs.scss';
  * make the site unusable if removed.
  */
 export default function UI() {
+  HideHeaderAndFooter();
   TitleCaseAllCapsHeaders();
   Permalinks();
   TOC();
