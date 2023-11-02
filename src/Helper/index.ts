@@ -8,6 +8,7 @@ import onSelectorReady from './onSelectorReady';
 import libRequire from './require';
 import vanity from './vanity';
 import straightenCurlyQuotes from './straightenCurlyQuotes';
+import Stack from './Stack';
 
 /**
  * Helper functions used across all plugins
@@ -22,6 +23,7 @@ const Helper = {
   fontAwesome,
   vanity,
   straightenCurlyQuotes,
-  require: libRequire
+  require: libRequire,
+  Stack
 };
 export default Helper;

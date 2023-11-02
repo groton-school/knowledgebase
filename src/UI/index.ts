@@ -9,6 +9,7 @@ import TitleCaseAllCapsHeaders from './TitleCaseAllCapsHeaders';
 import './google-docs.scss';
 import HideHeaderAndFooter from './HideHeaderAndFooter';
 import './unlock-img-width.scss';
+import RenestLists from './RenestLists';
 
 /**
  * Extend and enhance the user interface of Overdrive
@@ -22,5 +23,6 @@ export default function UI() {
   Permalinks();
   TOC();
   H6IsNormalText();
+  RenestLists();
   HighlightAnchor();
 }
