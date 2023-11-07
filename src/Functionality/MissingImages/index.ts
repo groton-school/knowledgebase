@@ -7,10 +7,11 @@ export default function MissingImages() {
     images.map((img) =>
       img.addEventListener('error', (...args) => {
         console.error(
-          `error loading ${img.src
+          `error loading ${
+            img.src
           }: ${args.toString()} (try refreshing the embedded Google Doc, force refreshing the page, or enabling 3rd party cookies)`
         );
-        img.outerHTML = `<div class="${styles.missing}">This image failed to load. Try refreshing this document from the &#9776; menu.</div>`;
+        img.outerHTML = `<div class="${styles.missing} kb-include">This image failed to load. Try refreshing this document from the &#9776; menu.</div>`;
       })
     );
   });

@@ -12,8 +12,8 @@ function embed(paragraphs: HTMLElement[]) {
     const android = p.querySelector(playStore) as HTMLAnchorElement;
     const id = crypto.randomUUID();
     p.outerHTML =
-      `<div id="${id}">` +
-      `<div class="${styles.apps}">` +
+      `<div id="${id}" class="kb-include">` +
+      `<div class="${styles.apps} kb-include">` +
       (ios ? `<a class="${styles.ios}" href="${ios.href}"></a>` : '') +
       (android
         ? `<a class="${styles.android}" href="${android.href}"></a>`

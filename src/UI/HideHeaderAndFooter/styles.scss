@@ -3,6 +3,6 @@
 [data-od-subtype='document']
   .od-pb-panel-body
   #{Constants.$googleDocEmbed}
-  > div:not(.kb-ftnt) {
+  > div:not(.kb-include) {
   display: none;
 }
