@@ -1,0 +1,55 @@
+@use '../../Constants';
+
+$embiggen: Constants.$prefix + 'embiggen';
+$image: Constants.$prefix + 'image';
+$original: Constants.$prefix + 'original';
+$scrim: Constants.$prefix + 'scrim';
+$closeBox: Constants.$prefix + 'close-box';
+$zoomed: Constants.$prefix + 'zoomed';
+$wrapper: Constants.$prefix + 'wrapper';
+
+#{Constants.$googleDocEmbed} {
+  img.#{$embiggen}.#{$image}.#{$original} {
+    cursor: zoom-in;
+  }
+
+  img.#{$embiggen}.#{$image}.#{$original}:hover {
+    background-color: rgba(51, 122, 183, 0.499);
+    mix-blend-mode: color;
+  }
+}
+
+.#{$embiggen}.#{$scrim} {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  z-index: 2000;
+  overflow: hidden;
+
+  background: hsla(0, 0%, 25%, 0.85);
+  backdrop-filter: blur(5px);
+
+  .#{$closeBox} {
+    padding: 0;
+    margin: 1em;
+    color: white;
+    font-size: 2em;
+    text-align: right;
+    line-height: 0.7em;
+    cursor: pointer;
+  }
+
+  .#{$image}.#{$zoomed} {
+    width: calc(100% - 2em);
+    height: calc(100% - 2em - 6em);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 0;
+    margin: 1em;
+    cursor: zoom-out;
+  }
+}

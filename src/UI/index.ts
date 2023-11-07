@@ -10,6 +10,7 @@ import './google-docs.scss';
 import HideHeaderAndFooter from './HideHeaderAndFooter';
 import './unlock-img-width.scss';
 import RenestLists from './RenestLists';
+import Embiggen from './Embiggen';
 
 /**
  * Extend and enhance the user interface of Overdrive
@@ -24,5 +25,6 @@ export default function UI() {
   TOC();
   H6IsNormalText();
   RenestLists();
+  Embiggen();
   HighlightAnchor();
 }
