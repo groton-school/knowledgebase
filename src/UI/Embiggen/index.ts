@@ -19,10 +19,12 @@ function Embiggenate(e: MouseEvent) {
   scrim.appendChild(image);
   document.body.appendChild(scrim);
   scrim.addEventListener('click', () => Disembiggenate(scrim));
+  Helper.log(`Embiggening ${(e.target as HTMLImageElement).src}`);
 }
 
 function Disembiggenate(scrim: HTMLDivElement) {
   scrim.remove();
+  Helper.log(`Disembiggening`);
 }
 
 export default function Embiggen() {
