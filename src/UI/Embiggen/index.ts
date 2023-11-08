@@ -11,7 +11,7 @@ function Embiggenate(e: MouseEvent) {
   const closeBox = document.createElement('div');
   closeBox.classList.add(styles.closeBox);
   closeBox.innerText = '×';
-  const image = document.createElement('div') as HTMLImageElement;
+  const image = document.createElement('div');
   image.classList.add(styles.image, styles.zoomed);
   image.style.backgroundImage = `url(${(e.target as HTMLImageElement).src})`;
 
@@ -26,10 +26,14 @@ function Disembiggenate(scrim: HTMLDivElement) {
 }
 
 export default function Embiggen() {
-  Helper.onGoogleDocEmbed('img', (images) => {
-    images.forEach((image) => {
-      image.classList.add(styles.embiggen, styles.image, styles.original);
-      image.addEventListener('click', Embiggenate);
-    });
-  });
+  Helper.onGoogleDocEmbed(
+    'span:only-child > img',
+    (images: HTMLImageElement[]) => {
+      images.forEach((image) => {
+        image.classList.add(styles.embiggen, styles.image, styles.original);
+        image.addEventListener('click', Embiggenate);
+        Helper.log(`${image.src} embiggenable`);
+      });
+    }
+  );
 }
