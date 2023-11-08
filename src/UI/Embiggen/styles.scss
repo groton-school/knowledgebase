@@ -62,8 +62,8 @@ $scrimColor: hsla(0, 0%, 25%, 0.85);
     align-items: center;
     justify-content: center;
 
-    width: calc(100% - #{2 * $margin});
-    height: calc(100% - #{2 * $margin} - #{2 * $margin});
+    width: calc(100% - 2 * $margin);
+    height: calc(100% - 2 * $margin);
 
     .#{$image}.#{$zoomed} {
       width: 100%;
