@@ -1,5 +1,9 @@
 import Helper from '../Helper';
 
+/**
+ * Rendered obsolete by Overdrive update 2023-11-09
+ */
+
 type Sublist = { id: string; depth: number; list: Element };
 
 export default function RenestLists() {

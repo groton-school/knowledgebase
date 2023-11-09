@@ -9,7 +9,6 @@ import TitleCaseAllCapsHeaders from './TitleCaseAllCapsHeaders';
 import './google-docs.scss';
 import HideHeaderAndFooter from './HideHeaderAndFooter';
 import './unlock-img-width.scss';
-import RenestLists from './RenestLists';
 import Embiggen from './Embiggen';
 
 /**
@@ -24,7 +23,7 @@ export default function UI() {
   Permalinks();
   TOC();
   H6IsNormalText();
-  RenestLists();
+  // RenestLists();
   Embiggen();
   HighlightAnchor();
 }
