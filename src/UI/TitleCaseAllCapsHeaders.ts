@@ -4,6 +4,8 @@ const properNouns = [
   'Anker',
   'Android',
   'Apple',
+  'AV',
+  'A/V',
   'CD',
   'Chrome',
   'Dell',
