@@ -2,6 +2,7 @@ import Helper from '../Helper';
 
 const properNouns = [
   'Anker',
+  'AMX',
   'Android',
   'Apple',
   'AV',
