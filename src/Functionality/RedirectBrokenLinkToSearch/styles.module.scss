@@ -1,0 +1,9 @@
+@use 'styles';
+
+:export {
+  redirect: #{styles.$redirect};
+  scrim: #{styles.$scrim};
+  closeBox: #{styles.$closeBox};
+  wrapper: #{styles.$wrapper};
+  dialog: #{styles.$dialog};
+}
