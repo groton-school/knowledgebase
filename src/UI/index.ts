@@ -10,7 +10,6 @@ import './google-docs.scss';
 import HideHeaderAndFooter from './HideHeaderAndFooter';
 import './unlock-img-width.scss';
 import Embiggen from './Embiggen';
-import MatchButtonLinkColors from './MatchButtonLinkColors';
 
 /**
  * Extend and enhance the user interface of Overdrive
@@ -27,5 +26,4 @@ export default function UI() {
   // RenestLists();
   Embiggen();
   HighlightAnchor();
-  MatchButtonLinkColors();
 }
