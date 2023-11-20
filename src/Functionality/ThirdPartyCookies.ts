@@ -7,12 +7,13 @@ const DEFAULT_INSTRUCTIONS = '<h1>Please enable third-party cookies</h1>';
  * Display instructions to user if 3rd-party cookies are disabled
  */
 function showCookieInstructions() {
-  Helper.onSelectorReady('.od-iframe-loader').then((frames) =>
-    frames.forEach((frame) => {
-      frame.innerHTML =
-        process.env.THIRD_PARTY_COOKIES_CONTENT || DEFAULT_INSTRUCTIONS;
-      frame.classList.add('loaded');
-    })
+  Helper.onSelectorReady<HTMLIFrameElement>('.od-iframe-loader').then(
+    (frames) =>
+      frames.forEach((frame) => {
+        frame.innerHTML =
+          process.env.THIRD_PARTY_COOKIES_CONTENT || DEFAULT_INSTRUCTIONS;
+        frame.classList.add('loaded');
+      })
   );
 }
 

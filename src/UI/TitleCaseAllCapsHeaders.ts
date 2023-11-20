@@ -48,7 +48,7 @@ function fixCase(text: string) {
 }
 
 export default function TitleCaseAllCapsHeaders() {
-  Helper.onGoogleDocEmbed('h1, h2', (headings) => {
+  Helper.onGoogleDocEmbed<HTMLHeadingElement>('h1, h2', (headings) => {
     headings.forEach((heading) => {
       const prev = heading.innerText;
       heading.innerText = fixCase(prev);

@@ -15,7 +15,7 @@ const removeTOC = () => document.querySelector(`#${styles.wrapper}`)?.remove();
  * Generate Google Doc-style outline as a second subnav
  */
 export default function TOC() {
-  Helper.onGoogleDocEmbed(
+  Helper.onGoogleDocEmbed<HTMLHeadingElement>(
     [...Array(Math.min(6, Math.max(0, MAX_DEPTH))).keys()]
       .map((d) => `h${d + 1}`)
       .join(','),

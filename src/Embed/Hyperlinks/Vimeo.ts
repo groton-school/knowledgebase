@@ -15,20 +15,23 @@ const vimeoLink = 'a[href*="vimeo.com"]';
  * ```
  */
 export default function Vimeo() {
-  Helper.onGoogleDocEmbed(`p:has(${vimeoLink})`, (paragraphs) => {
-    paragraphs.forEach((p) => {
-      const link = p.querySelector(vimeoLink) as HTMLAnchorElement;
-      const url = link.href;
-      const id = link.href.replace(/^https:\/\/vimeo.com\/(.+)\/?/, '$1');
-      p.replaceWith(
-        Helper.iframe(
-          `https://player.vimeo.com/video/${id}?h=da2b146dc1&title=${encodeURIComponent(
-            p.innerText
-          )}&byline=0&portrait=0`,
-          'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-        )
-      );
-      Helper.log(`embedded 🎬 ${p.innerText}`);
-    });
-  });
+  Helper.onGoogleDocEmbed<HTMLParagraphElement>(
+    `p:has(${vimeoLink})`,
+    (paragraphs) => {
+      paragraphs.forEach((p) => {
+        const link = p.querySelector(vimeoLink) as HTMLAnchorElement;
+        const url = link.href;
+        const id = link.href.replace(/^https:\/\/vimeo.com\/(.+)\/?/, '$1');
+        p.replaceWith(
+          Helper.iframe(
+            `https://player.vimeo.com/video/${id}?h=da2b146dc1&title=${encodeURIComponent(
+              p.innerText
+            )}&byline=0&portrait=0`,
+            'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+          )
+        );
+        Helper.log(`embedded 🎬 ${p.innerText}`);
+      });
+    }
+  );
 }

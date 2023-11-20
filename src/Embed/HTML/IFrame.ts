@@ -23,7 +23,7 @@ import Helper from '../../Helper';
  * Doc.
  */
 export default function IFrame() {
-  Helper.onGoogleDocEmbed('p', (paragraphs: HTMLElement[]) => {
+  Helper.onGoogleDocEmbed<HTMLParagraphElement>('p', (paragraphs) => {
     paragraphs.forEach((p) => {
       if (/^<iframe.*<\/iframe>$/.test(p.innerText)) {
         const url = Helper.straightenCurlyQuotes(p.innerText).replace(

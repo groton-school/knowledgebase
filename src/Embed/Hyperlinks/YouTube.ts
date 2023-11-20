@@ -15,39 +15,45 @@ const playlistLink = 'a[href^="https://youtube.com/playlist"]';
  * ```
  */
 export default function YouTube() {
-  Helper.onGoogleDocEmbed(`p:has(${youTubeLink})`, (paragraphs) => {
-    paragraphs.forEach((p) => {
-      const link = p.querySelector(youTubeLink) as HTMLAnchorElement;
-      const url = link.href;
-      const id = link.href.replace(
-        /^https:\/\/(?:youtu\.be)|(?:(?:www\.)?youtube\.com\/watch\?v=)\/(.+)\/?/,
-        '$1'
-      );
-      p.replaceWith(
-        Helper.iframe(
-          `https://www.youtube-nocookie.com/embed/${id}`,
-          'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-        )
-      );
-      Helper.log(`embedded 🎬 ${p.innerText}`);
-    });
-  });
+  Helper.onGoogleDocEmbed<HTMLParagraphElement>(
+    `p:has(${youTubeLink})`,
+    (paragraphs) => {
+      paragraphs.forEach((p) => {
+        const link = p.querySelector(youTubeLink) as HTMLAnchorElement;
+        const url = link.href;
+        const id = link.href.replace(
+          /^https:\/\/(?:youtu\.be)|(?:(?:www\.)?youtube\.com\/watch\?v=)\/(.+)\/?/,
+          '$1'
+        );
+        p.replaceWith(
+          Helper.iframe(
+            `https://www.youtube-nocookie.com/embed/${id}`,
+            'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+          )
+        );
+        Helper.log(`embedded 🎬 ${p.innerText}`);
+      });
+    }
+  );
 
-  Helper.onGoogleDocEmbed(`p:has(${playlistLink})`, (paragraphs) => {
-    paragraphs.forEach((p) => {
-      const link = p.querySelector(playlistLink) as HTMLAnchorElement;
-      const url = link.href;
-      const id = link.href.replace(
-        /^https:\/\/youtube.com\/playlist\?list=(.+)\/?/,
-        '$1'
-      );
-      p.replaceWith(
-        Helper.iframe(
-          `https://www.youtube.com/embed/videoseries?list=${id}`,
-          'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
-        )
-      );
-      Helper.log(`embedded 🎬🎬🎬 ${p.innerText}`);
-    });
-  });
+  Helper.onGoogleDocEmbed<HTMLParagraphElement>(
+    `p:has(${playlistLink})`,
+    (paragraphs) => {
+      paragraphs.forEach((p) => {
+        const link = p.querySelector(playlistLink) as HTMLAnchorElement;
+        const url = link.href;
+        const id = link.href.replace(
+          /^https:\/\/youtube.com\/playlist\?list=(.+)\/?/,
+          '$1'
+        );
+        p.replaceWith(
+          Helper.iframe(
+            `https://www.youtube.com/embed/videoseries?list=${id}`,
+            'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+          )
+        );
+        Helper.log(`embedded 🎬🎬🎬 ${p.innerText}`);
+      });
+    }
+  );
 }

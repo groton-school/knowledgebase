@@ -54,7 +54,7 @@ function waitForLib(paragraphs: HTMLElement[]) {
 */
 
 export default function AppStore() {
-  Helper.onGoogleDocEmbed(
+  Helper.onGoogleDocEmbed<HTMLParagraphElement>(
     `p:has(${appStore}), p:has(${playStore})`,
     (paragraphs) => {
       /*

@@ -6,9 +6,9 @@ import './styles.scss';
  * Display permalinks to embedded Google doc headers
  */
 export default function Permalinks() {
-  Helper.onGoogleDocEmbed(
+  Helper.onGoogleDocEmbed<HTMLHeadingElement>(
     [...Array(5).keys()].map((level) => `h${level + 1}:not([id=""])`).join(','),
-    (headers: HTMLElement[]) => {
+    (headers) => {
       if (!document.querySelector(`.${styles.permalink}`)) {
         headers.forEach((h) => {
           const a = document.createElement('a');

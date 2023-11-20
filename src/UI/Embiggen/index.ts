@@ -43,9 +43,9 @@ function Disembiggenate(scrim: HTMLDivElement) {
 }
 
 export default function Embiggen() {
-  Helper.onGoogleDocEmbed(
+  Helper.onGoogleDocEmbed<HTMLImageElement>(
     'span:only-child > img',
-    (images: HTMLImageElement[]) => {
+    (images) => {
       images.forEach((image) => {
         image.classList.add(styles.embiggen, styles.image, styles.original);
         image.addEventListener('click', Embiggenate);
