@@ -23,7 +23,6 @@ export default function UI() {
   Permalinks();
   TOC();
   H6IsNormalText();
-  // RenestLists();
   Embiggen();
   HighlightAnchor();
 }
