@@ -1,4 +1,5 @@
-import Helper from '../Helper';
+import Helper from '../../Helper';
+import './styles.scss';
 
 export default function MatchButtonLinkColors() {
   Helper.onSelectorReady<HTMLAnchorElement>('.od-pb-panel-body a.btn').then(

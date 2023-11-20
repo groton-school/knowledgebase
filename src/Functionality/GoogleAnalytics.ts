@@ -1,4 +1,14 @@
-// @ts-nocheck
+import Helper from '../Helper';
+
+declare global {
+  interface Window {
+    dataLayer: Record<string, any>;
+  }
+}
+
+function gtag(...args: any[]) {
+  window.dataLayer.push(args);
+}
 
 /**
  * Add Google Analytics tracking to pages
@@ -13,12 +23,11 @@ export default function GoogleAnalytics() {
   const lib: HTMLScriptElement = document.createElement('script');
   lib.async = true;
   lib.src = `https://www.googletagmanager.com/gtag/js?id=${tag}`;
-  document.head.appendChild(lib);
+  document.head
+    .appendChild(lib)
+    .addEventListener('error', () => Helper.log('Google Analytics not loaded'));
   window.dataLayer = window.dataLayer || [];
-
-  function gtag() {
-    window.dataLayer.push(arguments);
-  }
   gtag('js', new Date());
   gtag('config', tag);
+  Helper.log('Google Analytics loaded');
 }
