@@ -29,5 +29,9 @@ export default function GoogleAnalytics() {
   window.dataLayer = window.dataLayer || [];
   gtag('js', new Date());
   gtag('config', tag);
-  Helper.log('Google Analytics loaded');
+  setTimeout(() => {
+    if (window.dataLayer.length > 2) {
+      Helper.log('Google Analytics loaded');
+    }
+  }, 250);
 }
