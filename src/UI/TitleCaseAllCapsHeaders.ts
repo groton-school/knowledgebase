@@ -1,6 +1,7 @@
 import Helper from '../Helper';
 
 const properNouns = [
+  '2FA',
   'AI',
   'Anker',
   'AMX',
@@ -26,6 +27,7 @@ const properNouns = [
   'K-12',
   'Loomis',
   'macOS',
+  'MFA',
   'OpenAI',
   'SEO',
   'TV',
