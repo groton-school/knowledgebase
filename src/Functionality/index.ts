@@ -1,6 +1,5 @@
 import GoogleAnalytics from './GoogleAnalytics';
 import MissingImages from './MissingImages';
-import RedirectBrokenLinkToSearch from './RedirectBrokenLinkToSearch';
 import ThirdPartyCookies from './ThirdPartyCookies';
 
 /**
@@ -15,5 +14,4 @@ export default function Functionality() {
   GoogleAnalytics();
   ThirdPartyCookies();
   MissingImages();
-  RedirectBrokenLinkToSearch();
 }
