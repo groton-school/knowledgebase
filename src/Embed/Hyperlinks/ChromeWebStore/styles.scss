@@ -1,0 +1,27 @@
+@use '../../../Constants';
+
+$chromeWebStore: Constants.$prefix + 'chrome-web-store';
+
+#{Constants.$googleDocEmbed} {
+  .#{$chromeWebStore} {
+    font-family: 'Google Sans', Roboto, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    color: white !important;
+    text-decoration: none;
+
+    background: rgb(11, 87, 200) url('./chrome-web-store.png') no-repeat;
+    background-position: 16px center;
+    background-size: 2em;
+
+    block-size: 40px;
+    border: black 0px none;
+    margin: 4px 0;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-right: 24px;
+    padding-left: 50px;
+    border-radius: 24px;
+  }
+}
