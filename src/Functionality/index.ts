@@ -1,4 +1,3 @@
-import GoogleAnalytics from './GoogleAnalytics';
 import MissingImages from './MissingImages';
 import ThirdPartyCookies from './ThirdPartyCookies';
 
@@ -11,7 +10,6 @@ import ThirdPartyCookies from './ThirdPartyCookies';
  * necessary to, the functioning of the knowledgebase.
  */
 export default function Functionality() {
-  GoogleAnalytics();
   ThirdPartyCookies();
   MissingImages();
 }
