@@ -29,6 +29,7 @@ const properNouns = [
   'macOS',
   'MFA',
   'OpenAI',
+  'Openpath',
   'SEO',
   'TV',
   'USB',
