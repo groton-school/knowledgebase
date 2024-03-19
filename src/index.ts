@@ -1,8 +1,9 @@
+import pkg from '../package.json';
 import Embed from './Embed';
 import Functionality from './Functionality';
 import Helper from './Helper';
 import UI from './UI';
-import pkg from '../package.json';
+import '@battis/webpack';
 
 Helper.vanity(
   `${pkg.name}\nv${pkg.version}.${__webpack_hash__}\n${
