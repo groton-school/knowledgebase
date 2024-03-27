@@ -39,6 +39,7 @@ const properNouns = [
   'MFA',
   'November',
   'October',
+  'OneNote',
   'OpenAI',
   'Openpath',
   'SEO',
