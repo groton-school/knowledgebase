@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@types/gtag.js": "^0.0.12",
-    "@types/node": "^20.11.30",
+    "@types/node": "^20.12.3",
     "requirejs": "^2.3.6"
   }
 }

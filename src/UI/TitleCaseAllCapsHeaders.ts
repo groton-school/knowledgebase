@@ -37,6 +37,7 @@ const properNouns = [
   'March',
   'May',
   'MFA',
+  'myGroton',
   'November',
   'October',
   'OneNote',
