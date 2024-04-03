@@ -1,3 +1,5 @@
-/.env
-/build/
-/node_modules/
+.env
+.env.*
+!.env.example
+client_secret_*.json
+node_modules/
