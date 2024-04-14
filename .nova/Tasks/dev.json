@@ -1,9 +1,0 @@
-{
-  "actions" : {
-    "run" : {
-      "enabled" : true,
-      "script" : "cd packages\/server\nnpm run dev"
-    }
-  },
-  "openLogOnRun" : "start"
-}

@@ -1,5 +1,5 @@
 .env
 .env.*
 !.env.example
-client_secret_*.json
+client_secret*.json
 node_modules/
