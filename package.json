@@ -2,6 +2,7 @@
   "name": "@groton/knowledgebase",
   "description": "Knowledgebase website",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "build": "webpack"
   },
@@ -24,6 +25,7 @@
   "dependencies": {
     "@battis/qui-cli": "^0.4.0",
     "@google-cloud/local-auth": "^3.0.1",
+    "@google-cloud/storage": "^7.9.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "google-auth-library": "^9.7.0",
