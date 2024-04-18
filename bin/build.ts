@@ -1,5 +1,5 @@
 #!/usr/bin/env tsx
-import folderContents from '../src/folderContents';
+import buildTree from '../src/Actions/buildTree';
 import cli from '@battis/qui-cli';
 import dotenv from 'dotenv';
 import fs from 'fs';
@@ -28,7 +28,7 @@ const TIMESTAMP = '%TIMESTAMP%';
   });
   const spinner = cli.spinner();
   spinner.start('Indexing');
-  const tree = await folderContents(values.folderId, spinner);
+  const tree = await buildTree(values.folderId, spinner);
   const folderName = Object.keys(tree)[0];
   spinner.succeed(`Indexed ${folderName}`);
   const filePath = values.output

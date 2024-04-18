@@ -1,10 +1,14 @@
 #!/usr/bin/env tsx
-import FileDescription, { isFileDescription } from '../src/FileDescription';
-import FolderDescription from '../src/FolderDescription';
-import uploadToBucket from '../src/uploadToBucket';
+import uploadToBucket, {
+  stripNonAlphanumeric,
+  fetchAsHtml
+} from '../src/Actions/uploadToBucket';
+import FolderDescription, { FileDescription } from '../src/FolderDescription';
 import cli from '@battis/qui-cli';
 import dotenv from 'dotenv';
 import fs from 'fs';
+import { OAuth2Client } from 'google-auth-library';
+import { google, drive_v3 } from 'googleapis';
 import path from 'path';
 
 dotenv.config();
@@ -22,14 +26,73 @@ const { values, positionals } = cli.init({
 });
 
 const spinner = cli.spinner();
+const bucketName = values.bucket;
 
-function rename(fileName: string) {
-  return fileName.replace(/[^a-z0-9]+/gi, '-').toLowerCase();
+async function fetchAsHtmlIfPossible(
+  file: FileDescription,
+  auth: OAuth2Client
+) {
+  switch (file.mimeType) {
+    case 'image/png':
+    case 'image/gif':
+    case 'application/pdf':
+      const drive = google.drive({ version: 'v3', auth });
+      return (await drive.files.get({
+        fileId: file.id!,
+        alt: 'media'
+      })) as unknown as Blob;
+    default:
+      return await fetchAsHtml(file, auth);
+  }
+}
+
+function fileRenamer(filePath: string, file: FileDescription) {
+  switch (file.fileExtension) {
+    case 'gif':
+    case 'png':
+    case 'pdf':
+      return path.join(filePath, file.name!);
+    default:
+      return path.join(filePath, `${stripNonAlphanumeric(file)}/index.html`);
+  }
+}
+
+function demoteBodyToDiv(file: FileDescription, blob: Blob): Blob {
+  const html = Blob.toString();
+  return new Blob(
+    [
+      html
+        .replace(
+          '<style',
+          `<meta item-prop="kb.id" content="${file.id}" /><style`
+        )
+        .replace(
+          '</style>',
+          `</style><link rel="icon" href="https://storage.cloud.google.com/${bucketName}/favicon.ico" /><link rel="stylesheet" href="https://storage.cloud.google.com/${bucketName}/kb.css" />`
+        )
+        .replace('<body', '<body><div')
+        .replace(
+          '</body>',
+          `</div><script href="https://storage.cloud.google.com/${bucketName}/kb.js"></script></body>`
+        )
+    ],
+    { type: 'text/html' }
+  );
+}
+
+function onlyKbPermissionGroups(
+  permission: drive_v3.Schema$Permission
+): boolean {
+  return /^kb-.*@groton.org$/.test(permission.emailAddress!);
+}
+
+function isFileDescription(obj: object): obj is FileDescription {
+  return !('.' in obj);
 }
 
 async function uploadTree(subtree: FolderDescription, folderPath: string = '') {
   const folder = subtree['.'];
-  const nextPath = path.join(folderPath, rename(folder.name));
+  const nextPath = path.join(folderPath, stripNonAlphanumeric(folder));
   spinner.start(nextPath);
   for (const fileName of Object.keys(subtree)) {
     if (fileName != '.') {
@@ -48,33 +111,15 @@ async function uploadFile(file: FileDescription, filePath: string = '') {
   spinner.start(`Uploading ${cli.colors.value(file.name)}`);
   await uploadToBucket({
     file,
-    bucketName: process.env.BUCKET_NAME!,
-    fileRenamer: (fileName: string) =>
-      path.join(
-        filePath,
-        rename(fileName) + (/\.(png|gif|pdf)$/.test(fileName) ? '' : '.html')
-      ),
-    fileMutator: (html: string) => {
-      return html
-        .replace(
-          '<style',
-          `<meta item-prop="kb.id" content="${file.id}" /><style`
-        )
-        .replace(
-          '</style>',
-          `</style><link rel="icon" href="https://storage.cloud.google.com/${values.bucket}/favicon.ico" /><link rel="stylesheet" href="https://storage.cloud.google.com/${values.bucket}/kb.css" />`
-        )
-        .replace('<body', '<body><div')
-        .replace(
-          '</body>',
-          `</div><script href="https://storage.cloud.google.com/${values.bucket}/kb.js"></script></body>`
-        );
-    },
-    entityFilter: (email: string) => /^kb-.*@groton.org$/.test(email)
+    bucketName,
+    fileFetcher: fetchAsHtmlIfPossible,
+    fileNamer: fileRenamer.bind(null, filePath),
+    fileMutator: demoteBodyToDiv.bind(null, file),
+    permissionsFilter: onlyKbPermissionGroups
   }).then(() => {
     spinner.succeed(
       `${cli.colors.url(`${filePath}/`)}${cli.colors.value(
-        rename(file.name) + (/\.(png|gif|pdf)$/.test(file.name) ? '' : '.html')
+        fileRenamer('', file)
       )}`
     );
   });

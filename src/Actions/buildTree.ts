@@ -1,43 +1,32 @@
-import type FileDescription from './FileDescription';
-import FolderDescription from './FolderDescription';
+import FolderDescription, { FileDescription } from './FolderDescription';
 import authorize from './authorize';
 import cli from '@battis/qui-cli';
 import { google, drive_v3 } from 'googleapis';
 import path from 'path';
 
-async function folderContents(
+async function buildTree(
   folderId: string,
   spinner?: ReturnType<typeof cli.spinner>
 ) {
-  const client = await authorize(spinner);
-  const drive = google.drive({ version: 'v3', auth: client });
+  const auth = await authorize(spinner);
+  const drive = google.drive({ version: 'v3', auth });
   var tree: FolderDescription = {};
 
   async function describeFile(
     file: drive_v3.Schema$File,
     spinner?: ReturnType<typeof cli.spinner>
   ): Promise<FileDescription> {
-    spinner?.start(`${spinner.text} (getting access)`);
+    spinner?.start(`Describing ${spinner.text}`);
     const permissions = await drive.permissions.list({
       fileId: file.id!
     });
-    const access: string[] = [];
-    for (const permission of permissions.data.permissions!) {
-      access.push(
-        (
-          await drive.permissions.get({
-            fileId: file.id!,
-            permissionId: permission.id,
-            fields: 'emailAddress'
-          })
-        ).data.emailAddress
-      );
-    }
-    return {
-      id: file.id!,
-      name: file.name!,
-      access
-    };
+    return (
+      await drive.files.get({
+        fileId: file.id,
+        fields:
+          'id,name,fileExtension,mimeType,description,parents,permissions,modifiedTime'
+      })
+    ).data;
   }
 
   async function folderContentsRecursive(
@@ -46,15 +35,14 @@ async function folderContents(
   ): Promise<FolderDescription> {
     spinner?.start(folderPath);
     const tree: FolderDescription = {
-      '.': await describeFile(
-        (
-          await drive.files.get({ fileId: folderId })
-        ).data
-      )
+      '.': await describeFile({ id: folderId })
     };
     const response = await drive.files.list({
       q: `'${folderId}' in parents and trashed = false`
     });
+    if (response.data.nextPageToken) {
+      cli.log.debug(`${tree['.'].name} (${folderId}) has a nextPageToken`);
+    }
     if (response.data.files?.length) {
       for (const file of response.data.files) {
         if (file.mimeType == 'application/vnd.google-apps.folder') {
@@ -80,4 +68,4 @@ async function folderContents(
   return tree;
 }
 
-export default folderContents;
+export default buildTree;
