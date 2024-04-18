@@ -49,7 +49,8 @@ const properNouns = [
   'TV',
   'USB',
   'USB-C',
-  'Windows'
+  'Windows',
+  'Zoom'
 ];
 
 // collect any non-letters in properNouns
