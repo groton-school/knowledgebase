@@ -1,59 +1,61 @@
 @use '../Constants';
 
-// only re-style if font, font-size and font-color formatting from Google Doc are being used
-[data-od-subtype='document'][od_plstg_drive_formatting*='font,font-size,font-color']
-  .od-pb-panel-body
-  #{Constants.$googleDocEmbed} {
+#{Constants.$googleDocEmbed} {
+  [class^='c'] {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 11pt;
+    font-weight: 400;
+    color: rgb(0, 0, 0);
+  }
+
   .subtitle {
     font-family: Roboto, Helvetica, Arial, sans-serif;
     font-weight: 400;
-    font-size: 9pt;
-    color: #5b5b5b;
-    margin-bottom: 1em;
+    font-size: 9pt !important;
+    color: #5b5b5b !important;
+    margin-bottom: 1em !important;
   }
-}
 
-[data-od-subtype='document'] .od-pb-panel-body #{Constants.$googleDocEmbed} {
   .title {
     font-family: Roboto, Helvetica, Arial, sans-serif;
     color: rgb(0, 0, 0);
-    font-size: 26pt;
-    font-weight: 500;
+    font-size: 26pt !important;
+    font-weight: 500 !important;
   }
 
   h1 {
     font-family: Roboto, Helvetica, Arial, sans-serif;
     color: rgb(0, 0, 0);
-    font-size: 20pt;
-    font-weight: 500;
+    font-size: 20pt !important;
+    font-weight: 500 !important;
   }
 
   h2 {
     font-family: Roboto, Helvetica, Arial, sans-serif;
-    font-size: 16pt;
-    font-weight: 500;
-    color: rgb(85, 85, 85);
+    font-size: 16pt !important;
+    font-weight: 500 !important;
+    color: rgb(85, 85, 85) !important;
   }
 
   h3 {
     font-family: Roboto, Helvetica, Arial, sans-serif;
     font-weight: 400;
-    font-size: 14pt;
-    color: rgb(67, 67, 67);
+    font-size: 14pt !important;
+    color: rgb(67, 67, 67) !important;
   }
 
   h4 {
     font-family: Roboto, Helvetica, Arial, sans-serif;
     font-weight: 400;
-    font-size: 12pt;
-    color: rgb(102, 102, 102);
+    font-size: 12pt !important;
+    color: rgb(102, 102, 102) !important;
   }
 
   h5 {
     font-family: Roboto, Helvetica, Arial, sans-serif;
-    font-size: 11pt;
+    font-size: 11pt !important;
     font-weight: 400;
-    color: rgb(102, 102, 102);
+    color: rgb(102, 102, 102) !important;
   }
   h6 {
     //    font-style: italic;

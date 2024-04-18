@@ -27,7 +27,7 @@ Helper.require([
   }`
 ]);
 
-Functionality();
+// Functionality();
 UI();
 Embed();
 

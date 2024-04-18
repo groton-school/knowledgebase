@@ -18,7 +18,7 @@
 
   const pkg = require('../package.json');
   const webpack = require('../webpack.config');
-  require('dotenv').config();
+  require('dotenv').config({ path: process.cwd() });
 
   const bucketName = process.env.BUCKET_NAME;
   const directoryPath = webpack.output.path;
@@ -82,6 +82,13 @@ requirejs([\`https://${path.join(
         path.relative(process.cwd(), directoryPath),
         `kb-${pkg.version}.js?cache=\${crypto.randomUUID()}`
       )}\`]);
+      
+// embed a published Google Doc
+// ${
+        process.env.STYLIZE_URL
+      }/?edit=true&head=%3Cscript+src%3D%22https%3A%2F%2Fcdnjs.cloudflare.com%2Fajax%2Flibs%2Frequire.js%2F2.3.6%2Frequire.min.js%22+integrity%3D%22sha512-c3Nl8%2B7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo%2BIRO05sNLTH%2FD3vA6u1X32ehoLC7WFVdheg%3D%3D%22+crossorigin%3D%22anonymous%22+referrerpolicy%3D%22no-referrer%22%3E%3C%2Fscript%3E&style=%23banners%2C+.doc-content+%3E+div%3Afirst-child%2C+.title+%7B%0A++display%3A+none%3B%0A%7D%0A%0A%23contents+%7B%0A++padding%3A+0%3B%0A%7D%0A%0A.doc-content+%7B%0A++padding%3A+1em+%21important%3B%0A%7D&script=requirejs%28%5B%27https%3A%2F%2Fstorage.googleapis.com%2Fkb-groton-org%2Fbuild%2Fkb-${
+        pkg.version
+      }.js%27%5D%29
 
 `
     );

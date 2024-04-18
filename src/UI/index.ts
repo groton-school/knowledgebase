@@ -1,14 +1,15 @@
-import './fixed-background.scss';
+import { CleanGooglePassThrough } from './CleanGooglePassThrough';
+import Embiggen from './Embiggen';
+import H6IsNormalText from './H6IsNormalText';
+import HideHeaderAndFooter from './HideHeaderAndFooter';
 import HighlightAnchor from './HighlightAnchor';
-import './link-label-by-group.scss';
 import Permalinks from './Permalinks';
 import TOC from './TOC';
-import H6IsNormalText from './H6IsNormalText';
 import TitleCaseAllCapsHeaders from './TitleCaseAllCapsHeaders';
+import './fixed-background.scss';
 import './google-docs.scss';
-import HideHeaderAndFooter from './HideHeaderAndFooter';
+import './link-label-by-group.scss';
 import './unlock-img-width.scss';
-import Embiggen from './Embiggen';
 
 /**
  * Extend and enhance the user interface of Overdrive
@@ -19,9 +20,10 @@ import Embiggen from './Embiggen';
 export default function UI() {
   HideHeaderAndFooter();
   TitleCaseAllCapsHeaders();
-  Permalinks();
-  TOC();
+  // Permalinks();
+  // TOC();
   H6IsNormalText();
   Embiggen();
-  HighlightAnchor();
+  // HighlightAnchor();
+  CleanGooglePassThrough();
 }
