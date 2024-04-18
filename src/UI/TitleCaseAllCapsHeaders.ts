@@ -3,6 +3,7 @@ import Helper from '../Helper';
 const properNouns = [
   '2FA',
   'AI',
+  'Alta Open', // opt-space to turn it into a single token
   'Anker',
   'AMX',
   'Android',
