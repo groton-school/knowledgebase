@@ -14,9 +14,11 @@ function embed(paragraphs: HTMLElement[]) {
     p.outerHTML =
       `<div id="${id}" class="kb-include">` +
       `<div class="${styles.apps} kb-include">` +
-      (ios ? `<a class="${styles.ios}" href="${ios.href}"></a>` : '') +
+      (ios
+        ? `<a class="${styles.ios}" href="${ios.href}" target="_blank"></a>`
+        : '') +
       (android
-        ? `<a class="${styles.android}" href="${android.href}"></a>`
+        ? `<a class="${styles.android}" href="${android.href}" target="_blank"></a>`
         : '') +
       `</div>` +
       `</div>`;

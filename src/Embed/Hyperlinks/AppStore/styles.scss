@@ -42,6 +42,7 @@ $qr: Constants.$prefix + 'qr';
       // svg
       width: 200px;
       background-image: url('https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1320192000');
+      // background-image: url('./app-store.svg');
       background-size: 100%;
     }
 
@@ -51,7 +52,8 @@ $qr: Constants.$prefix + 'qr';
       // margin: 91.5px x 40.5px
       // png
       width: 224px;
-      background-image: url('https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png');
+      // background-image: url('https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png');
+      background-image: url('./play-store.png');
       background-size: 115%;
       background-position: 50% -17px;
     }
