@@ -1,4 +1,4 @@
-import type GoogleOAuthCredentials from './GoogleOAuthCredentials';
+import type GoogleOAuthCredentials from '../Models/GoogleOAuthCredentials';
 import cli from '@battis/qui-cli';
 import express from 'express';
 import fs from 'fs';

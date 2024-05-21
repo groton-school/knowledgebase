@@ -1,5 +1,5 @@
 #!/usr/bin/env tsx
-import buildTree from '../src/Actions/buildTree';
+import buildTree from './Actions/buildTree';
 import cli from '@battis/qui-cli';
 import dotenv from 'dotenv';
 import fs from 'fs';

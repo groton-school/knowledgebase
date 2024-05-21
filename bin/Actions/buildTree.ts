@@ -1,4 +1,6 @@
-import FolderDescription, { FileDescription } from './FolderDescription';
+import FolderDescription, {
+  FileDescription
+} from '../Models/FolderDescription';
 import authorize from './authorize';
 import cli from '@battis/qui-cli';
 import { google, drive_v3 } from 'googleapis';

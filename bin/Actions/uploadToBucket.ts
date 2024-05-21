@@ -1,4 +1,4 @@
-import { FileDescription } from '../FolderDescription';
+import { FileDescription } from '../Models/FolderDescription';
 import authorize from './authorize';
 import cli from '@battis/qui-cli';
 import { Storage } from '@google-cloud/storage';

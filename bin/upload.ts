@@ -2,8 +2,8 @@
 import uploadToBucket, {
   stripNonAlphanumeric,
   fetchAsHtml
-} from '../src/Actions/uploadToBucket';
-import FolderDescription, { FileDescription } from '../src/FolderDescription';
+} from './Actions/uploadToBucket';
+import FolderDescription, { FileDescription } from './Models/FolderDescription';
 import cli from '@battis/qui-cli';
 import dotenv from 'dotenv';
 import fs from 'fs';
