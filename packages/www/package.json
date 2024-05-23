@@ -1,0 +1,11 @@
+{
+  "name": "@groton/knowledgebase.www",
+  "scripts": {
+    "setup": "bin/setup.mjs",
+    "deploy": "bin/deploy.mjs -v"
+  },
+  "devDependencies": {
+    "@battis/partly-gcloudy": "^0.4.2",
+    "@battis/qui-cli": "^0.4.2"
+  }
+}

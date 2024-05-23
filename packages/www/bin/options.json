@@ -1,0 +1,21 @@
+{
+  "name": {
+    "description": "Google Cloud project name",
+    "default": "Blackbaud-to-Google Group Sync"
+  },
+  "billing": {
+    "description": "Google Cloud billing account ID for this project"
+  },
+  "delegatedAdmin": {
+    "description": "Google Workspace admin account that will delegate access to Admin SDK API"
+  },
+  "region": {
+    "description": "Google Cloud region in which to create App Engine instance"
+  },
+  "supportEmail": {
+    "description": "Support email address for app OAuth consent screen"
+  },
+  "users": {
+    "description": "Google IDs of users allowed to access app (comma-separated)"
+  }
+}

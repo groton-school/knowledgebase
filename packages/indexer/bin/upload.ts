@@ -13,6 +13,7 @@ import path from 'path';
 
 dotenv.config();
 const { values, positionals } = cli.init({
+  env: { root: process.cwd() },
   args: {
     requirePositionals: 1,
     options: {
@@ -57,8 +58,11 @@ function fileRenamer(filePath: string, file: FileDescription) {
   }
 }
 
-function demoteBodyToDiv(file: FileDescription, blob: Blob): Blob {
-  const html = Blob.toString();
+async function demoteBodyToDiv(
+  file: FileDescription,
+  blob: Blob
+): Promise<Blob> {
+  const html = await blob.text();
   return new Blob(
     [
       html

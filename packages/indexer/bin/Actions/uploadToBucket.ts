@@ -14,7 +14,7 @@ type Configuration = {
     file: drive_v3.Schema$File,
     oauth: OAuth2Client
   ) => Promise<Blob>;
-  fileMutator?: (fileContents: Blob) => Blob;
+  fileMutator?: (fileContents: Blob) => Promise<Blob>;
   permissionsFilter?: (permission: drive_v3.Schema$Permission) => boolean;
 };
 
@@ -38,7 +38,7 @@ export async function fetchAsHtml(
   ).blob();
 }
 
-export function blobPassThrough(blob: Blob): Blob {
+export async function blobPassThrough(blob: Blob): Promise<Blob> {
   return blob;
 }
 
@@ -59,7 +59,8 @@ async function uploadToBucket({
     `Uploading ${cli.colors.value(file.name)} to ${cli.colors.url(bucketName)}`
   );
   const oauth = await authorize(spinner);
-  const blob = fileMutator(await fileFetcher(file, oauth));
+  const raw = await fileFetcher(file, oauth);
+  const blob = await fileMutator(raw);
 
   // storage authorization via process.env.GOOGLE_APPLICATION_CREDENTIALS
   const storage = new Storage();

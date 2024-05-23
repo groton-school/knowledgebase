@@ -1,0 +1,31 @@
+{
+  "name": "@groton/knowledgebase.indexer",
+  "description": "Knowledgebase website",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "upload": "run-s upload:*",
+    "upload:index": "bin/index.ts -o 'var/%FOLDER_NAME%_%TIMESTAMP%.json'",
+    "upload:upload": "bin/upload.ts"
+  },
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.6",
+    "npm-run-all": "^4.1.5",
+    "tsx": "^4.10.5"
+  },
+  "eslintConfig": {
+    "languageOptions": {
+      "sourceType": "module"
+    }
+  },
+  "dependencies": {
+    "@battis/qui-cli": "^0.4.2",
+    "@google-cloud/local-auth": "^3.0.1",
+    "@google-cloud/storage": "^7.11.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "google-auth-library": "^9.10.0",
+    "googleapis": "^134.0.0",
+    "open": "^10.1.0"
+  }
+}

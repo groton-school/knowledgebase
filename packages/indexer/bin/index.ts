@@ -11,6 +11,7 @@ const TIMESTAMP = '%TIMESTAMP%';
 (async () => {
   dotenv.config();
   const { values } = cli.init({
+    env: { root: process.cwd() },
     args: {
       options: {
         folderId: {

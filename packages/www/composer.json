@@ -1,0 +1,10 @@
+{
+  "require": {
+    "google/cloud-storage": "^1.42"
+  },
+  "autoload": {
+    "psr-4": {
+      "GrotonSchool\\Knowledgebase\\": "src"
+    }
+  }
+}
