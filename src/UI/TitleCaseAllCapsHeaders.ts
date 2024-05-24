@@ -30,6 +30,7 @@ const properNouns = [
   'iOS',
   'iPadOS',
   'January',
+  'Jamf',
   'July',
   'June',
   'K-12',

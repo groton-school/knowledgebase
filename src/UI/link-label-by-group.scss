@@ -18,7 +18,8 @@
  */
 $groups: 'for-teachers/' 'Faculty',
   'for-students/' 'Students' white Constants.$grotonRed, 'for-staff/' 'Staff',
-  'for-employees/' 'Faculty & Staff', 'for-department-heads/' 'Dept. Heads';
+  'for-employees/' 'Faculty & Staff', 'for-department-heads/' 'Dept. Heads',
+  'for-it/' 'IT';
 
 @each $url, $label, $color, $text, $border in $groups {
   a[href$='#{$url}'] {
