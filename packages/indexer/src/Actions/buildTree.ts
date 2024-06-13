@@ -3,7 +3,7 @@ import FolderDescription, {
 } from '../Models/FolderDescription';
 import authorize from './authorize';
 import cli from '@battis/qui-cli';
-import { google, drive_v3 } from 'googleapis';
+import drive, { drive_v3 } from '@googleapis/drive';
 import path from 'path';
 
 async function buildTree(
@@ -11,7 +11,7 @@ async function buildTree(
   spinner?: ReturnType<typeof cli.spinner>
 ) {
   const auth = await authorize(spinner);
-  const drive = google.drive({ version: 'v3', auth });
+  const client = drive.drive({ version: 'v3', auth });
   var tree: FolderDescription = {};
 
   async function describeFile(
@@ -19,12 +19,12 @@ async function buildTree(
     spinner?: ReturnType<typeof cli.spinner>
   ): Promise<FileDescription> {
     spinner?.start(`Describing ${spinner.text}`);
-    const permissions = await drive.permissions.list({
+    const permissions = await client.permissions.list({
       fileId: file.id!
     });
     return (
-      await drive.files.get({
-        fileId: file.id,
+      await client.files.get({
+        fileId: file.id!,
         fields:
           'id,name,fileExtension,mimeType,description,parents,permissions,modifiedTime'
       })
@@ -39,7 +39,7 @@ async function buildTree(
     const tree: FolderDescription = {
       '.': await describeFile({ id: folderId })
     };
-    const response = await drive.files.list({
+    const response = await client.files.list({
       q: `'${folderId}' in parents and trashed = false`
     });
     if (response.data.nextPageToken) {
@@ -60,7 +60,7 @@ async function buildTree(
     return tree;
   }
 
-  const response = await drive.files.get({
+  const response = await client.files.get({
     fileId: folderId
   });
   spinner?.start(response.data.name!);

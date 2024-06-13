@@ -7,11 +7,12 @@ import open from 'open';
 import path from 'path';
 
 const GOOGLE_API_TOKENS = 'GOOGLE_API_TOKENS';
+let logged = false;
 
 async function authorize(
   spinner?: ReturnType<typeof cli.spinner>
 ): Promise<OAuth2Client> {
-  spinner?.start('Authenticating');
+  !logged && spinner?.start('Authenticating');
   return new Promise(async (resolve, reject) => {
     const possibleCredentials = fs
       .readdirSync(path.join(process.cwd(), 'var'))
@@ -54,8 +55,9 @@ async function authorize(
     var tokens = JSON.parse(cli.env.get({ key: GOOGLE_API_TOKENS }) ?? 'null');
     if (tokens) {
       client.setCredentials(tokens);
-      spinner?.succeed('Authenticated in environment');
+      !logged && spinner?.succeed('Authenticated in environment');
       resolve(client);
+      logged = true;
       return;
     }
 
