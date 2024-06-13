@@ -47,7 +47,7 @@ function merge(
 
   spinner.start('Indexing');
   const nextTree = await buildTree(
-    (prevTree[prevName] as FolderDescription)['.'].id,
+    (prevTree[prevName] as FolderDescription)['.'].id!,
     spinner
   );
   const nextName = Object.keys(nextTree)[0];

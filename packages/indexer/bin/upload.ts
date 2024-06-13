@@ -58,11 +58,12 @@ async function fetchAsHtmlIfPossible(
       throw new Error(`${cli.colors.value(file.mimeType)} isn't handled yet`);
     default:
       const client = drive.drive({ version: 'v3', auth });
+      const response = await client.files.get({
+        fileId: file.id!,
+        alt: 'media'
+      });
       return {
-        [file.name!]: (await client.files.get({
-          fileId: file.id!,
-          alt: 'media'
-        })) as unknown as Blob
+        ['.']: response.data
       };
   }
 }

@@ -81,28 +81,24 @@ async function uploadToBucket({
     spinner?.start(`Processing ${cli.colors.value(file.name)}`);
     const oauth = await authorize(spinner);
     const rawFiles = await fileFetcher(file, oauth);
-    for (const filename in rawFiles) {
-      let blob = await fileMutator(rawFiles[filename]);
-      if ('data' in blob) {
-        blob = blob.data as Blob;
+    for (let _f in rawFiles) {
+      let blob = await fileMutator(rawFiles[_f]);
+      let filename: string | undefined = _f;
+      if (filename == '.') {
+        filename = undefined;
       }
-
       // storage authorization via process.env.GOOGLE_APPLICATION_CREDENTIALS
       const storage = new Storage();
       const bucket = storage.bucket(bucketName);
       const remoteFile = bucket.file(fileNamer(file, filename));
-      blob.size;
       spinner?.start(
         `Uploading ${cli.colors.value(remoteFile.name)} (${blob.size} bytes)`
       );
       await remoteFile.save(Buffer.from(await blob.arrayBuffer()));
-      const parts = RegExp(`(^.*${stripNonAlphanumeric(file)}\/)(.*)`).exec(
-        remoteFile.name
-      );
       spinner?.succeed(
-        `${cli.colors.url(
-          `https://storage.cloud.google.com/${bucketName}/${parts![1]}`
-        )}${cli.colors.value(parts![2])}`
+        cli.colors.url(
+          `https://storage.cloud.google.com/${bucketName}/${remoteFile.name}`
+        )
       );
       file.index = {
         timestamp: new Date().toISOString(),
