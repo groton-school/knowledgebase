@@ -4,7 +4,8 @@ import uploadToBucket, {
   fetchAsCompleteHtml
 } from '../src/Actions/uploadToBucket';
 import FolderDescription, {
-  FileDescription
+  FileDescription,
+  isFileDescription
 } from '../src/Models/FolderDescription';
 import cli from '@battis/qui-cli';
 import drive, { drive_v3 } from '@googleapis/drive';
@@ -126,10 +127,6 @@ function onlyKbPermissionGroups(
   permission: drive_v3.Schema$Permission
 ): boolean {
   return /^kb-.*@groton.org$/.test(permission.emailAddress!);
-}
-
-function isFileDescription(obj: object): obj is FileDescription {
-  return !('.' in obj);
 }
 
 async function uploadTree(subtree: FolderDescription, folderPath: string = '') {
