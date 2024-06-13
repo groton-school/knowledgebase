@@ -21,6 +21,11 @@ const { values, positionals } = cli.init({
   args: {
     requirePositionals: 1,
     flags: {
+      force: {
+        short: 'f',
+        description: 'Force upload of all files, ignoring current index status',
+        default: false
+      },
       'ignore-errors': {
         description:
           'Ignore errors and continue uploading (default true, stop on errors with --no-ignore-errors',
@@ -152,6 +157,7 @@ async function uploadFile(file: FileDescription, filePath: string = '') {
   spinner.start(`Uploading ${cli.colors.value(file.name)}`);
   try {
     if (
+      values.force ||
       !file.index ||
       !file.index.uploaded ||
       file.index.timestamp < file.modifiedTime!

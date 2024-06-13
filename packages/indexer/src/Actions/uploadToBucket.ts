@@ -25,7 +25,7 @@ export function stripNonAlphanumeric(
   filename?: string
 ): string {
   return (
-    file.name!.replace(/[^a-z0-9]+/gi, '-').toLowerCase() +
+    file.name!.replace(/[^a-z0-9()!@*_+=;:,]+/gi, '-').toLowerCase() +
     (filename ? `/${filename}` : '')
   );
 }
