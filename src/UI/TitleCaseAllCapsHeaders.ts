@@ -34,6 +34,7 @@ const properNouns = [
   'July',
   'June',
   'K-12',
+  'K.I.S.S.',
   'Loomis',
   'macOS',
   'March',
