@@ -5,7 +5,6 @@ source "$(dirname $0)/../.env"
 gcloud projects create $PROJECT --folder=$FOLDER --name="Knowledgebase DEV" --format=json
 gcloud billing projects link $PROJECT --billing-account=$BILLING --format=json
 
-echo "You need to manually configure the OAuth Consent screen at https://console.cloud.google.com/apis/credentials/consent?project=$PROJECT"
 gcloud services enable docs.googleapis.com --project=$PROJECT --format=json
 gcloud services enable drive.googleapis.com --project=$PROJECT --format=json
 
@@ -29,4 +28,8 @@ gcloud compute forwarding-rules create http-lb-forwarding-rule --load-balancing-
 gcloud services enable storage-api.googleapis.com --project=$PROJECT --format=json
 gcloud app create --region=$LOCATION --project=$PROJECT --format=json
 
-# create OAuth2 client, download credentials to credentials.json
+mkdir -p "$(dirname $0)/../var"
+echo "{\"storage\":{\"bucket\":\"$BUCKET\"}}" > "$(dirname $0)/../var/config.json"
+
+echo "You need to manually configure the OAuth Consent screen at https://console.cloud.google.com/apis/credentials/consent?project=$PROJECT"
+echo "You need to manually create and download keys for the app screen at https://console.cloud.google.com/apis/credentials?project=$PROJECT (OAuth 2.0, web, set both JavaScript origin and redirect URL to GAE instance"

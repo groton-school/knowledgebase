@@ -2,7 +2,7 @@
 .DS_Store
 !/app.yaml
 !/assets
-!/credentials.json
 !/package.json
 !/pnpm-lock.yaml
 !/src
+!/var
