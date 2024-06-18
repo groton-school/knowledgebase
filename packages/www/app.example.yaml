@@ -1,6 +1,0 @@
-runtime: php81
-basic_scaling:
-  max_instances: 1
-entrypoint: serve src/app.php
-env_variables:
-  BUCKET: 'google_storage_bucket_id'

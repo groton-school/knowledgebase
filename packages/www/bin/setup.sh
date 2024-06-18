@@ -1,6 +1,6 @@
-#!/user/bin/env bash
+#!/usr/bin/env sh
 
-source "$(dirname $0)/.env"
+source "$(dirname $0)/../.env"
 
 gcloud projects create $PROJECT --folder=$FOLDER --name="Knowledgebase DEV" --format=json
 gcloud billing projects link $PROJECT --billing-account=$BILLING --format=json
@@ -25,3 +25,8 @@ gcloud compute backend-buckets create $LB --gcs-bucket-name=$BUCKET --project=$P
 gcloud compute url-maps create http-lb --default-backend-bucket=$LB --project=$PROJECT --format=json
 gcloud compute target-http-proxies create http-lb-proxy --url-map=http-lb --project=$PROJECT --format=json
 gcloud compute forwarding-rules create http-lb-forwarding-rule --load-balancing-scheme=EXTERNAL --network-tier=PREMIUM --address=kb-ip --global --target-http-proxy=http-lb-proxy --ports=80 --project=$PROJECT --format=json
+
+gcloud services enable storage-api.googleapis.com --project=$PROJECT --format=json
+gcloud app create --region=$LOCATION --project=$PROJECT --format=json
+
+# create OAuth2 client, download credentials to credentials.json

@@ -1,11 +1,27 @@
 {
   "name": "@groton/knowledgebase.www",
+  "version": "0.1.0",
+  "author": {
+    "name": "Seth Battis",
+    "email": "sbattis@groton.org"
+  },
   "scripts": {
-    "setup": "bin/setup.mjs",
-    "deploy": "bin/deploy.mjs -v"
+    "setup": "bin/setup.sh",
+    "deploy": "run-s deploy:*",
+    "deploy:lockfile": "make-dedicated-lockfile",
+    "deploy:deploy": "bin/deploy.mjs",
+    "start": "node src/index.js"
   },
   "devDependencies": {
-    "@battis/partly-gcloudy": "^0.4.2",
-    "@battis/qui-cli": "^0.4.2"
+    "@battis/partly-gcloudy": "^0.4.3",
+    "@battis/qui-cli": "^0.4.2",
+    "@pnpm/make-dedicated-lockfile": "^0.6.9",
+    "npm-run-all": "^4.1.5"
+  },
+  "dependencies": {
+    "@google-cloud/storage": "^7.11.2",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.19.2",
+    "google-auth-library": "^9.11.0"
   }
 }

@@ -1,1 +1,3 @@
-app.yaml
+credentials.json
+pnpm-lock.yaml
+tmp_node_modules
