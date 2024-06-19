@@ -1,0 +1,22 @@
+@use '../../Constants';
+
+$highlight: Constants.$prefix + 'hilite';
+
+#{Constants.$googleDocEmbed} {
+  .#{$highlight} {
+    animation: 0.25s fadeOut 8;
+  }
+
+  @keyframes fadeOut {
+    0% {
+      text-shadow: transparent;
+    }
+
+    50% {
+      text-shadow: #337ab7 0 0 0.25em;
+    }
+    100% {
+      text-shadow: transparent;
+    }
+  }
+}

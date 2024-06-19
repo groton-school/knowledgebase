@@ -1,0 +1,66 @@
+@use '../../../Constants';
+
+$apps: Constants.$prefix + 'apps';
+$ios: Constants.$prefix + 'ios';
+$android: Constants.$prefix + 'android';
+$qr: Constants.$prefix + 'qr';
+
+#{Constants.$googleDocEmbed} {
+  .#{$apps} {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+    margin: 1em inherit;
+
+    a.#{$ios},
+    a.#{$android} {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 67px;
+      background-repeat: no-repeat;
+      margin: 0.5em;
+
+      canvas {
+        margin-top: calc(67px + 0.5em);
+        min-width: 100px;
+        aspect-ratio: 1;
+        background: gray;
+      }
+
+      @media (max-width: 576px) {
+        canvas {
+          display: none;
+        }
+      }
+    }
+
+    a.#{$ios} {
+      // intrinsic 120px x 40px
+      // svg
+      width: 200px;
+      background-image: url('https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1320192000');
+      // background-image: url('./app-store.svg');
+      background-size: 100%;
+    }
+
+    a.#{$android} {
+      // content 563px x 169px
+      // intrinsic 646px x 250px
+      // margin: 91.5px x 40.5px
+      // png
+      width: 224px;
+      // background-image: url('https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png');
+      background-image: url('./play-store.png');
+      background-size: 115%;
+      background-position: 50% -17px;
+    }
+  }
+
+  div.#{$qr} {
+    text-align: center;
+    color: darkgray;
+  }
+}

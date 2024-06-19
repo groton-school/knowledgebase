@@ -1,0 +1,7 @@
+@use 'styles';
+
+:export {
+  toc: #{styles.$toc};
+  menu: #{styles.$menu};
+  wrapper: #{styles.$wrapper};
+}

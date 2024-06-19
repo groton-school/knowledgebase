@@ -1,0 +1,43 @@
+{
+  "name": "@groton/knowledgebase",
+  "version": "0.1.8-dev-embed",
+  "description": "Configuration and scripting for Overdrive.io integration",
+  "author": {
+    "name": "Seth Battis",
+    "email": "sbattis@groton.org"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/groton-school/knowledgebase.git"
+  },
+  "license": "GPL-3.0",
+  "scripts": {
+    "build": "webpack",
+    "deploy": "run-s deploy:*",
+    "deploy:build": "npm run build",
+    "deploy:deploy": "./bin/deploy.js"
+  },
+  "devDependencies": {
+    "@battis/eslint-config": "latest",
+    "@battis/prettier-config": "latest",
+    "@battis/webpack": "latest",
+    "@google-cloud/storage": "^6.12.0",
+    "dotenv": "^16.4.5",
+    "npm-run-all": "^4.1.5"
+  },
+  "prettier": "@battis/prettier-config",
+  "eslintConfig": {
+    "extends": [
+      "@battis/eslint-config"
+    ],
+    "env": {
+      "browser": true,
+      "node": false
+    }
+  },
+  "dependencies": {
+    "@types/gtag.js": "^0.0.12",
+    "@types/node": "^20.12.7",
+    "requirejs": "^2.3.6"
+  }
+}

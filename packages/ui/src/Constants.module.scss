@@ -1,0 +1,8 @@
+@use 'Constants';
+
+:export {
+  grotonred: #{Constants.$grotonRed};
+  googledocembed: #{Constants.$googleDocEmbed};
+  prefix: #{Constants.$prefix};
+  mobileCutoffWidthInPx: #{Constants.$mobileCutoffWidthInPx};
+}

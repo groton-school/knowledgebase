@@ -1,0 +1,81 @@
+@use '../Constants';
+
+#{Constants.$googleDocEmbed} {
+  [class^='c'] {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 11pt;
+    font-weight: 400;
+    color: rgb(0, 0, 0);
+  }
+
+  .subtitle {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 9pt !important;
+    color: #5b5b5b !important;
+    margin-bottom: 1em !important;
+  }
+
+  .title {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    color: rgb(0, 0, 0);
+    font-size: 26pt !important;
+    font-weight: 500 !important;
+  }
+
+  h1 {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    color: rgb(0, 0, 0);
+    font-size: 20pt !important;
+    font-weight: 500 !important;
+  }
+
+  h2 {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16pt !important;
+    font-weight: 500 !important;
+    color: rgb(85, 85, 85) !important;
+  }
+
+  h3 {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 14pt !important;
+    color: rgb(67, 67, 67) !important;
+  }
+
+  h4 {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 12pt !important;
+    color: rgb(102, 102, 102) !important;
+  }
+
+  h5 {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 11pt !important;
+    font-weight: 400;
+    color: rgb(102, 102, 102) !important;
+  }
+  h6 {
+    //    font-style: italic;
+    //    color: rgb (102, 102, 102);
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 11pt;
+    font-weight: 400;
+    color: rgb(0, 0, 0);
+  }
+
+  p,
+  li,
+  td {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 11pt;
+    font-weight: 400;
+    color: rgb(0, 0, 0);
+  }
+
+  p {
+    margin-bottom: 1em;
+  }
+}

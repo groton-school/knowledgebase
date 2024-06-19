@@ -1,0 +1,8 @@
+@use 'styles';
+
+:export {
+  apps: #{styles.$apps};
+  ios: #{styles.$ios};
+  android: #{styles.$android};
+  qr: #{styles.$qr};
+}
