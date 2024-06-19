@@ -1,0 +1,21 @@
+{
+  "name": {
+    "description": "Google Cloud project name",
+    "default": "Knowledgebase"
+  },
+  "billing": {
+    "description": "Google Cloud billing account ID for this project"
+  },
+  "region": {
+    "description": "Google Cloud region in which to create App Engine instance"
+  },
+  "supportEmail": {
+    "description": "Support email address for app OAuth consent screen"
+  },
+  "bucket": {
+    "description": "Google Cloud Storage Bucket ID to hold cached files"
+  },
+  "member": {
+    "description": "Email address of user that will sync files from Google Drive to Google Cloud Strage"
+  }
+}

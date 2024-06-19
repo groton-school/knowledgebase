@@ -1,5 +1,5 @@
 {
-  "name": "@groton/knowledgebase.www",
+  "name": "@groton/knowledgebase.server",
   "version": "0.1.0",
   "author": {
     "name": "Seth Battis",

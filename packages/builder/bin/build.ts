@@ -1,15 +1,14 @@
 #!/usr/bin/env tsx
 import buildTree from '../src/Actions/buildTree';
 import cli from '@battis/qui-cli';
-import dotenv from 'dotenv';
 import fs from 'fs';
+import path from 'path';
 
 const FOLDER_ID = '%FOLDER_ID%';
 const FOLDER_NAME = '%FOLDER_NAME%';
 const TIMESTAMP = '%TIMESTAMP%';
 
 (async () => {
-  dotenv.config();
   const { values } = cli.init({
     env: { root: process.cwd() },
     args: {
@@ -22,7 +21,7 @@ const TIMESTAMP = '%TIMESTAMP%';
         output: {
           short: 'o',
           description: `Output JSON file path (use ${FOLDER_NAME}, ${FOLDER_ID}, and ${TIMESTAMP} placeholders, if so desired)`,
-          default: '%FOLDER_NAME%_%TIMESTAMP%.json'
+          default: path.join(cli.appRoot(), '../server/var/index.json')
         }
       }
     }

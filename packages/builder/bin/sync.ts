@@ -8,6 +8,8 @@ import cli from '@battis/qui-cli';
 import dotenv from 'dotenv';
 import fs from 'fs';
 
+// TODO deal with _deleted_ files
+
 function merge(
   prev: FolderDescription | FileDescription,
   next: FolderDescription

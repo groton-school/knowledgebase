@@ -1,12 +1,12 @@
 {
-  "name": "@groton/knowledgebase.indexer",
+  "name": "@groton/knowledgebase.builder",
   "description": "Knowledgebase website",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "upload": "run-s upload:*",
-    "upload:index": "bin/index.ts -o 'var/%FOLDER_NAME%_%TIMESTAMP%.json'",
-    "upload:upload": "bin/upload.ts"
+    "build": "run-s upload:*",
+    "build:build": "bin/build.ts -o '../server/var/index.json'",
+    "build:upload": "bin/upload.ts '../server/var/index,json'"
   },
   "devDependencies": {
     "@tsconfig/recommended": "^1.0.6",
