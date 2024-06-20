@@ -1,8 +1,6 @@
 #!/usr/bin/env tsx
 import buildTree from '../src/Actions/buildTree';
-import FileDescription, {
-  isFileDescription
-} from '../src/Models/FileDescription';
+import mergeTrees from '../src/Actions/mergeTrees';
 import FolderDescription from '../src/Models/FolderDescription';
 import cli from '@battis/qui-cli';
 import fs from 'fs';
@@ -13,28 +11,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // TODO deal with _deleted_ files
-
-function merge(
-  prev: FolderDescription | FileDescription,
-  next: FolderDescription
-): FolderDescription {
-  if (isFileDescription(prev)) {
-    return next;
-  }
-  const merged = next;
-  for (const filename of Object.keys(next)) {
-    const prevFile = prev[filename];
-    const nextFile = next[filename];
-    if (isFileDescription(nextFile)) {
-      if (isFileDescription(prevFile) && prevFile.index) {
-        merged[filename].index = prevFile.index;
-      }
-    } else {
-      merged[filename] = merge(prevFile, nextFile);
-    }
-  }
-  return merged;
-}
 
 (async () => {
   const { positionals } = cli.init({
@@ -62,7 +38,7 @@ function merge(
   spinner.succeed(`Indexed ${nextName}`);
 
   spinner.start(`Writing index to ${cli.colors.url(filePath)}`);
-  nextTree[nextName] = merge(
+  nextTree[nextName] = mergeTrees(
     prevTree[prevName],
     nextTree[nextName] as FolderDescription
   );

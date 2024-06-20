@@ -4,7 +4,7 @@ export type FileDescription = drive_v3.Schema$File & {
   index?: {
     status?: string;
     uploaded: boolean;
-    url?: string;
+    uri?: string;
     timestamp: string;
   };
 };

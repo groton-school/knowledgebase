@@ -1,11 +1,11 @@
 import FileDescription from '../Models/FileDescription';
 import authorize from './authorize';
+import { fetchAsCompleteHtml } from './fetchDriveFiles';
+import { convertToOverdriveStyle } from './renameFile';
 import cli from '@battis/qui-cli';
 import { Storage } from '@google-cloud/storage';
-import drive, { drive_v3 } from '@googleapis/drive';
-import Zip from 'adm-zip';
+import { drive_v3 } from '@googleapis/drive';
 import { OAuth2Client } from 'google-auth-library';
-import mime from 'mime-types';
 
 type Configuration = {
   file: FileDescription;
@@ -23,96 +23,39 @@ type Configuration = {
   permissionsFilter?: (permission: drive_v3.Schema$Permission) => boolean;
 };
 
-export function stripNonAlphanumeric({
-  file,
-  filename
-}: {
-  file: drive_v3.Schema$File;
-  filename?: string;
-}): string {
-  return (
-    file.name!.replace(/[^a-z0-9()!@*_+=;:,.]+/gi, '-').toLowerCase() +
-    (filename ? `/${filename}` : '')
-  );
-}
-
-export function fetchAsCompleteHtml({
-  file,
-  auth
-}: {
-  file: drive_v3.Schema$File;
-  auth: OAuth2Client;
-}): Promise<Record<string, Blob>> {
-  return new Promise(async (resolve, reject) => {
-    const client = drive.drive({ version: 'v3', auth });
-    try {
-      const response = await client.files.export({
-        fileId: file.id!,
-        mimeType: 'application/zip'
-      });
-      const zip = new Zip(
-        Buffer.from(await (response.data as Blob).arrayBuffer())
-      );
-      const blobs: Record<string, Blob> = {};
-      zip.getEntries().forEach((entry) => {
-        const data = zip.readFile(entry);
-        if (data) {
-          blobs[entry.entryName] = new Blob([data], {
-            type: mime.contentType(entry.name) || undefined
-          });
-        }
-      });
-      resolve(blobs);
-    } catch (error) {
-      reject(error);
-    }
-  });
-}
-
-export async function blobPassThrough(blob: Blob): Promise<Blob> {
-  return blob;
-}
-
-export function includeAll(): boolean {
-  return true;
-}
-
 async function uploadToBucket({
   file,
   bucketName,
   spinner,
-  fileNamer = stripNonAlphanumeric,
+  fileNamer = convertToOverdriveStyle,
   fileFetcher = fetchAsCompleteHtml,
-  fileMutator = blobPassThrough,
-  permissionsFilter = includeAll
+  fileMutator = async (blob) => blob,
+  permissionsFilter = () => true
 }: Configuration): Promise<FileDescription> {
   try {
     spinner?.start(`Processing ${cli.colors.value(file.name)}`);
     const auth = await authorize(spinner);
     const rawFiles = await fileFetcher({ file, auth });
     for (let _f in rawFiles) {
-      let blob = await fileMutator(rawFiles[_f]);
+      let blob = await fileMutator(rawFiles[_f] as Blob);
       let filename: string | undefined = _f;
       if (filename == '.') {
         filename = undefined;
       }
-      // storage authorization via process.env.GOOGLE_APPLICATION_CREDENTIALS
       const storage = new Storage();
       const bucket = storage.bucket(bucketName);
       const remoteFile = bucket.file(fileNamer({ file, filename }));
       spinner?.start(
-        `Uploading ${cli.colors.value(remoteFile.name)} (${blob.size} bytes)`
+        `${cli.colors.value(remoteFile.cloudStorageURI.href)} (${
+          blob.size
+        } bytes)`
       );
       await remoteFile.save(Buffer.from(await blob.arrayBuffer()));
-      spinner?.succeed(
-        cli.colors.url(
-          `https://storage.cloud.google.com/${bucketName}/${remoteFile.name}`
-        )
-      );
+      spinner?.succeed(cli.colors.url(remoteFile.cloudStorageURI.href));
       file.index = {
         timestamp: new Date().toISOString(),
         uploaded: true,
-        url: `https://storage.cloud.google.com/${bucketName}/${remoteFile.name}`
+        uri: remoteFile.cloudStorageURI.href
       };
       for (const permission of (
         file.permissions as drive_v3.Schema$Permission[]

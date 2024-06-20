@@ -26,7 +26,7 @@ const injectAssets: PipelineFunction = ({ html }) => {
       '</head>',
       `<link rel="stylesheet" href="/assets/kb.css" /></head>`
     )
-    .replace('</body>', `<script href="/assets/kb.js"></script></body>`);
+    .replace('</body>', `<script src="/assets/kb.js"></script></body>`);
 };
 
 const removeScripts: PipelineFunction = ({ html }) => {

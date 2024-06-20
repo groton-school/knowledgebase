@@ -10,7 +10,6 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const GOOGLE_API_TOKENS = 'GOOGLE_API_TOKENS';
 let logged = false;
 
 async function authorize(

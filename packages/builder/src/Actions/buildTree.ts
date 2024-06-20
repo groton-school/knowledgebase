@@ -1,6 +1,5 @@
-import FolderDescription, {
-  FileDescription
-} from '../Models/FolderDescription';
+import FileDescription from '../Models/FileDescription';
+import FolderDescription from '../Models/FolderDescription';
 import authorize from './authorize';
 import cli from '@battis/qui-cli';
 import drive, { drive_v3 } from '@googleapis/drive';
@@ -19,9 +18,6 @@ async function buildTree(
     spinner?: ReturnType<typeof cli.spinner>
   ): Promise<FileDescription> {
     spinner?.start(`Describing ${spinner.text}`);
-    const permissions = await client.permissions.list({
-      fileId: file.id!
-    });
     return (
       await client.files.get({
         fileId: file.id!,
@@ -57,6 +53,7 @@ async function buildTree(
         }
       }
     }
+    spinner?.succeed(folderPath);
     return tree;
   }
 
