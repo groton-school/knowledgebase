@@ -12,7 +12,7 @@ async function buildTree(
 ) {
   const auth = await authorize(spinner);
   const client = drive.drive({ version: 'v3', auth });
-  var tree: FolderDescription = {};
+  var tree: FolderDescription = {} as FolderDescription;
 
   async function describeFile(
     file: drive_v3.Schema$File,
@@ -38,7 +38,7 @@ async function buildTree(
     spinner?.start(folderPath);
     const tree: FolderDescription = {
       '.': await describeFile({ id: folderId })
-    };
+    } as FolderDescription;
     const response = await client.files.list({
       q: `'${folderId}' in parents and trashed = false`
     });

@@ -3,62 +3,58 @@ import uploadToBucket, {
   stripNonAlphanumeric,
   fetchAsCompleteHtml
 } from '../src/Actions/uploadToBucket';
-import FolderDescription, {
-  FileDescription,
+import FileDescription, {
   isFileDescription
-} from '../src/Models/FolderDescription';
+} from '../src/Models/FileDescription';
+import FolderDescription from '../src/Models/FolderDescription';
 import cli from '@battis/qui-cli';
 import drive, { drive_v3 } from '@googleapis/drive';
-import dotenv from 'dotenv';
 import fs from 'fs';
 import { OAuth2Client } from 'google-auth-library';
 import { JSDOM } from 'jsdom';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
-dotenv.config();
-const { values, positionals } = cli.init({
-  env: { root: process.cwd() },
-  args: {
-    requirePositionals: 1,
-    flags: {
-      force: {
-        short: 'f',
-        description: 'Force upload of all files, ignoring current index status',
-        default: false
-      },
-      'ignore-errors': {
-        description:
-          'Ignore errors and continue uploading (default true, stop on errors with --no-ignore-errors',
-        default: true
-      },
-      overwrite: {
-        description:
-          'Overwrite input file with updated index including upload data (default true, block with --no-overwrite)',
-        default: true
-      }
-    },
-    options: {
-      bucket: {
-        short: 'b',
-        description: 'Google Cloud Storage bucket name',
-        default: process.env.BUCKET_NAME
-      }
-    }
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const options = {
+  bucket: {
+    short: 'b',
+    description: 'Google Cloud Storage bucket name'
   }
-});
+};
 
-const spinner = cli.spinner();
-const bucketName = values.bucket;
+const flags = {
+  force: {
+    short: 'f',
+    description: 'Force upload of all files, ignoring current index status',
+    default: false
+  },
+  ignoreErrors: {
+    description:
+      'Ignore errors and continue uploading (default true, stop on errors with --no-ignore-errors',
+    default: true
+  },
+  overwrite: {
+    description:
+      'Overwrite input file with updated index including upload data (default true, block with --no-overwrite)',
+    default: true
+  }
+};
 
-async function fetchAsHtmlIfPossible(
-  file: FileDescription,
-  auth: OAuth2Client
-) {
+async function fetchAsHtmlIfPossible({
+  file,
+  auth
+}: {
+  file: drive_v3.Schema$File;
+  auth: OAuth2Client;
+}) {
   switch (file.mimeType) {
     case 'application/vnd.google-apps.document':
     case 'application/vnd.google-apps.spreadsheet':
     case 'application/vnd.google-apps.presentation':
-      return await fetchAsCompleteHtml(file, auth);
+      return await fetchAsCompleteHtml({ file, auth });
     case 'application/vnd.google-apps.shortcut':
       throw new Error(`${cli.colors.value(file.mimeType)} isn't handled yet`);
     default:
@@ -73,12 +69,16 @@ async function fetchAsHtmlIfPossible(
   }
 }
 
-function fileRenamer(
-  filePath: string,
-  file: FileDescription,
-  filename?: string
-) {
-  const result = path.join(filePath, stripNonAlphanumeric(file, filename));
+function fileRenamer({
+  filePath,
+  file,
+  filename
+}: {
+  filePath: string;
+  file: FileDescription;
+  filename?: string;
+}) {
+  const result = path.join(filePath, stripNonAlphanumeric({ file, filename }));
   switch (path.extname(filename || '')) {
     case '.html':
       return result.replace(/^(.*)\/([^\/]+)\.html$/, '$1/index.html');
@@ -87,28 +87,21 @@ function fileRenamer(
   }
 }
 
-async function demoteBodyToDiv(
-  file: FileDescription,
-  blob: Blob
-): Promise<Blob> {
+async function addMetaId({
+  file,
+  blob
+}: {
+  file: FileDescription;
+  blob: Blob;
+}): Promise<Blob> {
   if (blob.type?.startsWith('text/html')) {
     const html = await blob.text();
     return new Blob(
       [
-        html
-          .replace(
-            '<style',
-            `<meta item-prop="kb.id" content="${file.id}" /><style`
-          )
-          .replace(
-            '</style>',
-            `</style><link rel="icon" href="https://storage.cloud.google.com/${bucketName}/favicon.ico" /><link rel="stylesheet" href="https://storage.cloud.google.com/${bucketName}/kb.css" />`
-          )
-          .replace('<body', '<body><div')
-          .replace(
-            '</body>',
-            `</div><script href="https://storage.cloud.google.com/${bucketName}/kb.js"></script></body>`
-          )
+        html.replace(
+          '<style',
+          `<meta item-prop="kb.id" content="${file.id}" /><style`
+        )
       ],
       { type: blob.type }
     );
@@ -116,7 +109,58 @@ async function demoteBodyToDiv(
   return blob;
 }
 
-async function removeScripts(file: FileDescription, blob: Blob): Promise<Blob> {
+async function demoteBodyToDiv({
+  file,
+  blob
+}: {
+  file: FileDescription;
+  blob: Blob;
+}): Promise<Blob> {
+  if (blob.type?.startsWith('text/html')) {
+    const html = await blob.text();
+    return new Blob(
+      [html.replace('<body', '<body><div').replace('</body>', `</div></body>`)],
+      { type: blob.type }
+    );
+  }
+  return blob;
+}
+
+async function injectAssets({
+  file,
+  blob
+}: {
+  file: FileDescription;
+  blob: Blob;
+}): Promise<Blob> {
+  if (blob.type?.startsWith('text/html')) {
+    const html = await blob.text();
+    return new Blob(
+      [
+        html
+          .replace(
+            '<head>',
+            '<head><link rel="icon" href="/assets/favicon.ico">'
+          )
+          .replace(
+            '</head>',
+            `<link rel="stylesheet" href="/assets/kb.css" /></head>`
+          )
+          .replace('</body>', `<script href="/assets/kb.js"></script></body>`)
+      ],
+      { type: blob.type }
+    );
+  }
+  return blob;
+}
+
+async function removeScripts({
+  file,
+  blob
+}: {
+  file: FileDescription;
+  blob: Blob;
+}): Promise<Blob> {
   if (blob.type?.startsWith('text/html')) {
     const dom = new JSDOM(await blob.text());
     Array.from(dom.window.document.querySelectorAll('script')).forEach((s) =>
@@ -135,29 +179,74 @@ function onlyKbPermissionGroups(
   return /^kb-.*@groton.org$/.test(permission.emailAddress!);
 }
 
-async function uploadTree(subtree: FolderDescription, folderPath: string = '') {
+async function uploadTree({
+  subtree,
+  folderPath = '',
+  bucketName,
+  spinner,
+  force,
+  ignoreErrors
+}: {
+  subtree: FolderDescription;
+  folderPath?: string;
+  bucketName: string;
+  force: boolean;
+  ignoreErrors: boolean;
+  spinner?: ReturnType<typeof cli.spinner>;
+}) {
   const folder = subtree['.'];
-  const nextPath = path.join(folderPath, stripNonAlphanumeric(folder));
-  spinner.start(nextPath);
+  const nextPath = path.join(
+    folderPath,
+    stripNonAlphanumeric({ file: folder })
+  );
+  spinner?.start(nextPath);
   for (const fileName of Object.keys(subtree)) {
     if (fileName != '.') {
       const file = subtree[fileName];
       if (isFileDescription(file)) {
-        subtree[fileName] = await uploadFile(file, nextPath);
+        subtree[fileName] = await uploadFile({
+          file,
+          filePath: nextPath,
+          bucketName,
+          force,
+          ignoreErrors,
+          spinner
+        });
       } else {
-        subtree[fileName] = await uploadTree(file, nextPath);
+        subtree[fileName] = await uploadTree({
+          subtree: file,
+          folderPath: nextPath,
+          bucketName,
+          force,
+          ignoreErrors,
+          spinner
+        });
       }
     }
   }
-  spinner.succeed(cli.colors.url(nextPath));
+  spinner?.succeed(cli.colors.url(nextPath));
   return subtree;
 }
 
-async function uploadFile(file: FileDescription, filePath: string = '') {
-  spinner.start(`Uploading ${cli.colors.value(file.name)}`);
+async function uploadFile({
+  file,
+  filePath = '',
+  bucketName,
+  spinner,
+  force,
+  ignoreErrors
+}: {
+  file: FileDescription;
+  filePath?: string;
+  spinner?: ReturnType<typeof cli.spinner>;
+  force: boolean;
+  ignoreErrors: boolean;
+  bucketName: string;
+}) {
+  spinner?.start(`Uploading ${cli.colors.value(file.name)}`);
   try {
     if (
-      values.force ||
+      force ||
       !file.index ||
       !file.index.uploaded ||
       file.index.timestamp < file.modifiedTime!
@@ -167,27 +256,37 @@ async function uploadFile(file: FileDescription, filePath: string = '') {
         file,
         bucketName,
         fileFetcher: fetchAsHtmlIfPossible,
-        fileNamer: (file, filename) => fileRenamer(filePath, file, filename),
+        fileNamer: ({ file, filename }) =>
+          fileRenamer({ filePath, file, filename }),
         fileMutator: async (blob) =>
-          removeScripts(file, await demoteBodyToDiv(file, blob)),
+          injectAssets({
+            file,
+            blob: await removeScripts({
+              file,
+              blob: await demoteBodyToDiv({
+                file,
+                blob: await addMetaId({ file, blob })
+              })
+            })
+          }),
         permissionsFilter: onlyKbPermissionGroups
       });
     }
   } catch (error) {
-    if (!values['ignore-errors']) {
+    if (!ignoreErrors) {
       throw error;
     }
   }
   if (file.index?.uploaded) {
-    spinner.succeed(
+    spinner?.succeed(
       `${cli.colors.url(`${filePath}/`)}${cli.colors.value(
-        fileRenamer('', file)
+        fileRenamer({ filePath: '', file })
       )}`
     );
   } else {
-    spinner.fail(
+    spinner?.fail(
       `${cli.colors.url(`${filePath}/`)}${cli.colors.value(
-        fileRenamer('', file)
+        fileRenamer({ filePath: '', file })
       )}`
     );
   }
@@ -195,9 +294,36 @@ async function uploadFile(file: FileDescription, filePath: string = '') {
 }
 
 (async () => {
-  spinner.start(positionals[0]);
+  const { values, positionals } = cli.init({
+    env: {
+      root: path.join(__dirname, '../../..'),
+      loadDotEnv: path.join(__dirname, '../../../.env')
+    },
+    args: {
+      requirePositionals: 1,
+      flags,
+      options
+    }
+  });
+
+  const spinner = cli.spinner();
+  const bucketName =
+    values.bucket ||
+    process.env.BUCKET ||
+    (await cli.prompts.input({
+      message: options.bucket.description,
+      validate: cli.validators.lengthBetween(6, 30)
+    }));
+
+  const indexPath = path.resolve(__dirname, '..', positionals[0]);
+  const force = !!values.force;
+  const ignoreErrors = !!values.ignoreErrors;
+
+  spinner.start(indexPath);
   const tree: FolderDescription = JSON.parse(
-    fs.readFileSync(positionals[0]).toString()
+    fs
+      .readFileSync(path.resolve(cli.appRoot(), indexPath).toString())
+      .toString()
   );
   spinner.succeed(positionals[0]);
 
@@ -207,22 +333,30 @@ async function uploadFile(file: FileDescription, filePath: string = '') {
     if (fileName != '.') {
       let file = (tree[rootFolder] as FolderDescription)[fileName];
       if (isFileDescription(file)) {
-        (tree[rootFolder] as FolderDescription)[fileName] = await uploadFile(
-          file
-        );
+        (tree[rootFolder] as FolderDescription)[fileName] = await uploadFile({
+          file,
+          bucketName,
+          force,
+          ignoreErrors,
+          spinner
+        });
       } else {
-        (tree[rootFolder] as FolderDescription)[fileName] = await uploadTree(
-          file
-        );
+        (tree[rootFolder] as FolderDescription)[fileName] = await uploadTree({
+          subtree: file,
+          bucketName,
+          force,
+          ignoreErrors,
+          spinner
+        });
       }
     }
   }
   spinner.succeed(cli.colors.url(rootFolder));
   if (values.overwrite) {
-    fs.writeFileSync(positionals[0].toString(), JSON.stringify(tree, null, 2));
+    fs.writeFileSync(indexPath, JSON.stringify(tree, null, 2));
   } else {
     fs.writeFileSync(
-      positionals[0].toString() +
+      indexPath.replace(new RegExp(`${path.extname(indexPath)}$`), '') +
         '_upload-' +
         new Date().toISOString() +
         '.json',

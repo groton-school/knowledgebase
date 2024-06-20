@@ -5,9 +5,13 @@
   "scripts": {
     "setup": "run-s setup:*",
     "setup:google": "bin/setup.mjs --no-deploy",
-    "setup:build": "pnpm -F @groton/knowledgebase.builder run build",
     "setup:deploy": "run-s deploy",
-    "deploy": "pnpm -F @groton/knowledgebase.server run deploy",
+    "build": "run-s build:*",
+    "build:builder": "pnpm -F @groton/knowledgebase.builder run build",
+    "build:ui": "pnpm -F @groton/knowledgebase.ui run build",
+    "deploy": "run-s deploy:*",
+    "deploy:build": "run-s build",
+    "deploy:deploy": "pnpm -F @groton/knowledgebase.server run deploy",
     "release": "run-s release:*",
     "release:changeset": "changeset version",
     "release:publish": "pnpm publish -r --otp $(op item get npm --otp)"

@@ -1,12 +1,16 @@
 #!/usr/bin/env tsx
 import buildTree from '../src/Actions/buildTree';
-import FolderDescription, {
-  FileDescription,
+import FileDescription, {
   isFileDescription
-} from '../src/Models/FolderDescription';
+} from '../src/Models/FileDescription';
+import FolderDescription from '../src/Models/FolderDescription';
 import cli from '@battis/qui-cli';
-import dotenv from 'dotenv';
 import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // TODO deal with _deleted_ files
 
@@ -33,9 +37,11 @@ function merge(
 }
 
 (async () => {
-  dotenv.config();
   const { positionals } = cli.init({
-    env: { root: process.cwd() },
+    env: {
+      root: path.join(__dirname, '../..'),
+      loadDotEnv: path.join(__dirname, '../../.env')
+    },
     args: { requirePositionals: 1 }
   });
   const filePath = positionals[0].toString();

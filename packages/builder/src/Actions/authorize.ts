@@ -5,6 +5,10 @@ import fs from 'fs';
 import { OAuth2Client } from 'google-auth-library';
 import open from 'open';
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const GOOGLE_API_TOKENS = 'GOOGLE_API_TOKENS';
 let logged = false;
@@ -14,30 +18,8 @@ async function authorize(
 ): Promise<OAuth2Client> {
   !logged && spinner?.start('Authenticating');
   return new Promise(async (resolve, reject) => {
-    const possibleCredentials = fs
-      .readdirSync(path.join(process.cwd(), 'var'))
-      .filter((file) => file.match(/^client_secret.*\.json$/));
-    var credentialPath: string;
-    switch (possibleCredentials.length) {
-      case 0:
-        const error = 'No credential file present';
-        spinner?.fail(error);
-        reject(error);
-        return;
-      case 1:
-        credentialPath = possibleCredentials.shift()!;
-        break;
-      default:
-        spinner?.info('Multiple credential files present');
-        credentialPath = await cli.prompts.select({
-          message: 'Which credential file?',
-          choices: possibleCredentials.map((p) => ({ value: p }))
-        });
-        spinner?.start('Authenticating');
-    }
-
     const credentials: GoogleOAuthCredentials = JSON.parse(
-      fs.readFileSync(path.join('var', credentialPath)).toString()
+      fs.readFileSync(path.join(__dirname, '../../var/keys.json')).toString()
     );
     const redirectUri = new URL(
       credentials.web.redirect_uris
@@ -52,10 +34,14 @@ async function authorize(
       redirectUri: redirectUri.href
     });
 
-    var tokens = JSON.parse(cli.env.get({ key: GOOGLE_API_TOKENS }) ?? 'null');
+    let tokens;
+    let tokenPath = path.join(__dirname, '../../var/tokens.json');
+    if (fs.existsSync(tokenPath)) {
+      tokens = JSON.parse(fs.readFileSync(tokenPath).toString());
+    }
     if (tokens) {
       client.setCredentials(tokens);
-      !logged && spinner?.succeed('Authenticated in environment');
+      !logged && spinner?.succeed('Authenticated with cached token');
       resolve(client);
       logged = true;
       return;
@@ -80,7 +66,7 @@ async function authorize(
       }
       if (request.query.code) {
         const { tokens } = await client.getToken(request.query.code.toString());
-        cli.env.set({ key: GOOGLE_API_TOKENS, value: JSON.stringify(tokens) });
+        fs.writeFileSync(tokenPath, JSON.stringify(tokens));
         client.setCredentials(tokens);
         spinner?.succeed('Authenticated in web browser');
         resolve(client);

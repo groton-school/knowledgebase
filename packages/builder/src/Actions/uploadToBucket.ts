@@ -1,4 +1,4 @@
-import { FileDescription } from '../Models/FolderDescription';
+import FileDescription from '../Models/FileDescription';
 import authorize from './authorize';
 import cli from '@battis/qui-cli';
 import { Storage } from '@google-cloud/storage';
@@ -11,29 +11,38 @@ type Configuration = {
   file: FileDescription;
   bucketName: string;
   spinner?: ReturnType<typeof cli.spinner>;
-  fileNamer?: (file: drive_v3.Schema$File, filename?: string) => string;
-  fileFetcher?: (
-    file: drive_v3.Schema$File,
-    oauth: OAuth2Client
-  ) => Promise<Record<string, Blob>>;
+  fileNamer?: (params: {
+    file: drive_v3.Schema$File;
+    filename?: string;
+  }) => string;
+  fileFetcher?: (params: {
+    file: drive_v3.Schema$File;
+    auth: OAuth2Client;
+  }) => Promise<Record<string, Blob | drive_v3.Schema$File>>;
   fileMutator?: (fileContents: Blob) => Promise<Blob>;
   permissionsFilter?: (permission: drive_v3.Schema$Permission) => boolean;
 };
 
-export function stripNonAlphanumeric(
-  file: drive_v3.Schema$File,
-  filename?: string
-): string {
+export function stripNonAlphanumeric({
+  file,
+  filename
+}: {
+  file: drive_v3.Schema$File;
+  filename?: string;
+}): string {
   return (
-    file.name!.replace(/[^a-z0-9()!@*_+=;:,]+/gi, '-').toLowerCase() +
+    file.name!.replace(/[^a-z0-9()!@*_+=;:,.]+/gi, '-').toLowerCase() +
     (filename ? `/${filename}` : '')
   );
 }
 
-export function fetchAsCompleteHtml(
-  file: drive_v3.Schema$File,
-  auth: OAuth2Client
-): Promise<Record<string, Blob>> {
+export function fetchAsCompleteHtml({
+  file,
+  auth
+}: {
+  file: drive_v3.Schema$File;
+  auth: OAuth2Client;
+}): Promise<Record<string, Blob>> {
   return new Promise(async (resolve, reject) => {
     const client = drive.drive({ version: 'v3', auth });
     try {
@@ -79,8 +88,8 @@ async function uploadToBucket({
 }: Configuration): Promise<FileDescription> {
   try {
     spinner?.start(`Processing ${cli.colors.value(file.name)}`);
-    const oauth = await authorize(spinner);
-    const rawFiles = await fileFetcher(file, oauth);
+    const auth = await authorize(spinner);
+    const rawFiles = await fileFetcher({ file, auth });
     for (let _f in rawFiles) {
       let blob = await fileMutator(rawFiles[_f]);
       let filename: string | undefined = _f;
@@ -90,7 +99,7 @@ async function uploadToBucket({
       // storage authorization via process.env.GOOGLE_APPLICATION_CREDENTIALS
       const storage = new Storage();
       const bucket = storage.bucket(bucketName);
-      const remoteFile = bucket.file(fileNamer(file, filename));
+      const remoteFile = bucket.file(fileNamer({ file, filename }));
       spinner?.start(
         `Uploading ${cli.colors.value(remoteFile.name)} (${blob.size} bytes)`
       );

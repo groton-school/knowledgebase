@@ -2,11 +2,11 @@
   "actions" : {
     "build" : {
       "enabled" : true,
-      "script" : "pnpm -F @groton\/knowledgebase.www run deploy:build"
+      "script" : "pnpm run build"
     },
     "run" : {
       "enabled" : true,
-      "script" : "pnpm -F @groton\/knowledgebase.www run deploy"
+      "script" : "pnpm run deploy"
     }
   },
   "openLogOnRun" : "start"

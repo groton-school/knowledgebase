@@ -1,7 +1,7 @@
 *
 .DS_Store
 !/app.yaml
-!/assets
+!/build
 !/package.json
 !/pnpm-lock.yaml
 !/src

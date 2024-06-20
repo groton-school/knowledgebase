@@ -1,12 +1,12 @@
 {
   "name": "@groton/knowledgebase.builder",
   "description": "Knowledgebase website",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "build": "run-s upload:*",
+    "build": "run-s build:*",
     "build:build": "bin/build.ts -o '../server/var/index.json'",
-    "build:upload": "bin/upload.ts '../server/var/index,json'"
+    "build:upload": "bin/upload.ts '../server/var/index.json'"
   },
   "devDependencies": {
     "@tsconfig/recommended": "^1.0.6",
@@ -29,7 +29,6 @@
     "@googleapis/docs": "^3.0.2",
     "@googleapis/drive": "^8.10.0",
     "adm-zip": "^0.5.14",
-    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "google-auth-library": "^9.10.0",
     "jsdom": "^24.0.0",

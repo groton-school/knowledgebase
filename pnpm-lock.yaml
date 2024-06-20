@@ -47,9 +47,6 @@ importers:
       adm-zip:
         specifier: ^0.5.14
         version: 0.5.14
-      dotenv:
-        specifier: ^16.4.5
-        version: 16.4.5
       express:
         specifier: ^4.19.2
         version: 4.19.2
@@ -122,7 +119,7 @@ importers:
         specifier: ^0.0.12
         version: 0.0.12
       '@types/node':
-        specifier: ^20.12.7
+        specifier: ^20.14.6
         version: 20.14.6
       requirejs:
         specifier: ^2.3.6
@@ -136,10 +133,13 @@ importers:
         version: 1.3.2
       '@battis/webpack':
         specifier: latest
-        version: 0.4.4
+        version: 0.4.5
       '@google-cloud/storage':
         specifier: ^6.12.0
         version: 6.12.0
+      copy-webpack-plugin:
+        specifier: ^12.0.2
+        version: 12.0.2(webpack@5.92.1(webpack-cli@5.1.4))
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -233,8 +233,8 @@ packages:
   '@battis/typescript-tricks@0.4.3':
     resolution: {integrity: sha512-7uHRia+kAWWXbTJFMjax3XXmTSIAAnqegLFONN9dAjMv1T5dqRTj+adkKcAlUrZBBQq3A2f0pZz8OFWNwXYTOg==}
 
-  '@battis/webpack@0.4.4':
-    resolution: {integrity: sha512-hSOGYrYOrlBiA0zOvmq6US4VVeNmAHAH7J0vrytGdUYfkB1iRTo2YyTonwbsr1lUdTOgxV+k8OpNityelvfTAQ==}
+  '@battis/webpack@0.4.5':
+    resolution: {integrity: sha512-mqZfi6OYuT8hnMaU5E60QYgeEhu+cz1zgq8PMOY+7ResfvGHfdHEoaRr8Ft6VwWEQRZhcwFm67+61Z892NHptg==}
     engines: {node: '>=12.17'}
 
   '@changesets/apply-release-plan@7.0.3':
@@ -1101,6 +1101,10 @@ packages:
     resolution: {integrity: sha512-ONhaKPIufzzrlNbqtWFFd+jlnemX6lJAgq9ZeiZtS7I1PIf/la7CW4m83rTXRnVnsMbW2k56pGYu7AUFJD9Pow==}
     engines: {node: '>=4'}
 
+  '@sindresorhus/merge-streams@2.3.0':
+    resolution: {integrity: sha512-LtoMMhxAlorcGhmFYI+LhPgbPZCkgP6ra1YL604EeF6U98pLlQ3iWIGMdWSC+vWmPBWBNgmDBAhnAobLROJmwg==}
+    engines: {node: '>=18'}
+
   '@tokenizer/token@0.3.0':
     resolution: {integrity: sha512-OvjF+z51L3ov0OyAU0duzsYuvO01PH7x4t6DJx+guahgTnBHkhJdG7soQeTSFLWN3efnHyibZ4Z8l2EuWwJN3A==}
 
@@ -1154,8 +1158,8 @@ packages:
   '@types/express-serve-static-core@4.19.3':
     resolution: {integrity: sha512-KOzM7MhcBFlmnlr/fzISFF5vGWVSvN6fTd4T+ExOt08bA/dA5kpSzY52nMsI1KDFmUREpJelPYyuslLRSjjgCg==}
 
-  '@types/express-serve-static-core@4.19.4':
-    resolution: {integrity: sha512-ZQSvOi1hrdICnPt6e2eiFGx4iPIqySC5pEWkWfofkyEi7A+ujNy+4W2lzM8n2B/8LBm4d54oZyIOUdCFpMCCAA==}
+  '@types/express-serve-static-core@4.19.5':
+    resolution: {integrity: sha512-y6W03tvrACO72aijJ5uF02FRq5cgDR9lUxddQ8vyF+GvmjJQqbzDcJngEjURc+ZsG31VI3hODNZJ2URj86pzmg==}
 
   '@types/express@4.17.21':
     resolution: {integrity: sha512-ejlPM315qwLpaQlQDTjPdsUFSc6ZsP4AN6AlWnogPjQ7CVi7PYF3YVz+CY3jE2pwYf7E/7HlDAN0rV2GxTG0HQ==}
@@ -1957,6 +1961,12 @@ packages:
   copy-webpack-plugin@11.0.0:
     resolution: {integrity: sha512-fX2MWpamkW0hZxMEg0+mYnA40LTosOSa5TqZ9GYIBzyJa9C3QUaMPSE2xAi/buNr8u89SfD9wHSQVBzrRa/SOQ==}
     engines: {node: '>= 14.15.0'}
+    peerDependencies:
+      webpack: ^5.1.0
+
+  copy-webpack-plugin@12.0.2:
+    resolution: {integrity: sha512-SNwdBeHyII+rWvee/bTnAYyO8vfVdcSTud4EIb6jcZ8inLeWucJE0DnxXQBjlQ5zlteuuvooGQy3LIyGxhvlOA==}
+    engines: {node: '>= 18.12.0'}
     peerDependencies:
       webpack: ^5.1.0
 
@@ -2884,6 +2894,10 @@ packages:
   globby@13.2.2:
     resolution: {integrity: sha512-Y1zNGV+pzQdh7H39l9zgB4PJqjRNqydvdYCDG4HFXM4XuvSaQQlEc91IU1yALL8gUTDomgBAfz3XJdmUS+oo0w==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+
+  globby@14.0.1:
+    resolution: {integrity: sha512-jOMLD2Z7MAhyG8aJpNOpmziMOP4rPLcc95oQPKXBazW82z+CEgPFBQvEpRUa1KeIMUJo4Wsm+q6uzO/Q/4BksQ==}
+    engines: {node: '>=18'}
 
   google-auth-library@8.9.0:
     resolution: {integrity: sha512-f7aQCJODJFmYWN6PeNKzgvy9LI2tYmXnzpNDHEjG5sDNPgGb2FXQyTBnXeSH+PAtpKESFD+LmHw3Ox3mN7e1Fg==}
@@ -4142,6 +4156,10 @@ packages:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
     engines: {node: '>=8'}
 
+  path-type@5.0.0:
+    resolution: {integrity: sha512-5HviZNaZcfqP95rwpv+1HDgUamezbqdSYTyzjTvwtJSnIH+3vnbmWsItli8OFEndS984VT55M3jduxZbX351gg==}
+    engines: {node: '>=12'}
+
   peek-readable@4.1.0:
     resolution: {integrity: sha512-ZI3LnwUv5nOGbQzD9c2iDG6toheuXSZP5esSHBjopsXH4dg19soufvpUGA3uohi5anFtGb2lhAVdHzH6R/Evvg==}
     engines: {node: '>=8'}
@@ -5030,6 +5048,10 @@ packages:
     resolution: {integrity: sha512-3dOsAHXXUkQTpOYcoAxLIorMTp4gIQr5IW3iVb7A7lFIp0VHhnynm9izx6TssdrIcVIESAlVjtnO2K8bg+Coew==}
     engines: {node: '>=12'}
 
+  slash@5.1.0:
+    resolution: {integrity: sha512-ZA6oR3T/pEyuqwMgAKT0/hAv8oAXckzbkmR0UkUosQ+Mc4RxGoJkRmwHgHufaenlyAgE1Mxgpdcrf75y6XcnDg==}
+    engines: {node: '>=14.16'}
+
   smart-buffer@4.2.0:
     resolution: {integrity: sha512-94hK0Hh8rPqQl2xXc3HsaBoOXKV20MToPkcXvwbISWLEs+64sBq5kFgn2kJDHb1Pry9yrP0dxrCI9RRci7RXKg==}
     engines: {node: '>= 6.0.0', npm: '>= 3.0.0'}
@@ -5501,6 +5523,10 @@ packages:
   undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
 
+  unicorn-magic@0.1.0:
+    resolution: {integrity: sha512-lRfVq8fE8gz6QMBuDM6a+LO3IAzTi05H6gCVaUpir2E1Rwpo4ZUog45KpNXKC/Mn3Yb9UDuHumeFTo9iV/D9FQ==}
+    engines: {node: '>=18'}
+
   unist-util-stringify-position@2.0.3:
     resolution: {integrity: sha512-3faScn5I+hy9VleOq/qNbAd6pAx7iH5jYBMS9I1HgQVijz/4mv5Bvw5iw1sC/90CODiKo81G/ps8AJrISn687g==}
 
@@ -5962,7 +5988,7 @@ snapshots:
 
   '@battis/typescript-tricks@0.4.3': {}
 
-  '@battis/webpack@0.4.4':
+  '@battis/webpack@0.4.5':
     dependencies:
       app-root-path: 3.1.0
       copy-webpack-plugin: 11.0.0(webpack@5.92.1(webpack-cli@5.1.4))
@@ -7089,6 +7115,8 @@ snapshots:
 
   '@sindresorhus/is@0.7.0': {}
 
+  '@sindresorhus/merge-streams@2.3.0': {}
+
   '@tokenizer/token@0.3.0': {}
 
   '@tootallnate/once@2.0.0': {}
@@ -7126,7 +7154,7 @@ snapshots:
 
   '@types/connect-history-api-fallback@1.5.4':
     dependencies:
-      '@types/express-serve-static-core': 4.19.4
+      '@types/express-serve-static-core': 4.19.5
       '@types/node': 20.14.6
 
   '@types/connect@3.4.38':
@@ -7152,7 +7180,7 @@ snapshots:
       '@types/range-parser': 1.2.7
       '@types/send': 0.17.4
 
-  '@types/express-serve-static-core@4.19.4':
+  '@types/express-serve-static-core@4.19.5':
     dependencies:
       '@types/node': 20.14.6
       '@types/qs': 6.9.15
@@ -8049,6 +8077,16 @@ snapshots:
       fast-glob: 3.3.2
       glob-parent: 6.0.2
       globby: 13.2.2
+      normalize-path: 3.0.0
+      schema-utils: 4.2.0
+      serialize-javascript: 6.0.2
+      webpack: 5.92.1(webpack-cli@5.1.4)
+
+  copy-webpack-plugin@12.0.2(webpack@5.92.1(webpack-cli@5.1.4)):
+    dependencies:
+      fast-glob: 3.3.2
+      glob-parent: 6.0.2
+      globby: 14.0.1
       normalize-path: 3.0.0
       schema-utils: 4.2.0
       serialize-javascript: 6.0.2
@@ -9187,6 +9225,15 @@ snapshots:
       ignore: 5.3.1
       merge2: 1.4.1
       slash: 4.0.0
+
+  globby@14.0.1:
+    dependencies:
+      '@sindresorhus/merge-streams': 2.3.0
+      fast-glob: 3.3.2
+      ignore: 5.3.1
+      path-type: 5.0.0
+      slash: 5.1.0
+      unicorn-magic: 0.1.0
 
   google-auth-library@8.9.0:
     dependencies:
@@ -10483,6 +10530,8 @@ snapshots:
 
   path-type@4.0.0: {}
 
+  path-type@5.0.0: {}
+
   peek-readable@4.1.0: {}
 
   pend@1.2.0: {}
@@ -11425,6 +11474,8 @@ snapshots:
 
   slash@4.0.0: {}
 
+  slash@5.1.0: {}
+
   smart-buffer@4.2.0: {}
 
   smartwrap@2.0.2:
@@ -11927,6 +11978,8 @@ snapshots:
       through: 2.3.8
 
   undici-types@5.26.5: {}
+
+  unicorn-magic@0.1.0: {}
 
   unist-util-stringify-position@2.0.3:
     dependencies:

@@ -69,6 +69,30 @@ const options = JSON.parse(
       `gcloud storage buckets update gs://${bucket} --project=${project.projectId} --public-access-prevention --no-uniform-bucket-level-access`
     );
 
+    cli.log.info(`
+You need to manually configure the OAuth Consent screen at ${cli.colors.url(
+      `https://console.cloud.google.com/apis/credentials/consent?project=${project.projectId}`
+    )}
+`);
+
+    cli.shell.mkdir('-p', path.join(cli.appRoot(), 'packages/builder/var'));
+    cli.log.info(`
+You need to manually create and download keys for the ${cli.colors.command(
+      'builder'
+    )} at ${cli.colors.url(
+      `https://console.cloud.google.com/apis/credentials?project=${project.projectId}`
+    )}
+  - Create client: ${cli.colors.value('OAuth Client ID')}
+  - Application Type: ${cli.colors.value('web application')}
+  - Authorized redirect URI: ${cli.colors.url(
+    'https://localhost:3000/oauth2callback'
+  )}
+
+Download these credentials to ${cli.colors.url(
+      path.join(cli.appRoot(), 'packages/builder/var/keys.json')
+    )}
+`);
+
     const configFilePath = path.join(
       cli.appRoot(),
       'packages/server/var/config.json'
@@ -81,14 +105,10 @@ const options = JSON.parse(
     }
     config.storage.bucket = bucket;
     fs.writeFileSync(configFilePath, JSON.stringify(config));
-
     cli.log.info(`
-You need to manually configure the OAuth Consent screen at ${cli.colors.url(
-      `https://console.cloud.google.com/apis/credentials/consent?project=${project.projectId}`
-    )}
-`);
-    cli.log.info(`
-You need to manually create and download keys for the app screen at ${cli.colors.url(
+You need to manually create and download keys for the ${cli.colors.command(
+      'server'
+    )} at ${cli.colors.url(
       `https://console.cloud.google.com/apis/credentials?project=${project.projectId}`
     )}
   - Create client: ${cli.colors.value('OAuth Client ID')}
