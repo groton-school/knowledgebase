@@ -1,8 +1,9 @@
 #!/usr/bin/env tsx
 import uploadFile from '../src/Actions/uploadFile';
 import uploadTree from '../src/Actions/uploadTree';
-import { isFileDescription } from '../src/Models/FileDescription';
-import FolderDescription from '../src/Models/FolderDescription';
+import FolderDescription, {
+  isFileDescription
+} from '../src/Models/FolderDescription';
 import cli from '@battis/qui-cli';
 import fs from 'fs';
 import path from 'path';

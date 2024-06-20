@@ -1,5 +1,6 @@
-import { isFileDescription } from '../Models/FileDescription';
-import FolderDescription from '../Models/FolderDescription';
+import FolderDescription, {
+  isFileDescription
+} from '../Models/FolderDescription';
 import { convertToOverdriveStyle } from './renameFile';
 import uploadFile from './uploadFile';
 import cli from '@battis/qui-cli';

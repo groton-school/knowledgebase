@@ -1,5 +1,7 @@
-import FileDescription, { isFileDescription } from '../Models/FileDescription';
-import FolderDescription from '../Models/FolderDescription';
+import FileDescription from '../Models/FileDescription';
+import FolderDescription, {
+  isFileDescription
+} from '../Models/FolderDescription';
 
 function mergeTrees(
   prev: FolderDescription | FileDescription,
