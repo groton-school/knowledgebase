@@ -1,4 +1,5 @@
 #!/usr/bin/env tsx
+import pipelineHTML from '../src/Actions/pipelineHTML';
 import uploadToBucket, {
   stripNonAlphanumeric,
   fetchAsCompleteHtml
@@ -11,7 +12,6 @@ import cli from '@battis/qui-cli';
 import drive, { drive_v3 } from '@googleapis/drive';
 import fs from 'fs';
 import { OAuth2Client } from 'google-auth-library';
-import { JSDOM } from 'jsdom';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -85,92 +85,6 @@ function fileRenamer({
     default:
       return result;
   }
-}
-
-async function addMetaId({
-  file,
-  blob
-}: {
-  file: FileDescription;
-  blob: Blob;
-}): Promise<Blob> {
-  if (blob.type?.startsWith('text/html')) {
-    const html = await blob.text();
-    return new Blob(
-      [
-        html.replace(
-          '<style',
-          `<meta item-prop="kb.id" content="${file.id}" /><style`
-        )
-      ],
-      { type: blob.type }
-    );
-  }
-  return blob;
-}
-
-async function demoteBodyToDiv({
-  file,
-  blob
-}: {
-  file: FileDescription;
-  blob: Blob;
-}): Promise<Blob> {
-  if (blob.type?.startsWith('text/html')) {
-    const html = await blob.text();
-    return new Blob(
-      [html.replace('<body', '<body><div').replace('</body>', `</div></body>`)],
-      { type: blob.type }
-    );
-  }
-  return blob;
-}
-
-async function injectAssets({
-  file,
-  blob
-}: {
-  file: FileDescription;
-  blob: Blob;
-}): Promise<Blob> {
-  if (blob.type?.startsWith('text/html')) {
-    const html = await blob.text();
-    return new Blob(
-      [
-        html
-          .replace(
-            '<head>',
-            '<head><link rel="icon" href="/assets/favicon.ico">'
-          )
-          .replace(
-            '</head>',
-            `<link rel="stylesheet" href="/assets/kb.css" /></head>`
-          )
-          .replace('</body>', `<script href="/assets/kb.js"></script></body>`)
-      ],
-      { type: blob.type }
-    );
-  }
-  return blob;
-}
-
-async function removeScripts({
-  file,
-  blob
-}: {
-  file: FileDescription;
-  blob: Blob;
-}): Promise<Blob> {
-  if (blob.type?.startsWith('text/html')) {
-    const dom = new JSDOM(await blob.text());
-    Array.from(dom.window.document.querySelectorAll('script')).forEach((s) =>
-      s.remove()
-    );
-    return new Blob([dom.window.document.documentElement.outerHTML], {
-      type: blob.type
-    });
-  }
-  return blob;
 }
 
 function onlyKbPermissionGroups(
@@ -258,17 +172,7 @@ async function uploadFile({
         fileFetcher: fetchAsHtmlIfPossible,
         fileNamer: ({ file, filename }) =>
           fileRenamer({ filePath, file, filename }),
-        fileMutator: async (blob) =>
-          injectAssets({
-            file,
-            blob: await removeScripts({
-              file,
-              blob: await demoteBodyToDiv({
-                file,
-                blob: await addMetaId({ file, blob })
-              })
-            })
-          }),
+        fileMutator: async (blob) => pipelineHTML({ file, blob }),
         permissionsFilter: onlyKbPermissionGroups
       });
     }
