@@ -5,11 +5,12 @@
     "name": "Seth Battis",
     "email": "sbattis@groton.org"
   },
+  "type": "module",
   "scripts": {
     "setup": "bin/setup.sh",
     "deploy": "run-s deploy:*",
     "deploy:lockfile": "make-dedicated-lockfile",
-    "deploy:deploy": "bin/deploy.mjs",
+    "deploy:deploy": "bin/deploy.js",
     "start": "node src/index.js"
   },
   "devDependencies": {

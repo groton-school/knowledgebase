@@ -1,11 +1,22 @@
-const express = require('express');
-const cookieParser = require('cookie-parser');
-const { OAuth2Client } = require('google-auth-library');
-const { Storage } = require('@google-cloud/storage');
-const keys = require('../var/keys.json');
-const config = require('../var/config.json');
-const winston = require('winston');
-const { LoggingWinston } = require('@google-cloud/logging-winston');
+import { LoggingWinston } from '@google-cloud/logging-winston';
+import { Storage } from '@google-cloud/storage';
+import cookieParser from 'cookie-parser';
+import express from 'express';
+import fs from 'fs/promises';
+import { OAuth2Client } from 'google-auth-library';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import winston from 'winston';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const keys = JSON.parse(
+  await fs.readFile(path.resolve(__dirname, '../var/keys.json'))
+);
+const config = JSON.parse(
+  await fs.readFile(path.resolve(__dirname, '../var/config.json'))
+);
 
 const TOKEN = 'token';
 const REDIRECT = 'redirect';
