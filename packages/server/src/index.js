@@ -30,15 +30,22 @@ const REDIRECT = 'redirect';
     } else {
       if (req.cookies?.token) {
         authClient.setCredentials(req.cookies.token);
-        const file = new Storage({
-          authClient,
-          projectId: process.env.GOOGLE_CLOUD_PROJECT
-        })
-          .bucket(config.storage.bucket)
-          .file(normalizePath(req.path));
-        const metadata = (await file.getMetadata())[0];
-        res.type(metadata.contentType);
-        res.send((await file.download()).toString());
+        try {
+          const file = new Storage({
+            authClient,
+            projectId: process.env.GOOGLE_CLOUD_PROJECT
+          })
+            .bucket(config.storage.bucket)
+            .file(normalizePath(req.path));
+          const metadata = (await file.getMetadata())[0];
+          res.type(metadata.contentType);
+          res.send((await file.download()).toString());
+        } catch (error) {
+          error.request = req;
+          console.error(error);
+          res.statusMessage = error.errors.map((e) => e.reason).join(', ');
+          res.status(error.code).end();
+        }
       } else {
         res.cookie(REDIRECT, req.url, { secure: true, httpOnly: true });
         res.redirect(
@@ -67,8 +74,8 @@ const REDIRECT = 'redirect';
   function deauthorize(_, res) {
     res.clearCookie(TOKEN);
     res.clearCookie(REDIRECT);
-    res.send('logged out');
-    res.end();
+    res.statusMessage = 'Logged out';
+    res.status(200).end();
   }
 
   const app = express();
