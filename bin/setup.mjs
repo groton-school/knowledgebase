@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 import gcloud from '@battis/partly-gcloudy';
 import cli from '@battis/qui-cli';
-import fs from 'fs';
+import fs from 'fs/promises';
 import path from 'path';
 
 const options = JSON.parse(
-  fs.readFileSync(new URL('./options.json', import.meta.url))
+  await fs.readFile(new URL('./options.json', import.meta.url))
 );
 
 (async () => {
@@ -98,13 +98,13 @@ Download these credentials to ${cli.colors.url(
       'packages/server/var/config.json'
     );
     let config = {};
-    if (fs.existsSync(configFilePath)) {
-      config = JSON.parse(fs.readFileSync(configFilePath).toString());
+    if (await fs.exists(configFilePath)) {
+      config = JSON.parse((await fs.readFile(configFilePath)).toString());
     } else {
       cli.shell.mkdir('-p', path.dirname(configFilePath));
     }
     config.storage.bucket = bucket;
-    fs.writeFileSync(configFilePath, JSON.stringify(config));
+    await fs.writeFile(configFilePath, JSON.stringify(config));
     cli.log.info(`
 You need to manually create and download keys for the ${cli.colors.command(
       'server'

@@ -12,10 +12,7 @@
   },
   "license": "GPL-3.0",
   "scripts": {
-    "build": "webpack",
-    "deploy": "run-s deploy:*",
-    "deploy:build": "npm run build",
-    "deploy:deploy": "./bin/deploy.js"
+    "build": "webpack"
   },
   "devDependencies": {
     "@battis/eslint-config": "latest",
