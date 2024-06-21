@@ -43,7 +43,6 @@ const options = {
       validate: cli.validators.notEmpty
     }));
   const tree = await buildTree(folderId, spinner);
-  const folderName = Object.keys(tree)[0];
   const filePath = path.resolve(
     cwd,
     (
@@ -55,7 +54,7 @@ const options = {
       }))
     )
       .replace(FOLDER_ID, folderId)
-      .replace(FOLDER_NAME, folderName)
+      .replace(FOLDER_NAME, tree.folder['.'].name!)
       .replace(TIMESTAMP, new Date().toISOString())
   );
   spinner.start(`Writing index to ${filePath}`);

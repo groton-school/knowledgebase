@@ -1,7 +1,7 @@
 #!/usr/bin/env tsx
 import buildTree from '../src/Actions/buildTree';
 import mergeTrees from '../src/Actions/mergeTrees';
-import Folder from '../src/Schema/Folder';
+import Tree from '../src/Schema/Tree';
 import cli from '@battis/qui-cli';
 import fs from 'fs';
 import path from 'path';
@@ -20,33 +20,24 @@ const __dirname = path.dirname(__filename);
     },
     args: { requirePositionals: 1 }
   });
-  const filePath = positionals[0].toString();
+  const indexPath = positionals[0].toString();
   const spinner = cli.spinner();
-  spinner.start(`Loading index from ${cli.colors.url(filePath)}`);
-  const prevTree: Folder = JSON.parse(
-    fs.readFileSync(filePath).toString()
-  ) as Folder;
-  const prevName = Object.keys(prevTree)[0];
-  spinner.succeed(`${cli.colors.value(prevName)} index loaded`);
+  spinner.start(`Loading index from ${cli.colors.url(indexPath)}`);
+  const prevTree: Tree = JSON.parse(
+    fs.readFileSync(indexPath).toString()
+  ) as Tree;
+  spinner.succeed(
+    `${cli.colors.value(prevTree.folder['.'].name)} index loaded`
+  );
 
   spinner.start('Indexing');
-  const nextTree = await buildTree(
-    (prevTree[prevName] as Folder)['.'].id!,
-    spinner
-  );
-  const nextName = Object.keys(nextTree)[0];
-  spinner.succeed(`Indexed ${nextName}`);
+  const nextTree = await buildTree(prevTree.folder['.'].id!, spinner);
+  spinner.succeed(`Indexed ${cli.colors.value(nextTree.folder['.'].name)}`);
 
-  spinner.start(`Writing index to ${cli.colors.url(filePath)}`);
-  nextTree[nextName] = mergeTrees(
-    prevTree[prevName],
-    nextTree[nextName] as Folder
-  );
+  spinner.start(`Writing index to ${cli.colors.url(indexPath)}`);
+  nextTree.folder = mergeTrees(prevTree.folder, nextTree.folder);
 
-  fs.writeFileSync(
-    positionals[0].toString(),
-    JSON.stringify(nextTree, null, 2)
-  );
+  fs.writeFileSync(indexPath, JSON.stringify(nextTree, null, 2));
 
-  spinner.succeed(filePath);
+  spinner.succeed(`Updated index at ${cli.colors.url(indexPath)}`);
 })();
