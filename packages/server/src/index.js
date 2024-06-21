@@ -40,7 +40,7 @@ const REDIRECT = 'redirect';
     return requestPath.substr(1);
   }
 
-  async function mapToCloudStorage(req, res) {
+  async function streamFromBucket(req, res) {
     if (!req.path.endsWith('/') && !/.*\.[^\\]+$/i.test(req.path)) {
       res.redirect(`${req.path}/`).end();
     } else {
@@ -54,8 +54,13 @@ const REDIRECT = 'redirect';
             .bucket(config.storage.bucket)
             .file(normalizePath(req.path));
           const metadata = (await file.getMetadata())[0];
-          res.type(metadata.contentType);
-          res.send((await file.download()).toString()).end();
+          res.type(metadata.contentType || path.extname(req.path));
+          const stream = file.createReadStream();
+          stream.on('data', (data) => res.write(data));
+          stream.on('error', (error) =>
+            logger.error(file.cloudStorageURI, error)
+          );
+          stream.on('end', () => res.end());
         } catch (error) {
           logger.error(req.originalUrl, error);
           res.status(error.code).end();
@@ -81,15 +86,13 @@ const REDIRECT = 'redirect';
       secure: true,
       httpOnly: true
     });
-    res.redirect(redirect);
-    res.end();
+    res.redirect(redirect).end();
   }
 
   function deauthorize(_, res) {
     res.clearCookie(TOKEN);
     res.clearCookie(REDIRECT);
-    res.statusMessage = 'Logged out';
-    res.status(200).end();
+    res.send('Logged out');
   }
 
   const app = express();
@@ -104,7 +107,7 @@ const REDIRECT = 'redirect';
    * exclude GAE `/_ah/*` endpoints but process others matching `/*`
    * https://stackoverflow.com/a/53606500/294171
    */
-  app.get(/^(?!.*_ah).*$/, mapToCloudStorage);
+  app.get(/^(?!.*_ah).*$/, streamFromBucket);
 
   const port = process.env.PORT || 8080;
   app.listen(port, () => {
