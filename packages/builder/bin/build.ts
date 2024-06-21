@@ -24,10 +24,11 @@ const options = {
 };
 
 (async () => {
+  const cwd = process.cwd();
   const { values } = cli.init({
     env: {
-      root: path.join(__dirname, '../..'),
-      loadDotEnv: path.join(__dirname, '../../.env')
+      root: path.join(__dirname, '../../..'),
+      loadDotEnv: path.join(__dirname, '../../../.env')
     },
     args: { options }
   });
@@ -43,20 +44,23 @@ const options = {
     }));
   const tree = await buildTree(folderId, spinner);
   const folderName = Object.keys(tree)[0];
-  spinner.succeed(`Indexed ${folderName}`);
-  const filePath = (
-    values.output ||
-    (await cli.prompts.input({
-      message: options.output.description,
-      default: path.resolve(cli.appRoot(), '../server/var/index.json'),
-      validate: cli.validators.notEmpty
-    }))
-  )
-    .replace(FOLDER_ID, folderId)
-    .replace(FOLDER_NAME, folderName)
-    .replace(TIMESTAMP, new Date().toISOString());
+  const filePath = path.resolve(
+    cwd,
+    (
+      values.output ||
+      (await cli.prompts.input({
+        message: options.output.description,
+        default: path.resolve(cli.appRoot(), '../server/var/index.json'),
+        validate: cli.validators.notEmpty
+      }))
+    )
+      .replace(FOLDER_ID, folderId)
+      .replace(FOLDER_NAME, folderName)
+      .replace(TIMESTAMP, new Date().toISOString())
+  );
   spinner.start(`Writing index to ${filePath}`);
   const content = JSON.stringify(tree, null, 2);
+  cli.shell.mkdir('-p', path.dirname(filePath));
   fs.writeFileSync(filePath, content);
-  spinner.succeed(filePath);
+  spinner.succeed(`Wrote index to ${cli.colors.url(filePath)}`);
 })();

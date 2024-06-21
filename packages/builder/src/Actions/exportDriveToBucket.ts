@@ -1,14 +1,14 @@
-import FileDescription from '../Models/FileDescription';
+import File from '../Schema/File';
 import authorize from './authorize';
 import { fetchAsCompleteHtml } from './fetchDriveFiles';
-import { convertToOverdriveStyle } from './renameFile';
+import { convertToOverdriveStyle } from './pipelineFileName';
 import cli from '@battis/qui-cli';
 import { Storage } from '@google-cloud/storage';
 import { drive_v3 } from '@googleapis/drive';
 import { OAuth2Client } from 'google-auth-library';
 
 type Configuration = {
-  file: FileDescription;
+  file: File;
   bucketName: string;
   spinner?: ReturnType<typeof cli.spinner>;
   fileNamer?: (params: {
@@ -23,7 +23,7 @@ type Configuration = {
   permissionsFilter?: (permission: drive_v3.Schema$Permission) => boolean;
 };
 
-async function uploadToBucket({
+async function exportDriveToBucket({
   file,
   bucketName,
   spinner,
@@ -31,7 +31,7 @@ async function uploadToBucket({
   fileFetcher = fetchAsCompleteHtml,
   fileMutator = async (blob) => blob,
   permissionsFilter = () => true
-}: Configuration): Promise<FileDescription> {
+}: Configuration): Promise<File> {
   try {
     spinner?.start(`Processing ${cli.colors.value(file.name)}`);
     const auth = await authorize(spinner);
@@ -110,4 +110,4 @@ async function uploadToBucket({
   return file;
 }
 
-export default uploadToBucket;
+export default exportDriveToBucket;

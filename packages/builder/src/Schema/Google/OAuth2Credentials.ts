@@ -1,4 +1,4 @@
-type GoogleOAuthCredentials = {
+type OAuth2Credentials = {
   web: {
     client_id: string;
     project_id: string;
@@ -8,4 +8,4 @@ type GoogleOAuthCredentials = {
     redirect_uris?: string[];
   };
 };
-export default GoogleOAuthCredentials;
+export default OAuth2Credentials;

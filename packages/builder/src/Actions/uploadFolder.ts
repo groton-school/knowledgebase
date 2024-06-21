@@ -1,37 +1,35 @@
-import FolderDescription, {
-  isFileDescription
-} from '../Models/FolderDescription';
-import { convertToOverdriveStyle } from './renameFile';
+import Folder, { isFile } from '../Schema/Folder';
+import { convertToOverdriveStyle } from './pipelineFileName';
 import uploadFile from './uploadFile';
 import cli from '@battis/qui-cli';
 import path from 'path';
 
-async function uploadTree({
-  subtree,
+async function uploadFolder({
+  folder,
   folderPath = '',
   bucketName,
   spinner,
   force,
   ignoreErrors
 }: {
-  subtree: FolderDescription;
+  folder: Folder;
   folderPath?: string;
   bucketName: string;
   force: boolean;
   ignoreErrors: boolean;
   spinner?: ReturnType<typeof cli.spinner>;
 }) {
-  const folder = subtree['.'];
+  const thisFolder = folder['.'];
   const nextPath = path.join(
     folderPath,
-    convertToOverdriveStyle({ file: folder })
+    convertToOverdriveStyle({ file: thisFolder })
   );
   spinner?.start(nextPath);
-  for (const fileName of Object.keys(subtree)) {
+  for (const fileName of Object.keys(folder)) {
     if (fileName != '.') {
-      const file = subtree[fileName];
-      if (isFileDescription(file)) {
-        subtree[fileName] = await uploadFile({
+      const file = folder[fileName];
+      if (isFile(file)) {
+        folder[fileName] = await uploadFile({
           file,
           filePath: nextPath,
           bucketName,
@@ -40,8 +38,8 @@ async function uploadTree({
           spinner
         });
       } else {
-        subtree[fileName] = await uploadTree({
-          subtree: file,
+        folder[fileName] = await uploadFolder({
+          folder: file,
           folderPath: nextPath,
           bucketName,
           force,
@@ -52,7 +50,7 @@ async function uploadTree({
     }
   }
   spinner?.succeed(cli.colors.url(nextPath));
-  return subtree;
+  return folder;
 }
 
-export default uploadTree;
+export default uploadFolder;

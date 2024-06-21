@@ -1,9 +1,9 @@
-import FileDescription from '../Models/FileDescription';
+import File from '../Schema/File';
+import exportDriveToBucket from './exportDriveToBucket';
 import { fetchAsHtmlIfPossible } from './fetchDriveFiles';
-import filterPermissions from './filterPermissions';
+import { selectiveRename } from './pipelineFileName';
 import pipelineHTML from './pipelineHTML';
-import { selectiveRename } from './renameFile';
-import uploadToBucket from './uploadToBucket';
+import filterPermissions from './pipelinePermissions';
 import cli from '@battis/qui-cli';
 
 async function uploadFile({
@@ -14,7 +14,7 @@ async function uploadFile({
   force,
   ignoreErrors
 }: {
-  file: FileDescription;
+  file: File;
   filePath?: string;
   spinner?: ReturnType<typeof cli.spinner>;
   force: boolean;
@@ -29,7 +29,7 @@ async function uploadFile({
       !file.index.uploaded ||
       file.index.timestamp < file.modifiedTime!
     ) {
-      file = await uploadToBucket({
+      file = await exportDriveToBucket({
         spinner,
         file,
         bucketName,

@@ -1,21 +1,16 @@
-import FileDescription from '../Models/FileDescription';
-import FolderDescription, {
-  isFileDescription
-} from '../Models/FolderDescription';
+import File from '../Schema/File';
+import Folder, { isFile } from '../Schema/Folder';
 
-function mergeTrees(
-  prev: FolderDescription | FileDescription,
-  next: FolderDescription
-): FolderDescription {
-  if (isFileDescription(prev)) {
+function mergeTrees(prev: Folder | File, next: Folder): Folder {
+  if (isFile(prev)) {
     return next;
   }
   const merged = next;
   for (const filename of Object.keys(next)) {
     const prevFile = prev[filename];
     const nextFile = next[filename];
-    if (isFileDescription(nextFile)) {
-      if (isFileDescription(prevFile) && prevFile.index) {
+    if (isFile(nextFile)) {
+      if (isFile(prevFile) && prevFile.index) {
         merged[filename].index = prevFile.index;
       }
     } else {

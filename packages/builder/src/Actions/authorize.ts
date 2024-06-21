@@ -1,4 +1,4 @@
-import type GoogleOAuthCredentials from '../Models/GoogleOAuthCredentials';
+import OAuth2Credentials from '../Schema/Google/OAuth2Credentials';
 import cli from '@battis/qui-cli';
 import express from 'express';
 import fs from 'fs';
@@ -17,7 +17,7 @@ async function authorize(
 ): Promise<OAuth2Client> {
   !logged && spinner?.start('Authenticating');
   return new Promise(async (resolve, reject) => {
-    const credentials: GoogleOAuthCredentials = JSON.parse(
+    const credentials: OAuth2Credentials = JSON.parse(
       fs.readFileSync(path.join(__dirname, '../../var/keys.json')).toString()
     );
     const redirectUri = new URL(

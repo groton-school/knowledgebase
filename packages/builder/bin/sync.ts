@@ -1,7 +1,7 @@
 #!/usr/bin/env tsx
 import buildTree from '../src/Actions/buildTree';
 import mergeTrees from '../src/Actions/mergeTrees';
-import FolderDescription from '../src/Models/FolderDescription';
+import Folder from '../src/Schema/Folder';
 import cli from '@battis/qui-cli';
 import fs from 'fs';
 import path from 'path';
@@ -23,15 +23,15 @@ const __dirname = path.dirname(__filename);
   const filePath = positionals[0].toString();
   const spinner = cli.spinner();
   spinner.start(`Loading index from ${cli.colors.url(filePath)}`);
-  const prevTree: FolderDescription = JSON.parse(
+  const prevTree: Folder = JSON.parse(
     fs.readFileSync(filePath).toString()
-  ) as FolderDescription;
+  ) as Folder;
   const prevName = Object.keys(prevTree)[0];
   spinner.succeed(`${cli.colors.value(prevName)} index loaded`);
 
   spinner.start('Indexing');
   const nextTree = await buildTree(
-    (prevTree[prevName] as FolderDescription)['.'].id!,
+    (prevTree[prevName] as Folder)['.'].id!,
     spinner
   );
   const nextName = Object.keys(nextTree)[0];
@@ -40,7 +40,7 @@ const __dirname = path.dirname(__filename);
   spinner.start(`Writing index to ${cli.colors.url(filePath)}`);
   nextTree[nextName] = mergeTrees(
     prevTree[prevName],
-    nextTree[nextName] as FolderDescription
+    nextTree[nextName] as Folder
   );
 
   fs.writeFileSync(

@@ -1,4 +1,4 @@
-import FileDescription from '../Models/FileDescription';
+import File from '../Schema/File';
 import { drive_v3 } from '@googleapis/drive';
 import path from 'path';
 
@@ -8,7 +8,7 @@ export function selectiveRename({
   filename
 }: {
   filePath: string;
-  file: FileDescription;
+  file: File;
   filename?: string;
 }) {
   const result = path.join(

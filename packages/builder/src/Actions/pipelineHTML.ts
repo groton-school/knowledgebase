@@ -1,10 +1,7 @@
-import FileDescription from '../Models/FileDescription';
+import File from '../Schema/File';
 import { JSDOM } from 'jsdom';
 
-type PipelineFunction = (params: {
-  file: FileDescription;
-  html: string;
-}) => string;
+type PipelineFunction = (params: { file: File; html: string }) => string;
 
 const injectGoogleDocId: PipelineFunction = ({ file, html }) => {
   return html.replace(
@@ -41,7 +38,7 @@ async function pipelineHTML({
   file,
   blob
 }: {
-  file: FileDescription;
+  file: File;
   blob: Blob;
 }): Promise<Blob> {
   if (blob.type?.startsWith('text/html')) {

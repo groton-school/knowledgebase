@@ -1,9 +1,8 @@
 #!/usr/bin/env tsx
 import uploadFile from '../src/Actions/uploadFile';
-import uploadTree from '../src/Actions/uploadTree';
-import FolderDescription, {
-  isFileDescription
-} from '../src/Models/FolderDescription';
+import uploadFolder from '../src/Actions/uploadFolder';
+import { isFile } from '../src/Schema/Folder';
+import Tree from '../src/Schema/Tree';
 import cli from '@battis/qui-cli';
 import fs from 'fs';
 import path from 'path';
@@ -64,20 +63,15 @@ const flags = {
   const ignoreErrors = !!values.ignoreErrors;
 
   spinner.start(indexPath);
-  const tree: FolderDescription = JSON.parse(
-    fs
-      .readFileSync(path.resolve(cli.appRoot(), indexPath).toString())
-      .toString()
-  );
-  spinner.succeed(positionals[0]);
+  const tree: Tree = JSON.parse(fs.readFileSync(indexPath).toString());
+  spinner.succeed(indexPath);
 
-  const rootFolder = Object.keys(tree)[0];
-  spinner.start(rootFolder);
-  for (const fileName of Object.keys(tree[rootFolder])) {
+  spinner.start(tree.folder['.'].name!);
+  for (const fileName of Object.keys(tree.folder)) {
     if (fileName != '.') {
-      let file = (tree[rootFolder] as FolderDescription)[fileName];
-      if (isFileDescription(file)) {
-        (tree[rootFolder] as FolderDescription)[fileName] = await uploadFile({
+      let file = tree.folder[fileName];
+      if (isFile(file)) {
+        tree.folder[fileName] = await uploadFile({
           file,
           bucketName,
           force,
@@ -85,8 +79,8 @@ const flags = {
           spinner
         });
       } else {
-        (tree[rootFolder] as FolderDescription)[fileName] = await uploadTree({
-          subtree: file,
+        tree.folder[fileName] = await uploadFolder({
+          folder: file,
           bucketName,
           force,
           ignoreErrors,
@@ -95,7 +89,7 @@ const flags = {
       }
     }
   }
-  spinner.succeed(cli.colors.url(rootFolder));
+  spinner.succeed(cli.colors.value(tree.folder['.'].name));
   if (values.overwrite) {
     fs.writeFileSync(indexPath, JSON.stringify(tree, null, 2));
   } else {
