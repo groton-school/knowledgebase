@@ -19,6 +19,7 @@ const properNouns = [
   'Chrome',
   'December',
   'Dell',
+  'DLP',
   'DVD',
   'Epson',
   'February',

@@ -1,6 +1,6 @@
 import pkg from '../package.json';
 import Embed from './Embed';
-import Functionality from './Functionality';
+// import Functionality from './Functionality';
 import Helper from './Helper';
 import UI from './UI';
 import '@battis/webpack';
@@ -12,20 +12,12 @@ Helper.vanity(
     JSON.parse(process.env.DEBUGGING!) ? 'development' : 'production'
   }\n${
     /\?cache=/.test(
-      (document.querySelector('script[src*="kb-"]') as HTMLScriptElement).src
+      (document.querySelector('script[src$="kb.js"]') as HTMLScriptElement).src
     )
       ? 'X GSC caching disabled'
       : '✓ GSC caching enabled'
   }`
 );
-
-Helper.require([
-  `https://storage.googleapis.com/${
-    process.env.BUCKET_NAME as string
-  }/build/kb-${pkg.version}.css${
-    process.env.DEBUGGING ? `?cache=${crypto.randomUUID()}` : ''
-  }`
-]);
 
 // Functionality();
 UI();

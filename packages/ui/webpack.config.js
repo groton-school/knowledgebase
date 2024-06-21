@@ -20,6 +20,5 @@ module.exports = require('@battis/webpack/ts/vanilla')({
       patterns: [{ from: 'assets', to: path.join(build, 'assets') }]
     })
   ],
-  externals: { requirejs: 'requirejs' }, // reuse Overdrive dependencies
   production: !JSON.parse(process.env.DEBUGGING)
 });

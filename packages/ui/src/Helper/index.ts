@@ -1,14 +1,13 @@
 import * as Cookies from './Cookies';
+import Stack from './Stack';
 import fontAwesome from './fontAwesome';
 import iframe from './iframe';
 import log from './log';
 import onGoogleDocEmbed from './onGoogleDocEmbed';
 import * as onLoad from './onLoad';
 import onSelectorReady from './onSelectorReady';
-import libRequire from './require';
-import vanity from './vanity';
 import straightenCurlyQuotes from './straightenCurlyQuotes';
-import Stack from './Stack';
+import vanity from './vanity';
 
 /**
  * Helper functions used across all plugins
@@ -23,7 +22,6 @@ const Helper = {
   fontAwesome,
   vanity,
   straightenCurlyQuotes,
-  require: libRequire,
   Stack
 };
 export default Helper;
