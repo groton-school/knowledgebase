@@ -2,7 +2,7 @@ import { LoggingWinston } from '@google-cloud/logging-winston';
 import { Storage } from '@google-cloud/storage';
 import cookieParser from 'cookie-parser';
 import express from 'express';
-import fs from 'fs/promises';
+import fs from 'fs';
 import { OAuth2Client } from 'google-auth-library';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -12,10 +12,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const keys = JSON.parse(
-  await fs.readFile(path.resolve(__dirname, '../var/keys.json'))
+  fs.readFileSync(path.resolve(__dirname, '../var/keys.json'))
 );
 const config = JSON.parse(
-  await fs.readFile(path.resolve(__dirname, '../var/config.json'))
+  fs.readFileSync(path.resolve(__dirname, '../var/config.json'))
 );
 
 const TOKEN = 'token';

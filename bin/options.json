@@ -17,5 +17,8 @@
   },
   "member": {
     "description": "Email address of user that will sync files from Google Drive to Google Cloud Strage"
+  },
+  "permissionsRegex": {
+    "description": "Regular expression to email addresses of users/groups to include in Cloud Storage Bucket"
   }
 }

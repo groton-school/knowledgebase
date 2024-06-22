@@ -1,23 +1,17 @@
 #!/usr/bin/env node
 import gcloud from '@battis/partly-gcloudy';
 import cli from '@battis/qui-cli';
-import fs from 'fs/promises';
+import fs from 'fs';
 import path from 'path';
 
 const options = JSON.parse(
-  await fs.readFile(new URL('./options.json', import.meta.url))
+  fs.readFileSync(new URL('./options.json', import.meta.url))
 );
 
 (async () => {
   const args = await gcloud.init({
     args: {
-      options,
-      flags: {
-        deploy: {
-          description:
-            'Include the (time-consuming) deploy step to App Engine (default true, --no-deploy to skip)'
-        }
-      }
+      options
     }
   });
   if (args.values.verbose) {
@@ -35,23 +29,36 @@ const options = JSON.parse(
       prebuild: () => {
         return true;
       },
-      deploy: args.values.deploy
+      deploy: false
     });
 
     await gcloud.services.enable(gcloud.services.API.GoogleDocsAPI);
     await gcloud.services.enable(gcloud.services.API.GoogleDriveAPI);
     await gcloud.services.enable(gcloud.services.API.GoogleCloudStorageJSONAPI);
+    await gcloud.services.enable(gcloud.services.API.AdminSDKAPI);
 
-    const member = await cli.prompts.input({
-      message: options.member.description,
-      default: args.values.member || process.env.MEMBER,
-      validate: cli.validators.email
-    });
+    const member =
+      args.values.member ||
+      process.env.MEMBER ||
+      (await cli.prompts.input({
+        message: options.member.description,
+        validate: cli.validators.email
+      }));
     cli.env.set('MEMBER', member);
     await gcloud.iam.addPolicyBinding({
       member,
       role: 'roles/storage.admin'
     });
+
+    const permissionsRegex =
+      args.values.permissionsRegex ||
+      process.env.PERMISSIONS_REGEX ||
+      (await cli.prompts.input({
+        message: options.permissionsRegex.description,
+        default: '.*',
+        validate: cli.validators.notEmpty
+      }));
+    cli.env.set('PERMISSIONS_REGEX', permissionsRegex);
 
     const bucket = await cli.prompts.input({
       message: options.bucket.description,
@@ -98,13 +105,13 @@ Download these credentials to ${cli.colors.url(
       'packages/server/var/config.json'
     );
     let config = {};
-    if (await fs.exists(configFilePath)) {
-      config = JSON.parse((await fs.readFile(configFilePath)).toString());
+    if (fs.existsSync(configFilePath)) {
+      config = JSON.parse(fs.readFileSync(configFilePath).toString());
     } else {
       cli.shell.mkdir('-p', path.dirname(configFilePath));
     }
     config.storage.bucket = bucket;
-    await fs.writeFile(configFilePath, JSON.stringify(config));
+    fs.writeFileSync(configFilePath, JSON.stringify(config));
     cli.log.info(`
 You need to manually create and download keys for the ${cli.colors.command(
       'server'

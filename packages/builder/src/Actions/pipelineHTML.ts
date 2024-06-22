@@ -1,4 +1,4 @@
-import File from '../Schema/File';
+import File from '../File';
 import { JSDOM } from 'jsdom';
 
 type PipelineFunction = (params: { file: File; html: string }) => string;

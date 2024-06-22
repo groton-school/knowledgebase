@@ -1,7 +1,7 @@
 #!/usr/bin/env tsx
-import buildTree from '../src/Actions/buildTree';
-import mergeTrees from '../src/Actions/mergeTrees';
-import Tree from '../src/Schema/Tree';
+import File from '../src/File';
+import Folder from '../src/Folder';
+import Client from '../src/Google/Client';
 import cli from '@battis/qui-cli';
 import fs from 'fs';
 import path from 'path';
@@ -22,7 +22,18 @@ const options = {
   },
   output: {
     short: 'o',
-    description: `Output JSON file path (use ${FOLDER_NAME}, ${FOLDER_ID}, and ${TIMESTAMP} placeholders, if so desired). If the file already exists, the index will be updated/`
+    description: `Output JSON file path (use ${FOLDER_NAME}, ${FOLDER_ID}, and ${TIMESTAMP} placeholders, if so desired). If the file already exists, the index will be updated/`,
+    default: path.join(__dirname, '../../server/var/index.json')
+  },
+  keys: {
+    short: 'k',
+    description: 'Path to file containing downloaded OAuth 2 credentials',
+    default: path.join(__dirname, '../var/keys.json')
+  },
+  tokens: {
+    short: 't',
+    description: 'Path to file containing access tokens',
+    default: path.join(__dirname, '../var/tokens.json')
   }
 };
 
@@ -36,10 +47,12 @@ const options = {
     args: { options }
   });
 
+  Client.init({ keysPath: values.keys, tokensPath: values.tokens });
+
   let indexPath = path.resolve(cwd, values.output);
   if (fs.existsSync(indexPath)) {
     // sync
-    const spinner = cli.spinner();
+    /*    const spinner = cli.spinner();
     spinner.start(`Loading index from ${cli.colors.url(indexPath)}`);
     const prevTree: Tree = JSON.parse(
       fs.readFileSync(indexPath).toString()
@@ -57,11 +70,29 @@ const options = {
 
     fs.writeFileSync(indexPath, JSON.stringify(nextTree, null, 2));
 
-    spinner.succeed(`Updated index at ${cli.colors.url(indexPath)}`);
+    spinner.succeed(`Updated index at ${cli.colors.url(indexPath)}`); */
   } else {
     // build from scratch
     const spinner = cli.spinner();
     spinner.start('Indexing');
+    Folder.event.on(File.Event.Start, (status): void => {
+      spinner.start(
+        cli.colors.url(path.dirname(status) + '/') +
+          cli.colors.value(path.basename(status))
+      );
+    });
+    Folder.event.on(File.Event.Succeed, (status): void => {
+      spinner.succeed(
+        cli.colors.url(path.dirname(status) + '/') +
+          cli.colors.value(path.basename(status))
+      );
+    });
+    Folder.event.on(File.Event.Fail, (status): void => {
+      spinner.fail(
+        cli.colors.url(path.dirname(status) + '/') +
+          cli.colors.value(path.basename(status))
+      );
+    });
     const folderId =
       values.folderId ||
       process.env.ROOT_FOLDER_ID ||
@@ -69,7 +100,7 @@ const options = {
         message: options.folderId.description,
         validate: cli.validators.notEmpty
       }));
-    const tree = await buildTree(folderId, spinner);
+    const folder = await Folder.fromDriveId(folderId);
     const indexPath = path.resolve(
       cwd,
       (
@@ -81,11 +112,11 @@ const options = {
         }))
       )
         .replace(FOLDER_ID, folderId)
-        .replace(FOLDER_NAME, tree.folder['.'].name!)
-        .replace(TIMESTAMP, new Date().toISOString())
+        .replace(FOLDER_NAME, folder.name!)
+        .replace(TIMESTAMP, new Date().toISOString().replace(':', '-'))
     );
     spinner.start(`Writing index to ${indexPath}`);
-    const content = JSON.stringify(tree, null, 2);
+    const content = JSON.stringify(folder, null, 2);
     cli.shell.mkdir('-p', path.dirname(indexPath));
     fs.writeFileSync(indexPath, content);
     spinner.succeed(`Wrote index to ${cli.colors.url(indexPath)}`);
