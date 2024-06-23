@@ -10,14 +10,15 @@
     "setup": "bin/setup.sh",
     "deploy": "run-s deploy:*",
     "deploy:lockfile": "make-dedicated-lockfile",
-    "deploy:deploy": "bin/deploy.js",
+    "deploy:deploy": "bin/deploy.ts",
     "start": "node src/index.js"
   },
   "devDependencies": {
     "@battis/partly-gcloudy": "^0.4.3",
     "@battis/qui-cli": "^0.4.2",
     "@pnpm/make-dedicated-lockfile": "^0.6.9",
-    "npm-run-all": "^4.1.5"
+    "npm-run-all": "^4.1.5",
+    "tsx": "^4.15.7"
   },
   "dependencies": {
     "@google-cloud/logging-winston": "^6.0.0",

@@ -12,10 +12,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const keys = JSON.parse(
-  fs.readFileSync(path.resolve(__dirname, '../var/keys.json'))
+  fs.readFileSync(path.resolve(__dirname, '../var/keys.json')).toString()
 );
 const config = JSON.parse(
-  fs.readFileSync(path.resolve(__dirname, '../var/config.json'))
+  fs.readFileSync(path.resolve(__dirname, '../var/config.json')).toString()
 );
 
 const TOKEN = 'token';
@@ -37,12 +37,45 @@ const REDIRECT = 'redirect';
     if (requestPath.endsWith('/')) {
       requestPath = `${requestPath}index.html`;
     }
-    return requestPath.substr(1);
+    return requestPath.substring(1);
   }
 
-  async function streamFromBucket(req, res) {
+  const app = express();
+  app.use(cookieParser());
+
+  app.get('/favicon.ico', (_, res) => {
+    res.redirect(301, '/assets/favicon.ico');
+  });
+
+  app.get('/logout', (_, res) => {
+    res.clearCookie(TOKEN);
+    res.clearCookie(REDIRECT);
+    res.send('Logged out');
+  });
+  app.get(redirectURI.pathname, async (req, res) => {
+    const redirect = req.cookies?.redirect || '/';
+    res.clearCookie(REDIRECT);
+    if (req.query.code) {
+      const tokenResponse = await authClient.getToken(
+        req.query.code.toString()
+      );
+      res.cookie(TOKEN, tokenResponse.tokens, {
+        secure: true,
+        httpOnly: true
+      });
+      res.redirect(redirect);
+    } else {
+      res.send('No code present');
+    }
+  });
+
+  /*
+   * exclude GAE `/_ah/*` endpoints but process others matching `/*`
+   * https://stackoverflow.com/a/53606500/294171
+   */
+  app.get(/^(?!.*_ah).*$/, async (req, res) => {
     if (!req.path.endsWith('/') && !/.*\.[^\\]+$/i.test(req.path)) {
-      res.redirect(`${req.path}/`).end();
+      res.redirect(`${req.path}/`);
     } else {
       if (req.cookies?.token) {
         authClient.setCredentials(req.cookies.token);
@@ -58,7 +91,7 @@ const REDIRECT = 'redirect';
           const stream = file.createReadStream();
           stream.on('data', (data) => res.write(data));
           stream.on('error', (error) =>
-            logger.error(file.cloudStorageURI, error)
+            logger.error(file.cloudStorageURI.href, error)
           );
           stream.on('end', () => res.end());
         } catch (error) {
@@ -67,47 +100,15 @@ const REDIRECT = 'redirect';
         }
       } else {
         res.cookie(REDIRECT, req.url, { secure: true, httpOnly: true });
-        res
-          .redirect(
-            authClient.generateAuthUrl({
-              access_type: 'offline',
-              scope: 'https://www.googleapis.com/auth/devstorage.read_only'
-            })
-          )
-          .end();
+        res.redirect(
+          authClient.generateAuthUrl({
+            access_type: 'offline',
+            scope: 'https://www.googleapis.com/auth/devstorage.read_only'
+          })
+        );
       }
     }
-  }
-  async function handleOAuth2Redirect(req, res) {
-    const redirect = req.cookies?.redirect || '/';
-    res.clearCookie(REDIRECT);
-    const tokenResponse = await authClient.getToken(req.query.code.toString());
-    res.cookie(TOKEN, tokenResponse.tokens, {
-      secure: true,
-      httpOnly: true
-    });
-    res.redirect(redirect).end();
-  }
-
-  function deauthorize(_, res) {
-    res.clearCookie(TOKEN);
-    res.clearCookie(REDIRECT);
-    res.send('Logged out');
-  }
-
-  const app = express();
-  app.use(cookieParser());
-  app.get('/favicon.ico', (_, res) => {
-    res.redirect(301, '/assets/favicon.ico').end();
   });
-  app.get('/logout', deauthorize);
-  app.get(redirectURI.pathname, handleOAuth2Redirect);
-
-  /*
-   * exclude GAE `/_ah/*` endpoints but process others matching `/*`
-   * https://stackoverflow.com/a/53606500/294171
-   */
-  app.get(/^(?!.*_ah).*$/, streamFromBucket);
 
   const port = process.env.PORT || 8080;
   app.listen(port, () => {
