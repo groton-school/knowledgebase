@@ -9,30 +9,43 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const defaultIndexPath = path.resolve(__dirname, '../../server/var/index.json');
+const defaultKeysPath = path.resolve(__dirname, '../var/keys.json');
+const defaultTokensPath = path.resolve(__dirname, '../var/tokens.json');
+
 const options = {
-  bucket: {
+  bucketName: {
     short: 'b',
-    description: 'Google Cloud Storage bucket name'
+    description: `Google Cloud Storage bucket name (will be read from ${cli.colors.value(
+      'BUCKET'
+    )} environment variable if present)`
   },
-  index: {
+  indexPath: {
     short: 'i',
-    description: 'Path to index file',
-    default: path.join(__dirname, '../../server/var/index.json')
+    description: `Path to index file (defaults to ${cli.colors.url(
+      defaultIndexPath
+    )})`,
+    default: defaultIndexPath
   },
   permissionsRegex: {
     short: 'p',
-    description:
-      'Regular expression to email addresses of users/groups to include in Cloud Storage Bucket'
+    description: `Regular expression to email addresses of users/groups to include in Cloud Storage Bucket (will be read from ${cli.colors.value(
+      'PERMISSIONS_REGEX'
+    )} environment variable if present)`
   },
-  keys: {
+  keysPath: {
     short: 'k',
-    description: 'Path to file containing downloaded OAuth 2 credentials',
-    default: path.join(__dirname, '../var/keys.json')
+    description: `Path to file containing downloaded OAuth2 credentials (defaults to ${cli.colors.url(
+      defaultKeysPath
+    )})`,
+    default: defaultKeysPath
   },
-  tokens: {
+  tokensPath: {
     short: 't',
-    description: 'Path to file containing access tokens',
-    default: path.join(__dirname, '../var/tokens.json')
+    description: `Path to file containing access tokens (defaults to ${cli.colors.url(
+      defaultTokensPath
+    )})`,
+    default: defaultTokensPath
   }
 };
 
@@ -46,16 +59,22 @@ const flags = {
     description:
       'Ignore errors and continue uploading (default true, stop on errors with --no-ignore-errors',
     default: true
-  },
-  overwrite: {
-    description:
-      'Overwrite input file with updated index including upload data (default true, block with --no-overwrite)',
-    default: true
   }
 };
 
 (async () => {
-  const { values } = cli.init({
+  const CWD = process.cwd();
+  let {
+    values: {
+      bucketName,
+      indexPath,
+      permissionsRegex,
+      keysPath,
+      tokensPath,
+      force,
+      ignoreErrors
+    }
+  } = cli.init({
     env: {
       root: path.join(__dirname, '../../..'),
       loadDotEnv: path.join(__dirname, '../../../.env')
@@ -66,11 +85,11 @@ const flags = {
     }
   });
 
-  Client.init({ keysPath: values.keys, tokensPath: values.tokens });
+  Client.init({ keysPath, tokensPath });
 
   const spinner = cli.spinner();
 
-  const indexPath = path.resolve(__dirname, '..', values.index);
+  indexPath = path.resolve(CWD, indexPath);
 
   Folder.event.on(Folder.Event.Start, (status) => {
     spinner.start(status);
@@ -78,25 +97,24 @@ const flags = {
   Folder.event.on(Folder.Event.Succeed, (status) => spinner.succeed(status));
   Folder.event.on(Folder.Event.Fail, (status) => spinner.fail(status));
 
-  spinner.start(indexPath);
+  spinner.start(`Loading index from ${cli.colors.url(indexPath)}`);
   const folder = await Folder.fromIndexFile(indexPath);
-  spinner.succeed(folder.name);
+  spinner.succeed(`${cli.colors.value(folder.name)} index loaded`);
 
   await folder.cache({
     bucketName:
-      values.bucket ||
+      bucketName ||
       process.env.BUCKET ||
       (await cli.prompts.input({
-        message: options.bucket.description,
+        message: options.bucketName.description,
         validate: cli.validators.lengthBetween(6, 30)
       })),
-    permissionsRegex:
-      values.permissionsRegex || process.env.PERMISSIONS_REGEX || '.*',
-    force: !!values.force,
-    ignoreErrors: !!values.ignoreErrors
+    permissionsRegex: permissionsRegex || process.env.PERMISSIONS_REGEX || '.*',
+    force: !!force,
+    ignoreErrors: !!ignoreErrors
   });
 
-  spinner.start(indexPath);
-  fs.writeFileSync(indexPath, JSON.stringify(folder, null, 2));
-  spinner.succeed(indexPath);
+  spinner.start(`Saving index to ${cli.colors.url(indexPath)}`);
+  fs.writeFileSync(indexPath, JSON.stringify(folder));
+  spinner.succeed(`Index saved to ${cli.colors.url(indexPath)}`);
 })();

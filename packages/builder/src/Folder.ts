@@ -93,7 +93,11 @@ class Folder extends File {
       .toLowerCase();
   }
 
-  private async indexContents() {
+  /**
+   * TODO _re_ index non-destructively
+   * TODO delete/rename cached files
+   */
+  public async indexContents() {
     let folderContents: drive_v3.Schema$FileList = {};
     do {
       folderContents = (

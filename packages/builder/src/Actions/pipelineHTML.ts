@@ -13,7 +13,8 @@ const injectGoogleDocId: PipelineFunction = ({ file, html }) => {
 const demoteBodyToDiv: PipelineFunction = ({ html }) => {
   return html
     .replace('<body', '<body><div')
-    .replace('</body>', `</div></body>`);
+    .replace('</body>', `</div></body>`)
+    .replace('class="doc-content"','id="doc-content" class="doc-content"');
 };
 
 const injectAssets: PipelineFunction = ({ html }) => {

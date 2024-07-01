@@ -5,18 +5,18 @@
   "type": "module",
   "scripts": {
     "build": "run-s build:*",
-    "build:build": "bin/build.ts -o '../server/var/index.json'",
-    "build:upload": "bin/upload.ts '../server/var/index.json'"
+    "build:build": "bin/build.ts",
+    "build:upload": "bin/upload.ts"
   },
   "devDependencies": {
     "@tsconfig/recommended": "^1.0.6",
     "@types/adm-zip": "^0.5.5",
     "@types/express": "^4.17.21",
-    "@types/jsdom": "^21.1.6",
+    "@types/jsdom": "^21.1.7",
     "@types/mime-types": "^2.1.4",
-    "@types/node": "^20.14.6",
+    "@types/node": "^20.14.8",
     "npm-run-all": "^4.1.5",
-    "tsx": "^4.10.5"
+    "tsx": "^4.15.7"
   },
   "eslintConfig": {
     "languageOptions": {
@@ -26,13 +26,13 @@
   "dependencies": {
     "@battis/qui-cli": "^0.4.2",
     "@google-cloud/local-auth": "^3.0.1",
-    "@google-cloud/storage": "^7.11.0",
+    "@google-cloud/storage": "^7.11.2",
     "@googleapis/docs": "^3.0.2",
     "@googleapis/drive": "^8.10.0",
     "adm-zip": "^0.5.14",
     "express": "^4.19.2",
-    "google-auth-library": "^9.10.0",
-    "jsdom": "^24.0.0",
+    "google-auth-library": "^9.11.0",
+    "jsdom": "^24.1.0",
     "mime-types": "^2.1.35",
     "open": "^10.1.0"
   }

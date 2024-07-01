@@ -14,32 +14,55 @@ const FOLDER_ID = '%FOLDER_ID%';
 const FOLDER_NAME = '%FOLDER_NAME%';
 const TIMESTAMP = '%TIMESTAMP%';
 
+const defaultIndexPath = path.resolve(__dirname, '../../server/var/index.json');
+const defaultKeysPath = path.resolve(__dirname, '../var/keys.json');
+const defaultTokensPath = path.resolve(__dirname, '../var/tokens.json');
+
 const options = {
   folderId: {
     short: 'f',
-    description:
-      'Google Drive ID of folder to index (will default to environment variable ROOT_FOLDER_ID if present)'
+    description: `Google Drive ID of folder to index (will be read from ${cli.colors.value(
+      'ROOT_FOLDER_ID'
+    )} environment variable if present)`
   },
-  output: {
-    short: 'o',
-    description: `Output JSON file path (use ${FOLDER_NAME}, ${FOLDER_ID}, and ${TIMESTAMP} placeholders, if so desired). If the file already exists, the index will be updated/`,
-    default: path.join(__dirname, '../../server/var/index.json')
+  indexPath: {
+    short: 'i',
+    description: `Output JSON file path (use ${cli.colors.value(
+      FOLDER_NAME
+    )}, ${cli.colors.value(FOLDER_ID)}, and ${cli.colors.value(
+      TIMESTAMP
+    )} placeholders, if so desired). If the file already exists, the index will be updated. (defaults to ${cli.colors.url(
+      defaultIndexPath
+    )})`,
+    default: defaultIndexPath
   },
-  keys: {
+  keysPath: {
     short: 'k',
-    description: 'Path to file containing downloaded OAuth 2 credentials',
-    default: path.join(__dirname, '../var/keys.json')
+    description: `Path to file containing downloaded OAuth2 credentials (defaults to ${cli.colors.url(
+      defaultKeysPath
+    )})`,
+    default: defaultKeysPath
   },
-  tokens: {
+  tokensPath: {
     short: 't',
-    description: 'Path to file containing access tokens',
-    default: path.join(__dirname, '../var/tokens.json')
+    description: `Path to file containing access tokens (defaults to ${cli.colors.url(
+      defaultTokensPath
+    )})`,
+    default: defaultTokensPath
   }
 };
 
+function colorizePath(p: string) {
+  return (
+    cli.colors.url(path.dirname(p) + '/') + cli.colors.value(path.basename(p))
+  );
+}
+
 (async () => {
-  const cwd = process.cwd();
-  const { values } = cli.init({
+  const CWD = process.cwd();
+  let {
+    values: { folderId, indexPath, keysPath, tokensPath }
+  } = cli.init({
     env: {
       root: path.join(__dirname, '../../..'),
       loadDotEnv: path.join(__dirname, '../../../.env')
@@ -47,66 +70,46 @@ const options = {
     args: { options }
   });
 
-  Client.init({ keysPath: values.keys, tokensPath: values.tokens });
+  Client.init({ keysPath, tokensPath });
 
-  let indexPath = path.resolve(cwd, values.output);
-  if (fs.existsSync(indexPath)) {
-    // sync
-    /*    const spinner = cli.spinner();
+  const spinner = cli.spinner();
+  Folder.event.on(File.Event.Start, (status): void => {
+    spinner.start(colorizePath(status));
+  });
+  Folder.event.on(File.Event.Succeed, (status): void => {
+    spinner.succeed(colorizePath(status));
+  });
+  Folder.event.on(File.Event.Fail, (status): void => {
+    spinner.fail(colorizePath(status));
+  });
+
+  if (indexPath && fs.existsSync(path.resolve(CWD, indexPath))) {
+    indexPath = path.resolve(CWD, indexPath);
     spinner.start(`Loading index from ${cli.colors.url(indexPath)}`);
-    const prevTree: Tree = JSON.parse(
-      fs.readFileSync(indexPath).toString()
-    ) as Tree;
-    spinner.succeed(
-      `${cli.colors.value(prevTree.folder['.'].name)} index loaded`
-    );
+    const folder = await Folder.fromIndexFile(indexPath);
+    spinner.succeed(`${cli.colors.value(folder.name)} index loaded`);
 
-    spinner.start('Indexing');
-    const nextTree = await buildTree(prevTree.folder['.'].id!, spinner);
-    spinner.succeed(`Indexed ${cli.colors.value(nextTree.folder['.'].name)}`);
+    await folder.indexContents();
 
     spinner.start(`Writing index to ${cli.colors.url(indexPath)}`);
-    nextTree.folder = mergeTrees(prevTree.folder, nextTree.folder);
-
-    fs.writeFileSync(indexPath, JSON.stringify(nextTree, null, 2));
-
-    spinner.succeed(`Updated index at ${cli.colors.url(indexPath)}`); */
+    fs.writeFileSync(indexPath, JSON.stringify(folder, null, 2));
+    spinner.succeed(`Updated index at ${cli.colors.url(indexPath)}`);
   } else {
     // build from scratch
-    const spinner = cli.spinner();
-    spinner.start('Indexing');
-    Folder.event.on(File.Event.Start, (status): void => {
-      spinner.start(
-        cli.colors.url(path.dirname(status) + '/') +
-          cli.colors.value(path.basename(status))
-      );
-    });
-    Folder.event.on(File.Event.Succeed, (status): void => {
-      spinner.succeed(
-        cli.colors.url(path.dirname(status) + '/') +
-          cli.colors.value(path.basename(status))
-      );
-    });
-    Folder.event.on(File.Event.Fail, (status): void => {
-      spinner.fail(
-        cli.colors.url(path.dirname(status) + '/') +
-          cli.colors.value(path.basename(status))
-      );
-    });
-    const folderId =
-      values.folderId ||
+    folderId =
+      folderId ||
       process.env.ROOT_FOLDER_ID ||
       (await cli.prompts.input({
         message: options.folderId.description,
         validate: cli.validators.notEmpty
       }));
     const folder = await Folder.fromDriveId(folderId);
-    const indexPath = path.resolve(
-      cwd,
+    indexPath = path.resolve(
+      CWD,
       (
-        values.output ||
+        indexPath ||
         (await cli.prompts.input({
-          message: options.output.description,
+          message: options.indexPath.description,
           default: path.resolve(cli.appRoot(), '../server/var/index.json'),
           validate: cli.validators.notEmpty
         }))
@@ -115,10 +118,10 @@ const options = {
         .replace(FOLDER_NAME, folder.name!)
         .replace(TIMESTAMP, new Date().toISOString().replace(':', '-'))
     );
-    spinner.start(`Writing index to ${indexPath}`);
+    spinner.start(`Saving index to ${indexPath}`);
     const content = JSON.stringify(folder, null, 2);
     cli.shell.mkdir('-p', path.dirname(indexPath));
     fs.writeFileSync(indexPath, content);
-    spinner.succeed(`Wrote index to ${cli.colors.url(indexPath)}`);
+    spinner.succeed(`Index saved to ${cli.colors.url(indexPath)}`);
   }
 })();
