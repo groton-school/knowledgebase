@@ -26,12 +26,18 @@ const REDIRECT = 'redirect';
     level: 'info',
     transports: [new LoggingWinston()]
   });
+
   const redirectURI = new URL(keys.web.redirect_uris[0]);
   const authClient = new OAuth2Client(
     keys.web.client_id,
     keys.web.client_secret,
     redirectURI.href
   );
+  let updatedTokens;
+
+  authClient.on('token', (tokens) => {
+    updatedTokens = tokens;
+  });
 
   function normalizePath(requestPath) {
     if (requestPath.endsWith('/')) {
@@ -93,10 +99,14 @@ const REDIRECT = 'redirect';
           stream.on('error', (error) =>
             logger.error(file.cloudStorageURI.href, error)
           );
+          if (updatedTokens) {
+            res.cookie(TOKEN, updatedTokens);
+            updatedTokens = undefined;
+          }
           stream.on('end', () => res.end());
         } catch (error) {
           logger.error(req.originalUrl, error);
-          res.status(error.code).end();
+          res.status(error.code || 418);
         }
       } else {
         res.cookie(REDIRECT, req.url, { secure: true, httpOnly: true });
