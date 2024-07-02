@@ -6,5 +6,6 @@ $permalink: Constants.$prefix + 'permalink';
   a.#{$permalink} {
     margin-left: 0.5em;
     font-size: 8pt;
+    text-decoration: none;
   }
 }

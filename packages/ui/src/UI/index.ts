@@ -3,10 +3,10 @@ import Embiggen from './Embiggen';
 import H6IsNormalText from './H6IsNormalText';
 import HideHeaderAndFooter from './HideHeaderAndFooter';
 import HighlightAnchor from './HighlightAnchor';
+import PageStructure from './PageStructure';
 import Permalinks from './Permalinks';
 import TOC from './TOC';
 import TitleCaseAllCapsHeaders from './TitleCaseAllCapsHeaders';
-import './fixed-background.scss';
 import './google-docs.scss';
 import './link-label-by-group.scss';
 import './unlock-img-width.scss';
@@ -18,12 +18,13 @@ import './unlock-img-width.scss';
  * make the site unusable if removed.
  */
 export default function UI() {
+  PageStructure();
   HideHeaderAndFooter();
   TitleCaseAllCapsHeaders();
-  // Permalinks();
-  // TOC();
+  TOC();
+  Permalinks();
   H6IsNormalText();
   Embiggen();
-  // HighlightAnchor();
+  HighlightAnchor();
   CleanGooglePassThrough();
 }

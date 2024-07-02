@@ -1,18 +1,13 @@
 import Helper from '../../Helper';
-import * as OverDrive from '../../OverDrive';
-import styles from './styles.module.scss';
-import './styles.scss';
+import Builder from './Builder';
 
-/** @type {string} Title text for table of contents */
 const TOC_TITLE = 'On this page';
 
-/** @type {number} Maximum header level to display */
+/* Maximum header level to display */
 const MAX_DEPTH = 3;
 
-const removeTOC = () => document.querySelector(`#${styles.wrapper}`)?.remove();
-
 /**
- * Generate Google Doc-style outline as a second subnav
+ * Generate Google Doc-style outline as TOC
  */
 export default function TOC() {
   Helper.onGoogleDocEmbed<HTMLHeadingElement>(
@@ -20,31 +15,22 @@ export default function TOC() {
       .map((d) => `h${d + 1}`)
       .join(','),
     (headings) => {
-      if (headings.length === 0) {
-        removeTOC();
-      } else {
-        const panel = OverDrive.Panel.panel(styles.wrapper);
-        panel.append(OverDrive.Panel.heading(TOC_TITLE));
-        const builder = new OverDrive.SubNav.Builder(styles.toc);
-        headings.forEach((h) => {
-          builder.add(
-            h.innerText,
-            `#${h.id}`,
-            parseInt(h.tagName.substr(-1)) - 1
-          );
-        });
-        panel.append(builder.finalize());
-        const oldTOC = document.querySelector(
-          `#${styles.wrapper}`
-        ) as HTMLDivElement;
-        if (oldTOC) {
-          oldTOC.replaceWith(panel);
-        } else {
-          document.querySelector('#od-col-subnav')?.prepend(panel);
-        }
-        Helper.log('built “On this page”');
-      }
+      const toc = document.createElement('div');
+      toc.insertAdjacentHTML(
+        'afterbegin',
+        `<div class="heading">${TOC_TITLE}</div>`
+      );
+      const builder = new Builder();
+      headings.forEach((h) => {
+        builder.add(
+          h.innerText,
+          `#${h.id}`,
+          parseInt(h.tagName.substring(h.tagName.length - 1)) - 1
+        );
+      });
+      toc.append(builder.finalize());
+      document.querySelector('#toc')?.prepend(toc);
+      Helper.log(`built “${TOC_TITLE}”`);
     }
   );
-  document.body.addEventListener(Helper.onLoad.GoogleDocRemoveEvent, removeTOC);
 }

@@ -17,7 +17,10 @@ module.exports = require('@battis/webpack/ts/vanilla')({
   mode: DEBUGGING ? 'development' : 'production',
   plugins: [
     new CopyWebpackPlugin({
-      patterns: [{ from: 'assets', to: path.join(build, 'assets') }]
+      patterns: [
+        { from: 'assets', to: path.join(build, 'assets') },
+        { from: 'public', to: build }
+      ]
     })
   ],
   production: !JSON.parse(process.env.DEBUGGING)

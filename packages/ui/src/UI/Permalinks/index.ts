@@ -12,7 +12,7 @@ export default function Permalinks() {
       if (!document.querySelector(`.${styles.permalink}`)) {
         headers.forEach((h) => {
           const a = document.createElement('a');
-          a.append(Helper.fontAwesome(''));
+          a.append('🔗');
           a.href = `#${h.id}`;
           a.className = styles.permalink;
           h.append(a);

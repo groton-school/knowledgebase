@@ -9,15 +9,15 @@ class Stack extends Array {
 }
 
 /**
- * Subnav factory
+ * TOC factory
  */
-export class Builder {
+export default class Builder {
   private stack: Stack;
   private wrapper: HTMLDivElement;
   private toc: HTMLUListElement;
 
   /**
-   * Start building a subnav
+   * Start building a TOC
    *
    * Use `add()` method to add elements
    *
@@ -29,7 +29,6 @@ export class Builder {
     if (id) {
       this.wrapper.id = id;
     }
-    this.wrapper.className = 'subnav panel-body od-simpletree';
     this.toc = document.createElement('ul');
     if (id) {
       this.toc.id = `${id}-menu`;
@@ -40,7 +39,7 @@ export class Builder {
   }
 
   /**
-   * Create a new node of the subnav
+   * Create a new node of the TOC
    * @param {string} innerText Text to display
    * @param {string} href Hyperlink target
    * @param {number} level Depth (like H1, H2, H3)
@@ -69,7 +68,7 @@ export class Builder {
     parseInt(node.dataset.level || '-1');
 
   /**
-   * Calculate `data-child-count` for subnav folding
+   * Calculate `data-child-count` for TOC folding
    * @param {HTMLElement} elt Parent? element
    */
   private calcChildCount(elt: HTMLElement) {
@@ -82,7 +81,7 @@ export class Builder {
   }
 
   /**
-   * Add another subnav entry
+   * Add another TOC entry
    * @param {string} innerText Text to display
    * @param {string} href Hyperlink target
    * @param {number} level Depth (like H1, H2, H3)
@@ -113,7 +112,7 @@ export class Builder {
   }
 
   /**
-   * Render the subnav as a DOM element
+   * Render the TOC as a DOM element
    */
   public finalize(): HTMLDivElement {
     while (this.stack.top() != this.wrapper) {

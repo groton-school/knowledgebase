@@ -7,7 +7,7 @@ export const GoogleDocEmbedEvent = 'kbe';
 export const GoogleDocRemoveEvent = 'kbr';
 
 /** CSS selector for root of embedded Google Doc */
-export const GoogleDocEmbedSelector = Constants.googledocembed;
+export const GoogleDocEmbedSelector = Constants.googleDocEmbed;
 
 function dispatchGoogleDocEmbed(detail: Element) {
   document.body.dispatchEvent(new CustomEvent(GoogleDocEmbedEvent, { detail }));

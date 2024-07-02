@@ -1,6 +1,5 @@
 import * as Cookies from './Cookies';
 import Stack from './Stack';
-import fontAwesome from './fontAwesome';
 import iframe from './iframe';
 import log from './log';
 import onGoogleDocEmbed from './onGoogleDocEmbed';
@@ -19,7 +18,6 @@ const Helper = {
   onGoogleDocEmbed,
   log,
   iframe,
-  fontAwesome,
   vanity,
   straightenCurlyQuotes,
   Stack

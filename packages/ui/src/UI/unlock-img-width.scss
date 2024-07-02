@@ -10,7 +10,7 @@
  * Long term, the fix would be to get the table column widths from the Google
  * Doc and inline them into the table HTML… I guess?
  */
-[data-od-subtype='document'] .od-pb-panel-body #{Constants.$googleDocEmbed} {
+#{Constants.$googleDocEmbed} {
   img {
     max-width: fit-content !important;
   }
