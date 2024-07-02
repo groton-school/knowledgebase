@@ -2,7 +2,7 @@ import Helper from '../../Helper';
 import styles from './styles.module.scss';
 import './styles.scss';
 
-function scrollToHash(e: any) {
+function scrollToHash() {
   if (window.location.hash.length) {
     const anchor = document.querySelector(
       window.location.hash.replace('.', '\\.')
