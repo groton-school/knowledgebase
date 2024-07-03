@@ -1,0 +1,7 @@
+{
+  "extends": "@battis/webpack/ts/tsconfig.json",
+  "compilerOptions": {
+    "module": "es2022",
+    "moduleResolution": "node"
+  }
+}

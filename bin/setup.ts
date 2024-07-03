@@ -28,22 +28,32 @@ const options = {
 };
 
 (async () => {
-  const args = await gcloud.init({
+  let {
+    values: {
+      name,
+      region,
+      project,
+      billing,
+      verbose,
+      permissionsRegex,
+      bucket
+    }
+  } = await gcloud.init({
     args: {
       options
     }
   });
-  if (args.values.verbose) {
+  if (verbose) {
     cli.shell.setSilent(false);
   }
 
   if (gcloud.ready()) {
     const publishResponse = await gcloud.batch.appEnginePublish({
-      name: args.values.name,
-      id: args.values.project,
+      name,
+      id: project,
       suggestedName: 'Knowledgebase',
-      billingAccountId: args.values.billing,
-      region: args.values.region,
+      billingAccountId: billing,
+      region,
       env: { keys: { urlVar: 'URL' } },
       deploy: false
     });
@@ -57,9 +67,14 @@ const options = {
         gcloud.services.API.GoogleCloudStorageJSONAPI
       );
       await gcloud.services.enable(gcloud.services.API.CloudIdentityAPI);
+      await gcloud.services.enable(gcloud.services.API.CloudFirestoreAPI);
 
-      const permissionsRegex =
-        args.values.permissionsRegex ||
+      cli.shell.exec(
+        `gcloud firestore databases update --type=firestore-native --project=${project.projectId} --format=json`
+      );
+
+      permissionsRegex =
+        permissionsRegex ||
         process.env.PERMISSIONS_REGEX ||
         (await cli.prompts.input({
           message: options.permissionsRegex.description,
@@ -68,14 +83,14 @@ const options = {
         }));
       cli.env.set({ key: 'PERMISSIONS_REGEX', value: permissionsRegex });
 
-      const bucket = await cli.prompts.input({
-        message: options.bucket.description,
-        default:
-          args.values.bucket ||
-          process.env.BUCKET ||
-          gcloud.lib.generate.projectId(),
-        validate: cli.validators.lengthBetween(6, 30)
-      });
+      bucket =
+        bucket ||
+        process.env.BUCKET ||
+        (await cli.prompts.input({
+          message: options.bucket.description,
+          default: gcloud.lib.generate.projectId(),
+          validate: cli.validators.lengthBetween(6, 30)
+        }));
       cli.env.set({ key: 'BUCKET', value: bucket });
       cli.shell.exec(
         `gcloud storage buckets create gs://${bucket} --location=${appEngine.locationId} --format=json --project=${project.projectId}`

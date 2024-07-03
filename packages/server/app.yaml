@@ -4,3 +4,5 @@ basic_scaling:
 handlers:
   - url: /assets
     static_dir: build/assets
+build_env_variables:
+  GOOGLE_NODE_RUN_SCRIPTS: ''
