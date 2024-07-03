@@ -9,8 +9,8 @@ function scrollToHash() {
     ) as HTMLElement;
     if (anchor) {
       Helper.log(`scroll to ${anchor.innerText}`);
-      anchor.scrollIntoView();
       window.scrollTo(0, 0);
+      anchor.scrollIntoView();
       const clone = anchor.cloneNode(true) as HTMLElement;
       anchor.parentNode?.replaceChild(clone, anchor);
       Array.from(document.querySelectorAll(`.${styles.highlight}`)).forEach(
