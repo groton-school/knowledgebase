@@ -19,7 +19,7 @@ export default function PageStructure() {
   let content = document.createElement('div');
   content.setAttribute('id', 'content');
   const doc = document.querySelector(
-    Constants.styles.googleDocEmbed
+    `${Constants.styles.googleDocEmbed}, #directory`
   ) as HTMLDivElement;
   if (doc) {
     content = doc.parentElement?.insertBefore(content, doc)!;

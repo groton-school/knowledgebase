@@ -63,5 +63,19 @@ body {
 
     #doc-content {
     }
+
+    #directory {
+      padding: 72pt;
+      max-width: 468pt;
+
+      a {
+        .heading {
+        }
+
+        .description {
+          text-decoration: none;
+        }
+      }
+    }
   }
 }

@@ -9,6 +9,7 @@ declare namespace Express {
     redirect?: string;
     tokens?: Credentials;
     userInfo?: Record<string, any>;
+    groups?: string[];
   }
 }
 
