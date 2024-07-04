@@ -54,7 +54,7 @@ const __dirname = path.dirname(__filename);
    * exclude GAE `/_ah/*` endpoints but process others matching `/*`
    * https://stackoverflow.com/a/53606500/294171
    */
-  app.get(/^(?!.*_ah).*$/, CloudStorageRouter({ config, authClient }));
+  app.get(/^(?!.*_ah).*$/, CloudStorageRouter({ config, index, authClient }));
 
   const port = process.env.PORT || 8080;
   app.listen(port, () => {
