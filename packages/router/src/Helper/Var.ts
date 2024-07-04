@@ -1,3 +1,4 @@
+import File from '@groton/knowledgebase.indexer/src/File';
 import Folder from '@groton/knowledgebase.indexer/src/Folder';
 
 type URLString = string;
@@ -31,5 +32,5 @@ export namespace Var {
   };
   export type Groups = Group[];
 
-  export type Index = Folder;
+  export type Index = (File | Folder)[];
 }

@@ -2,11 +2,11 @@ import Helper from '../Helper';
 import { Var } from '../Helper/Var';
 import Logger from '../Services/Logger';
 import { Storage } from '@google-cloud/storage';
+import File from '@groton/knowledgebase.indexer/src/File';
+import Folder from '@groton/knowledgebase.indexer/src/Folder';
 import { Request, Response } from 'express';
 import { OAuth2Client } from 'google-auth-library';
 import path from 'path';
-import Folder from '@groton/knowledgebase.indexer/src/Folder';
-import File from '@groton/knowledgebase.indexer/src/File'
 
 export default function CloudStorageRouter({
   config,
@@ -44,17 +44,16 @@ export default function CloudStorageRouter({
             };
             stream.on('end', () => res.end());
           } else {
-              let finger: Folder|undefined = index;
-              while (req.path != `/${finger!.index.path}/` ) {
-                  finger = Object.values(finger!.folderContents).reduce((next?: Folder, current: ) => {
-                      if (new RegExp(`^/${current.index.path}/`).test(req.path)) {
-                          return current;
-                      } else {
-                          return next
-                      }
-                  }, undefined)
-              }
-              res.send(finger);
+            const folder = index.find(
+              (file) => `/${file.index.path}/` == req.path
+            );
+            if (folder) {
+              res.send(
+                index.filter((file) => file.parents?.includes(folder.id))
+              );
+            } else {
+              res.status(404);
+            }
           }
         } catch (error) {
           Logger.error(req.originalUrl, error);

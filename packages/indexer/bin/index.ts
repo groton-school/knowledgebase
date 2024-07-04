@@ -3,6 +3,7 @@ import File from '../src/File';
 import Folder from '../src/Folder';
 import Client from '../src/Google/Client';
 import cli from '@battis/qui-cli';
+import { drive_v3 } from '@googleapis/drive';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -86,13 +87,13 @@ function colorizePath(p: string) {
   if (indexPath && fs.existsSync(path.resolve(CWD, indexPath))) {
     indexPath = path.resolve(CWD, indexPath);
     spinner.start(`Loading index from ${cli.colors.url(indexPath)}`);
-    const folder = await Folder.fromIndexFile(indexPath);
-    spinner.succeed(`${cli.colors.value(folder.name)} index loaded`);
+    let index = JSON.parse((await fs.readFileSync(indexPath)).toString());
+    spinner.succeed(`${cli.colors.value(index[0].name)} index loaded`);
 
-    await folder.indexContents();
+    index = index[0].indexContents();
 
     spinner.start(`Writing index to ${cli.colors.url(indexPath)}`);
-    fs.writeFileSync(indexPath, JSON.stringify(folder, null, 2));
+    fs.writeFileSync(indexPath, JSON.stringify(index));
     spinner.succeed(`Updated index at ${cli.colors.url(indexPath)}`);
   } else {
     // build from scratch
@@ -104,6 +105,8 @@ function colorizePath(p: string) {
         validate: cli.validators.notEmpty
       }));
     const folder = await Folder.fromDriveId(folderId);
+    const index: drive_v3.Schema$File[] = [folder];
+    index.push(...(await folder.indexContents()));
     indexPath = path.resolve(
       CWD,
       (
@@ -119,7 +122,7 @@ function colorizePath(p: string) {
         .replace(TIMESTAMP, new Date().toISOString().replace(':', '-'))
     );
     spinner.start(`Saving index to ${indexPath}`);
-    const content = JSON.stringify(folder, null, 2);
+    const content = JSON.stringify(index);
     cli.shell.mkdir('-p', path.dirname(indexPath));
     fs.writeFileSync(indexPath, content);
     spinner.succeed(`Index saved to ${cli.colors.url(indexPath)}`);

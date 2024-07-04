@@ -9,8 +9,6 @@ import path from 'path';
 type FolderContentsType = Record<IdType, File | Folder>;
 
 class Folder extends File {
-  public readonly folderContents: FolderContentsType;
-
   protected constructor(file: drive_v3.Schema$File);
   protected constructor(
     file: drive_v3.Schema$File & {
@@ -30,50 +28,22 @@ class Folder extends File {
     if (!Folder.isFolder(this)) {
       throw new Error(`Invalid folder ${JSON.stringify(this)}`);
     }
-    this.folderContents = {};
-    if (file.folderContents) {
-      for (const id in file.folderContents) {
-        if (Folder.isFolder(file.folderContents[id])) {
-          this.folderContents[id] = new Folder(file.folderContents[id]);
-        } else {
-          this.folderContents[id] = new File(file.folderContents[id]);
-        }
-      }
-    }
-  }
-
-  protected static async asyncConstructor(
-    file: drive_v3.Schema$File & { index?: IndexEntry }
-  ) {
-    const folder = new Folder(file);
-    if (folder.isEmpty()) {
-      await folder.indexContents();
-    }
-    return folder;
   }
 
   public static isFolder(obj: File | Folder): obj is Folder {
     return 'mimeType' in obj && obj.mimeType == MimeTypes.Google.Folder;
   }
 
-  public getContents(): (File | Folder)[] {
-    return Object.values(this.folderContents);
-  }
-
-  public isEmpty() {
-    return Object.getOwnPropertyNames(this.folderContents).length == 0;
-  }
-
   public static async fromDriveId(fileId: string, index?: IndexEntry) {
     const file = await super.fromDriveId(fileId, index);
-    return await Folder.asyncConstructor(file);
+    return new Folder(file);
   }
 
   public static async fromDrive(
     file: drive_v3.Schema$File,
     index?: IndexEntry
   ) {
-    return await Folder.asyncConstructor(new File(file, index));
+    return new Folder(new File(file, index));
   }
 
   public static async fromIndexFile(indexPath: string, index?: IndexEntry) {
@@ -97,7 +67,8 @@ class Folder extends File {
    * TODO _re_ index non-destructively
    * TODO delete/rename cached files
    */
-  public async indexContents() {
+  public async indexContents(): Promise<drive_v3.Schema$File[]> {
+    let contents: drive_v3.Schema$File[] = [];
     let folderContents: drive_v3.Schema$FileList = {};
     do {
       folderContents = (
@@ -124,36 +95,20 @@ class Folder extends File {
             new IndexEntry(this.index.path)
           );
           file.index = new IndexEntry(
-            path.join(this.index.path, Folder.normalizeFilename(file.name))
+            path.resolve(this.index.path, Folder.normalizeFilename(file.name))
           );
           if (Folder.isFolder(file)) {
-            this.folderContents[file.id] = await Folder.fromDrive(file);
+            const folder = await Folder.fromDrive(file);
+            contents.push(folder);
+            contents.push(...(await folder.indexContents()));
           } else {
-            this.folderContents[file.id] = file;
+            contents.push(file);
           }
-          Folder.event.emit(
-            Folder.Event.Succeed,
-            this.folderContents[file.id].index.path
-          );
+          Folder.event.emit(Folder.Event.Succeed, file.index.path);
         }
       }
     } while (folderContents.nextPageToken);
-  }
-
-  public async cache({ ignoreErrors, ...rest }: File.Params.Cache) {
-    for (const file of this.getContents()) {
-      try {
-        await file.cache({ ignoreErrors, ...rest });
-      } catch (error) {
-        Folder.event.emit(
-          Folder.Event.Fail,
-          `${file.index.path}: ${(error as Error).message} (driveId ${file.id})`
-        );
-        if (!ignoreErrors) {
-          throw error;
-        }
-      }
-    }
+    return contents;
   }
 }
 
