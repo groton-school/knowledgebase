@@ -1,5 +1,5 @@
 {
-  "name": "@groton/knowledgebase.builder",
+  "name": "@groton/knowledgebase.indexer",
   "description": "Knowledgebase website",
   "version": "0.1.0",
   "type": "module",

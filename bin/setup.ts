@@ -105,10 +105,10 @@ You need to manually configure the OAuth Consent screen at ${cli.colors.url(
       )}
 `);
 
-      cli.shell.mkdir('-p', path.join(cli.appRoot(), 'packages/builder/var'));
+      cli.shell.mkdir('-p', path.join(cli.appRoot(), 'packages/indexer/var'));
       cli.log.info(`
 You need to manually create and download keys for the ${cli.colors.command(
-        'builder'
+        'indexer'
       )} at ${cli.colors.url(
         `https://console.cloud.google.com/apis/credentials?project=${project.projectId}`
       )}
@@ -119,7 +119,7 @@ You need to manually create and download keys for the ${cli.colors.command(
   )}
 
 Download these credentials to ${cli.colors.url(
-        path.join(cli.appRoot(), 'packages/builder/var/keys.json')
+        path.join(cli.appRoot(), 'packages/indexer/var/keys.json')
       )}
 `);
 
