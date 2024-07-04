@@ -7,10 +7,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const FOLDER_NAME = '%FOLDER_NAME%';
-const TIMESTAMP = '%TIMESTAMP%';
-
-const defaultFilePath = path.resolve(__dirname, '../../server/var/groups.json');
+const defaultFilePath = path.resolve(__dirname, '../../router/var/groups.json');
 
 const options = {
   filePath: {
@@ -28,15 +25,14 @@ const options = {
 };
 
 (async () => {
-  const CWD = process.cwd();
   let {
     values: { filePath, permissionsRegex }
-  } = await cli.init({ args: { options } });
+  } = cli.init({ args: { options } });
 
   const spinner = cli.spinner();
 
   let groups = [];
-  let nextPageToken;
+  let nextPageToken: string;
   do {
     const page = JSON.parse(
       cli.shell.exec(

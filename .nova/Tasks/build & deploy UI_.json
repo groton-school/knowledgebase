@@ -1,0 +1,13 @@
+{
+  "actions": {
+    "build": {
+      "enabled": true,
+      "script": "pnpm -F @groton/knowledgebase.ui run build"
+    },
+    "run": {
+      "enabled": true,
+      "script": "pnpm -F @groton/knowledgebase.ui run build\npnpm -F @groton/knowledgebase.router run deploy:deploy"
+    }
+  },
+  "openLogOnRun": "start"
+}

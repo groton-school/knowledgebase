@@ -9,7 +9,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const defaultIndexPath = path.resolve(__dirname, '../../server/var/index.json');
+const defaultIndexPath = path.resolve(__dirname, '../../router/var/index.json');
 const defaultKeysPath = path.resolve(__dirname, '../var/keys.json');
 const defaultTokensPath = path.resolve(__dirname, '../var/tokens.json');
 

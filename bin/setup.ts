@@ -125,7 +125,7 @@ Download these credentials to ${cli.colors.url(
 
       const configFilePath = path.join(
         cli.appRoot(),
-        'packages/server/var/config.json'
+        'packages/router/var/config.json'
       );
       let config = {};
       if (fs.existsSync(configFilePath)) {
@@ -137,7 +137,7 @@ Download these credentials to ${cli.colors.url(
       fs.writeFileSync(configFilePath, JSON.stringify(config));
       cli.log.info(`
 You need to manually create and download keys for the ${cli.colors.command(
-        'server'
+        'router'
       )} at ${cli.colors.url(
         `https://console.cloud.google.com/apis/credentials?project=${project.projectId}`
       )}

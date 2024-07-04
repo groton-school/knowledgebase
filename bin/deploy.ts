@@ -10,13 +10,13 @@ const __dirname = path.dirname(__filename);
 (async () => {
   await gcloud.init({
     env: {
-      root: path.resolve(__dirname, '../packages/server'),
+      root: path.resolve(__dirname, '../packages/router'),
       loadDotEnv: path.resolve(__dirname, '../.env')
     }
   });
   cli.init({
     env: {
-      root: path.resolve(__dirname, '../packages/server'),
+      root: path.resolve(__dirname, '../packages/router'),
       loadDotEnv: path.resolve(__dirname, '../.env')
     }
   });

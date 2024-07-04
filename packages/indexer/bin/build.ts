@@ -14,7 +14,7 @@ const FOLDER_ID = '%FOLDER_ID%';
 const FOLDER_NAME = '%FOLDER_NAME%';
 const TIMESTAMP = '%TIMESTAMP%';
 
-const defaultIndexPath = path.resolve(__dirname, '../../server/var/index.json');
+const defaultIndexPath = path.resolve(__dirname, '../../router/var/index.json');
 const defaultKeysPath = path.resolve(__dirname, '../var/keys.json');
 const defaultTokensPath = path.resolve(__dirname, '../var/tokens.json');
 
@@ -110,7 +110,7 @@ function colorizePath(p: string) {
         indexPath ||
         (await cli.prompts.input({
           message: options.indexPath.description,
-          default: path.resolve(cli.appRoot(), '../server/var/index.json'),
+          default: path.resolve(cli.appRoot(), '../router/var/index.json'),
           validate: cli.validators.notEmpty
         }))
       )
