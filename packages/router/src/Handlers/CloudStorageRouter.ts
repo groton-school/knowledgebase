@@ -1,4 +1,5 @@
 import Helper from '../Helper';
+import { Var } from '../Helper/Var';
 import Logger from '../Services/Logger';
 import { Storage } from '@google-cloud/storage';
 import { Request, Response } from 'express';
@@ -9,7 +10,7 @@ export default function CloudStorageRouter({
   config,
   authClient
 }: {
-  config: Record<string, Record<string, string>>;
+  config: Var.Config;
   authClient: OAuth2Client;
 }) {
   return async (req: Request, res: Response) => {

@@ -5,8 +5,12 @@
   "type": "module",
   "scripts": {
     "build": "run-s build:*",
-    "build:build": "bin/build.ts",
-    "build:upload": "bin/upload.ts"
+    "build:index": "bin/build.ts",
+    "build:groups": "bin/groups.ts",
+    "upload": "run-s upload:*",
+    "upload:index": "node -e \"if (! require('fs').existsSync('../router/var/index.json') { process.exit(1)} \" || run-s build:build",
+    "upload:groups": "node -e \"if (! require('fs').existsSync('../router/var/groups.json') { process.exit(1)} \" || run-s build:groups",
+    "upload:upload": "bin/upload.ts"
   },
   "devDependencies": {
     "@tsconfig/recommended": "^1.0.7",

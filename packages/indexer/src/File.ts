@@ -162,7 +162,7 @@ class File {
           const file = bucket.file(filename);
           const blob = await pipelineHTML({
             file: this,
-            blob: files[subfileName]
+            blob: (files as Record<string, Blob>)[subfileName] // TODO better fix than manual typing
           });
           file.save(Buffer.from(await blob.arrayBuffer()));
           this.index.uri.push(file.cloudStorageURI.href);
