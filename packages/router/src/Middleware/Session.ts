@@ -8,6 +8,7 @@ declare namespace Express {
   export interface Session {
     redirect?: string;
     tokens?: Credentials;
+    userInfo?: Record<string, any>;
   }
 }
 

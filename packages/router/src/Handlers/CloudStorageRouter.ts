@@ -48,7 +48,8 @@ export default function CloudStorageRouter({
         res.redirect(
           authClient.generateAuthUrl({
             access_type: 'offline',
-            scope: 'https://www.googleapis.com/auth/devstorage.read_only'
+            scope:
+              'https://www.googleapis.com/auth/devstorage.read_only openid profile email'
           })
         );
       }
