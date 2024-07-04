@@ -99,6 +99,8 @@ const options = {
         `gcloud storage buckets update gs://${bucket} --project=${project.projectId} --public-access-prevention --no-uniform-bucket-level-access`
       );
 
+      // TODO collect environment variable values
+
       cli.log.info(`
 You need to manually configure the OAuth Consent screen at ${cli.colors.url(
         `https://console.cloud.google.com/apis/credentials/consent?project=${project.projectId}`
