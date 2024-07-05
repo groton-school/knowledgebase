@@ -10,7 +10,7 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
   // TODO better way to do this?
   if (!config || !index || !groups) {
     throw new Error(
-      `Missing configuration: ${JSON.stringify({
+      `Missing CloudStorageRouter configuration: ${JSON.stringify({
         config: !!config,
         index: !!index,
         groups: !!groups
