@@ -1,4 +1,5 @@
 import Helper from '../Helper';
+import ACL from '../Services/ACL';
 import Auth from '../Services/Auth';
 import Logger from '../Services/Logger';
 import HandlerFactory from './HandlerFactory';
@@ -43,54 +44,17 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
               res.send('storage access error');
             }
           } else {
-            if (!req.session.groups) {
-              const userGroups: string[] = [];
-              for (const group of groups) {
-                try {
-                  if (
-                    (
-                      await (
-                        await fetch(
-                          `https://cloudidentity.googleapis.com/v1/${group.name}/memberships:checkTransitiveMembership?query=member_key_id == '${req.session.userInfo?.email}'`,
-                          {
-                            headers: {
-                              Authorization: `Bearer ${req.session.tokens?.access_token}`
-                            }
-                          }
-                        )
-                      ).json()
-                    ).hasMembership
-                  ) {
-                    userGroups.push(group.groupKey.id);
-                  }
-                } catch (_) {
-                  // ignore error
-                }
-              }
-              req.session.groups = userGroups;
-            }
+            const acl = await new ACL(req, groups).prepare();
             const folder = index.find(
               (file) =>
                 `/${file.index.path}/` == req.path &&
-                file.permissions?.reduce((access: boolean, permission) => {
-                  if (req.session.groups?.includes(permission.emailAddress!)) {
-                    return true;
-                  }
-                  return access;
-                }, false)
+                acl.hasAccess(file.permissions)
             );
             if (folder) {
               const pages = index.filter(
                 (file) =>
                   file.parents?.includes(folder.id) &&
-                  file.permissions?.reduce((access: boolean, permission) => {
-                    if (
-                      req.session.groups?.includes(permission.emailAddress!)
-                    ) {
-                      return true;
-                    }
-                    return access;
-                  }, false)
+                  acl.hasAccess(file.permissions)
               );
               res.send(`<!doctype html>
                   <html lang="en">
