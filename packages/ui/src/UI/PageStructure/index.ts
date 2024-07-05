@@ -22,8 +22,12 @@ export default function PageStructure() {
     `${Constants.styles.googleDocEmbed}, #directory`
   ) as HTMLDivElement;
   if (doc) {
+    doc.classList.add('content');
     content = doc.parentElement?.insertBefore(content, doc)!;
-    content.insertAdjacentHTML('afterbegin', `<div id="toc"></div>`);
+    content.insertAdjacentHTML(
+      'afterbegin',
+      `<div id="sidebar"><div id="toc" class="content"></div><div id="tree" class="content"></div></div>`
+    );
     content.appendChild(doc);
     doc.style.maxHeight = `calc(100% - ${doc.style.paddingTop} - ${doc.style.paddingBottom} - var(--spacing)`;
   } else {

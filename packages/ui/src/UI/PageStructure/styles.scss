@@ -32,7 +32,6 @@ body {
     flex-direction: row-reverse;
     flex-wrap: wrap;
     align-items: start;
-    gap: var(--spacing);
     width: calc(100vw - var(--spacing) * 2);
     height: calc(
       100vh - /* navbar-height */ var(--spacing) *
@@ -40,24 +39,26 @@ body {
     );
     overflow: hidden;
 
-    > div {
+    .content {
       background: var(--content-background);
       border-radius: calc(0.5 * var(--spacing));
       border: solid var(--outline) 0.25px;
       box-shadow: 0 0 var(--spacing) hsla(0, 0%, 50%, 1);
       overflow-y: auto;
       max-height: 100%;
+      margin: var(--spacing);
     }
 
-    #toc {
-      padding: var(--spacing);
-      float: left;
-      max-width: 1.5in;
-      width: 2in;
-      min-width: 25vw;
+    .content:empty {
+      display: none;
+    }
 
-      li {
-        margin: calc(0.5 * var(--spacing)) 0;
+    #sidebar {
+      .content {
+        padding: var(--spacing);
+        max-width: 1.5in;
+        width: 2in;
+        min-width: 25vw;
       }
     }
 

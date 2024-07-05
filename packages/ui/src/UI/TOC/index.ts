@@ -1,5 +1,6 @@
 import Helper from '../../Helper';
 import Builder from './Builder';
+import './styles.scss';
 
 const TOC_TITLE = 'On this page';
 

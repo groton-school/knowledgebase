@@ -7,6 +7,7 @@ import PageStructure from './PageStructure';
 import Permalinks from './Permalinks';
 import TOC from './TOC';
 import TitleCaseAllCapsHeaders from './TitleCaseAllCapsHeaders';
+import Tree from './Tree';
 import './google-docs.scss';
 import './link-label-by-group.scss';
 import './unlock-img-width.scss';
@@ -21,6 +22,7 @@ export default function UI() {
   PageStructure();
   HideHeaderAndFooter();
   TitleCaseAllCapsHeaders();
+  Tree();
   TOC();
   Permalinks();
   H6IsNormalText();
