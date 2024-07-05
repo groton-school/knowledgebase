@@ -2,6 +2,7 @@ import CloudStorageRouter from './Handlers/CloudStorageRouter';
 import Favicon from './Handlers/Favicon';
 import Login from './Handlers/Login';
 import Logout from './Handlers/Logout';
+import Search from './Handlers/Search';
 import TOC from './Handlers/TOC';
 import Helper from './Helper';
 import Session from './Middleware/Session';
@@ -22,6 +23,7 @@ import express from 'express';
   app.get('/logout', Logout());
   app.get(Auth.redirectUri.pathname, Login());
   app.get(config.kb.tocRoute, TOC({ config, groups, index }));
+  app.get(config.kb.searchRoute, Search({ config, groups, index }));
 
   // TODO destroy /_ah/* sessions
 
