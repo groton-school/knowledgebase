@@ -1,10 +1,10 @@
-import { Request, Response } from 'express';
-import { OAuth2Client } from 'google-auth-library';
+import Auth from '../Services/Auth';
+import HandlerFactory from './HandlerFactory';
 
-export default function Login({ authClient }: { authClient: OAuth2Client }) {
-  return async (req: Request, res: Response) => {
+const Login: HandlerFactory = () => {
+  return async (req, res) => {
     if (req.query.code) {
-      const tokenResponse = await authClient.getToken(
+      const tokenResponse = await Auth.authClient.getToken(
         req.query.code.toString()
       );
       req.session.tokens = { ...req.session.tokens, ...tokenResponse.tokens };
@@ -16,7 +16,10 @@ export default function Login({ authClient }: { authClient: OAuth2Client }) {
       );
       res.redirect(req.session.redirect || '/');
     } else {
-      res.send('No code present');
+      res.status(401);
+      res.send('Missing authorization code');
     }
   };
-}
+};
+
+export default Login;

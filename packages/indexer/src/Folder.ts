@@ -110,6 +110,10 @@ class Folder extends File {
     } while (folderContents.nextPageToken);
     return contents;
   }
+
+  public async cache() {
+    return;
+  }
 }
 
 namespace Folder {

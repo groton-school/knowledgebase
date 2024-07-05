@@ -1,19 +1,13 @@
-import { Var } from '../Helper/Var';
+import { Var } from '../var';
 import { FirestoreStore } from '@google-cloud/connect-firestore';
 import { Firestore } from '@google-cloud/firestore';
 import session from 'express-session';
-import { Credentials } from 'google-auth-library';
 
-declare namespace Express {
-  export interface Session {
-    redirect?: string;
-    tokens?: Credentials;
-    userInfo?: Record<string, any>;
-    groups?: string[];
-  }
-}
+type SessionConfig = {
+  config: Var.Config;
+};
 
-export default function Session({ config }: { config: Var.Config }) {
+export default function Session({ config }: SessionConfig) {
   return session({
     secret: config.session.secret, // if using cookies, use same secret!
     cookie: { secure: true, maxAge: 90 * 24 * 60 * 60 * 1000 },

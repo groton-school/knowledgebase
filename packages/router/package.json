@@ -10,12 +10,15 @@
     "build": "run-s build:*",
     "build:ui": "node -e \"if (! require('fs').existsSync('../ui/build')) { process.exit(1)}\" || pnpm -F @groton/knowledgebase.ui run build",
     "build:rollup": "rollup -c rollup.config.mjs",
-    "#build:lockfile": "node -e \"if (! require('fs').existsSync('./pnpm-lock.yaml')) { process.exit(1)}\" || run-s build:lockfile:*",
-    "#build:lockfile:lockfile": "make-dedicated-lockfile",
-    "#build:lockfile:cleanup": "pnpm install --force",
+    "deploy": "run-s deploy:* || bin/restore-lockfile.ts",
+    "deploy:prepare-lockfile": "bin/prepare-lockfile.ts",
+    "deploy:deploy": "bin/deploy.ts",
+    "deploy:restore-lockfile": "bin/restore-lockfile.ts",
     "start": "node build/index.js"
   },
   "devDependencies": {
+    "@battis/partly-gcloudy": "^0.4.4",
+    "@battis/qui-cli": "^0.4.2",
     "@groton/knowledgebase.indexer": "file:../indexer",
     "@pnpm/make-dedicated-lockfile": "^0.6.10",
     "@rollup/plugin-terser": "^0.4.4",

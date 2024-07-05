@@ -1,13 +1,18 @@
 import Logger from '../Services/Logger';
-import { Request, Response } from 'express';
+import HandlerFactory from './HandlerFactory';
 
-export default function Logout() {
-  return (req: Request, res: Response) => {
+const Logout: HandlerFactory = () => {
+  return (req, res) => {
     req.session.destroy((err) => {
       if (err) {
         Logger.error(JSON.stringify(err));
+        res.status(err.code || 500);
+        res.send('Error logging out');
+      } else {
+        res.send('Logged out');
       }
-      res.send('Logged out');
     });
   };
-}
+};
+
+export default Logout;

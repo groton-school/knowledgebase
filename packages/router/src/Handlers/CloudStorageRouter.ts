@@ -1,48 +1,47 @@
 import Helper from '../Helper';
-import { Var } from '../Helper/Var';
+import Auth from '../Services/Auth';
 import Logger from '../Services/Logger';
+import HandlerFactory from './HandlerFactory';
 import { Storage } from '@google-cloud/storage';
-import { Request, Response } from 'express';
-import { OAuth2Client } from 'google-auth-library';
 import path from 'path';
 
-export default function CloudStorageRouter({
-  config,
-  index,
-  groups,
-  authClient
-}: {
-  config: Var.Config;
-  index: Var.Index;
-  groups: Var.Groups;
-  authClient: OAuth2Client;
-}) {
-  return async (req: Request, res: Response) => {
+const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
+  // TODO better way to do this?
+  if (!config || !index || !groups) {
+    throw new Error(
+      `Missing configuration: ${JSON.stringify({
+        config: !!config,
+        index: !!index,
+        groups: !!groups
+      })}`
+    );
+  }
+  return async (req, res) => {
     req.session.redirect = undefined;
     if (!req.path.endsWith('/') && !/.*\.[^\\]+$/i.test(req.path)) {
       res.redirect(`${req.path}/`);
     } else {
-      if (req.session.tokens) {
-        authClient.setCredentials(req.session.tokens);
+      if (Auth.authorize(req, res)) {
         try {
           const bucket = new Storage({
-            authClient,
+            authClient: Auth.authClient,
             projectId: process.env.GOOGLE_CLOUD_PROJECT
           }).bucket(config.storage.bucket);
           const file = bucket.file(Helper.normalizePath(req.path));
           if ((await file.exists())[0]) {
-            const metadata = (await file.getMetadata())[0];
-            res.type(metadata.contentType || path.extname(req.path));
-            const stream = file.createReadStream();
-            stream.on('data', (data) => res.write(data));
-            stream.on('error', (error) =>
-              Logger.error(file.cloudStorageURI.href, error)
-            );
-            req.session.tokens = {
-              ...req.session.tokens,
-              ...authClient.credentials
-            };
-            stream.on('end', () => res.end());
+            try {
+              const metadata = (await file.getMetadata())[0];
+              res.type(metadata.contentType || path.extname(req.path));
+              const stream = file.createReadStream();
+              stream.on('data', (data) => res.write(data));
+              stream.on('error', (error) =>
+                Logger.error(file.cloudStorageURI.href, error)
+              );
+              stream.on('end', () => res.end());
+            } catch (_) {
+              res.status(500);
+              res.send('storage access error');
+            }
           } else {
             if (!req.session.groups) {
               const userGroups: string[] = [];
@@ -52,7 +51,7 @@ export default function CloudStorageRouter({
                     (
                       await (
                         await fetch(
-                          `https://cloudidentity.googleapis.com/v1/${group.name}/memberships:checkTransitiveMembership?query=member_key_id == '${req.session.userInfo.email}'`,
+                          `https://cloudidentity.googleapis.com/v1/${group.name}/memberships:checkTransitiveMembership?query=member_key_id == '${req.session.userInfo?.email}'`,
                           {
                             headers: {
                               Authorization: `Bearer ${req.session.tokens?.access_token}`
@@ -74,7 +73,7 @@ export default function CloudStorageRouter({
               (file) =>
                 `/${file.index.path}/` == req.path &&
                 file.permissions?.reduce((access: boolean, permission) => {
-                  if (req.session.groups.includes(permission.emailAddress)) {
+                  if (req.session.groups?.includes(permission.emailAddress!)) {
                     return true;
                   }
                   return access;
@@ -85,7 +84,9 @@ export default function CloudStorageRouter({
                 (file) =>
                   file.parents?.includes(folder.id) &&
                   file.permissions?.reduce((access: boolean, permission) => {
-                    if (req.session.groups.includes(permission.emailAddress)) {
+                    if (
+                      req.session.groups?.includes(permission.emailAddress!)
+                    ) {
                       return true;
                     }
                     return access;
@@ -130,17 +131,9 @@ export default function CloudStorageRouter({
           Logger.error(req.originalUrl, error);
           res.status((error as any).code || 418);
         }
-      } else {
-        req.session.redirect = req.url;
-        res.redirect(
-          authClient.generateAuthUrl({
-            access_type: 'offline',
-            // TODO examine these scopes more carefully
-            scope:
-              'https://www.googleapis.com/auth/devstorage.read_only openid profile email https://www.googleapis.com/auth/cloud-identity.groups.readonly'
-          })
-        );
       }
     }
   };
-}
+};
+
+export default CloudStorageRouter;

@@ -118,6 +118,12 @@ importers:
         specifier: ^3.13.0
         version: 3.13.0
     devDependencies:
+      '@battis/partly-gcloudy':
+        specifier: ^0.4.4
+        version: 0.4.4
+      '@battis/qui-cli':
+        specifier: ^0.4.2
+        version: 0.4.2
       '@groton/knowledgebase.indexer':
         specifier: file:../indexer
         version: link:../indexer

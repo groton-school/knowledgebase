@@ -1,6 +1,8 @@
 #!/usr/bin/env tsx
+import File from '../src/File';
 import Folder from '../src/Folder';
 import Client from '../src/Google/Client';
+import MimeTypes from '../src/MimeTypes';
 import cli from '@battis/qui-cli';
 import fs from 'fs';
 import path from 'path';
@@ -98,23 +100,36 @@ const flags = {
   Folder.event.on(Folder.Event.Fail, (status) => spinner.fail(status));
 
   spinner.start(`Loading index from ${cli.colors.url(indexPath)}`);
-  const folder = await Folder.fromIndexFile(indexPath);
-  spinner.succeed(`${cli.colors.value(folder.name)} index loaded`);
+  const index: (File | Folder)[] = await Promise.all(
+    JSON.parse(fs.readFileSync(indexPath).toString()).map((obj: File) => {
+      if (obj.mimeType == MimeTypes.Google.Folder) {
+        return Folder.fromDrive(obj, obj.index);
+      } else {
+        return File.fromDrive(obj, obj.index);
+      }
+    })
+  );
+  spinner.succeed(`${cli.colors.value(index[0].name)} index loaded`);
 
-  await folder.cache({
-    bucketName:
-      bucketName ||
-      process.env.BUCKET ||
-      (await cli.prompts.input({
-        message: options.bucketName.description,
-        validate: cli.validators.lengthBetween(6, 30)
-      })),
-    permissionsRegex: permissionsRegex || process.env.PERMISSIONS_REGEX || '.*',
-    force: !!force,
-    ignoreErrors: !!ignoreErrors
-  });
+  bucketName =
+    bucketName ||
+    process.env.BUCKET ||
+    (await cli.prompts.input({
+      message: options.bucketName.description,
+      validate: cli.validators.lengthBetween(6, 30)
+    }));
+
+  for (let i = 0; i < index.length; i++) {
+    await index[i].cache({
+      bucketName,
+      permissionsRegex:
+        permissionsRegex || process.env.PERMISSIONS_REGEX || '.*',
+      force: !!force,
+      ignoreErrors: !!ignoreErrors
+    });
+  }
 
   spinner.start(`Saving index to ${cli.colors.url(indexPath)}`);
-  fs.writeFileSync(indexPath, JSON.stringify(folder));
+  fs.writeFileSync(indexPath, JSON.stringify(index));
   spinner.succeed(`Index saved to ${cli.colors.url(indexPath)}`);
 })();

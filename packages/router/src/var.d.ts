@@ -1,12 +1,9 @@
 import File from '@groton/knowledgebase.indexer/src/File';
 import Folder from '@groton/knowledgebase.indexer/src/Folder';
 
-type URLString = string;
-type EmailString = string;
-
-export namespace Var {
+declare namespace Var {
   export type Config = {
-    gae: { url: string };
+    gae: { url: UrlString };
     session: { secret: string };
     storage: { bucket: string };
   };
@@ -16,12 +13,12 @@ export namespace Var {
     web: {
       client_id: string;
       project_id: string;
-      auth_uri: URLString;
-      token_uri: URLString;
-      auth_provider_x509_cert_url: string;
+      auth_uri: UrlString;
+      token_uri: UrlString;
+      auth_provider_x509_cert_url: UrlString;
       client_secret: string;
-      redirect_uris: URLString[];
-      javascript_origins: URLString[];
+      redirect_uris: UrlString[];
+      javascript_origins: UrlString[];
     };
   };
 

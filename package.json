@@ -14,7 +14,7 @@
     "deploy": "run-s deploy:*",
     "deploy:build": "run-s build",
     "deploy:cache": "pnpm -F @groton/knowledgebase.indexer run upload",
-    "deploy:deploy": "bin/deploy.ts",
+    "deploy:deploy": "pnpm -F @groton/knowledgebase.router run deploy",
     "release": "run-s release:*",
     "release:changeset": "changeset version",
     "release:publish": "pnpm publish -r --otp $(op item get npm --otp)"
