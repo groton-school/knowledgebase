@@ -6,7 +6,12 @@ declare namespace Var {
     gae: { url: UrlString };
     session: { secret: string };
     storage: { bucket: string };
-    kb: { root: PathString; tocRoute: PathString; searchRoute: PathString };
+    kb: {
+      root: PathString;
+      tocRoute: PathString;
+      searchRoute: PathString;
+      search?: { include?: string[]; exclude?: string[] };
+    };
   };
 
   // TODO surely this must be defined _somewhere_ in google-auth-library
