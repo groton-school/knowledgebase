@@ -16,10 +16,12 @@ module.exports = require('@battis/webpack/ts/vanilla')({
   plugins: [
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin({
-      patterns: [
-        { from: 'assets', to: 'assets' },
-        DEBUGGING ? { from: 'public', to: '' } : undefined
-      ]
+      patterns: DEBUGGING
+        ? [
+            { from: 'assets', to: 'assets' },
+            { from: 'public', to: '' }
+          ]
+        : [{ from: 'assets', to: 'assets' }]
     })
   ],
   production: !DEBUGGING
