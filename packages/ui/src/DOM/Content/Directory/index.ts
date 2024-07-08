@@ -2,6 +2,11 @@ import Helper from '../../../Helper';
 import './styles.scss';
 
 export default function Directory(directory: HTMLDivElement) {
+  const card = document.createElement('div');
+  card.classList.add('col-md-7', 'card', 'm-1'); // TODO config spacing
+  directory.classList.add('card-body');
+  directory.parentElement?.insertBefore(card, directory);
+  card.appendChild(directory);
   Array.from(directory.querySelectorAll('a')).forEach(
     (a: HTMLAnchorElement) => {
       a.classList.add('card', 'm-1'); // TODO config spacing

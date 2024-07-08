@@ -20,7 +20,6 @@ export default function PageStructure() {
     const content = document.querySelector(
       `${Constants.styles.googleDocEmbed}, #directory`
     ) as HTMLDivElement;
-    content.classList.add('col-md-7', 'card', 'm-1'); // TODO config spacing
     if (content) {
       wrapper = content.parentElement?.insertBefore(wrapper, content)!;
       row.appendChild(content);
