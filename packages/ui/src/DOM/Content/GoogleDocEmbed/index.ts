@@ -7,8 +7,8 @@ export default function GoogleDocEmbed(doc: HTMLDivElement) {
   doc.parentElement?.insertAdjacentHTML(
     'afterbegin',
     // TODO template
-    `<div class="col-md-4 card sticky-top m-1"><div id="toc" class="card-body"></div></div>` // TODO config spacing
+    `<div class="col-md-4 card sticky-top m-1 p-3"><div id="toc" class="card-body"></div></div>` // TODO config spacing
   );
-  doc.style.maxHeight = `calc(100% - ${doc.style.paddingTop} - ${doc.style.paddingBottom}`;
+  doc.removeAttribute('style');
   Helper.log(`Updated ${Constants.styles.googleDocEmbed} DOM`);
 }
