@@ -1,4 +1,6 @@
 import StyleConstants from './Constants.module.scss';
 
-export const hosting = process.env.GOOGLE_HOSTING;
-export const styles = StyleConstants;
+const hosting = process.env.GOOGLE_HOSTING;
+const styles = StyleConstants;
+
+export default { hosting, styles };

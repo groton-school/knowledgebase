@@ -56,6 +56,7 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
                   file.parents?.includes(folder.id) &&
                   acl.hasAccess(file.permissions)
               );
+              // TODO template
               res.send(`<!doctype html>
                   <html lang="en">
                   <head>
@@ -69,18 +70,18 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
                   </head>
                   <body>
                   <div id="directory">
-                  <h1>${folder.name}</h1>
+                  <h1 class="title">${folder.name}</h1>
                   ${pages
                     .map(
                       (page) =>
-                        `<div class="page"><a href="/${
+                        `<a href="/${
                           // TODO this path formatting is wonky
                           page.index.path
-                        }/"><h2 class="title">${page.name}</h2>${
+                        }/"><div class="name">${page.name}</div>${
                           page.description
                             ? `<div class="description">${page.description}</div>`
                             : ''
-                        }</a></div>`
+                        }</a>`
                     )
                     .join('')}
                   </div>

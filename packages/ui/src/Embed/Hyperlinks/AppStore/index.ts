@@ -11,6 +11,7 @@ function embed(paragraphs: HTMLElement[]) {
     const ios = p.querySelector(appStore) as HTMLAnchorElement;
     const android = p.querySelector(playStore) as HTMLAnchorElement;
     const id = crypto.randomUUID();
+    // TODO template
     p.outerHTML =
       `<div id="${id}" class="kb-include">` +
       `<div class="${styles.apps} kb-include">` +

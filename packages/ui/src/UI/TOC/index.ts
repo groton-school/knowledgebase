@@ -2,7 +2,7 @@ import Helper from '../../Helper';
 import Builder from './Builder';
 import './styles.scss';
 
-const TOC_TITLE = 'On this page';
+const TOC_TITLE = 'On this page'; // TODO config
 
 /* Maximum header level to display */
 const MAX_DEPTH = 3;
@@ -19,7 +19,7 @@ export default function TOC() {
       const toc = document.createElement('div');
       toc.insertAdjacentHTML(
         'afterbegin',
-        `<div class="heading">${TOC_TITLE}</div>`
+        `<h5 class="card-title">${TOC_TITLE}</h5>`
       );
       const builder = new Builder();
       headings.forEach((h) => {

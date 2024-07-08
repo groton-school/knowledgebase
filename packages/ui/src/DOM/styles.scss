@@ -1,0 +1,16 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+body {
+  --groton-red: #a6093d; // TODO config
+
+  font-family: Arial, Roboto, Helvetica, sans-serif; // TODO config
+
+  background: url('./campus.jpg') no-repeat fixed; // TODO config
+  background-size: cover;
+
+  #wrapper {
+    position: fixed;
+    top: var(--nav-height);
+    height: calc(100vh - var(--nav-height));
+  }
+}

@@ -19,6 +19,7 @@
     "@battis/prettier-config": "latest",
     "@battis/webpack": "^0.4.7",
     "@google-cloud/storage": "^6.12.0",
+    "@types/bootstrap": "^5.2.10",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^12.0.2",
     "dotenv": "^16.4.5",
@@ -36,6 +37,7 @@
   },
   "dependencies": {
     "@types/gtag.js": "^0.0.12",
-    "@types/node": "^20.14.8"
+    "@types/node": "^20.14.8",
+    "bootstrap": "^5.3.3"
   }
 }

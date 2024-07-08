@@ -1,4 +1,5 @@
 import pkg from '../package.json';
+import DOM from './DOM';
 import Embed from './Embed';
 import Helper from './Helper';
 import UI from './UI';
@@ -12,6 +13,7 @@ Helper.vanity(
   }`
 );
 
+DOM();
 UI();
 Embed();
 

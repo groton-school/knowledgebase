@@ -1,5 +1,3 @@
-#toc {
-  li {
-    margin: calc(0.5 * var(--spacing)) 0;
-  }
+.card:has(#toc:empty) {
+  display: none;
 }
