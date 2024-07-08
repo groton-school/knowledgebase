@@ -3,6 +3,7 @@ import Helper from '../Helper';
 const properNouns = [
   '2FA',
   'AI',
+  'AirPlay',
   'Alta Open', // opt-space to turn it into a single token
   'Anker',
   'AMX',
@@ -29,7 +30,9 @@ const properNouns = [
   'HDMI',
   'I',
   'iOS',
+  'iPad',
   'iPadOS',
+  'iPhone',
   'Jamf',
   'January',
   'July',
