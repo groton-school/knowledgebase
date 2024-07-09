@@ -1,0 +1,17 @@
+{
+  "name": "@groton/knowledgebase.google",
+  "version": "0.0.0",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "dependencies": {
+    "@battis/qui-cli": "^0.4.2",
+    "@google-cloud/storage": "^7.11.3",
+    "@googleapis/drive": "^8.11.0",
+    "express": "^4.19.2",
+    "google-auth-library": "^9.11.0",
+    "open": "^10.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21"
+  }
+}

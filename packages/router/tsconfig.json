@@ -1,9 +1,0 @@
-{
-  "extends": "@battis/webpack/ts/tsconfig.json",
-  "compilerOptions": {
-    "target": "es2022",
-    "module": "es2022",
-    "moduleResolution": "node",
-    "resolveJsonModule": true
-  }
-}

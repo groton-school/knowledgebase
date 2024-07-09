@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@battis/eslint-config": "latest",
-    "@battis/partly-gcloudy": "^0.4.4",
+    "@battis/partly-gcloudy": "^0.4.5",
     "@battis/prettier-config": "latest",
     "@battis/qui-cli": "^0.4.2",
     "@changesets/cli": "^2.27.7",

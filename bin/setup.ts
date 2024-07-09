@@ -69,9 +69,21 @@ const options = {
       await gcloud.services.enable(gcloud.services.API.CloudIdentityAPI);
       await gcloud.services.enable(gcloud.services.API.CloudFirestoreAPI);
 
-      cli.shell.exec(
-        `gcloud firestore databases update --type=firestore-native --project=${project.projectId} --format=json`
-      );
+      const firestore = await gcloud.iam.serviceAccounts.create({
+        name: 'firestore',
+        displayName: 'Firestore service account'
+      });
+      cli.env.set({ key: 'FIRESTORE', value: firestore.email });
+      await gcloud.iam.addPolicyBinding({
+        member: firestore.email,
+        userType: 'serviceAccount',
+        role: 'roles/datastore.user'
+      });
+      await gcloud.iam.serviceAccounts.keys({
+        email: firestore.email,
+        path: path.join(cli.appRoot(), 'apps/router/var/firestore.json'),
+        cautiouslyDeleteExpiredKeysIfNecessary: true
+      });
 
       permissionsRegex =
         permissionsRegex ||
@@ -107,7 +119,7 @@ You need to manually configure the OAuth Consent screen at ${cli.colors.url(
       )}
 `);
 
-      cli.shell.mkdir('-p', path.join(cli.appRoot(), 'packages/indexer/var'));
+      cli.shell.mkdir('-p', path.join(cli.appRoot(), 'apps/indexer/var'));
       cli.log.info(`
 You need to manually create and download keys for the ${cli.colors.command(
         'indexer'
@@ -121,13 +133,13 @@ You need to manually create and download keys for the ${cli.colors.command(
   )}
 
 Download these credentials to ${cli.colors.url(
-        path.join(cli.appRoot(), 'packages/indexer/var/keys.json')
+        path.join(cli.appRoot(), 'apps/indexer/var/keys.json')
       )}
 `);
 
       const configFilePath = path.join(
         cli.appRoot(),
-        'packages/router/var/config.json'
+        'apps/router/var/config.json'
       );
       let config = {};
       if (fs.existsSync(configFilePath)) {
@@ -135,7 +147,10 @@ Download these credentials to ${cli.colors.url(
       } else {
         cli.shell.mkdir('-p', path.dirname(configFilePath));
       }
-      config['storage'].bucket = bucket;
+      if (!config.storage) {
+        config.storage = {};
+      }
+      config['storage']['bucket'] = bucket;
       fs.writeFileSync(configFilePath, JSON.stringify(config));
       cli.log.info(`
 You need to manually create and download keys for the ${cli.colors.command(
