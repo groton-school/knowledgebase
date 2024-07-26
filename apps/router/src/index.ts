@@ -1,7 +1,5 @@
 import CloudStorageRouter from './Handlers/CloudStorageRouter';
 import Favicon from './Handlers/Favicon';
-import Login from './Handlers/Login';
-import Logout from './Handlers/Logout';
 import Search from './Handlers/Search';
 import SiteTree from './Handlers/SiteTree';
 import Helper from './Helper';
@@ -19,9 +17,9 @@ import express from 'express';
   app.set('trust proxy', true); // https://stackoverflow.com/a/77331306/294171
   app.use(Session({ config }));
 
-  app.get('/favicon.ico', Favicon());
-  app.get('/logout', Logout());
-  app.get(Auth.redirectUri.pathname, Login());
+  app.get('/favicon.ico', Favicon);
+  app.get('/logout', Auth.deauthorize);
+  app.get(Auth.redirectUri.pathname, Auth.authorize);
   app.get(config.kb.siteTreeRoute, SiteTree({ config, groups, index }));
   app.get(config.kb.searchRoute, Search({ config, groups, index }));
 

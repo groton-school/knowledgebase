@@ -40,7 +40,10 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
               );
               stream.on('end', () => res.end());
             } catch (error) {
-              Logger.info(req.originalUrl, error);
+              Logger.error(req.originalUrl, {
+                function: 'CloudStorageRouter',
+                error
+              });
               res.status(500);
               res.send('storage access error');
             }
@@ -94,8 +97,18 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
             }
           }
         } catch (error) {
-          Logger.error(req.originalUrl, error);
-          res.status((error as any).code || 418);
+          if (error == 'Error: No refresh token is set.') {
+              // silent login if refresh token not present
+            // FIXME this should be caught in Auth.authorize
+            req.session.redirect = req.originalUrl;
+            res.redirect(Auth.authUrl);
+          } else {
+            Logger.error(req.originalUrl, {
+              function: 'CloudStorageRouter',
+              error
+            });
+            res.status((error as any).code || 500);
+          }
         }
       }
     }

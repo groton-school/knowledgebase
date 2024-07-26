@@ -1,9 +1,7 @@
-import HandlerFactory from './HandlerFactory';
+import { Request, Response } from 'express';
 
-const Favicon: HandlerFactory = () => {
-  return (_, res) => {
-    res.redirect(301, '/assets/favicon.ico');
-  };
-};
+function Favicon(_: Request, res: Response) {
+  res.redirect(301, '/assets/favicon.ico');
+}
 
 export default Favicon;

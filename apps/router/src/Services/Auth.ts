@@ -1,3 +1,4 @@
+import Logger from './Logger';
 import Var from '@groton/knowledgebase.config';
 import OpenID from '@groton/knowledgebase.openid';
 import { Request, Response } from 'express';
@@ -73,6 +74,21 @@ export default class Auth {
     req.session.redirect = req.url;
     res.redirect(Auth.authUrl);
     return false;
+  }
+
+  public static deauthorize(req: Request, res: Response) {
+    req.session.destroy((error) => {
+      if (error) {
+        Logger.error(req.originalUrl, {
+          function: 'Auth.deauthorize()',
+          error
+        });
+        res.status(error.code || 500);
+        res.send('Error logging out');
+      } else {
+        res.send('Logged out');
+      }
+    });
   }
 
   public static get authUrl(): string {

@@ -38,7 +38,10 @@ export default class ACL {
             userGroups.push(group.groupKey.id);
           }
         } catch (error) {
-          Logger.error(this.req.originalUrl, error);
+          Logger.error(this.req.originalUrl, {
+            function: 'ACL.prepare()',
+            error
+          });
           this.res.status((error as any).code || 418);
         }
       }
