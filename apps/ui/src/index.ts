@@ -13,8 +13,9 @@ Helper.vanity(
   }`
 );
 
-DOM();
+if (DOM()) {
 UI();
 Embed();
+}
 
 Helper.onLoad.activate();
