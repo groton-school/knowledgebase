@@ -2,7 +2,7 @@ import Helper from '../../Helper';
 import * as SiteTreeAPI from '@groton/knowledgebase.api/src/SiteTree';
 
 export default async function SiteTree() {
-  const pages = (await (await fetch('/_/toc')).json()) as SiteTreeAPI.PageList;
+  const pages = (await (await fetch('/_/tree/')).json()) as SiteTreeAPI.PageList;
   const tree = document.querySelector('#site-tree');
   pages.map((page) => {
     const li = document.createElement('li');

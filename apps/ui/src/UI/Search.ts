@@ -8,9 +8,9 @@ export default function Search() {
     e.preventDefault();
     e.stopPropagation();
     const response = (await (
-      await fetch(`/_/search?q=${encodeURIComponent(query.value)}`)
+      await fetch(`/_/search/?q=${encodeURIComponent(query.value)}`)
     ) // TODO config
-      .json()) as {
+      .json())  as {
       name: string;
       href: string;
       description?: string;

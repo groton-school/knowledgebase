@@ -1,7 +1,7 @@
-import Helper from '../Helper';
-import ACL from '../Services/ACL';
-import Auth from '../Services/Auth';
-import Logger from '../Services/Logger';
+import Helper from '../../Helper';
+import ACL from '../../Services/ACL';
+import Auth from '../../Services/Auth';
+import Logger from '../../Services/Logger';
 import HandlerFactory from './HandlerFactory';
 import { Storage } from '@google-cloud/storage';
 import path from 'path';
@@ -13,8 +13,8 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
       `Missing CloudStorageRouter configuration: ${JSON.stringify({
         config: !!config,
         index: !!index,
-        groups: !!groups
-      })}`
+        groups: !!groups,
+      })}`,
     );
   }
   return async (req, res) => {
@@ -26,7 +26,7 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
         try {
           const bucket = new Storage({
             authClient: Auth.authClient,
-            projectId: process.env.GOOGLE_CLOUD_PROJECT
+            projectId: process.env.GOOGLE_CLOUD_PROJECT,
           }).bucket(config.storage.bucket);
           const file = bucket.file(Helper.normalizePath(req.path));
           if ((await file.exists())[0]) {
@@ -36,13 +36,13 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
               const stream = file.createReadStream();
               stream.on('data', (data) => res.write(data));
               stream.on('error', (error) =>
-                Logger.error(file.cloudStorageURI.href, error)
+                Logger.error(file.cloudStorageURI.href, error),
               );
               stream.on('end', () => res.end());
             } catch (error) {
               Logger.error(req.originalUrl, {
                 function: 'CloudStorageRouter',
-                error
+                error,
               });
               res.status(500);
               res.send('storage access error');
@@ -52,22 +52,22 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
             const folder = index.find(
               (file) =>
                 `/${file.index.path}/` == req.path &&
-                acl.hasAccess(file.permissions)
+                acl.hasAccess(file.permissions),
             );
             if (folder) {
               const pages = index.filter(
                 (file) =>
                   file.parents?.includes(folder.id) &&
-                  acl.hasAccess(file.permissions)
+                  acl.hasAccess(file.permissions),
               );
               // TODO template
               res.send(`<!doctype html>
                   <html lang="en">
                   <head>
-                <meta charset="utf-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1">
-                <meta content="text/html; charset=UTF-8" http-equiv="content-type">
-                <meta item-prop="kb.id" content="${folder.id}">
+                    <meta charset="utf-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1">
+                    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+                    <meta item-prop="kb.id" content="${folder.id}">
                   <title>${folder.name}</title>
                   <link rel="icon" href="/assets/favicon.ico">
                   <link rel="stylesheet" href="/assets/kb.css" />
@@ -85,7 +85,7 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
                           page.description
                             ? `<div class="description">${page.description}</div>`
                             : ''
-                        }</a>`
+                        }</a>`,
                     )
                     .join('')}
                   </div>
@@ -98,14 +98,14 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
           }
         } catch (error) {
           if (error == 'Error: No refresh token is set.') {
-              // silent login if refresh token not present
+            // silent login if refresh token not present
             // FIXME this should be caught in Auth.authorize
             req.session.redirect = req.originalUrl;
             res.redirect(Auth.authUrl);
           } else {
             Logger.error(req.originalUrl, {
               function: 'CloudStorageRouter',
-              error
+              error,
             });
             res.status((error as any).code || 500);
           }

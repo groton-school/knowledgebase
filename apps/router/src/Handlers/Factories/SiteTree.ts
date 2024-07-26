@@ -1,8 +1,10 @@
-import ACL from '../Services/ACL';
+import ACL from '../../Services/ACL';
 import HandlerFactory from './HandlerFactory';
 import API from '@groton/knowledgebase.api';
+import Logger from '../../Services/Logger';
+import { Request, Response } from 'express';
 
-const TOC: HandlerFactory = ({ index, groups, config } = {}) => {
+const SiteTree: HandlerFactory = ({ index, groups, config } = {}) => {
   // TODO better way to do this?
   if (!config || !index || !groups) {
     throw new Error(
@@ -16,8 +18,11 @@ const TOC: HandlerFactory = ({ index, groups, config } = {}) => {
 
   const root = index.find((file) => file.index.path == config.kb.root);
 
-  return async (req, res) => {
+  return async (req: Request, res: Response) => {
+      Logger.info('preparing acl');
     const acl = await new ACL(req, res, groups).prepare();
+    Logger.info('acl ready');
+    Logger.info('index size = ' + index.length);
     res.send(
       index
         .filter(
@@ -35,4 +40,4 @@ const TOC: HandlerFactory = ({ index, groups, config } = {}) => {
   };
 };
 
-export default TOC;
+export default SiteTree;

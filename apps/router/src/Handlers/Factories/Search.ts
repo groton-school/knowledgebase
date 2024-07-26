@@ -1,6 +1,7 @@
-import ACL from '../Services/ACL';
+import ACL from '../../Services/ACL';
 import HandlerFactory from './HandlerFactory';
 import API from '@groton/knowledgebase.api';
+import { Request, Response } from 'express';
 
 function score(needle: string, haystack: string, base = 1, factor = 2) {
   const pattern = new RegExp(`^(.*\W)?${needle}(\W.*)?$`);
@@ -24,7 +25,7 @@ const Search: HandlerFactory = ({ index, groups, config } = {}) => {
     );
   }
 
-  return async (req, res) => {
+  return async (req: Request, res: Response) => {
     const acl = await new ACL(req, res, groups).prepare();
     const query = (req.query.q as string).toLowerCase();
     const minScore = parseInt((req.query.score as string) || '0');
