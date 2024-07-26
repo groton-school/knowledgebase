@@ -42,6 +42,9 @@ export default class Auth {
       keys.web.client_secret,
       Auth._redirectURI.href
     );
+
+    // TODO there's probably a reasonable upper limit, but that would involve projecting how many simultaneous connections might be made to the router... and I'm not up for figuring that out
+    Auth._authClient.setMaxListeners(Infinity);
   }
 
   /**
@@ -65,9 +68,11 @@ export default class Auth {
 
     if (req.session.tokens) {
       Auth.authClient.setCredentials(req.session.tokens);
-      Auth.authClient.on('tokens', (tokens: Credentials) => {
-        req.session.tokens = tokens;
-      });
+      const tokenListener = (tokens: Credentials) => {
+          req.session.tokens = tokens;
+          Auth.authClient.removeListener('tokens', tokenListener)
+        }
+      Auth.authClient.on('tokens', tokenListener);
       return true;
     }
 

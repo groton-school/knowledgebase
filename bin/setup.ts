@@ -69,22 +69,6 @@ const options = {
       await gcloud.services.enable(gcloud.services.API.CloudIdentityAPI);
       await gcloud.services.enable(gcloud.services.API.CloudFirestoreAPI);
 
-      const firestore = await gcloud.iam.serviceAccounts.create({
-        name: 'firestore',
-        displayName: 'Firestore service account'
-      });
-      cli.env.set({ key: 'FIRESTORE', value: firestore.email });
-      await gcloud.iam.addPolicyBinding({
-        member: firestore.email,
-        userType: 'serviceAccount',
-        role: 'roles/datastore.user'
-      });
-      await gcloud.iam.serviceAccounts.keys({
-        email: firestore.email,
-        path: path.join(cli.appRoot(), 'apps/router/var/firestore.json'),
-        cautiouslyDeleteExpiredKeysIfNecessary: true
-      });
-
       permissionsRegex =
         permissionsRegex ||
         process.env.PERMISSIONS_REGEX ||
