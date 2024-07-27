@@ -17,7 +17,8 @@
     "deploy:deploy": "pnpm -F @groton/knowledgebase.router run deploy",
     "release": "run-s release:*",
     "release:changeset": "changeset version",
-    "release:publish": "pnpm publish -r --otp $(op item get npm --otp)"
+    "release:publish": "pnpm publish -r --otp $(op item get npm --otp)",
+    "log": "source .grpcio/bin/activate; source .env; gcloud alpha logging tail --project=$PROJECT"
   },
   "devDependencies": {
     "@battis/eslint-config": "latest",

@@ -1,7 +1,7 @@
 {
   "name": "@groton/knowledgebase.config",
   "version": "0.0.0",
-  "main": "src",
+  "main": "src/index.ts",
   "dependencies": {
     "@groton/knowledgebase.index": "workspace:*",
     "@groton/knowledgebase.strings": "workspace:*"

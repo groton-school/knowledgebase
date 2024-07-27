@@ -1,5 +1,5 @@
 {
   "name": "@groton/knowledgebase.strings",
   "version": "0.0.0",
-  "main": "src"
+  "main": "src/index.ts"
 }

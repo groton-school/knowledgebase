@@ -1,7 +1,7 @@
 {
   "name": "@groton/knowledgebase.openid",
   "version": "0.0.0",
-  "main": "src",
+  "main": "src/index.ts",
   "dependencies": {
     "@groton/knowledgebase.strings": "workspace:*"
   }
