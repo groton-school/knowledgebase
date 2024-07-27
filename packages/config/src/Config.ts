@@ -6,8 +6,6 @@ type Config = {
   storage: { bucket: string };
   kb: {
     root: PathString;
-    siteTreeRoute: PathString;
-    searchRoute: PathString;
     search?: { include?: string[]; exclude?: string[] };
   };
 };

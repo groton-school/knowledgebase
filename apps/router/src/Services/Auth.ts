@@ -69,9 +69,9 @@ export default class Auth {
     if (req.session.tokens) {
       Auth.authClient.setCredentials(req.session.tokens);
       const tokenListener = (tokens: Credentials) => {
-          req.session.tokens = tokens;
-          Auth.authClient.removeListener('tokens', tokenListener)
-        }
+        req.session.tokens = tokens;
+        Auth.authClient.removeListener('tokens', tokenListener);
+      };
       Auth.authClient.on('tokens', tokenListener);
       return true;
     }

@@ -26,6 +26,11 @@ const __dirname = path.dirname(__filename);
   const pkg = JSON.parse(fs.readFileSync(pkgPath).toString());
 
   delete pkg.devDependencies;
+  for (const mod in pkg.dependencies) {
+      if (/^workspace:/.test(pkg.dependencies[mod])) {
+          delete pkg.dependencies[mod];
+      }
+  }
 
   if (!fs.existsSync(pkgPathActual)) {
     fs.renameSync(pkgPath, pkgPathActual);

@@ -1,4 +1,5 @@
 import Helper from '../Helper';
+import API from '@groton/knowledgebase.api'
 
 export default function Search() {
   const search = document.querySelector('#search') as HTMLFormElement;
@@ -8,8 +9,8 @@ export default function Search() {
     e.preventDefault();
     e.stopPropagation();
     const response = (await (
-      await fetch(`/_/search/?q=${encodeURIComponent(query.value)}`)
-    ) // TODO config
+      await fetch(`${API.Search.path}?q=${encodeURIComponent(query.value)}`)
+    )
       .json())  as {
       name: string;
       href: string;

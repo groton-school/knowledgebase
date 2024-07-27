@@ -13,8 +13,8 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
       `Missing CloudStorageRouter configuration: ${JSON.stringify({
         config: !!config,
         index: !!index,
-        groups: !!groups,
-      })}`,
+        groups: !!groups
+      })}`
     );
   }
   return async (req, res) => {
@@ -26,7 +26,7 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
         try {
           const bucket = new Storage({
             authClient: Auth.authClient,
-            projectId: process.env.GOOGLE_CLOUD_PROJECT,
+            projectId: process.env.GOOGLE_CLOUD_PROJECT
           }).bucket(config.storage.bucket);
           const file = bucket.file(Helper.normalizePath(req.path));
           if ((await file.exists())[0]) {
@@ -36,13 +36,13 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
               const stream = file.createReadStream();
               stream.on('data', (data) => res.write(data));
               stream.on('error', (error) =>
-                Logger.error(file.cloudStorageURI.href, error),
+                Logger.error(file.cloudStorageURI.href, error)
               );
               stream.on('end', () => res.end());
             } catch (error) {
               Logger.error(req.originalUrl, {
                 function: 'CloudStorageRouter',
-                error,
+                error
               });
               res.status(500);
               res.send('storage access error');
@@ -52,13 +52,13 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
             const folder = index.find(
               (file) =>
                 `/${file.index.path}/` == req.path &&
-                acl.hasAccess(file.permissions),
+                acl.hasAccess(file.permissions)
             );
             if (folder) {
               const pages = index.filter(
                 (file) =>
                   file.parents?.includes(folder.id) &&
-                  acl.hasAccess(file.permissions),
+                  acl.hasAccess(file.permissions)
               );
               // TODO template
               res.send(`<!doctype html>
@@ -85,7 +85,7 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
                           page.description
                             ? `<div class="description">${page.description}</div>`
                             : ''
-                        }</a>`,
+                        }</a>`
                     )
                     .join('')}
                   </div>
@@ -105,7 +105,7 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
           } else {
             Logger.error(req.originalUrl, {
               function: 'CloudStorageRouter',
-              error,
+              error
             });
             res.status((error as any).code || 500);
           }
