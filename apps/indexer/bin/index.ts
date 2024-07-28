@@ -83,10 +83,16 @@ const options = {
       const newIndex = await root.indexContents();
 
       // TODO merge logic
-      process.exit();
 
-      spinner.start(`Writing index to ${cli.colors.url(indexPath)}`);
-      fs.writeFileSync(indexPath, JSON.stringify(newIndex));
+      spinner.start(
+        `Writing new index to ${cli.colors.url(
+          path.resolve(__dirname, '../var/index.json')
+        )}`
+      );
+      fs.writeFileSync(
+        path.resolve(__dirname, '../var/index.json'),
+        JSON.stringify(newIndex)
+      );
       spinner.succeed(`Updated index at ${cli.colors.url(indexPath)}`);
     } else {
       spinner.fail('could not find root folder');

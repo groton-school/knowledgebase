@@ -101,7 +101,7 @@ class Folder extends File {
             new IndexEntry(this.index.path)
           );
           file.index = new IndexEntry(
-            path.resolve(this.index.path, Folder.normalizeFilename(file.name))
+            path.join(this.index.path, Folder.normalizeFilename(file.name))
           );
           if (Folder.isFolder(file)) {
             const folder = await Folder.fromDrive(file);
