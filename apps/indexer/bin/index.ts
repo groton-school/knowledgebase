@@ -80,19 +80,27 @@ const options = {
 
     if (root) {
       spinner.succeed(`${cli.colors.value(root.name)} index loaded`);
-      const newIndex = await root.indexContents();
+      const currIndex = await root.indexContents();
 
-      // TODO merge logic
+      const nextIndex = [];
+      prevIndex.forEach((prev) => {
+        let update = prev;
+        const i = currIndex.findIndex(
+          (elt) => elt.index.path == prev.index.path
+        );
+        if (i >= 0) {
+          update = currIndex[i];
+          update.index = prev.index;
+          currIndex.splice(i, 1);
+        } else {
+          update.index.status = Index.IndexEntry.State.Expired;
+        }
+        nextIndex.push(update);
+      });
+      nextIndex.push(...currIndex);
 
-      spinner.start(
-        `Writing new index to ${cli.colors.url(
-          path.resolve(__dirname, '../var/index.json')
-        )}`
-      );
-      fs.writeFileSync(
-        path.resolve(__dirname, '../var/index.json'),
-        JSON.stringify(newIndex)
-      );
+      spinner.start(`Writing new index to ${cli.colors.url(indexPath)}`);
+      fs.writeFileSync(indexPath, JSON.stringify(nextIndex));
       spinner.succeed(`Updated index at ${cli.colors.url(indexPath)}`);
     } else {
       spinner.fail('could not find root folder');

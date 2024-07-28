@@ -218,6 +218,8 @@ class File {
         }
       }
       this.index.status = IndexEntry.State.Cached;
+    } else if (false) {
+      // TODO delete cache if no longer needed
     }
   }
 }

@@ -16,6 +16,7 @@ namespace IndexEntry {
     export const Indexed = 'indexed';
     export const PreparingCache = 'preparing cache';
     export const Cached = 'cached';
+    export const Expired = 'expired';
   }
 }
 
