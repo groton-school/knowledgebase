@@ -1,4 +1,3 @@
-#!/usr/bin/env tsx
 import cli from '@battis/qui-cli';
 import Google from '@groton/knowledgebase.google';
 import File from '@groton/knowledgebase.index/src/File';

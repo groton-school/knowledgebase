@@ -1,4 +1,3 @@
-#!/usr/bin/env tsx
 import * as Helper from '../src/Helper';
 import cli from '@battis/qui-cli';
 import Google from '@groton/knowledgebase.google';

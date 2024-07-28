@@ -1,10 +1,11 @@
 import File from './File';
 import Folder from './Folder';
 import IndexEntry from './IndexEntry';
+import { JSONObject } from '@battis/typescript-tricks';
 import fs from 'fs';
 
 export function fromFile(filePath: string): (File | Folder)[] {
-  return JSON.parse(fs.readFileSync(filePath).toString()).map((e) =>
+  return JSON.parse(fs.readFileSync(filePath).toString()).map((e: JSONObject) =>
     Folder.isFolderData(e) ? Folder.fromJSON(e) : File.fromJSON(e)
   );
 }

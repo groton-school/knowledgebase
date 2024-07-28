@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "setup": "run-s setup:*",
-    "setup:gcp": "bin/setup.ts",
+    "setup:gcp": "tsx bin/setup.ts",
     "setup:deploy": "run-s deploy",
     "build": "run-s build:*",
     "build:indexer": "pnpm -F @groton/knowledgebase.indexer run build",

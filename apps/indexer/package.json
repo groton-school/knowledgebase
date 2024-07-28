@@ -4,15 +4,15 @@
   "version": "0.0.0",
   "scripts": {
     "build": "run-s build:*",
-    "build:index": "bin/index.ts",
-    "build:groups": "bin/groups.ts",
+    "build:index": "tsx bin/index.ts",
+    "build:groups": "tsx bin/groups.ts",
     "upload": "run-s upload:*",
     "upload:index": "node -e \"if (! require('fs').existsSync('../router/var/index.json')) { process.exit(1)} \" || run-s build:build",
     "upload:groups": "node -e \"if (! require('fs').existsSync('../router/var/groups.json')) { process.exit(1)} \" || run-s build:groups",
-    "upload:upload": "bin/upload.ts"
+    "upload:upload": "tsx bin/upload.ts"
   },
   "devDependencies": {
-    "@types/node": "^20.14.12",
+    "@types/node": "^20.14.13",
     "npm-run-all": "^4.1.5",
     "tsx": "^4.16.2"
   },

@@ -1,6 +1,6 @@
 import cli from '@battis/qui-cli';
 import { Storage } from '@google-cloud/storage';
-import Drive from '@googleapis/drive';
+import * as Drive from '@googleapis/drive';
 import express from 'express';
 import fs from 'fs';
 import { OAuth2Client, Credentials } from 'google-auth-library';
@@ -93,9 +93,7 @@ export default class Client {
             reject(error);
           }
           if (req.query.code) {
-            const { tokens } = await this.oauth2!.getToken(
-              req.query.code.toString()
-            );
+            const { tokens } = await oauth2.getToken(req.query.code.toString());
             fs.writeFileSync(this.tokensPath!, JSON.stringify(tokens));
             oauth2.setCredentials(tokens);
             resolve((this.oauth2 = oauth2));

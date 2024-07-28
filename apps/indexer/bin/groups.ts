@@ -1,4 +1,3 @@
-#!/usr/bin/env tsx
 import cli from '@battis/qui-cli';
 import Var from '@groton/knowledgebase.config';
 import fs from 'fs';

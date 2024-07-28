@@ -19,7 +19,7 @@
     "@battis/webpack": "^0.4.8",
     "@types/bootstrap": "^5.2.10",
     "@types/gtag.js": "^0.0.12",
-    "@types/node": "^20.14.12",
+    "@types/node": "^20.14.13",
     "app-root-path": "^3.1.0",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^12.0.2",
