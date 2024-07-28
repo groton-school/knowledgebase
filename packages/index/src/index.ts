@@ -1,9 +1,3 @@
-import File from './File';
-import Folder from './Folder';
-import IndexEntry from './IndexEntry';
+import * as Index from './IndexModule';
 
-export default {
-  File,
-  Folder,
-  IndexEntry
-};
+export default Index;

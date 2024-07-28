@@ -5,10 +5,6 @@ import File from '@groton/knowledgebase.index/src/File';
 import Folder from '@groton/knowledgebase.index/src/Folder';
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const defaultIndexPath = path.resolve(__dirname, '../../router/var/index.json');
 const defaultKeysPath = path.resolve(__dirname, '../var/keys.json');
@@ -101,7 +97,7 @@ const flags = {
   spinner.start(`Loading index from ${cli.colors.url(indexPath)}`);
   const index: (File | Folder)[] = await Promise.all(
     JSON.parse(fs.readFileSync(indexPath).toString()).map((obj: File) => {
-      if (obj.mimeType == Google.MimeTypes.Google.Folder) {
+      if (obj.mimeType == Google.MimeTypes.Folder) {
         return Folder.fromDrive(obj, obj.index);
       } else {
         return File.fromDrive(obj, obj.index);

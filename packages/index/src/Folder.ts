@@ -1,9 +1,8 @@
 import File, { IdType } from './File';
 import IndexEntry from './IndexEntry';
+import { JSONObject } from '@battis/typescript-tricks';
 import { drive_v3 } from '@googleapis/drive';
-import Client from '@groton/knowledgebase.google/src/Client';
-import MimeTypes from '@groton/knowledgebase.google/src/MimeTypes';
-import fs from 'fs/promises';
+import Google from '@groton/knowledgebase.google';
 import path from 'path';
 
 type FolderContentsType = Record<IdType, File | Folder>;
@@ -31,7 +30,11 @@ class Folder extends File {
   }
 
   public static isFolder(obj: File | Folder): obj is Folder {
-    return 'mimeType' in obj && obj.mimeType == MimeTypes.Google.Folder;
+    return 'mimeType' in obj && obj.mimeType == Google.MimeTypes.Folder;
+  }
+
+  public static isFolderData(obj: JSONObject) {
+    return 'mimeType' in obj && obj.mimeType == Google.MimeTypes.Folder;
   }
 
   public static async fromDriveId(fileId: string, index?: IndexEntry) {
@@ -46,11 +49,14 @@ class Folder extends File {
     return new Folder(new File(file, index));
   }
 
-  public static async fromIndexFile(indexPath: string, index?: IndexEntry) {
-    return new Folder(
-      JSON.parse((await fs.readFile(indexPath)).toString()),
-      index
-    );
+  public static fromJSON({
+    index,
+    ...file
+  }: JSONObject & { index?: IndexEntry }): Folder {
+    if (this.isFolderData(file)) {
+      return new Folder(file, index);
+    }
+    throw new Error('invalid folder data');
   }
 
   /**
@@ -67,13 +73,13 @@ class Folder extends File {
    * TODO _re_ index non-destructively
    * TODO delete/rename cached files
    */
-  public async indexContents(): Promise<drive_v3.Schema$File[]> {
-    let contents: drive_v3.Schema$File[] = [];
+  public async indexContents(): Promise<File[]> {
+    let contents: File[] = [];
     let folderContents: drive_v3.Schema$FileList = {};
     do {
       folderContents = (
         await (
-          await Client.getDrive()
+          await Google.Client.getDrive()
         ).files.list({
           q: `'${this.id}' in parents and trashed = false`,
           supportsAllDrives: true,

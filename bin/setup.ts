@@ -1,6 +1,7 @@
 #!/usr/bin/env tsx
 import gcloud from '@battis/partly-gcloudy';
 import cli from '@battis/qui-cli';
+import Var from '@groton/knowledgebase.config';
 import fs from 'fs';
 import path from 'path';
 
@@ -125,16 +126,19 @@ Download these credentials to ${cli.colors.url(
         cli.appRoot(),
         'apps/router/var/config.json'
       );
-      let config = {};
+      let config: Partial<Var.Config> = {};
       if (fs.existsSync(configFilePath)) {
         config = JSON.parse(fs.readFileSync(configFilePath).toString());
       } else {
         cli.shell.mkdir('-p', path.dirname(configFilePath));
       }
-      if (!config.storage) {
-        config.storage = {};
-      }
-      config['storage']['bucket'] = bucket;
+      config = {
+        ...config,
+        storage: {
+          ...config.storage,
+          bucket
+        }
+      };
       fs.writeFileSync(configFilePath, JSON.stringify(config));
       cli.log.info(`
 You need to manually create and download keys for the ${cli.colors.command(

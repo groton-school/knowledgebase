@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "main": "src/index.ts",
   "dependencies": {
+    "@battis/typescript-tricks": "^0.5.3",
     "@google-cloud/storage": "^7.12.0",
     "@googleapis/drive": "^8.11.0",
     "@groton/knowledgebase.google": "workspace:*",

@@ -1,11 +1,8 @@
 #!/usr/bin/env tsx
 import cli from '@battis/qui-cli';
+import Var from '@groton/knowledgebase.config';
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const defaultFilePath = path.resolve(__dirname, '../../router/var/groups.json');
 
@@ -31,7 +28,7 @@ const options = {
 
   const spinner = cli.spinner();
 
-  let groups = [];
+  let groups: Var.Groups = [];
   let nextPageToken: string | undefined = undefined;
   do {
     const page = JSON.parse(

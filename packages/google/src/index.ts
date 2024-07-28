@@ -1,4 +1,12 @@
-import Client from './Client';
-import MimeTypes from './MimeTypes';
+import ClientClass from './Client';
+import MimeTypesConst from './MimeTypes';
 
-export default { Client, MimeTypes };
+class Google {
+  public static MimeTypes = MimeTypesConst;
+}
+
+namespace Google {
+  export class Client extends ClientClass {}
+}
+
+export default Google;

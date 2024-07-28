@@ -1,6 +1,7 @@
 // FIXME this is so bad!
 import pipelineHTML from './Actions/pipelineHTML';
 import IndexEntry from './IndexEntry';
+import { JSONObject } from '@battis/typescript-tricks';
 import { Storage } from '@google-cloud/storage';
 import { drive_v3 } from '@googleapis/drive';
 import Google from '@groton/knowledgebase.google';
@@ -74,13 +75,20 @@ class File {
     return new File(file, index);
   }
 
+  public static fromJSON({
+    index,
+    ...file
+  }: JSONObject & { index?: IndexEntry }) {
+    return new File(file, index);
+  }
+
   public async fetchAsHtmlIfPossible() {
     switch (this.mimeType) {
-      case Google.MimeTypes.Google.Doc:
-      case Google.MimeTypes.Google.Sheet:
-      case Google.MimeTypes.Google.Slides:
+      case Google.MimeTypes.Doc:
+      case Google.MimeTypes.Sheet:
+      case Google.MimeTypes.Slides:
         return await this.fetchAsCompleteHtml();
-      case Google.MimeTypes.Google.Shortcut:
+      case Google.MimeTypes.Shortcut:
         throw new Error(`${this.mimeType} isn't handled yet`);
       default:
         return {
@@ -103,7 +111,7 @@ class File {
           await Google.Client.getDrive()
         ).files.export({
           fileId: this.id!,
-          mimeType: Google.MimeTypes.ZipArchive
+          mimeType: 'application/zip'
         });
         const zip = new Zip(
           Buffer.from(await (response.data as Blob).arrayBuffer())

@@ -1,14 +1,10 @@
 #!/usr/bin/env tsx
+import * as Helper from '../src/Helper';
 import cli from '@battis/qui-cli';
-import { drive_v3 } from '@googleapis/drive';
 import Google from '@groton/knowledgebase.google';
 import Index from '@groton/knowledgebase.index';
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const FOLDER_ID = '%FOLDER_ID%';
 const FOLDER_NAME = '%FOLDER_NAME%';
@@ -52,12 +48,6 @@ const options = {
   }
 };
 
-function colorizePath(p: string) {
-  return (
-    cli.colors.url(path.dirname(p) + '/') + cli.colors.value(path.basename(p))
-  );
-}
-
 (async () => {
   const CWD = process.cwd();
   let {
@@ -74,26 +64,35 @@ function colorizePath(p: string) {
 
   const spinner = cli.spinner();
   Index.Folder.event.on(Index.File.Event.Start, (status): void => {
-    spinner.start(colorizePath(status));
+    spinner.start(Helper.colorizePath(status));
   });
   Index.Folder.event.on(Index.File.Event.Succeed, (status): void => {
-    spinner.succeed(colorizePath(status));
+    spinner.succeed(Helper.colorizePath(status));
   });
   Index.Folder.event.on(Index.File.Event.Fail, (status): void => {
-    spinner.fail(colorizePath(status));
+    spinner.fail(Helper.colorizePath(status));
   });
 
   if (indexPath && fs.existsSync(path.resolve(CWD, indexPath))) {
     indexPath = path.resolve(CWD, indexPath);
     spinner.start(`Loading index from ${cli.colors.url(indexPath)}`);
-    let index = JSON.parse((await fs.readFileSync(indexPath)).toString());
-    spinner.succeed(`${cli.colors.value(index[0].name)} index loaded`);
+    const prevIndex = Index.fromFile(indexPath);
+    const root = Index.extractRoot(prevIndex);
 
-    index = index[0].indexContents();
+    if (root) {
+      spinner.succeed(`${cli.colors.value(root.name)} index loaded`);
+      const newIndex = await root.indexContents();
 
-    spinner.start(`Writing index to ${cli.colors.url(indexPath)}`);
-    fs.writeFileSync(indexPath, JSON.stringify(index));
-    spinner.succeed(`Updated index at ${cli.colors.url(indexPath)}`);
+      // TODO merge logic
+      process.exit();
+
+      spinner.start(`Writing index to ${cli.colors.url(indexPath)}`);
+      fs.writeFileSync(indexPath, JSON.stringify(newIndex));
+      spinner.succeed(`Updated index at ${cli.colors.url(indexPath)}`);
+    } else {
+      spinner.fail('could not find root folder');
+      process.exit();
+    }
   } else {
     // build from scratch
     folderId =
@@ -104,7 +103,7 @@ function colorizePath(p: string) {
         validate: cli.validators.notEmpty
       }));
     const folder = await Index.Folder.fromDriveId(folderId);
-    const index: drive_v3.Schema$File[] = [folder];
+    const index: Index.File[] = [folder];
     index.push(...(await folder.indexContents()));
     indexPath = path.resolve(
       CWD,
