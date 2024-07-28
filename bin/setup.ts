@@ -95,6 +95,11 @@ const options = {
         `gcloud storage buckets update gs://${bucket} --project=${project.projectId} --public-access-prevention --no-uniform-bucket-level-access`
       );
 
+      // enable Application Default Credentials for updating Google Cloud Storage
+      cli.shell.exec(
+        `gcloud auth application-default login --project=${project.projectId} --format=json --quiet`
+      );
+
       // TODO collect environment variable values
 
       cli.log.info(`

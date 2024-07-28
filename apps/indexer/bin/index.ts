@@ -75,37 +75,36 @@ const options = {
   if (indexPath && fs.existsSync(path.resolve(CWD, indexPath))) {
     indexPath = path.resolve(CWD, indexPath);
     spinner.start(`Loading index from ${cli.colors.url(indexPath)}`);
-    const prevIndex = Index.fromFile(indexPath);
-    const root = Index.extractRoot(prevIndex);
+    const prevIndex = await Index.fromFile(indexPath);
+    spinner.succeed(`${cli.colors.value(prevIndex.root.name)} index loaded`);
 
-    if (root) {
-      spinner.succeed(`${cli.colors.value(root.name)} index loaded`);
-      const currIndex = await root.indexContents();
+    const currIndex = await prevIndex.root.indexContents();
 
-      const nextIndex = [];
-      prevIndex.forEach((prev) => {
-        let update = prev;
-        const i = currIndex.findIndex(
-          (elt) => elt.index.path == prev.index.path
-        );
-        if (i >= 0) {
-          update = currIndex[i];
-          update.index = prev.index;
-          currIndex.splice(i, 1);
-        } else {
-          update.index.status = Index.IndexEntry.State.Expired;
-        }
-        nextIndex.push(update);
-      });
-      nextIndex.push(...currIndex);
+    spinner.start(`Comparing indices`);
+    // TODO reset permissions
+    const nextIndex = [];
+    prevIndex.forEach((prev) => {
+      spinner.start(prev.index.path);
+      let update = prev;
+      const i = currIndex.findIndex((elt) => elt.index.path == prev.index.path);
+      if (i >= 0) {
+        update = currIndex[i];
+        update.index = prev.index;
+        currIndex.splice(i, 1);
+      } else {
+        update.index.exists = false;
+      }
+      nextIndex.push(update);
+    });
+    currIndex.forEach((elt) => {
+      spinner.start(elt.index.path);
+      nextIndex.push(elt);
+    });
+    spinner.succeed('Indices merged');
 
-      spinner.start(`Writing new index to ${cli.colors.url(indexPath)}`);
-      fs.writeFileSync(indexPath, JSON.stringify(nextIndex));
-      spinner.succeed(`Updated index at ${cli.colors.url(indexPath)}`);
-    } else {
-      spinner.fail('could not find root folder');
-      process.exit();
-    }
+    spinner.start(`Writing new index to ${cli.colors.url(indexPath)}`);
+    fs.writeFileSync(indexPath, JSON.stringify(nextIndex));
+    spinner.succeed(`Updated index at ${cli.colors.url(indexPath)}`);
   } else {
     // build from scratch
     folderId =

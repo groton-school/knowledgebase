@@ -1,13 +1,11 @@
 import * as Helper from '../src/Helper';
 import cli from '@battis/qui-cli';
-import Google from '@groton/knowledgebase.google';
 import Index from '@groton/knowledgebase.index';
+import File from '@groton/knowledgebase.index/src/File';
 import fs from 'fs';
 import path from 'path';
 
 const defaultIndexPath = path.resolve(__dirname, '../../router/var/index.json');
-const defaultKeysPath = path.resolve(__dirname, '../var/keys.json');
-const defaultTokensPath = path.resolve(__dirname, '../var/tokens.json');
 
 const options = {
   bucketName: {
@@ -28,20 +26,6 @@ const options = {
     description: `Regular expression to email addresses of users/groups to include in Cloud Storage Bucket (will be read from ${cli.colors.value(
       'PERMISSIONS_REGEX'
     )} environment variable if present)`
-  },
-  keysPath: {
-    short: 'k',
-    description: `Path to file containing downloaded OAuth2 credentials (defaults to ${cli.colors.url(
-      defaultKeysPath
-    )})`,
-    default: defaultKeysPath
-  },
-  tokensPath: {
-    short: 't',
-    description: `Path to file containing access tokens (defaults to ${cli.colors.url(
-      defaultTokensPath
-    )})`,
-    default: defaultTokensPath
   }
 };
 
@@ -61,15 +45,7 @@ const flags = {
 (async () => {
   const CWD = process.cwd();
   let {
-    values: {
-      bucketName,
-      indexPath,
-      permissionsRegex,
-      keysPath,
-      tokensPath,
-      force,
-      ignoreErrors
-    }
+    values: { bucketName, indexPath, permissionsRegex, force, ignoreErrors }
   } = cli.init({
     env: {
       root: path.join(__dirname, '../../..'),
@@ -81,19 +57,17 @@ const flags = {
     }
   });
 
-  Google.Client.init({ keysPath, tokensPath });
-
   const spinner = cli.spinner();
 
   indexPath = path.resolve(CWD, indexPath);
 
-  Index.File.event.on(Index.File.Event.Start, (status) => {
+  File.event.on(File.Event.Start, (status) => {
     spinner.start(Helper.colorizePath(status));
   });
-  Index.File.event.on(Index.File.Event.Succeed, (status) =>
+  File.event.on(File.Event.Succeed, (status) =>
     spinner.succeed(Helper.colorizePath(status))
   );
-  Index.File.event.on(Index.File.Event.Fail, (status) =>
+  File.event.on(File.Event.Fail, (status) =>
     spinner.fail(Helper.colorizePath(status))
   );
 
@@ -111,15 +85,12 @@ const flags = {
 
   permissionsRegex = permissionsRegex || process.env.PERMISSIONS_REGEX || '.*';
 
-  for (let i = 0; i < index.length; i++) {
-    if (index[i].index.path != '.') {
-      await index[i].cache({
-        bucketName,
-        permissionsRegex,
-        force: !!force,
-        ignoreErrors: !!ignoreErrors
-      });
-    }
+  for (const file of index) {
+    await file.resetPermissions({
+      bucketName,
+      permissionsRegex,
+      ignoreErrors: !!ignoreErrors
+    });
   }
 
   spinner.start(`Saving index to ${cli.colors.url(indexPath)}`);

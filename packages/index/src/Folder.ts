@@ -33,10 +33,6 @@ class Folder extends File {
     return 'mimeType' in obj && obj.mimeType == Google.MimeTypes.Folder;
   }
 
-  public static isFolderData(obj: JSONObject) {
-    return 'mimeType' in obj && obj.mimeType == Google.MimeTypes.Folder;
-  }
-
   public static async fromDriveId(fileId: string, index?: IndexEntry) {
     const file = await super.fromDriveId(fileId, index);
     return new Folder(file);
@@ -47,16 +43,6 @@ class Folder extends File {
     index?: IndexEntry
   ) {
     return new Folder(new File(file, index));
-  }
-
-  public static fromJSON({
-    index,
-    ...file
-  }: JSONObject & { index?: IndexEntry }): Folder {
-    if (this.isFolderData(file)) {
-      return new Folder(file, index);
-    }
-    throw new Error('invalid folder data');
   }
 
   /**

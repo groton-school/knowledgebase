@@ -6,6 +6,7 @@ import { Storage } from '@google-cloud/storage';
 import { drive_v3 } from '@googleapis/drive';
 import Google from '@groton/knowledgebase.google';
 import Zip from 'adm-zip';
+import crypto from 'crypto';
 import events from 'events';
 import mime from 'mime-types';
 import path from 'path';
@@ -16,6 +17,10 @@ export type IdType = Nonoptional<drive_v3.Schema$File['id']>;
 export type NameType = Nonoptional<drive_v3.Schema$File['name']>;
 
 interface File extends drive_v3.Schema$File {}
+
+const DEFAULT_PERMISSIONS_REGEX = /.*/;
+const DEFAULT_FORCE = false;
+const DEFAULT_IGNORE_ERRORS = true;
 
 class File {
   public readonly id: IdType;
@@ -48,8 +53,12 @@ class File {
     } else {
       throw new Error(`name is ${name}`);
     }
-    if (index && _index) {
-      index = { ...index, ..._index };
+    if (index) {
+      if (_index) {
+        index = IndexEntry.fromJSON({ ...index, ..._index });
+      } else {
+        index = IndexEntry.fromJSON(index as unknown as JSONObject);
+      }
     }
     this.index = index || _index || new IndexEntry();
     Object.assign(this, rest);
@@ -72,13 +81,6 @@ class File {
           'id,name,fileExtension,mimeType,description,parents,permissions,modifiedTime'
       })
     ).data;
-    return new File(file, index);
-  }
-
-  public static fromJSON({
-    index,
-    ...file
-  }: JSONObject & { index?: IndexEntry }) {
     return new File(file, index);
   }
 
@@ -142,85 +144,141 @@ class File {
     return path.join(basePath, subfileName);
   }
 
+  private async exponentialBackoff(
+    action: Function,
+    ignoreErrors = DEFAULT_IGNORE_ERRORS,
+    retries = 5,
+    lastTimeout = 0
+  ) {
+    try {
+      await action();
+      return;
+    } catch (_e) {
+      const error = _e as Error;
+      if (error.code == 503 && retries > 0) {
+        File.event.emit(
+          File.Event.Start,
+          `${this.index.path} (${retries} retries left)`
+        );
+        const timeout = lastTimeout
+          ? lastTimeout * 2
+          : crypto.randomInt(50, 100);
+        setTimeout(
+          () =>
+            this.exponentialBackoff(action, ignoreErrors, retries - 1, timeout),
+          timeout
+        );
+      } else {
+        this.index.status = error.message;
+        File.event.emit(
+          File.Event.Fail,
+          `${this.index.path}: ${error.message} (driveId ${this.id})`
+        );
+        if (!ignoreErrors) {
+          throw error;
+        }
+      }
+    }
+  }
+
   /**
    * Cache Drive file as complete web archive in Cloud Storage Bucket
    */
   public async cache({
     bucketName,
-    permissionsRegex,
-    force,
-    ignoreErrors
+    permissionsRegex = DEFAULT_PERMISSIONS_REGEX,
+    force = DEFAULT_FORCE,
+    ignoreErrors = DEFAULT_IGNORE_ERRORS
   }: File.Params.Cache) {
     const bucket = Google.Client.getStorage().bucket(bucketName);
-    if (
+    if (!this.index.exists) {
+      await this.exponentialBackoff(async () => {
+        for (const uri of this.index.uri) {
+          const filePath = uri.substr(`gs://${bucketName}/`.length);
+          File.event.emit(File.Event.Start, filePath);
+          const file = bucket.file(filePath);
+          await file.delete();
+          File.event.emit(File.Event.Fail, `${filePath}: expired and deleted`);
+        }
+        File.event.emit(
+          File.Event.Fail,
+          `${this.index.path}: expired and deleted`
+        );
+      }, ignoreErrors);
+    } else if (
       force ||
       this.index.uri.length == 0 ||
       (this.modifiedTime && this.modifiedTime > this.index.timestamp)
     ) {
       this.index.status = IndexEntry.State.PreparingCache;
-      const files = await this.fetchAsHtmlIfPossible();
-      let errors = 0;
-      for (const subfileName in files) {
-        try {
-          let filename = File.normalizeSubfileName(
-            this.index.path,
-            subfileName
-          );
-          File.event.emit(File.Event.Start, filename);
-          const file = bucket.file(filename);
-          const blob = await pipelineHTML({
-            file: this,
-            blob: (files as Record<string, Blob>)[subfileName] // TODO better fix than manual typing
-          });
-          file.save(Buffer.from(await blob.arrayBuffer()));
-          this.index.uri.push(file.cloudStorageURI.href);
-          File.event.emit(File.Event.Succeed, filename);
+      await this.exponentialBackoff(async () => {
+        const files = await this.fetchAsHtmlIfPossible();
+        for (const subfileName in files) {
+          await this.exponentialBackoff(async () => {
+            let filename = File.normalizeSubfileName(
+              this.index.path,
+              subfileName
+            );
+            File.event.emit(File.Event.Start, filename);
+            const file = bucket.file(filename);
+            const blob = await pipelineHTML({
+              file: this,
+              blob: (files as Record<string, Blob>)[subfileName] // TODO better fix than manual typing
+            });
+            file.save(Buffer.from(await blob.arrayBuffer()));
+            this.index.uri.push(file.cloudStorageURI.href);
+            File.event.emit(File.Event.Succeed, filename);
+          }, ignoreErrors);
+        }
+        this.index.status = IndexEntry.State.Cached;
+      }, ignoreErrors);
+      await this.resetPermissions({
+        bucketName,
+        permissionsRegex,
+        force,
+        ignoreErrors
+      });
+    }
+  }
 
-          for (const permission of this.permissions!.filter(
-            (p) =>
-              p.emailAddress &&
-              new RegExp(permissionsRegex || '.*').test(p.emailAddress)
-          )) {
-            File.event.emit(File.Event.Start, `  ${permission.displayName}`);
-            let entity;
-            switch (permission.type) {
-              case 'group':
-                entity = `group-${permission.emailAddress}`;
-                break;
-              case 'user':
-                entity = `user-${permission.emailAddress}`;
-                break;
-              default:
-                throw new Error(
-                  `Cannot handle permission type ${permission.type}`
-                );
-            }
-            if (entity) {
-              await file.acl.add({ entity, role: Storage.acl.READER_ROLE });
-              File.event.emit(File.Event.Succeed, `  ${entity}`);
-            } else {
-              File.event.emit(File.Event.Fail, `  ${permission.id}`);
-            }
-          }
-        } catch (error) {
-          this.index.status = (error as Error).message;
-          File.event.emit(
-            File.Event.Fail,
-            `${this.index.path}: ${(error as Error).message} (driveId ${
-              this.id
-            })`
-          );
-          if (!ignoreErrors) {
-            throw error;
-          } else {
-            errors++;
-          }
+  public async resetPermissions({
+    bucketName,
+    permissionsRegex = DEFAULT_PERMISSIONS_REGEX,
+    ignoreErrors = DEFAULT_IGNORE_ERRORS
+  }: File.Params.Cache) {
+    const bucket = Google.Client.getStorage().bucket(bucketName);
+    for (const uri of this.index.uri) {
+      const filePath = uri.replace(/^gs:\/\/[^/]+\//, '');
+      File.event.emit(File.Event.Succeed, filePath);
+      const file = bucket.file(filePath);
+      for (const permission of this.permissions!.filter(
+        (p) =>
+          p.emailAddress &&
+          new RegExp(permissionsRegex || '.*').test(p.emailAddress)
+      )) {
+        File.event.emit(File.Event.Start, `  ${permission.displayName}`);
+        let entity: string;
+        switch (permission.type) {
+          case 'group':
+            entity = `group-${permission.emailAddress}`;
+            break;
+          case 'user':
+            entity = `user-${permission.emailAddress}`;
+            break;
+          default:
+            throw new Error(`Cannot handle permission type ${permission.type}`);
+        }
+        if (entity) {
+          await this.exponentialBackoff(async () => {
+            await file.acl.add({ entity, role: Storage.acl.READER_ROLE });
+            File.event.emit(File.Event.Succeed, `  ${entity}`);
+          }, ignoreErrors);
+        } else {
+          File.event.emit(File.Event.Fail, `  ${permission.id}`);
         }
       }
-      this.index.status = IndexEntry.State.Cached;
-    } else if (false) {
-      // TODO delete cache if no longer needed
     }
+    this.index.update();
   }
 }
 
@@ -234,8 +292,8 @@ namespace File {
     export type Cache = {
       bucketName: string;
       permissionsRegex?: string | RegExp;
-      force: boolean;
-      ignoreErrors: boolean;
+      force?: boolean;
+      ignoreErrors?: boolean;
     };
   }
 }
