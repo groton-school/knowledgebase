@@ -66,6 +66,7 @@ class Folder extends File {
     return filename!
       .replace('&', 'and')
       .replace(/[^a-z0-9()!@*_.]+/gi, '-')
+      .replace(/-+$/, '')
       .toLowerCase();
   }
 
@@ -114,6 +115,7 @@ class Folder extends File {
         }
       }
     } while (folderContents.nextPageToken);
+    contents.unshift(this);
     return contents;
   }
 
