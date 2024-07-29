@@ -7,12 +7,15 @@
     "setup": "run-s setup:*",
     "setup:gcp": "tsx bin/setup.ts",
     "setup:deploy": "run-s deploy",
+    "setup:log": "run-s setup:log:*",
+    "setup:log:venv": "node -e \"if (! require('fs').existsSync('.grpcio')) { process.exit(1)}\" || python3 -m venv .grpcio",
+    "setup:log:grpcio": "python3 -m pip install -r requirements.txt",
     "build": "pnpm -F @groton/knowledgebase.router run build",
     "deploy": "pnpm -F @groton/knowledgebase.router run deploy",
-    "sync":"run-s sync:*",
+    "sync": "run-s sync:*",
     "sync:index": "pnpm -F @groton/knowledgebase.indexer run upload",
     "sync:router": "pnpm -F @groton/knowledgebase.router run deploy",
-    "log": "source .grpcio/bin/activate; source .env; gcloud alpha logging tail --project=$PROJECT"
+    "log": "source .env; PATH=\".grpcio/bin:$PATH\" VIRTUAL_ENV=\".grpcio/bin/python\" gcloud alpha logging tail --project=$PROJECT"
   },
   "devDependencies": {
     "@battis/eslint-config": "latest",
