@@ -154,7 +154,7 @@ class File {
       await action();
       return;
     } catch (_e) {
-      const error = _e as Error;
+        const error = _e as {code?:number,message?:string};
       if (error.code == 503 && retries > 0) {
         File.event.emit(
           File.Event.Start,
@@ -169,7 +169,7 @@ class File {
           timeout
         );
       } else {
-        this.index.status = error.message;
+        this.index.status = error.message || JSON.stringify(error);
         File.event.emit(
           File.Event.Fail,
           `${this.index.path}: ${error.message} (driveId ${this.id})`

@@ -13,8 +13,8 @@ class IndexEntry {
   }
 
   public static fromJSON({ path, status, uri, exists, timestamp }: JSONObject) {
-    const entry = new IndexEntry(path, status, uri, exists);
-    entry._timestamp = timestamp;
+    const entry = new IndexEntry(path as string, status as string, uri as string[], exists as boolean);
+    entry._timestamp = timestamp as string;
     return entry;
   }
 
