@@ -1,4 +1,3 @@
-#!/usr/bin/env tsx
 import config from './lockfile.config.json';
 import cli from '@battis/qui-cli';
 import fs from 'fs';

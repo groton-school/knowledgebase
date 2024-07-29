@@ -1,4 +1,3 @@
-#!/usr/bin/env tsx
 import gcloud from '@battis/partly-gcloudy';
 import cli from '@battis/qui-cli';
 import path from 'path';

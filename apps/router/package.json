@@ -6,14 +6,13 @@
     "email": "sbattis@groton.org"
   },
   "scripts": {
-    "setup": "bin/setup.sh",
     "build": "run-s build:*",
     "build:ui": "node -e \"if (! require('fs').existsSync('../ui/build')) { process.exit(1)}\" || pnpm -F @groton/knowledgebase.ui run build",
     "build:compile": "webpack",
-    "deploy": "run-s deploy:* || bin/restore-lockfile.ts",
-    "deploy:prepare-lockfile": "bin/prepare-lockfile.ts",
-    "deploy:deploy": "bin/deploy.ts",
-    "deploy:restore-lockfile": "bin/restore-lockfile.ts",
+    "deploy": "run-s deploy:* || tsx bin/restore-lockfile.ts",
+    "deploy:prepare-lockfile": "tsx bin/prepare-lockfile.ts",
+    "deploy:deploy": "tsx bin/deploy.ts",
+    "deploy:restore-lockfile": "tsx bin/restore-lockfile.ts",
     "start": "node build/index.js"
   },
   "devDependencies": {
