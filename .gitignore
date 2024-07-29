@@ -1,6 +1,8 @@
 .env
 .env.*
 !.env.example
-/build
-/node_modules
-/var
+build/
+node_modules/
+vendor/
+*.cache
+/.grpcio

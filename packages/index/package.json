@@ -1,0 +1,19 @@
+{
+  "name": "@groton/knowledgebase.index",
+  "version": "0.0.0",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@battis/typescript-tricks": "^0.5.3",
+    "@google-cloud/storage": "^7.12.0",
+    "@googleapis/drive": "^8.11.0",
+    "@groton/knowledgebase.google": "workspace:*",
+    "adm-zip": "^0.5.14",
+    "jsdom": "^24.1.1",
+    "mime-types": "^2.1.35"
+  },
+  "devDependencies": {
+    "@types/adm-zip": "^0.5.5",
+    "@types/jsdom": "^21.1.7",
+    "@types/mime-types": "^2.1.4"
+  }
+}

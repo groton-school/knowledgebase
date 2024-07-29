@@ -1,0 +1,8 @@
+*
+!/app.yaml
+!/build
+!/package.json
+!/pnpm-lock.yaml
+!/var
+.DS_Store
+*.LICENSE.txt

@@ -1,43 +1,36 @@
 {
-  "name": "@groton/knowledgebase",
-  "version": "0.1.8",
-  "description": "Configuration and scripting for Overdrive.io integration",
-  "author": {
-    "name": "Seth Battis",
-    "email": "sbattis@groton.org"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/groton-school/knowledgebase.git"
-  },
-  "license": "GPL-3.0",
+  "workspaces": [
+    "packages/*"
+  ],
+  "type": "module",
   "scripts": {
-    "build": "webpack",
-    "deploy": "run-s deploy:*",
-    "deploy:build": "npm run build",
-    "deploy:deploy": "./bin/deploy.js"
+    "setup": "run-s setup:*",
+    "setup:gcp": "tsx bin/setup.ts",
+    "setup:deploy": "run-s deploy",
+    "setup:log": "run-s setup:log:*",
+    "setup:log:venv": "node -e \"if (! require('fs').existsSync('.grpcio')) { process.exit(1)}\" || python3 -m venv .grpcio",
+    "setup:log:grpcio": "python3 -m pip install -r requirements.txt",
+    "build": "pnpm -F @groton/knowledgebase.router run build",
+    "deploy": "pnpm -F @groton/knowledgebase.router run deploy",
+    "sync": "run-s sync:*",
+    "sync:index": "pnpm -F @groton/knowledgebase.indexer run upload",
+    "sync:router": "pnpm -F @groton/knowledgebase.router run deploy",
+    "log": "source .env; PATH=\".grpcio/bin:$PATH\" VIRTUAL_ENV=\".grpcio/bin/python\" gcloud alpha logging tail --project=$PROJECT"
   },
   "devDependencies": {
     "@battis/eslint-config": "latest",
+    "@battis/partly-gcloudy": "^0.4.5",
     "@battis/prettier-config": "latest",
-    "@battis/webpack": "latest",
-    "@google-cloud/storage": "^6.12.0",
-    "dotenv": "^16.4.5",
-    "npm-run-all": "^4.1.5"
+    "@battis/qui-cli": "^0.4.2",
+    "@changesets/cli": "^2.27.7",
+    "@groton/knowledgebase.config": "workspace:*",
+    "npm-run-all": "^4.1.5",
+    "tsx": "^4.16.2"
   },
   "prettier": "@battis/prettier-config",
   "eslintConfig": {
     "extends": [
       "@battis/eslint-config"
-    ],
-    "env": {
-      "browser": true,
-      "node": false
-    }
-  },
-  "dependencies": {
-    "@types/gtag.js": "^0.0.12",
-    "@types/node": "^20.12.12",
-    "requirejs": "^2.3.6"
+    ]
   }
 }
