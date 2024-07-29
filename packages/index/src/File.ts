@@ -232,12 +232,6 @@ class File {
         }
         this.index.status = IndexEntry.State.Cached;
       }, ignoreErrors);
-      await this.resetPermissions({
-        bucketName,
-        permissionsRegex,
-        force,
-        ignoreErrors
-      });
     }
   }
 
