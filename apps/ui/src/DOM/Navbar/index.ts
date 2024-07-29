@@ -20,8 +20,7 @@ export default function Navbar() {
             <form role="search" id="search" class="ms-auto">
               <div class="input-group">
                 <div class="dropdown">
-                <input class="form-control query dropdown-toggle" type="search" placeholder="How do I…" aria-label="Search" data-bs-toggle="dropdown" aria-expanded="false">
-                  <ul class="dropdown-menu results"></ul>
+                <input class="form-control query" type="search" placeholder="How do I…" aria-label="Search">
               </div>
                   <button class="btn btn-outline-light" type="submit">Search</button>
                 </div>
