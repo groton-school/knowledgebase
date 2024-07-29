@@ -7,6 +7,7 @@
   },
   "scripts": {
     "build": "run-s build:*",
+    "build:index": "node -e \"if (! require('fs').existsSync('var/index.json') || ! require('fs).existsSync('var/groups.json')) { process.exit(1)}\" || pnpm -F @groton/knowledgebase.index run upload",
     "build:ui": "node -e \"if (! require('fs').existsSync('../ui/build')) { process.exit(1)}\" || pnpm -F @groton/knowledgebase.ui run build",
     "build:compile": "webpack",
     "deploy": "run-s deploy:* || tsx bin/restore-lockfile.ts",
