@@ -101,7 +101,6 @@ class Folder extends File {
         }
       }
     } while (folderContents.nextPageToken);
-    contents.unshift(this);
     return contents;
   }
 
