@@ -33,8 +33,7 @@ export default function Search() {
         results.appendChild(div);
       });
     } else {
-      results.innerHTML =
-        '<li><a class="disabled" href="#">No results</a></li>';
+      results.innerHTML = '<li>No results</li>';
     }
   });
   Helper.log('Search enabled');
