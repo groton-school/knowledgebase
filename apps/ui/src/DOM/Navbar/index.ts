@@ -17,14 +17,6 @@ export default function Navbar() {
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul id="site-tree" class="navbar-nav"></ul>
-            <form role="search" id="search" class="ms-auto">
-              <div class="input-group">
-                <div class="dropdown">
-                <input class="form-control query" type="search" placeholder="How do I…" aria-label="Search">
-              </div>
-                  <button class="btn btn-outline-light" type="submit">Search</button>
-                </div>
-            </form>
           </div>
         </div>
       `;

@@ -1,17 +1,18 @@
 import Helper from '../Helper';
-import API from '@groton/knowledgebase.api'
+import API from '@groton/knowledgebase.api';
 
 export default function Search() {
   const search = document.querySelector('#search') as HTMLFormElement;
   const query = search.querySelector('.query') as HTMLInputElement;
-  const results = search.querySelector('.results') as HTMLUListElement;
+  const results = document.querySelector(
+    '.search .results'
+  ) as HTMLUListElement;
   search.addEventListener('submit', async (e: SubmitEvent) => {
     e.preventDefault();
     e.stopPropagation();
     const response = (await (
       await fetch(`${API.Search.path}?q=${encodeURIComponent(query.value)}`)
-    )
-      .json())  as {
+    ).json()) as {
       name: string;
       href: string;
       description?: string;
@@ -22,7 +23,7 @@ export default function Search() {
       results.innerHTML = '';
       response.forEach((result) => {
         const div = document.createElement('div');
-        div.innerHTML = `<li><a class="dropdown-item" href="${
+        div.innerHTML = `<li><a href="${
           result.href
         }"><div class="name" data-score="${result.score}">${result.name}</div>${
           result.description
@@ -33,7 +34,7 @@ export default function Search() {
       });
     } else {
       results.innerHTML =
-        '<li><a class="dropdown-item disabled" href="#">No results</a></li>';
+        '<li><a class="disabled" href="#">No results</a></li>';
     }
   });
   Helper.log('Search enabled');
