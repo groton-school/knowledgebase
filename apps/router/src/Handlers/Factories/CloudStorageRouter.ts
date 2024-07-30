@@ -100,7 +100,7 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
           if (error == 'Error: No refresh token is set.') {
             // silent login if refresh token not present
             // FIXME this should be caught in Auth.authorize
-            req.session.redirect = req.originalUrl;
+            req.session.redirect = req.url.replace(`https://${req.host}`, '');
             res.redirect(Auth.authUrl);
           } else {
             Logger.error(req.originalUrl, {

@@ -15,6 +15,7 @@ import { OAuth2Client, Credentials } from 'google-auth-library';
 
 type AuthConfig = {
   keys: Var.Keys;
+  config: Var.Config;
 };
 
 export default class Auth {
@@ -35,8 +36,12 @@ export default class Auth {
     return Auth._authClient;
   }
 
-  public static init({ keys }: AuthConfig) {
-    Auth._redirectURI = new URL(keys.web.redirect_uris[0]);
+  public static init({ keys, config }: AuthConfig) {
+    const preferredRedirect =
+      keys.web.redirect_uris.find(
+        (uri) => new URL(uri).hostname == config.hostname
+      ) || keys.web.redirect_uris[0];
+    Auth._redirectURI = new URL(preferredRedirect);
     Auth._authClient = new OAuth2Client(
       keys.web.client_id,
       keys.web.client_secret,
@@ -76,7 +81,7 @@ export default class Auth {
       return true;
     }
 
-    req.session.redirect = req.url;
+    req.session.redirect = req.url.replace(`https://${req.hostname}`, '');
     res.redirect(Auth.authUrl);
     return false;
   }

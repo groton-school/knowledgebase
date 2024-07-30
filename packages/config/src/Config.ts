@@ -1,7 +1,7 @@
-import { UrlString, PathString } from '@groton/knowledgebase.strings';
+import { HostnameString, PathString } from '@groton/knowledgebase.strings';
 
 type Config = {
-  gae: { url: UrlString };
+  hostname?: HostnameString;
   session: { secret: string };
   storage: { bucket: string };
   kb: {

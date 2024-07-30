@@ -12,7 +12,7 @@ import express from 'express';
 (async () => {
   const [keys, config, groups, index] = await Helper.loadConfigFiles();
 
-  Auth.init({ keys });
+  Auth.init({ keys, config });
 
   const app = express();
   app.set('trust proxy', true); // https://stackoverflow.com/a/77331306/294171
