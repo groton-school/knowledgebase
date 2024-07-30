@@ -1,0 +1,15 @@
+{
+  "versionGroups": [
+    {
+      "dependencies": ["@types/**"],
+      "dependencyTypes": ["!dev"],
+      "isBanned": true,
+      "label": "@types packages should only be under devDependencies"
+    },
+    {
+      "dependencies": ["$LOCAL"],
+      "pinVersion": "workspace:*",
+      "label": "@Use workspace protocol when developing local packages"
+    }
+  ]
+}
