@@ -1,7 +1,6 @@
 import * as Helper from '../src/Helper';
 import cli from '@battis/qui-cli';
 import Index from '@groton/knowledgebase.index';
-import File from '@groton/knowledgebase.index/src/File';
 import fs from 'fs';
 import path from 'path';
 
@@ -61,13 +60,13 @@ const flags = {
 
   indexPath = path.resolve(CWD, indexPath);
 
-  File.event.on(File.Event.Start, (status) => {
+  Index.File.event.on(Index.File.Event.Start, (status) => {
     spinner.start(Helper.colorizePath(status));
   });
-  File.event.on(File.Event.Succeed, (status) =>
+  Index.File.event.on(Index.File.Event.Succeed, (status) =>
     spinner.succeed(Helper.colorizePath(status))
   );
-  File.event.on(File.Event.Fail, (status) =>
+  Index.File.event.on(Index.File.Event.Fail, (status) =>
     spinner.fail(Helper.colorizePath(status))
   );
 

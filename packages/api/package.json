@@ -2,7 +2,7 @@
   "name": "@groton/knowledgebase.api",
   "version": "0.0.0",
   "main": "src/index.ts",
-  "depeendencies": {
+  "dependencies": {
     "@groton/knowledgebase.index": "workspace:*"
   }
 }

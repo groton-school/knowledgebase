@@ -25,7 +25,7 @@ class Index extends Array<Index.File | Index.Folder> {
         ))
       );
     }
-    return [] as Index;
+    return new Index(...[]);
   }
 
   public get root(): Index.Folder | undefined {

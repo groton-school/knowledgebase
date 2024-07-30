@@ -23,27 +23,27 @@ export default class Client {
     keysPath: string;
     tokensPath: string;
   }) {
-    this.keysPath = keysPath;
-    this.tokensPath = tokensPath;
+    Client.keysPath = keysPath;
+    Client.tokensPath = tokensPath;
   }
 
   public static async getDrive() {
-    if (!this.drive) {
-      this.drive = Drive.drive({
+    if (!Client.drive) {
+      Client.drive = Drive.drive({
         version: 'v3',
-        auth: await this.getOAuth2Client({
+        auth: await Client.getOAuth2Client({
           scope: 'https://www.googleapis.com/auth/drive'
         })
       });
     }
-    return this.drive;
+    return Client.drive;
   }
 
   public static getStorage() {
-    if (!this.storage) {
-      this.storage = new Storage();
+    if (!Client.storage) {
+      Client.storage = new Storage();
     }
-    return this.storage;
+    return Client.storage;
   }
 
   public static async getOAuth2Client({
@@ -52,11 +52,11 @@ export default class Client {
     scope: string;
   }): Promise<OAuth2Client> {
     return new Promise(async (resolve, reject) => {
-      if (!this.keysPath || !this.tokensPath) {
+      if (!Client.keysPath || !Client.tokensPath) {
         throw new Error('Client not initialized');
       }
-      if (!this.oauth2) {
-        const keys = JSON.parse(fs.readFileSync(this.keysPath).toString());
+      if (!Client.oauth2) {
+        const keys = JSON.parse(fs.readFileSync(Client.keysPath).toString());
         const redirectUri = new URL(
           keys.web.redirect_uris
             ? keys.web.redirect_uris
@@ -71,12 +71,12 @@ export default class Client {
         });
 
         let tokens: Credentials | undefined;
-        if (fs.existsSync(this.tokensPath)) {
-          tokens = JSON.parse(fs.readFileSync(this.tokensPath).toString());
+        if (fs.existsSync(Client.tokensPath)) {
+          tokens = JSON.parse(fs.readFileSync(Client.tokensPath).toString());
         }
         if (tokens) {
           oauth2.setCredentials(tokens);
-          resolve((this.oauth2 = oauth2));
+          resolve((Client.oauth2 = oauth2));
           return;
         }
 
@@ -94,9 +94,9 @@ export default class Client {
           }
           if (req.query.code) {
             const { tokens } = await oauth2.getToken(req.query.code.toString());
-            fs.writeFileSync(this.tokensPath!, JSON.stringify(tokens));
+            fs.writeFileSync(Client.tokensPath!, JSON.stringify(tokens));
             oauth2.setCredentials(tokens);
-            resolve((this.oauth2 = oauth2));
+            resolve((Client.oauth2 = oauth2));
           }
           res.send('You may close this window.');
           server.close();
@@ -108,7 +108,7 @@ export default class Client {
           })
         );
       } else {
-        resolve(this.oauth2);
+        resolve(Client.oauth2);
       }
     });
   }

@@ -22,29 +22,29 @@ export default class Auth {
   private static _authClient: OAuth2Client;
 
   public static get redirectUri(): URL {
-    if (!this._redirectURI) {
+    if (!Auth._redirectURI) {
       throw new Error('Auth.redirectURI not initialized');
     }
-    return this._redirectURI;
+    return Auth._redirectURI;
   }
 
   public static get authClient(): OAuth2Client {
-    if (!this._authClient) {
+    if (!Auth._authClient) {
       throw new Error('Auth.authClient not initialized');
     }
-    return this._authClient;
+    return Auth._authClient;
   }
 
   public static init({ keys }: AuthConfig) {
-    this._redirectURI = new URL(keys.web.redirect_uris[0]);
-    this._authClient = new OAuth2Client(
+    Auth._redirectURI = new URL(keys.web.redirect_uris[0]);
+    Auth._authClient = new OAuth2Client(
       keys.web.client_id,
       keys.web.client_secret,
-      this._redirectURI.href
+      Auth._redirectURI.href
     );
 
     // TODO there's probably a reasonable upper limit, but that would involve projecting how many simultaneous connections might be made to the router... and I'm not up for figuring that out
-    this._authClient.setMaxListeners(Infinity);
+    Auth._authClient.setMaxListeners(Infinity);
   }
 
   /**
@@ -58,26 +58,26 @@ export default class Auth {
 
   public static async authorize(req: Request, res: Response) {
     if (req.query.code) {
-      const tokenResponse = await this.authClient.getToken(
+      const tokenResponse = await Auth.authClient.getToken(
         req.query.code.toString()
       );
-      req.session.userInfo = this.parseUserInfo(tokenResponse.tokens);
+      req.session.userInfo = Auth.parseUserInfo(tokenResponse.tokens);
       req.session.tokens = tokenResponse.tokens;
       res.redirect(req.session.redirect || '/');
     }
 
     if (req.session.tokens) {
-      this.authClient.setCredentials(req.session.tokens);
+      Auth.authClient.setCredentials(req.session.tokens);
       const tokenListener = (tokens: Credentials) => {
         req.session.tokens = tokens;
-        this.authClient.removeListener('tokens', tokenListener);
+        Auth.authClient.removeListener('tokens', tokenListener);
       };
-      this.authClient.on('tokens', tokenListener);
+      Auth.authClient.on('tokens', tokenListener);
       return true;
     }
 
     req.session.redirect = req.url;
-    res.redirect(this.authUrl);
+    res.redirect(Auth.authUrl);
     return false;
   }
 
@@ -97,7 +97,7 @@ export default class Auth {
   }
 
   public static get authUrl(): string {
-    return this.authClient.generateAuthUrl({
+    return Auth.authClient.generateAuthUrl({
       access_type: 'offline',
       scope: [
         // TODO examine these scopes more carefully

@@ -1,6 +1,5 @@
-import File from '@groton/knowledgebase.index/src/File';
-import Folder from '@groton/knowledgebase.index/src/Folder';
+import $Index from '@groton/knowledgebase.index';
 
-type Index = (File | Folder)[];
+type Index = ($Index.File | $Index.Folder)[];
 
 export default Index;

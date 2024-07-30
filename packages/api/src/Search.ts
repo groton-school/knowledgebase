@@ -1,6 +1,6 @@
-import File from '@groton/knowledgebase.index/src/File'
+import Index from '@groton/knowledgebase.index'
 
-export type Result = File & {
+export type Result = Index.File & {
   name: string;
   href: string;
   description?: string;
