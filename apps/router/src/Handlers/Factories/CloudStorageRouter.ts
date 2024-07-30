@@ -55,11 +55,13 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
                 acl.hasAccess(file.permissions)
             );
             if (folder) {
-              const pages = index.filter(
-                (file) =>
-                  file.parents?.includes(folder.id) &&
-                  acl.hasAccess(file.permissions)
-              );
+              const pages = index
+                .filter(
+                  (file) =>
+                    file.parents?.includes(folder.id) &&
+                    acl.hasAccess(file.permissions)
+                )
+                .sort((a, b) => a.name.localeCompare(b.name));
               // TODO template
               res.send(`<!doctype html>
                   <html lang="en">
