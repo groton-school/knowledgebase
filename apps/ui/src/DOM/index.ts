@@ -16,16 +16,22 @@ export default function PageStructure() {
 
     let wrapper = document.createElement('div');
     wrapper.id = 'wrapper'; // TODO constant
-    wrapper.classList.add('overflow-y-auto');
-    let row = document.createElement('div');
-    row.classList.add('row', 'align-items-start');
-    wrapper.appendChild(row);
+    wrapper.classList.add(
+      'overflow-y-auto',
+      'row',
+      'align-items-start',
+      'col-md-12'
+    );
+    //    let row = document.createElement('div');
+    //    row.classList.add('row', 'align-items-start');
+    //    wrapper.appendChild(row);
     const content = document.querySelector(
       `${Constants.styles.googleDocEmbed}, #directory`
     ) as HTMLDivElement;
     if (content) {
       wrapper = content.parentElement?.insertBefore(wrapper, content)!;
-      row.appendChild(content);
+      //      row.appendChild(content);
+      wrapper.appendChild(content);
       switch (content.id) {
         case 'doc-content': // TODO constant fix
           GoogleDocEmbed(content);

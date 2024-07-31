@@ -12,9 +12,5 @@ body {
     position: fixed;
     top: var(--nav-height);
     height: calc(100vh - var(--nav-height));
-
-    .search:has(.results:empty) {
-      display: none;
-    }
   }
 }

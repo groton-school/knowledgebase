@@ -1,12 +1,17 @@
-import Helper from '../Helper';
+import Helper from '../../Helper';
+import './styles.scss';
 
 export default function Search() {
-  document.querySelector('#wrapper .row')?.insertAdjacentHTML(
+  document.querySelector('#wrapper')?.insertAdjacentHTML(
     'afterbegin',
+    // TODO config spacing
     `
-      <div class="search col card m-1 p-3">
+      <div id="search-results" class="card col-md-3 order-md-3">
         <div class="card-body">
-          <ul class="results"></ul>
+          <h5 class="card-title">Search Results</h5>
+          <div class="card-text">
+            <div class="dynamic-content"></div>
+          </div>
         </div>
       </div>
     `
@@ -18,7 +23,7 @@ export default function Search() {
     <form role="search" id="search" class="ms-auto">
       <div class="input-group">
         <div class="dropdown">
-        <input class="form-control query" type="search" placeholder="How do I…" aria-label="Search">
+        <input class="form-control" name="query" type="search" placeholder="How do I…" aria-label="Search">
       </div>
           <button class="btn btn-outline-light" type="submit">Search</button>
         </div>

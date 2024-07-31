@@ -1,12 +1,13 @@
 import Helper from '../Helper';
+import { HTMLFormElements } from '@battis/typescript-tricks';
 import API from '@groton/knowledgebase.api';
 
 export default function Search() {
   const search = document.querySelector('#search') as HTMLFormElement;
-  const query = search.querySelector('.query') as HTMLInputElement;
+  const query = (search.elements as HTMLFormElements<'query'>)['query'];
   const results = document.querySelector(
-    '.search .results'
-  ) as HTMLUListElement;
+    '#search-results .dynamic-content'
+  ) as HTMLElement;
   search.addEventListener('submit', async (e: SubmitEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -23,13 +24,16 @@ export default function Search() {
       results.innerHTML = '';
       response.forEach((result) => {
         const div = document.createElement('div');
-        div.innerHTML = `<li><a href="${
-          result.href
-        }"><div class="name" data-score="${result.score}">${result.name}</div>${
+        div.classList.add('card');
+        div.innerHTML = `<div class="card-body"><div class="card-title" data-score="${
+          result.score
+        }"><a href="${result.href}" class="stretched-link">${
+          result.name
+        }</a></div>${
           result.description
-            ? `<div class="description">${result.description}</div>`
+            ? `<div class="card-body">${result.description}</div>`
             : ''
-        }</a></li>`;
+        }</div>`;
         results.appendChild(div);
       });
     } else {

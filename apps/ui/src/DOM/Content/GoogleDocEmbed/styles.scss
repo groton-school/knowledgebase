@@ -1,3 +1,5 @@
-.row:has(#toc) {
-  flex-direction: row-reverse;
+@use '../../../Constants';
+#{Constants.$googleDocEmbed} {
+  max-width: 7in;
+  margin: auto;
 }

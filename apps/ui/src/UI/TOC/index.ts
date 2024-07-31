@@ -2,10 +2,8 @@ import Helper from '../../Helper';
 import Builder from './Builder';
 import './styles.scss';
 
-const TOC_TITLE = 'On this page'; // TODO config
-
 /* Maximum header level to display */
-const MAX_DEPTH = 3;
+const MAX_DEPTH = 3; // TODO config
 
 /**
  * Generate Google Doc-style outline as TOC
@@ -16,22 +14,19 @@ export default function TOC() {
       .map((d) => `h${d + 1}`)
       .join(','),
     (headings) => {
-      const toc = document.createElement('div');
-      toc.insertAdjacentHTML(
-        'afterbegin',
-        `<h5 class="card-title">${TOC_TITLE}</h5>`
-      );
-      const builder = new Builder();
-      headings.forEach((h) => {
-        builder.add(
-          h.innerText,
-          `#${h.id}`,
-          parseInt(h.tagName.substring(h.tagName.length - 1)) - 1
-        );
-      });
-      toc.append(builder.finalize());
-      document.querySelector('#toc')?.prepend(toc);
-      Helper.log(`built “${TOC_TITLE}”`);
+      const toc = document.querySelector('#toc .dynamic-content');
+      if (toc) {
+        const builder = new Builder();
+        headings.forEach((h) => {
+          builder.add(
+            h.innerText,
+            `#${h.id}`,
+            parseInt(h.tagName.substring(h.tagName.length - 1)) - 1
+          );
+        });
+        toc.append(builder.finalize());
+        Helper.log(`built TOC`);
+      }
     }
   );
 }

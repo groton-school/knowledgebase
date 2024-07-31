@@ -1,4 +1,3 @@
-.card:has(#toc:empty),
-.card:has(#toc):has(ul:empty) {
+#toc.card:has(.dynamic-content:empty) {
   display: none;
 }
