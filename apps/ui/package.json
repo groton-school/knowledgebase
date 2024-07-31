@@ -15,6 +15,7 @@
     "build": "webpack"
   },
   "dependencies": {
+    "@battis/typescript-tricks": "^0.5.4",
     "@groton/knowledgebase.api": "workspace:*",
     "bootstrap": "^5.3.3"
   },
