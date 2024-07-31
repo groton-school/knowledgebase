@@ -1,4 +1,5 @@
 import Helper from '../../Helper';
+import { label } from '../../UI/LinkLabelByGroup';
 import API from '@groton/knowledgebase.api';
 
 export default async function SiteTree() {
@@ -23,6 +24,7 @@ export default async function SiteTree() {
       li.classList.add('active');
     }
     li.appendChild(a);
+    label(a);
     tree?.appendChild(li);
   });
   Helper.log('Site tree built');

@@ -5,17 +5,17 @@ import Helper from './Helper';
 import UI from './UI';
 import '@battis/webpack';
 
+const DEBUGGING = JSON.parse(process.env.DEBUGGING || '');
+
 Helper.vanity(
   `${pkg.name}\nv${pkg.version}.${__webpack_hash__}\n${
-    JSON.parse(process.env.DEBUGGING || '') ? 'X' : '✓'
-  } webpack.mode ${
-    JSON.parse(process.env.DEBUGGING!) ? 'development' : 'production'
-  }`
+    DEBUGGING ? 'X' : '✓'
+  } webpack.mode ${DEBUGGING ? 'development' : 'production'}`
 );
 
 if (DOM()) {
-UI();
-Embed();
+  UI();
+  Embed();
 }
 
 Helper.onLoad.activate();

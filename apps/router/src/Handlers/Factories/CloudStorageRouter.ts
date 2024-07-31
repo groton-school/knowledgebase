@@ -80,14 +80,15 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
                   ${pages
                     .map(
                       (page) =>
-                        `<a href="/${
-                          // TODO this path formatting is wonky
-                          page.index.path
-                        }/"><div class="name">${page.name}</div>${
+                        `<div class="page">
+                          <div class="name"><a href="/${
+                            // TODO this path formatting is wonky
+                            page.index.path
+                          }/">${page.name}</a></div>${
                           page.description
                             ? `<div class="description">${page.description}</div>`
                             : ''
-                        }</a>`
+                        }</div>`
                     )
                     .join('')}
                   </div>
