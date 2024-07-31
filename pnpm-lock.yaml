@@ -33,8 +33,8 @@ importers:
         specifier: ^12.4.0
         version: 12.4.0(typescript@5.5.4)
       tsx:
-        specifier: ^4.16.2
-        version: 4.16.2
+        specifier: ^4.16.3
+        version: 4.16.3
 
   apps/indexer:
     dependencies:
@@ -58,8 +58,8 @@ importers:
         specifier: ^4.1.5
         version: 4.1.5
       tsx:
-        specifier: ^4.16.2
-        version: 4.16.2
+        specifier: ^4.16.3
+        version: 4.16.3
 
   apps/router:
     dependencies:
@@ -206,8 +206,8 @@ importers:
         specifier: ^9.5.1
         version: 9.5.1(typescript@5.5.4)(webpack@5.93.0(webpack-cli@5.1.4))
       tsx:
-        specifier: ^4.16.2
-        version: 4.16.2
+        specifier: ^4.16.3
+        version: 4.16.3
       typescript:
         specifier: ^5.5.4
         version: 5.5.4
@@ -229,6 +229,9 @@ importers:
 
   apps/ui:
     dependencies:
+      '@battis/typescript-tricks':
+        specifier: ^0.5.4
+        version: 0.5.4
       '@groton/knowledgebase.api':
         specifier: workspace:*
         version: link:../../packages/api
@@ -393,9 +396,6 @@ importers:
 
   packages/index:
     dependencies:
-      '@battis/typescript-tricks':
-        specifier: ^0.5.3
-        version: 0.5.3
       '@google-cloud/storage':
         specifier: ^7.12.0
         version: 7.12.0
@@ -415,6 +415,9 @@ importers:
         specifier: ^2.1.35
         version: 2.1.35
     devDependencies:
+      '@battis/typescript-tricks':
+        specifier: ^0.5.4
+        version: 0.5.4
       '@types/adm-zip':
         specifier: ^0.5.5
         version: 0.5.5
@@ -475,8 +478,8 @@ packages:
     resolution: {integrity: sha512-EStJpq4OuY8xYfhGVXngigBJRWxftKX9ksiGDnmlY3o7B/V7KIAc9X4oiK87uPJSc/vs5L869bem5fhZa8caZw==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/parser@7.25.0':
-    resolution: {integrity: sha512-CzdIU9jdP0dg7HdyB+bHvDJGagUv+qtzZt5rYCWwW6tITNqV9odjp6Qu41gkG0ca5UfdDUWrKkiAnHHdGRnOrA==}
+  '@babel/parser@7.25.3':
+    resolution: {integrity: sha512-iLTJKDbJ4hMvFPgQwwsVoxtHyWpKKPBrxkANrSYewDPaPpT5py5yeVkgPIJ7XYXhndxJpaA3PyALSXQ7u8e/Dw==}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
@@ -534,8 +537,8 @@ packages:
   '@battis/typescript-tricks@0.4.3':
     resolution: {integrity: sha512-7uHRia+kAWWXbTJFMjax3XXmTSIAAnqegLFONN9dAjMv1T5dqRTj+adkKcAlUrZBBQq3A2f0pZz8OFWNwXYTOg==}
 
-  '@battis/typescript-tricks@0.5.3':
-    resolution: {integrity: sha512-VDgmy0F7hs0WorjS7csvne2DnsdfiO+STFqsmopHlnat3ZYtp9NVmyBgI34CWn7O1G++yE+mvAfREHM6EOf76w==}
+  '@battis/typescript-tricks@0.5.4':
+    resolution: {integrity: sha512-sNbzm9/Gu+5Fgq1tSbPCvmSi/Sx8ke4qxHdzknVgMMKOvRhxjyk243xBrZ3kwjxLI9yPdhNR4L/NBJjcTTgT7w==}
 
   '@battis/webpack@0.4.8':
     resolution: {integrity: sha512-fxtux1g21PJIV6/44ANj/N4l6tzvgiFnKtJKqhsagbSnMP3PaNTux+pUkWvXuK/ts3dU4RiPT0CIV8kCvTi5IA==}
@@ -2168,8 +2171,8 @@ packages:
   caniuse-api@3.0.0:
     resolution: {integrity: sha512-bsTwuIg/BZZK/vreVTYYbSWoe2F+71P7K5QGEX+pT250DZbfU1MQ5prOKpPR+LL6uWKK3KMwMCAS74QB3Um1uw==}
 
-  caniuse-lite@1.0.30001644:
-    resolution: {integrity: sha512-YGvlOZB4QhZuiis+ETS0VXR+MExbFf4fZYYeMTEE0aTQd/RdIjkTyZjLrbYVKnHzppDvnOhritRVv+i7Go6mHw==}
+  caniuse-lite@1.0.30001645:
+    resolution: {integrity: sha512-GFtY2+qt91kzyMk6j48dJcwJVq5uTkk71XxE3RtScx7XWRLsO7bU44LOFkOZYR8w9YMS0UhPSYpN/6rAMImmLw==}
 
   caw@2.0.1:
     resolution: {integrity: sha512-Cg8/ZSBEa8ZVY9HspcGUYaK63d/bN7rqS3CYCzEGUxuYv6UlmcjzDUz2fCFFHyTvUW5Pk0I+3hkA3iXlIj6guA==}
@@ -2739,8 +2742,8 @@ packages:
   effect@3.5.7:
     resolution: {integrity: sha512-PzEncc0R3ZZhqNTR+fXrSX+anF/4Ai6ftKie1ZrUUWY7WPE7d4KjB6wjpeWoGMOC7xWFPGSkBBUudyJN1mx3+g==}
 
-  electron-to-chromium@1.5.3:
-    resolution: {integrity: sha512-QNdYSS5i8D9axWp/6XIezRObRHqaav/ur9z1VzCDUCH1XIFOr9WQk5xmgunhsTpjjgDy3oLxO/WMOVZlpUQrlA==}
+  electron-to-chromium@1.5.4:
+    resolution: {integrity: sha512-orzA81VqLyIGUEA77YkVA1D+N+nNfl2isJVjjmOyrlxuooZ19ynb+dOlaDTqd/idKRS9lDCSBmtzM+kyCsMnkA==}
 
   email-validator@2.0.4:
     resolution: {integrity: sha512-gYCwo7kh5S3IDyZPLZf6hSS0MnZT8QmJFqYvbqlDZSbwdZlY6QZWxJ4i/6UhITOJ4XzyI647Bm2MXKCLqnJ4nQ==}
@@ -5879,8 +5882,8 @@ packages:
     peerDependencies:
       typescript: '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
 
-  tsx@4.16.2:
-    resolution: {integrity: sha512-C1uWweJDgdtX2x600HjaFaucXTilT7tgUZHbOE4+ypskZ1OP8CRCSDkCxG6Vya9EwaFIVagWwpaVAn5wzypaqQ==}
+  tsx@4.16.3:
+    resolution: {integrity: sha512-MP8AEUxVnboD2rCC6kDLxnpDBNWN9k3BSVU/0/nNxgm70bPBnfn+yCKcnOsIVPQwdkbKYoFOlKjjWZWJ2XCXUg==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -6271,7 +6274,7 @@ snapshots:
 
   '@babel/generator@7.17.7':
     dependencies:
-      '@babel/types': 7.17.0
+      '@babel/types': 7.25.2
       jsesc: 2.5.2
       source-map: 0.5.7
 
@@ -6310,9 +6313,9 @@ snapshots:
       js-tokens: 4.0.0
       picocolors: 1.0.1
 
-  '@babel/parser@7.25.0':
+  '@babel/parser@7.25.3':
     dependencies:
-      '@babel/types': 7.17.0
+      '@babel/types': 7.25.2
 
   '@babel/runtime@7.25.0':
     dependencies:
@@ -6321,7 +6324,7 @@ snapshots:
   '@babel/template@7.25.0':
     dependencies:
       '@babel/code-frame': 7.24.7
-      '@babel/parser': 7.25.0
+      '@babel/parser': 7.25.3
       '@babel/types': 7.25.2
 
   '@babel/traverse@7.23.2':
@@ -6332,7 +6335,7 @@ snapshots:
       '@babel/helper-function-name': 7.24.7
       '@babel/helper-hoist-variables': 7.24.7
       '@babel/helper-split-export-declaration': 7.24.7
-      '@babel/parser': 7.25.0
+      '@babel/parser': 7.25.3
       '@babel/types': 7.25.2
       debug: 4.3.6
       globals: 11.12.0
@@ -6398,7 +6401,7 @@ snapshots:
 
   '@battis/typescript-tricks@0.4.3': {}
 
-  '@battis/typescript-tricks@0.5.3': {}
+  '@battis/typescript-tricks@0.5.4': {}
 
   '@battis/webpack@0.4.8(m7brfopcolqpyz7ahfvoy56lwa)':
     dependencies:
@@ -7578,7 +7581,7 @@ snapshots:
   '@trivago/prettier-plugin-sort-imports@4.3.0(prettier@2.8.8)':
     dependencies:
       '@babel/generator': 7.17.7
-      '@babel/parser': 7.25.0
+      '@babel/parser': 7.25.3
       '@babel/traverse': 7.23.2
       '@babel/types': 7.17.0
       javascript-natural-sort: 0.7.1
@@ -8135,7 +8138,7 @@ snapshots:
   autoprefixer@10.4.19(postcss@8.4.40):
     dependencies:
       browserslist: 4.23.2
-      caniuse-lite: 1.0.30001644
+      caniuse-lite: 1.0.30001645
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.0.1
@@ -8256,8 +8259,8 @@ snapshots:
 
   browserslist@4.23.2:
     dependencies:
-      caniuse-lite: 1.0.30001644
-      electron-to-chromium: 1.5.3
+      caniuse-lite: 1.0.30001645
+      electron-to-chromium: 1.5.4
       node-releases: 2.0.18
       update-browserslist-db: 1.1.0(browserslist@4.23.2)
 
@@ -8329,11 +8332,11 @@ snapshots:
   caniuse-api@3.0.0:
     dependencies:
       browserslist: 4.23.2
-      caniuse-lite: 1.0.30001644
+      caniuse-lite: 1.0.30001645
       lodash.memoize: 4.1.2
       lodash.uniq: 4.5.0
 
-  caniuse-lite@1.0.30001644: {}
+  caniuse-lite@1.0.30001645: {}
 
   caw@2.0.1:
     dependencies:
@@ -8955,7 +8958,7 @@ snapshots:
 
   effect@3.5.7: {}
 
-  electron-to-chromium@1.5.3: {}
+  electron-to-chromium@1.5.4: {}
 
   email-validator@2.0.4: {}
 
@@ -12364,7 +12367,7 @@ snapshots:
       tslib: 1.14.1
       typescript: 5.5.4
 
-  tsx@4.16.2:
+  tsx@4.16.3:
     dependencies:
       esbuild: 0.21.5
       get-tsconfig: 4.7.6
