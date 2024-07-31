@@ -24,7 +24,7 @@ export default function TOC() {
             parseInt(h.tagName.substring(h.tagName.length - 1)) - 1
           );
         });
-        toc.append(builder.finalize());
+        toc.append(builder.finalize().firstElementChild!); // TODO TOC hack
         Helper.log(`built TOC`);
       }
     }
