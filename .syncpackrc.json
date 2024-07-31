@@ -1,0 +1,28 @@
+{
+  "versionGroups": [
+    {
+      "label": "@types/* packages should only be under devDependencies",
+      "dependencies": ["@types/**"],
+      "dependencyTypes": ["!dev"],
+      "isBanned": true
+    },
+    {
+      "label": "@battis/* config packages should only be under devDependencies",
+      "dependencies": [
+        "@battis/typescript-tricks",
+        "@battis/webpack",
+        "@battis/prettier-config",
+        "@battis/eslint-config",
+        "@battis/babel-config"
+      ],
+      "dependencyTypes": ["!dev"],
+      "isBanned": true
+    },
+    {
+      "label": "use workspace protocol for local packages",
+      "dependencies": ["$LOCAL"],
+      "dependencyTypes": ["!local"],
+      "pinVersion": "workspace:*"
+    }
+  ]
+}
