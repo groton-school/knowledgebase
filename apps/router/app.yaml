@@ -7,4 +7,3 @@ handlers:
 build_env_variables:
   # disable build script (pre-built before deploy)
   GOOGLE_NODE_RUN_SCRIPTS: ''
-  GOOGLE_APPLICATION_CREDENTIALS: 'var/firestore.json'

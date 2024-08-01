@@ -1,7 +1,8 @@
 import SiteTree from './SiteTree';
 import logo from './logo.png';
-// TODO config
 import './styles.scss';
+
+// TODO config logo
 
 export default function Navbar() {
   const nav = document.createElement('nav');

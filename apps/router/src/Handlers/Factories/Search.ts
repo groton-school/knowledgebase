@@ -32,16 +32,16 @@ const Search: HandlerFactory = ({ index, groups, config } = {}) => {
     const results: API.Search.Result[] = [];
     const available = index.filter((file) => {
       if (config.kb.search) {
-        if (config.kb.search.exclude) {
-          for (const e of config.kb.search.exclude) {
-            if (file.index.path.startsWith(e)) {
+        if (config.kb.search.include) {
+          for (const i of config.kb.search.include) {
+            if (!file.index.path.includes(i)) {
               return false;
             }
           }
         }
-        if (config.kb.search.include) {
-          for (const i of config.kb.search.include) {
-            if (!file.index.path.includes(i)) {
+        if (config.kb.search.exclude) {
+          for (const e of config.kb.search.exclude) {
+            if (file.index.path.startsWith(e)) {
               return false;
             }
           }

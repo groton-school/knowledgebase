@@ -144,6 +144,8 @@ Download these credentials to ${cli.colors.url(
         }
       };
       fs.writeFileSync(configFilePath, JSON.stringify(config));
+
+      // TODO amend to include information re: custom domain mapping
       cli.log.info(`
 You need to manually create and download keys for the ${cli.colors.command(
         'router'

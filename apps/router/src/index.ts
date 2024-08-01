@@ -18,7 +18,13 @@ import express from 'express';
   app.set('trust proxy', true); // https://stackoverflow.com/a/77331306/294171
   app.use(Session({ config }));
 
-  app.get('/', (_, res) => res.redirect(config.kb.root));
+  app.get('/', (_, res, next) => {
+    if (config.kb.root) {
+      res.redirect(config.kb.root);
+    } else {
+      next();
+    }
+  });
   app.get('/favicon.ico', Favicon);
   app.get('/logout', Auth.deauthorize);
   app.get(Auth.redirectUri.pathname, Auth.authorize);
