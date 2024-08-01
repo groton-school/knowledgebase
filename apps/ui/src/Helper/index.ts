@@ -1,4 +1,3 @@
-import * as Cookies from './Cookies';
 import Stack from './Stack';
 import iframe from './iframe';
 import log from './log';
@@ -12,7 +11,6 @@ import vanity from './vanity';
  * Helper functions used across all plugins
  */
 const Helper = {
-  Cookies,
   onLoad,
   onSelectorReady,
   onGoogleDocEmbed,
