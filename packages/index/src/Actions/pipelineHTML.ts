@@ -1,6 +1,8 @@
 import File from '../File';
 import { JSDOM } from 'jsdom';
 
+// TODO pipelineHTML needs a re-think
+
 type PipelineFunction = (params: { file: File; html: string }) => string;
 
 const injectGoogleDocId: PipelineFunction = ({ file, html }) => {

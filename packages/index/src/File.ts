@@ -1,4 +1,3 @@
-// FIXME this is so bad!
 import pipelineHTML from './Actions/pipelineHTML';
 import IndexEntry from './IndexEntry';
 import { JSONObject } from '@battis/typescript-tricks';

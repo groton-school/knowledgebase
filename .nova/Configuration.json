@@ -1,4 +1,6 @@
 {
-  "workspace.art_style" : 1,
-  "workspace.color" : 8
+  "todo.workspace-ignore-names": [""],
+  "todo.workspace-ignore-paths": ["./.grpcio"],
+  "workspace.art_style": 1,
+  "workspace.color": 8
 }
