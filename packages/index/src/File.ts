@@ -154,7 +154,7 @@ class File {
       await action();
       return;
     } catch (_e) {
-        const error = _e as {code?:number,message?:string};
+      const error = _e as { code?: number; message?: string };
       if (error.code == 503 && retries > 0) {
         File.event.emit(
           File.Event.Start,
@@ -183,6 +183,8 @@ class File {
 
   /**
    * Cache Drive file as complete web archive in Cloud Storage Bucket
+   *
+   * FIXME need to purge expired files from Cloud Storage as well as upload new files
    */
   public async cache({
     bucketName,

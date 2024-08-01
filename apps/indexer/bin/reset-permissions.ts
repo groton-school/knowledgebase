@@ -4,6 +4,9 @@ import Index from '@groton/knowledgebase.index';
 import fs from 'fs';
 import path from 'path';
 
+// TODO why does reset-permissions need to run separately from upload?
+// TODO version of reset-permissions that resets only recent uploads
+
 const defaultIndexPath = path.resolve(__dirname, '../../router/var/index.json');
 
 const options = {
