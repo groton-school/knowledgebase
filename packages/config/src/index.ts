@@ -1,10 +1,10 @@
-import ConfigType from './Config';
+import ConfigModule from './Config';
 import GroupsType from './Groups';
 import IndexType from './IndexFile';
 import KeysType from './Keys';
 
 namespace Config {
-  export type Config = ConfigType;
+  export import Config = ConfigModule;
   export type Groups = GroupsType;
   export type Index = IndexType;
   export type Keys = KeysType;

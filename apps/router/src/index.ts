@@ -19,8 +19,8 @@ import express from 'express';
   app.use(Session({ config }));
 
   app.get('/', (_, res, next) => {
-    if (config.kb.root) {
-      res.redirect(config.kb.root);
+    if (config.ui?.root) {
+      res.redirect(config.ui.root);
     } else {
       next();
     }

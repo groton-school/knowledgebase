@@ -31,16 +31,16 @@ const Search: HandlerFactory = ({ index, groups, config } = {}) => {
     const minScore = parseInt((req.query.score as string) || '0');
     const results: API.Search.Result[] = [];
     const available = index.filter((file) => {
-      if (config.kb.search) {
-        if (config.kb.search.include) {
-          for (const i of config.kb.search.include) {
+      if (config.ui?.search) {
+        if (config.ui.search.include) {
+          for (const i of config.ui.search.include) {
             if (!file.index.path.includes(i)) {
               return false;
             }
           }
         }
-        if (config.kb.search.exclude) {
-          for (const e of config.kb.search.exclude) {
+        if (config.ui.search.exclude) {
+          for (const e of config.ui.search.exclude) {
             if (file.index.path.startsWith(e)) {
               return false;
             }

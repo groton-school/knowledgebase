@@ -15,23 +15,25 @@ const SiteTree: HandlerFactory = ({ index, groups, config } = {}) => {
     );
   }
 
-  const root = index.find((file) => file.index.path == config.kb.root);
+  const root = index.find((file) => file.index.path == config.ui?.root || '.');
 
   return async (req: Request, res: Response) => {
     const acl = await new ACL(req, res, groups).prepare();
     res.send(
-      index
-        .filter(
-          (file) =>
-            file.mimeType == 'application/vnd.google-apps.folder' &&
-            file.parents?.includes(root!.id) &&
-            acl.hasAccess(file.permissions)
-        )
-        .map((file) => ({
-          name: file.name,
-          href: `/${file.index.path}/`,
-          description: file.description
-        })) as API.SiteTree.PageList
+      root
+        ? (index
+            .filter(
+              (file) =>
+                file.mimeType == 'application/vnd.google-apps.folder' &&
+                file.parents?.includes(root.id) &&
+                acl.hasAccess(file.permissions)
+            )
+            .map((file) => ({
+              name: file.name,
+              href: `/${file.index.path}/`,
+              description: file.description
+            })) as API.SiteTree.PageList)
+        : []
     );
   };
 };

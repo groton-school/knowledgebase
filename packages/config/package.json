@@ -3,7 +3,11 @@
   "version": "0.0.0",
   "main": "src/index.ts",
   "dependencies": {
+    "@battis/qui-cli": "^0.4.2",
     "@groton/knowledgebase.index": "workspace:*",
     "@groton/knowledgebase.strings": "workspace:*"
+  },
+  "devDependencies": {
+    "@battis/typescript-tricks": "^0.5.4"
   }
 }

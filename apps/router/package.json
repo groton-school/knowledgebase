@@ -7,6 +7,7 @@
   },
   "scripts": {
     "build": "run-s build:*",
+    "build:sync-config": "tsx bin/sync-config.ts -c ../../config.json",
     "build:index": "node -e \"if (! require('fs').existsSync('var/index.json') || ! require('fs').existsSync('var/groups.json')) { process.exit(1)}\" || pnpm -F @groton/knowledgebase.index run upload",
     "build:ui": "node -e \"if (! require('fs').existsSync('../ui/build')) { process.exit(1)}\" || pnpm -F @groton/knowledgebase.ui run build",
     "build:compile": "webpack",
@@ -18,6 +19,21 @@
     "deploy:unbork-pnpm": "pnpm i -rf",
     "start": "node build/index.js"
   },
+  "dependencies": {
+    "@google-cloud/connect-firestore": "^3.0.0",
+    "@google-cloud/firestore": "^7.9.0",
+    "@google-cloud/logging-winston": "^6.0.0",
+    "@google-cloud/storage": "^7.12.0",
+    "@googleapis/drive": "^8.11.0",
+    "@groton/knowledgebase.api": "workspace:*",
+    "@groton/knowledgebase.config": "workspace:*",
+    "@groton/knowledgebase.index": "workspace:*",
+    "@groton/knowledgebase.openid": "workspace:*",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "google-auth-library": "^9.13.0",
+    "winston": "^3.13.1"
+  },
   "devDependencies": {
     "@battis/partly-gcloudy": "^0.4.5",
     "@battis/qui-cli": "^0.4.2",
@@ -26,7 +42,7 @@
     "@tsconfig/recommended": "^1.0.7",
     "@types/express": "^4.17.21",
     "@types/express-session": "^1.18.0",
-    "@types/node": "^20.14.13",
+    "@types/node": "^20.14.14",
     "app-root-path": "^3.1.0",
     "copy-webpack-plugin": "^12.0.2",
     "css-loader": "^6.11.0",
@@ -53,27 +69,12 @@
     "style-loader": "^3.3.4",
     "terser-webpack-plugin": "^5.3.10",
     "ts-loader": "^9.5.1",
-    "tsx": "^4.16.3",
+    "tsx": "^4.16.5",
     "typescript": "^5.5.4",
     "url-loader": "^4.1.1",
     "webpack": "^5.93.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.2",
     "webpack-node-externals": "^3.0.0"
-  },
-  "dependencies": {
-    "@google-cloud/connect-firestore": "^3.0.0",
-    "@google-cloud/firestore": "^7.9.0",
-    "@google-cloud/logging-winston": "^6.0.0",
-    "@google-cloud/storage": "^7.12.0",
-    "@googleapis/drive": "^8.11.0",
-    "@groton/knowledgebase.api": "workspace:*",
-    "@groton/knowledgebase.config": "workspace:*",
-    "@groton/knowledgebase.index": "workspace:*",
-    "@groton/knowledgebase.openid": "workspace:*",
-    "express": "^4.19.2",
-    "express-session": "^1.18.0",
-    "google-auth-library": "^9.12.0",
-    "winston": "^3.13.1"
   }
 }
