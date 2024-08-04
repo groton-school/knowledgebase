@@ -15,7 +15,7 @@ const SiteTree: HandlerFactory = ({ index, groups, config } = {}) => {
     );
   }
 
-  const root = index.find((file) => file.index.path == config.ui?.root || '.');
+  const root = index.find((file) => file.index.path == config.ui?.root);
 
   return async (req: Request, res: Response) => {
     const acl = await new ACL(req, res, groups).prepare();

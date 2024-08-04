@@ -15,7 +15,7 @@ The configuration for this app is stored in `var/config.json` which is uploaded 
   "hostname": "subdomain.example.com",
   "session": { "secret": "185f3c79-4208-446f-9e66-322f68fe17c1" },
   "storage": { "bucket": "elderberry-fossil-098765" },
-  "kb": {
+  "ui": {
     "root": "docs",
     "search": { "include": ["docs"], "exclude": ["assets"] }
   }
@@ -36,19 +36,19 @@ Required. A secret used to encrypt session data at rest in Firestore.
 
 Required. The ID of the GCS bucket where the static content is stored.
 
-### `kb.root`
+### `ui.root`
 
 Optional. Relative path from root of GCS bucket to the root of the documents folder. `/` will be redirected to this path in the location bar if defined (otherwise `/` will be processed as an index of the GCS bucket, as would any other directory path)
 
-### `kb.search`
+### `ui.search`
 
 Inclusions are processed before exclusions. So if you wanted to include `docs` but exclude `docs/secrets`, that would work.
 
-##### `kb.search.include`
+##### `ui.search.include`
 
 Optional. An array of paths to be included in search responses (if the user has access to them).
 
-##### `kb.search.exclude`
+##### `ui.search.exclude`
 
 Optional. An array of paths to be excluded in search responses (no matter what the user's level of access is).
 
