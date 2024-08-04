@@ -27,7 +27,6 @@
     "@googleapis/drive": "^8.11.0",
     "@groton/knowledgebase.api": "workspace:*",
     "@groton/knowledgebase.config": "workspace:*",
-    "@groton/knowledgebase.index": "workspace:*",
     "@groton/knowledgebase.openid": "workspace:*",
     "express": "^4.19.2",
     "express-session": "^1.18.0",

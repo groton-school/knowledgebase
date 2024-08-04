@@ -26,6 +26,9 @@ importers:
       '@groton/knowledgebase.config':
         specifier: workspace:*
         version: link:packages/config
+      '@tsconfig/recommended':
+        specifier: ^1.0.7
+        version: 1.0.7
       npm-run-all:
         specifier: ^4.1.5
         version: 4.1.5
@@ -84,12 +87,6 @@ importers:
       '@groton/knowledgebase.config':
         specifier: workspace:*
         version: link:../../packages/config
-      '@groton/knowledgebase.google':
-        specifier: workspace:*
-        version: link:../../packages/google
-      '@groton/knowledgebase.index':
-        specifier: workspace:*
-        version: link:../../packages/index
       '@groton/knowledgebase.openid':
         specifier: workspace:*
         version: link:../../packages/openid
