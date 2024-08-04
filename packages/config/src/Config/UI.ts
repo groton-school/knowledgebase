@@ -6,6 +6,7 @@ type UI = {
   site?: {
     logo?: PathString;
     favicon?: PathString;
+    background?: PathString;
     js?: PathString;
     css?: PathString;
   };
@@ -13,7 +14,6 @@ type UI = {
     thumbnails?: {
       root: PathString;
       default?: PathString;
-      indexable?: boolean;
     };
   };
 };
