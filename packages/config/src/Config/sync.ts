@@ -1,3 +1,4 @@
+import Config from './Config';
 import createDefault from './createDefault';
 import cli from '@battis/qui-cli';
 import { JSONObject } from '@battis/typescript-tricks';
@@ -108,4 +109,6 @@ export default function sync(
 
   fs.writeFileSync(localConfigPath, JSON.stringify(dest));
   spinner.succeed(`Configuration synced to ${cli.colors.url(localConfigPath)}`);
+
+  return dest as Partial<Config>;
 }

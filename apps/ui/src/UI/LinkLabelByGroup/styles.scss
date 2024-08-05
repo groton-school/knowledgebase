@@ -16,15 +16,16 @@
  * `text-color` (Optional) defaults to white
  * `border-color` (Optional) defaults to text-color, if present, or transparent
  */
+// TODO make configurable
 $groups: 'for-teachers/' 'Faculty',
-  'for-students/' 'Students' white Constants.$grotonRed, 'for-staff/' 'Staff',
+  'for-students/' 'Students' white Constants.$navbarColor, 'for-staff/' 'Staff',
   'for-employees/' 'Faculty & Staff', 'for-department-heads/' 'Dept. Heads',
   'for-it/' 'IT' gold black;
 
 @each $url, $label, $color, $text, $border in $groups {
   a[href$='#{$url}'] {
     .badge {
-      background: $color or Constants.$grotonRed;
+      background: $color or Constants.$navbarColor;
       border: solid 1px ($border or $text or transparent);
 
       .label::before {

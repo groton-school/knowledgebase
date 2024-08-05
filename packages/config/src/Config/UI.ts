@@ -2,7 +2,7 @@ import { PathString } from '@groton/knowledgebase.strings';
 
 type UI = {
   root?: PathString;
-  search?: { include?: string[]; exclude?: string[] };
+  search?: { include?: PathString[]; exclude?: PathString[] };
   site?: {
     logo?: PathString;
     favicon?: PathString;
@@ -16,6 +16,9 @@ type UI = {
       root: PathString;
       default?: PathString;
     };
+  };
+  webpack?: {
+    doNotResolve?: PathString[];
   };
 };
 

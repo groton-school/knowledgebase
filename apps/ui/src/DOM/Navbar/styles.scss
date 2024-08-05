@@ -1,5 +1,7 @@
+@use '../../Constants';
+
 #nav.navbar {
-  background: var(--groton-red); // TODO config
+  background: Constants.$navbarColor; // TODO config
   color: white;
 
   .navbar-brand {

@@ -1,8 +1,12 @@
 @use 'Constants';
 
 :export {
-  grotonred: #{Constants.$grotonRed};
   googleDocEmbed: #{Constants.$googleDocEmbed};
   prefix: #{Constants.$prefix};
   mobileCutoffWidthInPx: #{Constants.$mobileCutoffWidthInPx};
+
+  favicon: Constants.$favicon;
+  logo: Constants.$logo;
+  background: Constants.$background;
+  navbarColor: #{Constants.$navbarColor};
 }

@@ -1,5 +1,5 @@
+import Constants from '../../Constants';
 import SiteTree from './SiteTree';
-import logo from './logo.png';
 import './styles.scss';
 
 // TODO config logo
@@ -12,7 +12,9 @@ export default function Navbar() {
   // TODO consolidate Search in one directory
   nav.innerHTML = `
       <div class="container-fluid align-items-middle">
-          <a class="navbar-brand" href="/tc"><img src="${logo}"></a>
+          <a class="navbar-brand" href="/tc">
+            <img src=${Constants.styles.logo}>
+          </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
