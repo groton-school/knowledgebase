@@ -4,6 +4,6 @@
 !/package.json
 !/pnpm-lock.yaml
 !/var
-/var/config.*.json
+/var/*.*.json
 .DS_Store
 *.LICENSE.txt

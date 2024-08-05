@@ -7,6 +7,7 @@ type UI = {
     logo?: PathString;
     favicon?: PathString;
     background?: PathString;
+    navbarColor?: string;
     js?: PathString;
     css?: PathString;
   };
