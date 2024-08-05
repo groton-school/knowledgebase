@@ -25,7 +25,7 @@ export function label(link: HTMLAnchorElement) {
       replace(new RegExp(` for ${role}$`, 'i'), '', link);
       link.insertAdjacentHTML(
         'beforeend',
-        `<div class="badge rounded-pill ${role}"><span class="label"></span></div>
+        `<br/><div class="badge rounded-pill ${role}"><small class="label"></small></div>
 `
       );
       Helper.log(`Added ${role} label to ${link.href}`);

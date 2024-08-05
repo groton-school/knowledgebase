@@ -1,4 +1,5 @@
-import Helper from '../../Helper';
+import Helper from '../../../Helper';
+import './styles.scss';
 
 export default function Directory(directory: HTMLDivElement) {
   const card = document.createElement('div');
@@ -7,20 +8,26 @@ export default function Directory(directory: HTMLDivElement) {
   directory.parentElement?.insertBefore(card, directory);
   card.appendChild(directory);
   Array.from(directory.querySelectorAll('.page')).forEach((page) => {
-    page.classList.add('card', 'mb-3'); // TODO config spacing
+    page.classList.add('card', 'col-md-4');
     (page as HTMLElement).style.maxWidth = '3.5in';
 
     const row = document.createElement('div');
     row.classList.add('row', 'g-0');
     page.prepend(row);
-    /*
+
+    const a = page.querySelector('a');
+    a?.classList.add('stretched-link');
+
     const thumbnail = document.createElement('div');
     thumbnail.classList.add('thumbnail', 'col-md-4');
+    // FIXME use config.json
     thumbnail.innerHTML = `
-      <img class="img-fluid rounded-start" src="/assets/acad-tech-icon.png" />
+      <img class="img-fluid rounded-start" onerror="this.setAttribute('data-broken','true')" src="${'/static/thumbnail'}${new URL(
+      a!.href
+    ).pathname.replace(/\/$/, '')}.png" />
     `;
     row.append(thumbnail);
-    */
+
     let body = document.createElement('div');
     body.classList.add('col-md-8');
     row.append(body);
@@ -36,15 +43,13 @@ export default function Directory(directory: HTMLDivElement) {
 
     const description = page.querySelector('.description');
     if (description) {
-      const text = document.createElement('div');
+      const text = document.createElement('p');
       text.classList.add('card-text', 'description');
       text.innerHTML = '<small class="text-body-secondary"></small>';
       text.firstElementChild!.append(...description.childNodes);
       body.append(text);
       description.remove();
     }
-
-    page.querySelector('a')?.classList.add('stretched-link');
   });
   Helper.log('Updated #directory DOM');
 }
