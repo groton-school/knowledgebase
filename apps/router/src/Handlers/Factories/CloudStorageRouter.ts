@@ -1,4 +1,3 @@
-import Helper from '../../Helper';
 import ACL from '../../Services/ACL';
 import Auth from '../../Services/Auth';
 import Logger from '../../Services/Logger';
@@ -18,101 +17,121 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
     );
   }
   return async (req, res) => {
-    req.session.redirect = undefined;
-    if (!req.path.endsWith('/') && !/.*\.[^\\]+$/i.test(req.path)) {
-      res.redirect(`${req.path}/`);
-    } else {
+    try {
       if (await Auth.authorize(req, res)) {
-        try {
-          const bucket = new Storage({
-            authClient: Auth.authClient,
-            projectId: process.env.GOOGLE_CLOUD_PROJECT
-          }).bucket(config.storage.bucket);
-          const file = bucket.file(Helper.normalizePath(req.path));
-          if ((await file.exists())[0]) {
-            try {
-              const metadata = (await file.getMetadata())[0];
-              res.type(metadata.contentType || path.extname(req.path));
-              const stream = file.createReadStream();
-              stream.on('data', (data) => res.write(data));
-              stream.on('error', (error) =>
-                Logger.error(file.cloudStorageURI.href, error)
-              );
-              stream.on('end', () => res.end());
-            } catch (error) {
-              Logger.error(req.originalUrl, {
-                function: 'CloudStorageRouter',
-                error
-              });
-              res.status(500);
-              res.send('storage access error');
-            }
-          } else {
-            const acl = await new ACL(req, res, groups).prepare();
-            const folder = index.find(
-              (file) =>
-                `/${file.index.path}/` == req.path &&
-                acl.hasAccess(file.permissions)
+        const bucket = new Storage({
+          authClient: Auth.authClient,
+          projectId: process.env.GOOGLE_CLOUD_PROJECT
+        }).bucket(config.storage.bucket);
+
+        let reqPath = path.join(
+          req.path.substring(1),
+          /\.\w+$/.test(req.path) ? '' : 'index.html'
+        );
+        const acl = await new ACL(req, res, groups).prepare();
+        const gsPath = `gs://${config.storage.bucket}/${reqPath}`;
+        const reqFile = index.find(
+          (f) => f.index.uri.includes(gsPath) && acl.hasAccess(f.permissions)
+        );
+        Logger.info(`DEBUG ${req.path}`, { reqPath, gsPath, reqFile });
+        let success = false;
+        if (reqFile) {
+          const file = bucket.file(reqPath);
+          try {
+            const metadata = (await file.getMetadata())[0];
+            res.type(metadata.contentType || path.extname(reqPath));
+            const stream = file.createReadStream();
+            stream.on('data', (data) => res.write(data));
+            stream.on('error', (error) =>
+              Logger.error(file.cloudStorageURI.href, error)
             );
-            if (folder) {
-              const pages = index
-                .filter(
-                  (file) =>
-                    file.parents?.includes(folder.id) &&
-                    acl.hasAccess(file.permissions)
-                )
-                .sort((a, b) => a.name.localeCompare(b.name));
-              // TODO template
-              res.send(`<!doctype html>
-                  <html lang="en">
-                  <head>
-                    <meta charset="utf-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1">
-                    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
-                    <meta item-prop="kb.id" content="${folder.id}">
-                  <title>${folder.name}</title>
-                  <link rel="icon" href="/assets/favicon.ico">
-                  <link rel="stylesheet" href="/assets/kb.css" />
-                  </head>
-                  <body>
-                  <div id="directory">
-                  <h1 class="title">${folder.name}</h1>
-                  ${pages
-                    .map(
-                      (page) =>
-                        `<div class="page">
-                          <div class="name"><a href="/${
-                            // TODO this path formatting is wonky
-                            page.index.path
-                          }/">${page.name}</a></div>${
-                          page.description
-                            ? `<div class="description">${page.description}</div>`
-                            : ''
-                        }</div>`
-                    )
-                    .join('')}
-                  </div>
-                  <script src="/assets/kb.js"></script>
-                  </body>
-                  `);
-            } else {
-              res.status(404);
-            }
-          }
-        } catch (error) {
-          if (error == 'Error: No refresh token is set.') {
-            // silent login if refresh token not present
-            // TODO this should be caught/handled in Auth.authorize, not here
-            req.session.redirect = req.url.replace(`https://${req.host}`, '');
-            res.redirect(Auth.authUrl);
-          } else {
+            stream.on('end', () => res.end());
+            success = true;
+          } catch (error) {
             Logger.error(req.originalUrl, {
               function: 'CloudStorageRouter',
+              reqPath,
               error
             });
-            res.status((error as any).code || 500);
+            res.status(418);
+          }
+        } else {
+          reqPath = req.path.replace(/^\/(.+[^\/])\/?$/, '$1');
+          const requestedDir = index.find(
+            (f) => f.index.path == reqPath && acl.hasAccess(f.permissions)
+          );
+          if (requestedDir) {
+            const pages = index
+              .filter(
+                (file) =>
+                  file.parents?.includes(requestedDir.id) &&
+                  acl.hasAccess(file.permissions)
+              )
+              .sort((a, b) => a.name.localeCompare(b.name));
+            // TODO template
+            res.send(`<!doctype html>
+                    <html lang="en">
+                    <head>
+                      <meta charset="utf-8">
+                      <meta name="viewport" content="width=device-width, initial-scale=1">
+                      <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+                      <meta item-prop="kb.id" content="${requestedDir.id}">
+                      <title>${requestedDir.name}</title>${
+              config.ui?.site?.favicon
+                ? `
+                      <link rel="icon" href="${config.ui.site.favicon}">`
+                : ''
+            }${
+              config.ui?.site?.css
+                ? `
+                      <link rel="stylesheet" href="${config.ui.site.css}" />`
+                : ''
+            }
+                    </head>
+                    <body>
+                    <div id="directory">
+                    <h1 class="title">${requestedDir.name}</h1>
+                    ${pages
+                      .map(
+                        (page) =>
+                          `<div class="page">
+                            <div class="name"><a href="/${
+                              // TODO this path formatting is wonky
+                              page.index.path
+                            }/">${page.name}</a></div>${
+                            page.description
+                              ? `<div class="description">${page.description}</div>`
+                              : ''
+                          }</div>`
+                      )
+                      .join('')}
+                    </div>${
+                      config.ui?.site?.js
+                        ? `
+                      <script src="${config.ui.site.js}"></script>`
+                        : ''
+                    }
+                    </body>
+                    `);
+            success = true;
           }
         }
+        if (!success) {
+          res.send(404);
+        }
+      }
+    } catch (error) {
+      if (error == 'Error: No refresh token is set.') {
+        // silent login if refresh token not present
+        // TODO this should be caught/handled in Auth.authorize, not here
+        req.session.redirect = req.url.replace(`https://${req.host}`, '');
+        res.redirect(Auth.authUrl);
+      } else {
+        Logger.error(req.originalUrl, {
+          function: 'CloudStorageRouter',
+          error
+        });
+        res.status((error as any).code || 500);
       }
     }
   };
