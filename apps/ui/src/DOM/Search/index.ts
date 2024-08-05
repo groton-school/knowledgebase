@@ -5,7 +5,7 @@ export default function Search() {
   document.querySelector('#wrapper')?.insertAdjacentHTML(
     'afterbegin',
     `
-      <div id="search-results" class="card col-md-3 order-md-3">
+      <div id="search-results" class="card col-md-3 order-md-3 sticky-lg-top">
         <div class="card-body">
           <h5 class="card-title">Search Results</h5>
           <div class="card-text">

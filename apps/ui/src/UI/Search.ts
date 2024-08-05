@@ -39,9 +39,6 @@ export default function Search() {
     } else {
       results.innerHTML = '<li>No results</li>';
     }
-    document
-      .querySelector('#search-results .card-title')!
-      .scrollIntoView({ behavior: 'smooth' });
   });
   Helper.log('Search enabled');
 }
