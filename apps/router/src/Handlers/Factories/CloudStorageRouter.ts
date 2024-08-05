@@ -33,28 +33,19 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
         const reqFile = index.find(
           (f) => f.index.uri.includes(gsPath) && acl.hasAccess(f.permissions)
         );
-        Logger.info(`DEBUG ${req.path}`, { reqPath, gsPath, reqFile });
         let success = false;
+
         if (reqFile) {
           const file = bucket.file(reqPath);
-          try {
-            const metadata = (await file.getMetadata())[0];
-            res.type(metadata.contentType || path.extname(reqPath));
-            const stream = file.createReadStream();
-            stream.on('data', (data) => res.write(data));
-            stream.on('error', (error) =>
-              Logger.error(file.cloudStorageURI.href, error)
-            );
-            stream.on('end', () => res.end());
-            success = true;
-          } catch (error) {
-            Logger.error(req.originalUrl, {
-              function: 'CloudStorageRouter',
-              reqPath,
-              error
-            });
-            res.status(418);
-          }
+          const metadata = (await file.getMetadata())[0];
+          res.type(metadata.contentType || path.extname(reqPath));
+          const stream = file.createReadStream();
+          stream.on('data', (data) => res.write(data));
+          stream.on('error', (error) =>
+            Logger.error(file.cloudStorageURI.href, error)
+          );
+          stream.on('end', () => res.end());
+          success = true;
         } else {
           reqPath = req.path.replace(/^\/(.+[^\/])\/?$/, '$1');
           const requestedDir = index.find(
