@@ -1,7 +1,8 @@
 {
   "extends": "@battis/webpack/ts/tsconfig.json",
   "compilerOptions": {
-      "target":"es6",
+    "target": "es6",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "esModuleInterop": true
   }

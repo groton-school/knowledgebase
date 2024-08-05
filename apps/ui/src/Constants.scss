@@ -4,7 +4,10 @@ $googleDocEmbed: '#doc-content'; // TODO #directory ?
 $prefix: 'ui-';
 $mobileCutoffWidthInPx: 576;
 
+// image paths
 $favicon: config.$favicon;
 $background: config.$background;
 $logo: config.$logo;
-$navbarColor: config.$navbarColor;
+
+// bootstrap styling
+$primaryColor: config.$primaryColor;

@@ -6,7 +6,7 @@ import './styles.scss';
 
 export default function Navbar() {
   const nav = document.createElement('nav');
-  nav.classList.add('navbar', 'navbar-expand-lg', 'fixed-top');
+  nav.classList.add('navbar', 'navbar-expand-lg', 'bg-primary', 'fixed-top');
   nav.id = 'nav';
   // TODO template
   // TODO consolidate Search in one directory

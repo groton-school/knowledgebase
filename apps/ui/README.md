@@ -14,9 +14,9 @@ This app can be configured throughout the code, in particular... (And yes, clear
 
 Set `DEBUGGING=true` for debugging information in the bundle build (and much larger bundle size).
 
-##### [`src/Constants.scss`](./src/Constants.scss)
+##### `var/config.json`
 
-Toolbar color (`$grotonRed`) and class selector prefixes
+Can be synced from monorepo using [`bin/sync-config.ts`](./bin/sync-config.ts). Contains settings for styling the UI.
 
 ##### [`src/Embed/Hyperlinks/index.ts`](./src/Embed/Hyperlinks/index.ts)
 
@@ -32,7 +32,7 @@ Which URLs get tagged with labels (and have their titles shortened). Entered as 
 
 ```scss
 $groups: 'for-teachers/' 'Faculty', 'for-students/' 'Students' white
-    Constants.$grotonRed, 'for-staff/' 'Staff', 'for-employees/'
+    Constants.$primaryColor, 'for-staff/' 'Staff', 'for-employees/'
     'Faculty & Staff', 'for-department-heads/' 'Dept. Heads', 'for-it/' 'IT'
     gold black;
 ```
@@ -41,7 +41,7 @@ In general, for each label definition list:
 
 - Item 1 is a string defining the end of the HREF path to match on (i.e. "every HREF that ends in `for-it/")
 - Item 2 is the text content of the label (i.e. `IT`)
-- Item 3, if defined, is the color of the label badge. If not defined, it defaults to the color of the navbar, as defined in [`src/Constants.scss`](./src/Constants.scss) and referred to as `$grotonRed` (i.e. `gold`)
+- Item 3, if defined, is the color of the label badge. If not defined, it defaults to the color of the navbar, as defined in [`src/Constants.scss`](./src/Constants.scss) and referred to as `$primaryColor` (i.e. `gold`)
 - Item 4, if defined, is the color of the text and badge border. If not defined, it defaults to white. Note that if this color is defined, Item 3, the badge color, must _also_ be defined/
 
 ##### [`src/UI/TitleCaseAllCapsHeaders.ts`](./src/UI/TitleCaseAllCapsHeaders.ts)

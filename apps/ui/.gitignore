@@ -5,4 +5,5 @@
 /node_modules
 /public
 /src/config.scss
-/var
+/var/*
+!/var/config.json

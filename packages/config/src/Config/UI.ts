@@ -1,4 +1,4 @@
-import { PathString } from '@groton/knowledgebase.strings';
+import { PathString, CSSColorString } from '@groton/knowledgebase.strings';
 
 type UI = {
   root?: PathString;
@@ -7,7 +7,7 @@ type UI = {
     logo?: PathString;
     favicon?: PathString;
     background?: PathString;
-    navbarColor?: string;
+    primaryColor?: CSSColorString;
     js?: PathString;
     css?: PathString;
   };
@@ -16,6 +16,9 @@ type UI = {
       root: PathString;
       default?: PathString;
     };
+  };
+  toc?: {
+    maxDepth?: 1 | 2 | 3 | 4 | 5 | 6;
   };
   webpack?: {
     doNotResolve?: PathString[];

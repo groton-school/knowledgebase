@@ -1,5 +1,8 @@
 @use '../Constants';
-@import 'bootstrap/dist/css/bootstrap.min.css';
+
+$primary: Constants.$primaryColor;
+
+@import 'bootstrap';
 
 body {
   font-family: Arial, Roboto, Helvetica, sans-serif; // TODO config

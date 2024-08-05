@@ -18,14 +18,14 @@
  */
 // TODO make configurable
 $groups: 'for-teachers/' 'Faculty',
-  'for-students/' 'Students' white Constants.$navbarColor, 'for-staff/' 'Staff',
+  'for-students/' 'Students' white Constants.$primaryColor, 'for-staff/' 'Staff',
   'for-employees/' 'Faculty & Staff', 'for-department-heads/' 'Dept. Heads',
   'for-it/' 'IT' gold black;
 
 @each $url, $label, $color, $text, $border in $groups {
   a[href$='#{$url}'] {
     .badge {
-      background: $color or Constants.$navbarColor;
+      background: $color or Constants.$primaryColor;
       border: solid 1px ($border or $text or transparent);
 
       .label::before {
@@ -39,7 +39,7 @@ $groups: 'for-teachers/' 'Faculty',
 nav {
   a {
     .badge {
-      box-shadow: white 0 0 5px;
+      display: none;
     }
   }
 }

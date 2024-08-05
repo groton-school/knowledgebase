@@ -33,7 +33,7 @@ export default function PageStructure() {
       //      row.appendChild(content);
       wrapper.appendChild(content);
       switch (content.id) {
-        case 'doc-content': // TODO constant fix
+        case 'doc-content':
           GoogleDocEmbed(content);
           break;
         case 'directory': // TODO constant?

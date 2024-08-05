@@ -40,4 +40,9 @@ config.module.rules[rule].use[loader].options.url = {
     )
 };
 
+// ignore Bootstrap's SCSS
+config.ignoreWarnings = [
+  (warning) => /\/node_modules\/bootstrap\/scss\//.test(warning.warning)
+];
+
 module.exports = config;

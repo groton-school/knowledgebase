@@ -1,24 +1,7 @@
-@use '../../Constants';
-
 #nav.navbar {
-  background: Constants.$navbarColor; // TODO config
-  color: white;
-
   .navbar-brand {
     img {
       height: 1em;
     }
-  }
-
-  .nav-link {
-    color: white;
-  }
-
-  .nav-link:hover,
-  .nav-link:active,
-  .active .nav-link {
-    background: maroon;
-    border-radius: 0.5em;
-    text-shadow: 0 0 0.25em hsla(0, 0%, 50%, 0.75);
   }
 }

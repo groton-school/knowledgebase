@@ -22,14 +22,13 @@ const config = Var.Config.sync(
 
 function quoted(key: string, value: string = '') {
   switch (key) {
-    case 'navbarColor':
+    case 'primaryColor':
       return value;
     default:
       return `"${value}"`;
   }
 }
 
-// FIXME this approach could leave stranded values in SCSS that have been deleted from config
 const spinner = cli.spinner();
 const pathToScss = path.resolve(__dirname, '../src/config.scss');
 spinner.start(`Updating ${cli.colors.url(pathToScss)}`);
