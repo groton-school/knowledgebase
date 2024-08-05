@@ -19,14 +19,18 @@ const demoteBodyToDiv: PipelineFunction = ({ html }) => {
     .replace('class="doc-content"', 'id="doc-content" class="doc-content"');
 };
 
+// FIXME decouple and use config.json
 const injectAssets: PipelineFunction = ({ html }) => {
   return html
-    .replace('<head>', '<head><link rel="icon" href="/assets/favicon.ico">')
+    .replace(
+      '<head>',
+      '<head><link rel="icon" href="/static/_site/favicon.ico">'
+    )
     .replace(
       '</head>',
-      `<link rel="stylesheet" href="/assets/kb.css" /></head>`
+      `<link rel="stylesheet" href="/assets/ui.css" /></head>`
     )
-    .replace('</body>', `<script src="/assets/kb.js"></script></body>`);
+    .replace('</body>', `<script src="/assets/ui.js"></script></body>`);
 };
 
 const removeScripts: PipelineFunction = ({ html }) => {
