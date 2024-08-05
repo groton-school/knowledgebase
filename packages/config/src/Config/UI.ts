@@ -17,9 +17,6 @@ type UI = {
       default?: PathString;
     };
   };
-  toc?: {
-    maxDepth?: 1 | 2 | 3 | 4 | 5 | 6;
-  };
   webpack?: {
     doNotResolve?: PathString[];
   };
