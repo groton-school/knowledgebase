@@ -4,7 +4,6 @@ import './styles.scss';
 export default function Search() {
   document.querySelector('#wrapper')?.insertAdjacentHTML(
     'afterbegin',
-    // TODO config spacing
     `
       <div id="search-results" class="card col-md-3 order-md-3">
         <div class="card-body">
@@ -22,11 +21,9 @@ export default function Search() {
     `
     <form role="search" id="search" class="ms-auto">
       <div class="input-group">
-        <div class="dropdown">
         <input class="form-control" name="query" type="search" placeholder="How do I…" aria-label="Search">
+        <button class="btn btn-outline-light" type="submit">Search</button>
       </div>
-          <button class="btn btn-outline-light" type="submit">Search</button>
-        </div>
     </form>
 `
   );

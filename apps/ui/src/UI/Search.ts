@@ -24,14 +24,14 @@ export default function Search() {
       results.innerHTML = '';
       response.forEach((result) => {
         const div = document.createElement('div');
-        div.classList.add('card');
+        div.className = 'card';
         div.innerHTML = `<div class="card-body"><div class="card-title" data-score="${
           result.score
         }"><a href="${result.href}" class="stretched-link">${
           result.name
         }</a></div>${
           result.description
-            ? `<div class="card-body">${result.description}</div>`
+            ? `<div class="card-body"><small class="card-text">${result.description}</small></div>`
             : ''
         }</div>`;
         results.appendChild(div);
@@ -39,6 +39,9 @@ export default function Search() {
     } else {
       results.innerHTML = '<li>No results</li>';
     }
+    document
+      .querySelector('#search-results .card-title')!
+      .scrollIntoView({ behavior: 'smooth' });
   });
   Helper.log('Search enabled');
 }
