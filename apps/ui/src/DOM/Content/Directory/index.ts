@@ -51,5 +51,18 @@ export default function Directory(directory: HTMLDivElement) {
       description.remove();
     }
   });
+
+  const title = document.querySelector('.title');
+  if (title) {
+    const thumbnail = document.createElement('span');
+    thumbnail.className = 'thumbnail';
+    thumbnail.innerHTML = `
+        <img class="img-fluid rounded-start" onerror="this.setAttribute('data-broken','true')" src="${'/static/thumbnail'}${window.location.pathname.replace(
+      /\/$/,
+      ''
+    )}.png" />
+      `;
+    title.prepend(thumbnail);
+  }
   Helper.log('Updated #directory DOM');
 }
