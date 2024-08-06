@@ -1,7 +1,7 @@
+import Cache from '../src/Cache';
 import * as Helper from '../src/Helper';
 import cli from '@battis/qui-cli';
 import Google from '@groton/knowledgebase.google';
-import Index from '@groton/knowledgebase.index';
 import fs from 'fs';
 import path from 'path';
 
@@ -62,20 +62,20 @@ const options = {
   Google.Client.init({ keysPath, tokensPath });
 
   const spinner = cli.spinner();
-  Index.Folder.event.on(Index.File.Event.Start, (status): void => {
+  Cache.File.event.on(Cache.File.Event.Start, (status): void => {
     spinner.start(Helper.colorizePath(status));
   });
-  Index.Folder.event.on(Index.File.Event.Succeed, (status): void => {
+  Cache.File.event.on(Cache.File.Event.Succeed, (status): void => {
     spinner.succeed(Helper.colorizePath(status));
   });
-  Index.Folder.event.on(Index.File.Event.Fail, (status): void => {
+  Cache.File.event.on(Cache.File.Event.Fail, (status): void => {
     spinner.fail(Helper.colorizePath(status));
   });
 
   if (indexPath && fs.existsSync(path.resolve(CWD, indexPath))) {
     indexPath = path.resolve(CWD, indexPath);
     spinner.start(`Loading index from ${cli.colors.url(indexPath)}`);
-    const prevIndex = await Index.fromFile(indexPath);
+    const prevIndex = await Cache.fromFile(indexPath, Cache.File);
     spinner.succeed(`${cli.colors.value(prevIndex.root.name)} index loaded`);
 
     const currIndex = await prevIndex.root.indexContents();
@@ -114,8 +114,10 @@ const options = {
         message: options.folderId.description,
         validate: cli.validators.notEmpty
       }));
-    const folder = await Index.Folder.fromDriveId(folderId);
-    const index: Index.File[] = [folder];
+    const folder = await new Cache.FileFactory(Cache.File).fromDriveId(
+      folderId
+    );
+    const index: Cache.File[] = [folder];
     index.push(...(await folder.indexContents()));
     indexPath = path.resolve(
       CWD,

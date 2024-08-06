@@ -3,17 +3,9 @@
   "version": "0.0.0",
   "main": "src/index.ts",
   "dependencies": {
-    "@google-cloud/storage": "^7.12.0",
-    "@googleapis/drive": "^8.11.0",
-    "@groton/knowledgebase.google": "workspace:*",
-    "adm-zip": "^0.5.14",
-    "jsdom": "^24.1.1",
-    "mime-types": "^2.1.35"
+    "@groton/knowledgebase.google": "workspace:*"
   },
   "devDependencies": {
-    "@battis/typescript-tricks": "^0.5.4",
-    "@types/adm-zip": "^0.5.5",
-    "@types/jsdom": "^21.1.7",
-    "@types/mime-types": "^2.1.4"
+    "@battis/typescript-tricks": "^0.5.4"
   }
 }

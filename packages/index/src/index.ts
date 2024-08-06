@@ -1,44 +1,33 @@
 import FileModule from './File';
-import FolderModule from './Folder';
+import FileFactoryModule from './FileFactory';
 import IndexEntryModule from './IndexEntry';
+import IndexModule from './Index_';
 import { JSONObject } from '@battis/typescript-tricks';
 import fs from 'fs';
 
-class Index extends Array<Index.File | Index.Folder> {
-  protected constructor(...items: (Index.File | Index.Folder)[]) {
-    super();
-    this.push(...items);
-  }
+class Index<T extends Index.File> extends IndexModule<T> {}
 
-  public static async fromFile(filePath: string) {
+namespace Index {
+  export import File = FileModule;
+  export import FileFactory = FileFactoryModule;
+  export import IndexEntry = IndexEntryModule;
+  export async function fromFile<T extends typeof File = typeof File>(
+    filePath: string,
+    fileType: T
+  ) {
+    const fileFactory = new FileFactory(fileType);
     const obj = JSON.parse(fs.readFileSync(filePath).toString());
     if (Array.isArray(obj)) {
-      return new Index(
+      return new Index<InstanceType<T>>(
         ...(await Promise.all(
           obj.map(async (e: JSONObject) => {
-            const file = await Index.File.fromDrive(e);
-            if (Index.Folder.isFolder(file)) {
-              return await Index.Folder.fromDrive(file);
-            }
-            return file;
+            return await fileFactory.fromDrive(e);
           })
         ))
       );
     }
-    return new Index(...[]);
+    return new Index<InstanceType<T>>(...[]);
   }
-
-  public get root(): Index.Folder | undefined {
-    return this.find(
-      (f) => f.index.path == '.' && Index.Folder.isFolder(f)
-    ) as Index.Folder;
-  }
-}
-
-namespace Index {
-  export import File = FileModule;
-  export import Folder = FolderModule;
-  export import IndexEntry = IndexEntryModule;
 }
 
 export default Index;

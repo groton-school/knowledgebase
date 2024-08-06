@@ -1,3 +1,4 @@
+import StateEnum from './State';
 import { JSONObject } from '@battis/typescript-tricks';
 
 class IndexEntry {
@@ -13,7 +14,12 @@ class IndexEntry {
   }
 
   public static fromJSON({ path, status, uri, exists, timestamp }: JSONObject) {
-    const entry = new IndexEntry(path as string, status as string, uri as string[], exists as boolean);
+    const entry = new IndexEntry(
+      path as string,
+      status as string,
+      uri as string[],
+      exists as boolean
+    );
     entry._timestamp = timestamp as string;
     return entry;
   }
@@ -74,11 +80,7 @@ class IndexEntry {
 }
 
 namespace IndexEntry {
-  export namespace State {
-    export const Indexed = 'indexed';
-    export const PreparingCache = 'preparing cache';
-    export const Cached = 'cached';
-  }
+  export import State = StateEnum;
 }
 
 export default IndexEntry;

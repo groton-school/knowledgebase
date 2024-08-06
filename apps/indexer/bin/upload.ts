@@ -1,7 +1,7 @@
+import Cache from '../src/Cache';
 import * as Helper from '../src/Helper';
 import cli from '@battis/qui-cli';
 import Google from '@groton/knowledgebase.google';
-import Index from '@groton/knowledgebase.index';
 import fs from 'fs';
 import path from 'path';
 
@@ -87,18 +87,18 @@ const flags = {
 
   indexPath = path.resolve(CWD, indexPath);
 
-  Index.File.event.on(Index.File.Event.Start, (status) => {
+  Cache.File.event.on(Cache.File.Event.Start, (status) => {
     spinner.start(Helper.colorizePath(status));
   });
-  Index.File.event.on(Index.File.Event.Succeed, (status) =>
+  Cache.File.event.on(Cache.File.Event.Succeed, (status) =>
     spinner.succeed(Helper.colorizePath(status))
   );
-  Index.File.event.on(Index.File.Event.Fail, (status) =>
+  Cache.File.event.on(Cache.File.Event.Fail, (status) =>
     spinner.fail(Helper.colorizePath(status))
   );
 
   spinner.start(`Loading index from ${cli.colors.url(indexPath)}`);
-  const index = await Index.fromFile(indexPath);
+  const index = await Cache.fromFile(indexPath, Cache.File);
   spinner.succeed(`${cli.colors.value(index.root.name)} index loaded`);
 
   bucketName =
