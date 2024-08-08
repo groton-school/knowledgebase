@@ -29,8 +29,11 @@ const Search: HandlerFactory = ({ index, groups, config } = {}) => {
     const acl = await new ACL(req, res, groups).prepare();
     const query = (req.query.q as string).toLowerCase();
     const minScore = parseInt((req.query.score as string) || '0');
-    const results: API.Search.Result[] = [];
+    let results: API.Search.Result[] = [];
     const available = index.filter((file) => {
+      if (file.index.hidden) {
+        return false;
+      }
       if (config.ui?.search) {
         if (config.ui.search.include) {
           for (const i of config.ui.search.include) {
@@ -62,6 +65,19 @@ const Search: HandlerFactory = ({ index, groups, config } = {}) => {
         results.push(result);
       }
     });
+
+    results = results.reduce((unique, result) => {
+      const i = unique.findIndex(
+        (u) => u.name == result.name && u.description == result.description
+      );
+      if (i >= 0) {
+        unique[i].score += result.score;
+      } else {
+        unique.push(result);
+      }
+      return unique;
+    }, [] as API.Search.Result[]);
+
     res.send(
       results
         .sort((a, b) => b.score - a.score)

@@ -24,6 +24,7 @@ const SiteTree: HandlerFactory = ({ index, groups, config } = {}) => {
         ? (index
             .filter(
               (file) =>
+                !file.index.hidden &&
                 file.mimeType == 'application/vnd.google-apps.folder' &&
                 file.parents?.includes(root.id) &&
                 acl.hasAccess(file.permissions)

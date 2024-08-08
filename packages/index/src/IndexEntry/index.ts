@@ -8,7 +8,8 @@ class IndexEntry {
     private _path: string = '.',
     private _status: string = IndexEntry.State.Indexed,
     private _uri: string[] = [],
-    private _exists: boolean = true
+    private _exists: boolean = true,
+    private _hidden: boolean = false
   ) {
     this._timestamp = new Date().toISOString();
   }
@@ -68,14 +69,27 @@ class IndexEntry {
     this.update;
   }
 
+  public get hidden() {
+    return this._hidden;
+  }
+
+  public set hidden(value) {
+    this._hidden = value;
+    this.update;
+  }
+
   public toJSON() {
-    return {
+    const json: JSONObject = {
       path: this.path,
       status: this.status,
       uri: this.uri,
       exists: this.exists,
       timestamp: this.timestamp
     };
+    if (this.hidden) {
+      json.hidden = this.hidden;
+    }
+    return json;
   }
 }
 

@@ -55,6 +55,7 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
             const pages = index
               .filter(
                 (file) =>
+                  !file.index.hidden &&
                   file.parents?.includes(requestedDir.id) &&
                   acl.hasAccess(file.permissions)
               )
