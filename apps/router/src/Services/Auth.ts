@@ -1,7 +1,7 @@
 import Logger from './Logger';
 import Var from '@groton/knowledgebase.config';
 import OpenID from '@groton/knowledgebase.openid';
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { OAuth2Client, Credentials } from 'google-auth-library';
 
 /*
@@ -84,6 +84,18 @@ export default class Auth {
     req.session.redirect = req.url.replace(`https://${req.hostname}`, '');
     res.redirect(Auth.authUrl);
     return false;
+  }
+
+  public static refreshToken(req: Request, res: Response, next: NextFunction) {
+    if (
+      req.session.tokens?.expiry_date &&
+      req.session.tokens?.expiry_date < Date.now()
+    ) {
+      req.session.redirect = req.url.replace(`https://${req.hostname}`, '');
+      res.redirect(Auth.authUrl);
+    } else {
+      next();
+    }
   }
 
   public static deauthorize(req: Request, res: Response) {

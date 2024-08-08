@@ -18,6 +18,9 @@ import express from 'express';
   app.set('trust proxy', true); // https://stackoverflow.com/a/77331306/294171
   app.use(Session({ config }));
 
+  app.get('/logout', Auth.deauthorize);
+  app.get(Auth.redirectUri.pathname, Auth.authorize);
+  app.get('*', Auth.refreshToken);
   app.get('/', (_, res, next) => {
     if (config.ui?.root) {
       res.redirect(config.ui.root);
@@ -26,8 +29,6 @@ import express from 'express';
     }
   });
   app.get('/favicon.ico', Favicon);
-  app.get('/logout', Auth.deauthorize);
-  app.get(Auth.redirectUri.pathname, Auth.authorize);
   app.get(API.SiteTree.path, SiteTree({ config, groups, index }));
   app.get(API.Search.path, Search({ config, groups, index }));
 
