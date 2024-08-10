@@ -64,13 +64,13 @@ const flags = {
   indexPath = path.resolve(CWD, indexPath);
 
   Cache.File.event.on(Cache.File.Event.Start, (status) => {
-    spinner.start(Helper.colorizePath(status));
+    spinner.start(Helper.colorizeStatus(status));
   });
   Cache.File.event.on(Cache.File.Event.Succeed, (status) =>
-    spinner.succeed(Helper.colorizePath(status))
+    spinner.succeed(Helper.colorizeStatus(status))
   );
   Cache.File.event.on(Cache.File.Event.Fail, (status) =>
-    spinner.fail(Helper.colorizePath(status))
+    spinner.fail(Helper.colorizeStatus(status))
   );
 
   spinner.start(`Loading index from ${cli.colors.url(indexPath)}`);

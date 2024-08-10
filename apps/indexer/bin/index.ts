@@ -63,13 +63,13 @@ const options = {
 
   const spinner = cli.spinner();
   Cache.File.event.on(Cache.File.Event.Start, (status): void => {
-    spinner.start(Helper.colorizePath(status));
+    spinner.start(Helper.colorizeStatus(status));
   });
   Cache.File.event.on(Cache.File.Event.Succeed, (status): void => {
-    spinner.succeed(Helper.colorizePath(status));
+    spinner.succeed(Helper.colorizeStatus(status));
   });
   Cache.File.event.on(Cache.File.Event.Fail, (status): void => {
-    spinner.fail(Helper.colorizePath(status));
+    spinner.fail(Helper.colorizeStatus(status));
   });
 
   if (indexPath && fs.existsSync(path.resolve(CWD, indexPath))) {

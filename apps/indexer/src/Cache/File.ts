@@ -1,3 +1,4 @@
+import * as Helper from '../Helper';
 import pipelineHTML from './Actions/pipelineHTML';
 import Google from '@groton/knowledgebase.google';
 import Index from '@groton/knowledgebase.index';
@@ -102,7 +103,7 @@ class File extends Index.File {
         this.index.status = error.message || JSON.stringify(error);
         File.event.emit(
           File.Event.Fail,
-          `${this.index.path}: ${error.message} (driveId ${this.id})`
+          Helper.errorMessage(undefined, { driveId: this.id }, error)
         );
         if (!ignoreErrors) {
           throw error;
@@ -149,7 +150,7 @@ class File extends Index.File {
             }
             File.event.emit(
               File.Event.Start,
-              path.join(this.index.path, item.name)
+              `Indexing ${path.join(this.index.path, item.name)}`
             );
             const file = await fileFactory.fromDriveId(
               item.id!,
@@ -164,7 +165,7 @@ class File extends Index.File {
             } else {
               contents.push(file);
             }
-            File.event.emit(File.Event.Succeed, file.index.path);
+            File.event.emit(File.Event.Succeed, `${file.index.path} indexed`);
           }
         }
       } while (folderContents.nextPageToken);
@@ -185,20 +186,37 @@ class File extends Index.File {
     if (!this.isFolder()) {
       const bucket = Google.Client.getStorage().bucket(bucketName);
       if (!this.index.exists) {
+        File.event.emit(File.Event.Start, `${this.index.path} expired`);
+        let success = true;
         await this.exponentialBackoff(async () => {
           for (const uri of this.index.uri) {
-            const filePath = uri.substr(`gs://${bucketName}/`.length);
-            File.event.emit(File.Event.Start, filePath);
-            const file = bucket.file(filePath);
-            await file.delete();
-            File.event.emit(
-              File.Event.Fail,
-              `${filePath}: expired and deleted`
+            File.event.emit(File.Event.Start, `${uri} expired`);
+            const file = bucket.file(
+              path.join(this.index.path, path.basename(uri))
             );
+            try {
+              await file.delete();
+              File.event.emit(
+                File.Event.Succeed,
+                `${file.name} expired and deleted`
+              );
+            } catch (error) {
+              File.event.emit(
+                File.Event.Fail,
+                Helper.errorMessage(
+                  `Error deleting ${file.name}`,
+                  { driveId: this.id },
+                  error
+                )
+              );
+              success = false;
+            }
           }
           File.event.emit(
-            File.Event.Fail,
-            `${this.index.path}: expired and deleted`
+            success ? File.Event.Succeed : File.Event.Fail,
+            `${this.index.path} expired and deleted${
+              success ? '' : ' with error'
+            }`
           );
           return false;
         }, ignoreErrors);
@@ -207,27 +225,67 @@ class File extends Index.File {
         this.index.uri.length == 0 ||
         (this.modifiedTime && this.modifiedTime > this.index.timestamp)
       ) {
+        File.event.emit(File.Event.Start, `Caching ${this.index.path}`);
         this.index.status = Index.IndexEntry.State.PreparingCache;
         await this.exponentialBackoff(async () => {
-          const files = await this.fetchAsHtmlIfPossible();
-          for (const subfileName in files) {
-            await this.exponentialBackoff(async () => {
-              let filename = File.normalizeSubfileName(
-                this.index.path,
-                subfileName
-              );
-              File.event.emit(File.Event.Start, filename);
-              const file = bucket.file(filename);
-              const blob = await pipelineHTML({
-                file: this,
-                blob: (files as Record<string, Blob>)[subfileName] // TODO better fix than manual typing
-              });
-              file.save(Buffer.from(await blob.arrayBuffer()));
-              this.index.uri.push(file.cloudStorageURI.href);
-              File.event.emit(File.Event.Succeed, filename);
-            }, ignoreErrors);
+          try {
+            const files = await this.fetchAsHtmlIfPossible();
+            const deleted: string[] = [];
+            for (const uri in this.index.uri) {
+              if (!Object.keys(files).includes(path.basename(uri))) {
+                File.event.emit(File.Event.Start, `${uri} expired`);
+                const file = bucket.file(
+                  path.join(this.index.path, path.basename(uri))
+                );
+                try {
+                  await file.delete();
+                  deleted.push(uri);
+                  File.event.emit(
+                    File.Event.Succeed,
+                    `${file.name} expired and deleted`
+                  );
+                } catch (error) {
+                  File.event.emit(
+                    File.Event.Fail,
+                    Helper.errorMessage(
+                      `Error deleting ${file.name}`,
+                      { driveId: this.id },
+                      error
+                    )
+                  );
+                }
+              }
+            }
+            this.index.uri = this.index.uri.filter(
+              (uri) => !deleted.includes(uri)
+            );
+            for (const subfileName in files) {
+              await this.exponentialBackoff(async () => {
+                let filename = File.normalizeSubfileName(
+                  this.index.path,
+                  subfileName
+                );
+                File.event.emit(File.Event.Start, `Caching ${filename}`);
+                const file = bucket.file(filename);
+                const blob = await pipelineHTML({
+                  file: this,
+                  blob: (files as Record<string, Blob>)[subfileName] // TODO better fix than manual typing
+                });
+                file.save(Buffer.from(await blob.arrayBuffer()));
+                if (!this.index.uri.includes(file.cloudStorageURI.href)) {
+                  this.index.uri.push(file.cloudStorageURI.href);
+                }
+                File.event.emit(File.Event.Succeed, `${filename} cached`);
+              }, ignoreErrors);
+            }
+            this.index.status = Index.IndexEntry.State.Cached;
+          } catch (error) {
+            this.index.status = error.message || 'error';
+            File.event.emit(
+              File.Event.Fail,
+              Helper.errorMessage(this.index.path, { driveId: this.id }, error)
+            );
           }
-          this.index.status = Index.IndexEntry.State.Cached;
         }, ignoreErrors);
       }
     }
@@ -249,7 +307,10 @@ class File extends Index.File {
           p.emailAddress &&
           new RegExp(permissionsRegex || '.*').test(p.emailAddress)
       )) {
-        File.event.emit(File.Event.Start, `  ${permission.displayName}`);
+        File.event.emit(
+          File.Event.Start,
+          `Adding ${permission.displayName} to ACL for ${this.index.path}`
+        );
         let entity: string;
         switch (permission.type) {
           case 'group':
@@ -259,19 +320,20 @@ class File extends Index.File {
             entity = `user-${permission.emailAddress}`;
             break;
           default:
-            throw new Error(`Cannot handle permission type ${permission.type}`);
+            throw new Error(
+              `Cannot handle permission type ${permission.type} (driveId: ${this.id}, emailAddress: ${permission.emailAddress})`
+            );
         }
-        if (entity) {
-          await this.exponentialBackoff(async () => {
-            await file.acl.add({
-              entity,
-              role: Google.Storage.acl.READER_ROLE
-            });
-            File.event.emit(File.Event.Succeed, `  ${entity}`);
-          }, ignoreErrors);
-        } else {
-          File.event.emit(File.Event.Fail, `  ${permission.id}`);
-        }
+        await this.exponentialBackoff(async () => {
+          await file.acl.add({
+            entity,
+            role: Google.Storage.acl.READER_ROLE
+          });
+          File.event.emit(
+            File.Event.Succeed,
+            `${entity} added as reader to ACL for ${this.index.path}`
+          );
+        }, ignoreErrors);
       }
     }
     this.index.update();
@@ -279,11 +341,12 @@ class File extends Index.File {
 }
 
 namespace File {
-  export namespace Event {
-    export const Start = 'start';
-    export const Succeed = 'succeed';
-    export const Fail = 'fail';
+  export enum Event {
+    Start = 'start',
+    Succeed = 'succeed',
+    Fail = 'fail'
   }
+
   export namespace Params {
     export type Cache = {
       bucketName: string;
