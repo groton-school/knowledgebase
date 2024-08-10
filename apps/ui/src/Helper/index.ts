@@ -1,4 +1,5 @@
 import Stack from './Stack';
+import addScript from './addScript';
 import iframe from './iframe';
 import log from './log';
 import onGoogleDocEmbed from './onGoogleDocEmbed';
@@ -18,6 +19,7 @@ const Helper = {
   iframe,
   vanity,
   straightenCurlyQuotes,
-  Stack
+  Stack,
+  addScript
 };
 export default Helper;

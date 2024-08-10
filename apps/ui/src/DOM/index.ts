@@ -1,5 +1,6 @@
 import Constants from '../Constants';
 import Helper from '../Helper';
+import Analytics from './Analytics';
 import Directory from './Content/Directory';
 import GoogleDocEmbed from './Content/GoogleDocEmbed';
 import Head from './Head';
@@ -10,6 +11,7 @@ import './styles.scss';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 export default function PageStructure() {
+  Analytics();
   if (!Redirect()) {
     Head();
     Navbar();

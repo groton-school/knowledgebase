@@ -20,6 +20,9 @@ type UI = {
   webpack?: {
     doNotResolve?: PathString[];
   };
+  googleAnalytics?: {
+    trackingId: string;
+  };
 };
 
 export default UI;

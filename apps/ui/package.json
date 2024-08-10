@@ -14,16 +14,19 @@
   "scripts": {
     "build": "run-s build:*",
     "build:sync-config": "tsx bin/sync-config -c ../../config.json",
+    "build:apply-config": "tsx bin/apply-config -c var/config.json",
     "build:compile": "webpack"
   },
   "dependencies": {
     "@battis/typescript-tricks": "^0.5.4",
     "@groton/knowledgebase.api": "workspace:*",
+    "@groton/knowledgebase.strings": "workspace:*",
     "bootstrap": "^5.3.3"
   },
   "devDependencies": {
     "@battis/eslint-config": "latest",
     "@battis/prettier-config": "latest",
+    "@battis/qui-cli": "^0.4.2",
     "@battis/webpack": "^0.4.8",
     "@tsconfig/recommended": "^1.0.7",
     "@types/bootstrap": "^5.2.10",
@@ -56,7 +59,7 @@
     "style-loader": "^3.3.4",
     "terser-webpack-plugin": "^5.3.10",
     "ts-loader": "^9.5.1",
-    "tsx": "^4.16.5",
+    "tsx": "^4.17.0",
     "typescript": "^5.5.4",
     "url-loader": "^4.1.1",
     "webpack": "^5.93.0",

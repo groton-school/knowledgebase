@@ -4,6 +4,6 @@
 /build
 /node_modules
 /public
-/src/config.scss
+/src/config.*
 /var/*
-!/var/config.json
+!/var/config.example.json
