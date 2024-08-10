@@ -23,12 +23,6 @@ const options = {
     )})`,
     default: defaultIndexPath
   },
-  permissionsRegex: {
-    short: 'p',
-    description: `Regular expression to email addresses of users/groups to include in Cloud Storage Bucket (will be read from ${cli.colors.value(
-      'PERMISSIONS_REGEX'
-    )} environment variable if present)`
-  },
   keysPath: {
     short: 'k',
     description: `Path to file containing downloaded OAuth2 credentials (defaults to ${cli.colors.url(
@@ -109,20 +103,21 @@ const flags = {
       validate: cli.validators.lengthBetween(6, 30)
     }));
 
-  permissionsRegex = permissionsRegex || process.env.PERMISSIONS_REGEX || '.*';
-
+  const updatedIndex = new Cache(index.root);
   for (let i = 0; i < index.length; i++) {
     if (index[i].index.path != '.') {
-      await index[i].cache({
+      const result = await index[i].cache({
         bucketName,
-        permissionsRegex,
         force: !!force,
         ignoreErrors: !!ignoreErrors
       });
+      if (result) {
+        updatedIndex.push(result);
+      }
     }
   }
 
   spinner.start(`Saving index to ${cli.colors.url(indexPath)}`);
-  fs.writeFileSync(indexPath, JSON.stringify(index));
+  fs.writeFileSync(indexPath, JSON.stringify(updatedIndex));
   spinner.succeed(`Index saved to ${cli.colors.url(indexPath)}`);
 })();

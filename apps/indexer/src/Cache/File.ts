@@ -179,7 +179,6 @@ class File extends Index.File {
    */
   public async cache({
     bucketName,
-    permissionsRegex = DEFAULT_PERMISSIONS_REGEX,
     force = DEFAULT_FORCE,
     ignoreErrors = DEFAULT_IGNORE_ERRORS
   }: File.Params.Cache) {
@@ -201,6 +200,7 @@ class File extends Index.File {
             File.Event.Fail,
             `${this.index.path}: expired and deleted`
           );
+          return false;
         }, ignoreErrors);
       } else if (
         force ||
@@ -231,6 +231,7 @@ class File extends Index.File {
         }, ignoreErrors);
       }
     }
+    return this;
   }
 
   public async resetPermissions({
