@@ -11,5 +11,5 @@ export default function GoogleDocEmbed(doc: HTMLDivElement) {
   doc.classList.add('card-body');
   doc.parentElement?.insertBefore(card, doc);
   card.appendChild(doc);
-  Helper.log(`Updated #${Constants.styles.googleDocEmbed} DOM`);
+  Helper.log(`Updated ${Constants.styles.googleDocEmbed} DOM`);
 }
