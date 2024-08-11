@@ -2,7 +2,6 @@ import Cache from '../src/Cache';
 import Helper from '../src/Helper';
 import cli from '@battis/qui-cli';
 import Google from '@groton/knowledgebase.google';
-import Index from '@groton/knowledgebase.index';
 import fs from 'fs';
 import path from 'path';
 

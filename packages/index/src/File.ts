@@ -4,14 +4,14 @@ import Google from '@groton/knowledgebase.google';
 
 type Nonoptional<T> = Exclude<T, null | undefined>;
 
-export type IdType = Nonoptional<Google.Drive.drive_v3.Schema$File['id']>;
-export type NameType = Nonoptional<Google.Drive.drive_v3.Schema$File['name']>;
+export type Id = Nonoptional<Google.Drive.drive_v3.Schema$File['id']>;
+export type Name = Nonoptional<Google.Drive.drive_v3.Schema$File['name']>;
 
 interface File extends Google.Drive.drive_v3.Schema$File {}
 
 class File {
-  public readonly id: IdType;
-  public readonly name: NameType;
+  public readonly id: Id;
+  public readonly name: Name;
   public readonly description: Google.Drive.drive_v3.Schema$File['description'];
   public readonly modifiedTime: Google.Drive.drive_v3.Schema$File['modifiedTime'];
   public readonly permissions: Google.Drive.drive_v3.Schema$File['permissions'];

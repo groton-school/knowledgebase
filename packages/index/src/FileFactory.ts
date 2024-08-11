@@ -1,4 +1,4 @@
-import File, { IdType } from './File';
+import File, { Id } from './File';
 import IndexEntry from './IndexEntry';
 import Google from '@groton/knowledgebase.google';
 
@@ -12,7 +12,7 @@ class FileFactory<T extends typeof File> {
     return new this.fileType(file, index) as InstanceType<T>;
   }
 
-  public async fromDriveId(fileId: IdType, index?: IndexEntry) {
+  public async fromDriveId(fileId: Id, index?: IndexEntry) {
     const file = (
       await (
         await Google.Client.getDrive()

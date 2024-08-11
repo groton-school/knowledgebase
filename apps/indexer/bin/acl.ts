@@ -1,4 +1,4 @@
-import Cache from '../src/Cache';
+import ACL from '../src/ACL';
 import Helper from '../src/Helper';
 import cli from '@battis/qui-cli';
 import fs from 'fs';
@@ -65,18 +65,18 @@ const flags = {
 
   indexPath = path.resolve(CWD, indexPath);
 
-  Cache.File.event.on(Cache.File.Event.Start, (status) => {
+  ACL.File.event.on(ACL.File.Event.Start, (status) => {
     spinner.start(Helper.colorizeStatus(status));
   });
-  Cache.File.event.on(Cache.File.Event.Succeed, (status) =>
+  ACL.File.event.on(ACL.File.Event.Succeed, (status) =>
     spinner.succeed(Helper.colorizeStatus(status))
   );
-  Cache.File.event.on(Cache.File.Event.Fail, (status) =>
+  ACL.File.event.on(ACL.File.Event.Fail, (status) =>
     spinner.fail(Helper.colorizeStatus(status))
   );
 
   spinner.start(`Loading index from ${cli.colors.url(indexPath)}`);
-  const index = await Cache.fromFile(indexPath, Cache.File);
+  const index = await ACL.fromFile(indexPath);
   spinner.succeed(`${cli.colors.value(index.root.name)} index loaded`);
 
   bucketName =
@@ -91,7 +91,7 @@ const flags = {
 
   spinner.start('Reviewing permission changes');
   for (const file of index) {
-    await file.cacheACL({
+    await file.cache({
       bucketName,
       permissionsRegex,
       ignoreErrors: !!ignoreErrors

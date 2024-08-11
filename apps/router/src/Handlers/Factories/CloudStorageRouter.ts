@@ -87,10 +87,9 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
                       .map(
                         (page) =>
                           `<div class="page">
-                            <div class="name"><a href="/${
-                              // TODO this path formatting is wonky
-                              page.index.path
-                            }/">${page.name}</a></div>${
+                            <div class="name"><a href="/${page.index.path}/">${
+                            page.name
+                          }</a></div>${
                             page.description
                               ? `<div class="description">${page.description}</div>`
                               : ''
