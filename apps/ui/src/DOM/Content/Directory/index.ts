@@ -1,4 +1,5 @@
 import Helper from '../../../Helper';
+import config from '../../../config';
 import './styles.scss';
 
 export default function Directory(directory: HTMLDivElement) {
@@ -8,7 +9,7 @@ export default function Directory(directory: HTMLDivElement) {
   directory.parentElement?.insertBefore(card, directory);
   card.appendChild(directory);
   Array.from(directory.querySelectorAll('.page')).forEach((page) => {
-    page.classList.add('card', 'col-md-4');
+    page.classList.add('card', 'col-md-4', 'g-0', 'm-1');
     (page as HTMLElement).style.maxWidth = '3.5in';
 
     const row = document.createElement('div');
@@ -19,19 +20,21 @@ export default function Directory(directory: HTMLDivElement) {
     a?.classList.add('stretched-link');
 
     const thumbnail = document.createElement('div');
-    thumbnail.classList.add('thumbnail', 'col-md-4');
-    // FIXME use config.json
+    thumbnail.classList.add('thumbnail', 'col-md-4', 'col-2');
+
     thumbnail.innerHTML = `
-      <img class="img-fluid rounded-start" onerror="this.setAttribute('data-broken','true')" src="${'/static/thumbnail'}${new URL(
+      <img class="img-fluid rounded-start" onerror="this.src='${
+        config.directory.thumbnails.default
+      }'" src="${config.directory.thumbnails.root}${new URL(
       a!.href
     ).pathname.replace(/\/$/, '')}.png" />
     `;
     row.append(thumbnail);
 
     let body = document.createElement('div');
-    body.classList.add('col-md-8');
+    body.classList.add('col-md-8', 'col-10');
     row.append(body);
-    body.innerHTML = '<div class="card-body"></div>';
+    body.innerHTML = '<div class="card-body p-2"></div>';
     body = body.firstElementChild as HTMLDivElement;
 
     const name = page.querySelector('.name') as HTMLDivElement;
@@ -57,10 +60,11 @@ export default function Directory(directory: HTMLDivElement) {
     const thumbnail = document.createElement('span');
     thumbnail.className = 'thumbnail';
     thumbnail.innerHTML = `
-        <img class="img-fluid rounded-start" onerror="this.setAttribute('data-broken','true')" src="${'/static/thumbnail'}${window.location.pathname.replace(
-      /\/$/,
-      ''
-    )}.png" />
+        <img class="img-fluid rounded-start" onerror="this.src='${
+          config.directory.thumbnails.default
+        }'" src="${
+      config.directory.thumbnails.root
+    }${window.location.pathname.replace(/\/$/, '')}.png" />
       `;
     title.prepend(thumbnail);
   }
