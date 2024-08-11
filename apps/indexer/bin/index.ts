@@ -91,7 +91,7 @@ const options = {
     spinner.succeed(`${cli.colors.value(prevIndex.root.name)} index loaded`);
 
     const currIndex = [
-      await new Index.FileFactory(Cache.File).fromDriveId(prevIndex.root.id)
+      await new Cache.FileFactory(Cache.File).fromDriveId(prevIndex.root.id)
     ];
     currIndex.push(...(await currIndex[0].indexContents()));
 
@@ -110,7 +110,7 @@ const options = {
               (p) => p.emailAddress == permission.emailAddress
             )
           ) {
-            permission.indexerAclState = Index.IndexEntry.State.Expired;
+            permission.indexerAclState = Cache.IndexEntry.State.Expired;
             spinner.fail(
               `Expired ${permission.emailAddress} from ${prev.index.path}`
             );
@@ -133,7 +133,7 @@ const options = {
         update.permissions = permissions;
         currIndex.splice(i, 1);
       } else {
-        update.index.status = Index.IndexEntry.State.Expired;
+        update.index.status = Cache.IndexEntry.State.Expired;
         update.index.exists = false;
       }
       nextIndex.push(update);

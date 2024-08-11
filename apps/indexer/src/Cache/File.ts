@@ -1,5 +1,7 @@
 import Helper from '../Helper';
 import pipelineHTML from './Actions/pipelineHTML';
+import FileFactory from './FileFactory';
+import IndexEntry from './IndexEntry';
 import Google from '@groton/knowledgebase.google';
 import Index from '@groton/knowledgebase.index';
 import Zip from 'adm-zip';
@@ -13,7 +15,7 @@ const DEFAULT_IGNORE_ERRORS = true;
 
 interface File extends Index.File {
   permissions: (Google.Drive.drive_v3.Schema$Permission & {
-    indexerAclState?: Index.IndexEntry.State;
+    indexerAclState?: IndexEntry.State;
   })[];
 }
 
@@ -88,7 +90,7 @@ class File extends Index.File {
     if (this.isFolder()) {
       let contents: File[] = [];
       let folderContents: Google.Drive.drive_v3.Schema$FileList = {};
-      const fileFactory = new Index.FileFactory(File);
+      const fileFactory = new FileFactory(File);
 
       do {
         folderContents = (
@@ -112,9 +114,9 @@ class File extends Index.File {
             );
             const file = await fileFactory.fromDriveId(
               item.id!,
-              new Index.IndexEntry(this.index.path)
+              new IndexEntry(this.index.path)
             );
-            file.index = new Index.IndexEntry(
+            file.index = new IndexEntry(
               path.join(this.index.path, Helper.normalizeFilename(file.name))
             );
             if (file.isFolder()) {
@@ -184,7 +186,7 @@ class File extends Index.File {
         (this.modifiedTime && this.modifiedTime > this.index.timestamp)
       ) {
         File.event.emit(File.Event.Start, `Caching ${this.index.path}`);
-        this.index.status = Index.IndexEntry.State.PreparingCache;
+        this.index.status = IndexEntry.State.PreparingCache;
         await Helper.exponentialBackoff(async () => {
           try {
             const files = await this.fetchAsHtmlIfPossible();
@@ -238,7 +240,7 @@ class File extends Index.File {
                 File.event.emit(File.Event.Succeed, `${filename} cached`);
               }, ignoreErrors);
             }
-            this.index.status = Index.IndexEntry.State.Cached;
+            this.index.status = IndexEntry.State.Cached;
           } catch (error) {
             this.index.status = error.message || 'error';
             File.event.emit(
@@ -268,7 +270,7 @@ class File extends Index.File {
       for (const permission of this.permissions!.filter(
         (p) =>
           p.emailAddress &&
-          p.indexerAclState != Index.IndexEntry.State.Cached &&
+          p.indexerAclState != IndexEntry.State.Cached &&
           new RegExp(permissionsRegex || '.*').test(p.emailAddress)
       )) {
         let entity: string;
@@ -285,7 +287,7 @@ class File extends Index.File {
             );
         }
 
-        if (permission.indexerAclState == Index.IndexEntry.State.Expired) {
+        if (permission.indexerAclState == IndexEntry.State.Expired) {
           File.event.emit(
             File.Event.Start,
             `Removing ${permission.displayName} from ACL for ${this.index.path}`
@@ -354,7 +356,7 @@ class File extends Index.File {
                 );
               }
             }
-            permission.indexerAclState = Index.IndexEntry.State.Cached;
+            permission.indexerAclState = IndexEntry.State.Cached;
             updatedPermissions.push(permission);
           }, ignoreErrors);
         }

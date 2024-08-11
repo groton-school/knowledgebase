@@ -1,12 +1,14 @@
 import FileModule from './File';
+import FileFactoryModule from './FileFactory';
+import IndexEntryModule from './IndexEntry';
 import Index from '@groton/knowledgebase.index';
 
 class Cache extends Index<Cache.File> {}
 
 namespace Cache {
   export import File = FileModule;
-  export const FileFactory = Index.FileFactory;
-  export import IndexEntry = Index.IndexEntry;
+  export const FileFactory = FileFactoryModule;
+  export import IndexEntry = IndexEntryModule;
   export import fromFile = Index.fromFile;
 }
 
