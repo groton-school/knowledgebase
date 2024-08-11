@@ -1,5 +1,5 @@
 import Cache from '../src/Cache';
-import * as Helper from '../src/Helper';
+import Helper from '../src/Helper';
 import cli from '@battis/qui-cli';
 import Google from '@groton/knowledgebase.google';
 import Index from '@groton/knowledgebase.index';

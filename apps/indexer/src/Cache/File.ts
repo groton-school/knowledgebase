@@ -1,10 +1,8 @@
-import * as Helper from '../Helper';
+import Helper from '../Helper';
 import pipelineHTML from './Actions/pipelineHTML';
-import { Bucket, File as GCSFile } from '@google-cloud/storage';
 import Google from '@groton/knowledgebase.google';
 import Index from '@groton/knowledgebase.index';
 import Zip from 'adm-zip';
-import crypto from 'crypto';
 import events from 'events';
 import mime from 'mime-types';
 import path from 'path';
@@ -82,60 +80,6 @@ class File extends Index.File {
     return path.join(basePath, subfileName);
   }
 
-  private async exponentialBackoff(
-    action: Function,
-    ignoreErrors = DEFAULT_IGNORE_ERRORS,
-    retries = 5,
-    lastTimeout = 0
-  ) {
-    try {
-      await action();
-      return;
-    } catch (_e) {
-      const error = _e as { code?: number; message?: string };
-      if (error.code == 503 && retries > 0) {
-        File.event.emit(
-          File.Event.Start,
-          `${this.index.path} (${retries} retries left)`
-        );
-        const timeout = lastTimeout
-          ? lastTimeout * 2
-          : crypto.randomInt(50, 100);
-        setTimeout(
-          () =>
-            this.exponentialBackoff(action, ignoreErrors, retries - 1, timeout),
-          timeout
-        );
-      } else {
-        this.index.status = error.message || JSON.stringify(error);
-        File.event.emit(
-          File.Event.Fail,
-          Helper.errorMessage(undefined, { driveId: this.id }, error)
-        );
-        if (!ignoreErrors) {
-          throw error;
-        }
-      }
-    }
-  }
-  /**
-   * Backwards-compatible with Overdrive.io naming scheme
-   */
-  private static normalizeFilename(filename: string): string {
-    return filename!
-      .replace('&', 'and')
-      .replace(/[^a-z0-9()!@*_.]+/gi, '-')
-      .replace(/-+$/, '')
-      .toLowerCase();
-  }
-
-  private subfileFactory(bucket: Bucket) {
-    return (uri: string) => {
-      let uriPath = uri.replace(/^gs:\/\/[^/]+\//, '');
-      return bucket.file(uriPath);
-    };
-  }
-
   /**
    * TODO _re_ index non-destructively
    * TODO delete/rename cached files
@@ -171,7 +115,7 @@ class File extends Index.File {
               new Index.IndexEntry(this.index.path)
             );
             file.index = new Index.IndexEntry(
-              path.join(this.index.path, File.normalizeFilename(file.name))
+              path.join(this.index.path, Helper.normalizeFilename(file.name))
             );
             if (file.isFolder()) {
               contents.push(file);
@@ -199,12 +143,12 @@ class File extends Index.File {
   }: File.Params.Cache) {
     if (!this.isFolder()) {
       const bucket = Google.Client.getStorage().bucket(bucketName);
-      const subfile = this.subfileFactory(bucket);
+      const subfile = Helper.subfileFactory(bucket);
 
       if (!this.index.exists) {
         File.event.emit(File.Event.Start, `${this.index.path} expired`);
         let success = true;
-        await this.exponentialBackoff(async () => {
+        await Helper.exponentialBackoff(async () => {
           for (const uri of this.index.uri) {
             File.event.emit(File.Event.Start, `${uri} expired`);
             const file = subfile(uri);
@@ -241,7 +185,7 @@ class File extends Index.File {
       ) {
         File.event.emit(File.Event.Start, `Caching ${this.index.path}`);
         this.index.status = Index.IndexEntry.State.PreparingCache;
-        await this.exponentialBackoff(async () => {
+        await Helper.exponentialBackoff(async () => {
           try {
             const files = await this.fetchAsHtmlIfPossible();
             const deleted: string[] = [];
@@ -276,7 +220,7 @@ class File extends Index.File {
               (uri) => !deleted.includes(uri)
             );
             for (const subfileName in files) {
-              await this.exponentialBackoff(async () => {
+              await Helper.exponentialBackoff(async () => {
                 let filename = File.normalizeSubfileName(
                   this.index.path,
                   subfileName
@@ -299,7 +243,11 @@ class File extends Index.File {
             this.index.status = error.message || 'error';
             File.event.emit(
               File.Event.Fail,
-              Helper.errorMessage(this.index.path, { driveId: this.id }, error)
+              Helper.errorMessage(
+                `${this.index.path}`,
+                { driveId: this.id },
+                error
+              )
             );
           }
         }, ignoreErrors);
@@ -315,8 +263,8 @@ class File extends Index.File {
   }: File.Params.Cache) {
     if (!this.isFolder()) {
       const bucket = Google.Client.getStorage().bucket(bucketName);
-      const subfile = this.subfileFactory(bucket);
-      const updatedPermissions: Google.Drive.drive_v3.Schema$Permission[] = [];
+      const subfile = Helper.subfileFactory(bucket);
+      let updatedPermissions = this.permissions;
       for (const permission of this.permissions!.filter(
         (p) =>
           p.emailAddress &&
@@ -347,6 +295,12 @@ class File extends Index.File {
               const file = subfile(uri);
               File.event.emit(File.Event.Start, file.name);
               await file.acl.delete({ entity });
+              updatedPermissions = updatedPermissions.splice(
+                updatedPermissions.findIndex(
+                  (p) => p.emailAddress == permission.emailAddress
+                ),
+                1
+              );
               File.event.emit(
                 File.Event.Succeed,
                 `${permission.type}:${permission.emailAddress} removed from ACL for ${this.index.path}`
@@ -357,9 +311,11 @@ class File extends Index.File {
             updatedPermissions.push(permission);
             File.event.emit(
               File.Event.Fail,
-              `Error removing from ACL`,
-              { entity, driveId: this.id },
-              error
+              Helper.errorMessage(
+                `Error removing ${permission.emailAddress} from ACL`,
+                { entity, driveId: this.id },
+                error
+              )
             );
           }
         } else {
@@ -367,7 +323,7 @@ class File extends Index.File {
             File.Event.Start,
             `Adding ${permission.displayName} to ACL for ${this.index.path}`
           );
-          await this.exponentialBackoff(async () => {
+          await Helper.exponentialBackoff(async () => {
             for (const uri of this.index.uri) {
               const file = subfile(uri);
               File.event.emit(
@@ -404,8 +360,6 @@ class File extends Index.File {
         }
       }
       this.permissions = updatedPermissions;
-
-      this.index.update();
     }
   }
 }
