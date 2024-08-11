@@ -2,6 +2,7 @@ import Cache from '../src/Cache';
 import * as Helper from '../src/Helper';
 import cli from '@battis/qui-cli';
 import Google from '@groton/knowledgebase.google';
+import Index from '@groton/knowledgebase.index';
 import fs from 'fs';
 import path from 'path';
 
@@ -31,6 +32,14 @@ const options = {
     )})`,
     default: defaultIndexPath
   },
+  permissionsRegex: {
+    short: 'p',
+    description: `Regular expression to match processed users/groups (will be read from ${cli.colors.value(
+      'PERMISSIONS_REGEX'
+    )} environment variable if present or default to ${cli.colors.value(
+      '.*'
+    )} if no enviroment variable is set or argument is passed)`
+  },
   keysPath: {
     short: 'k',
     description: `Path to file containing downloaded OAuth2 credentials (defaults to ${cli.colors.url(
@@ -50,7 +59,7 @@ const options = {
 (async () => {
   const CWD = process.cwd();
   let {
-    values: { folderId, indexPath, keysPath, tokensPath }
+    values: { folderId, indexPath, keysPath, tokensPath, permissionsRegex }
   } = cli.init({
     env: {
       root: path.join(__dirname, '../../..'),
@@ -60,6 +69,9 @@ const options = {
   });
 
   Google.Client.init({ keysPath, tokensPath });
+  const permissionsPattern = new RegExp(
+    permissionsRegex || process.env.PERMISSIONS_REGEX || '.*'
+  );
 
   const spinner = cli.spinner();
   Cache.File.event.on(Cache.File.Event.Start, (status): void => {
@@ -78,7 +90,10 @@ const options = {
     const prevIndex = await Cache.fromFile(indexPath, Cache.File);
     spinner.succeed(`${cli.colors.value(prevIndex.root.name)} index loaded`);
 
-    const currIndex = await prevIndex.root.indexContents();
+    const currIndex = [
+      await new Index.FileFactory(Cache.File).fromDriveId(prevIndex.root.id)
+    ];
+    currIndex.push(...(await currIndex[0].indexContents()));
 
     spinner.start(`Comparing indices`);
     // TODO reset permissions
@@ -88,10 +103,37 @@ const options = {
       let update = prev;
       const i = currIndex.findIndex((elt) => elt.index.path == prev.index.path);
       if (i >= 0) {
+        const permissions: Google.Drive.drive_v3.Schema$Permission[] = [];
+        for (const permission of prev.permissions) {
+          if (
+            !currIndex[i].permissions.find(
+              (p) => p.emailAddress == permission.emailAddress
+            )
+          ) {
+            permission.indexerAclState = Index.IndexEntry.State.Expired;
+            spinner.fail(
+              `Expired ${permission.emailAddress} from ${prev.index.path}`
+            );
+          }
+          permissions.push(permission);
+        }
+        for (const permission of currIndex[i].permissions) {
+          if (
+            permissionsPattern.test(permission.emailAddress) &&
+            !permissions.find((p) => p.emailAddress == permission.emailAddress)
+          ) {
+            permissions.push(permission);
+            spinner.succeed(
+              `Added ${permission.emailAddress} to ${currIndex[i].index.path}`
+            );
+          }
+        }
         update = currIndex[i];
         update.index = prev.index;
+        update.permissions = permissions;
         currIndex.splice(i, 1);
       } else {
+        update.index.status = Index.IndexEntry.State.Expired;
         update.index.exists = false;
       }
       nextIndex.push(update);
@@ -133,6 +175,7 @@ const options = {
         .replace(FOLDER_NAME, folder.name!)
         .replace(TIMESTAMP, new Date().toISOString().replace(':', '-'))
     );
+
     spinner.start(`Saving index to ${indexPath}`);
     const content = JSON.stringify(index);
     cli.shell.mkdir('-p', path.dirname(indexPath));

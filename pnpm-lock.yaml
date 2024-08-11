@@ -63,6 +63,12 @@ importers:
         specifier: ^2.1.35
         version: 2.1.35
     devDependencies:
+      '@battis/typescript-tricks':
+        specifier: ^0.5.4
+        version: 0.5.4
+      '@google-cloud/storage':
+        specifier: ^7.12.0
+        version: 7.12.0
       '@types/adm-zip':
         specifier: ^0.5.5
         version: 0.5.5

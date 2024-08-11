@@ -2,9 +2,9 @@ import cli from '@battis/qui-cli';
 
 export function colorizeStatus(p: string) {
   return p.replace(
-    /(\/?([a-z0-9._-]+\/)+([a-z0-9._-]+))/g,
+    /(\/?([a-z0-9._-]+\/)+([a-z0-9()._-]+))/gi,
     cli.colors.url('$1')
-  );
+  ).replace(/((user|group):[a-z0-9._-]+@[a-z0-9._-]+)/gi, cli.colors.value('$1'));
 }
 
 export function errorMessage(

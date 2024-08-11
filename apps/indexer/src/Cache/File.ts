@@ -1,5 +1,6 @@
 import * as Helper from '../Helper';
 import pipelineHTML from './Actions/pipelineHTML';
+import { Bucket, File as GCSFile } from '@google-cloud/storage';
 import Google from '@groton/knowledgebase.google';
 import Index from '@groton/knowledgebase.index';
 import Zip from 'adm-zip';
@@ -11,6 +12,12 @@ import path from 'path';
 const DEFAULT_PERMISSIONS_REGEX = /.*/;
 const DEFAULT_FORCE = false;
 const DEFAULT_IGNORE_ERRORS = true;
+
+interface File extends Index.File {
+  permissions: (Google.Drive.drive_v3.Schema$Permission & {
+    indexerAclState?: Index.IndexEntry.State;
+  })[];
+}
 
 class File extends Index.File {
   public static event = new events.EventEmitter();
@@ -114,12 +121,19 @@ class File extends Index.File {
   /**
    * Backwards-compatible with Overdrive.io naming scheme
    */
-  protected static normalizeFilename(filename: string): string {
+  private static normalizeFilename(filename: string): string {
     return filename!
       .replace('&', 'and')
       .replace(/[^a-z0-9()!@*_.]+/gi, '-')
       .replace(/-+$/, '')
       .toLowerCase();
+  }
+
+  private subfileFactory(bucket: Bucket) {
+    return (uri: string) => {
+      let uriPath = uri.replace(/^gs:\/\/[^/]+\//, '');
+      return bucket.file(uriPath);
+    };
   }
 
   /**
@@ -185,15 +199,15 @@ class File extends Index.File {
   }: File.Params.Cache) {
     if (!this.isFolder()) {
       const bucket = Google.Client.getStorage().bucket(bucketName);
+      const subfile = this.subfileFactory(bucket);
+
       if (!this.index.exists) {
         File.event.emit(File.Event.Start, `${this.index.path} expired`);
         let success = true;
         await this.exponentialBackoff(async () => {
           for (const uri of this.index.uri) {
             File.event.emit(File.Event.Start, `${uri} expired`);
-            const file = bucket.file(
-              path.join(this.index.path, path.basename(uri))
-            );
+            const file = subfile(uri);
             try {
               await file.delete();
               File.event.emit(
@@ -232,11 +246,13 @@ class File extends Index.File {
             const files = await this.fetchAsHtmlIfPossible();
             const deleted: string[] = [];
             for (const uri in this.index.uri) {
-              if (!Object.keys(files).includes(path.basename(uri))) {
+              if (
+                !Object.keys(files).includes(
+                  uri.replace(new RegExp(`^.*${this.index.path}/(.*)$`), '$1')
+                )
+              ) {
                 File.event.emit(File.Event.Start, `${uri} expired`);
-                const file = bucket.file(
-                  path.join(this.index.path, path.basename(uri))
-                );
+                const file = subfile(uri);
                 try {
                   await file.delete();
                   deleted.push(uri);
@@ -292,25 +308,21 @@ class File extends Index.File {
     return this;
   }
 
-  public async resetPermissions({
+  public async cacheACL({
     bucketName,
     permissionsRegex = DEFAULT_PERMISSIONS_REGEX,
     ignoreErrors = DEFAULT_IGNORE_ERRORS
   }: File.Params.Cache) {
-    const bucket = Google.Client.getStorage().bucket(bucketName);
-    for (const uri of this.index.uri) {
-      const filePath = uri.replace(/^gs:\/\/[^/]+\//, '');
-      File.event.emit(File.Event.Succeed, filePath);
-      const file = bucket.file(filePath);
+    if (!this.isFolder()) {
+      const bucket = Google.Client.getStorage().bucket(bucketName);
+      const subfile = this.subfileFactory(bucket);
+      const updatedPermissions: Google.Drive.drive_v3.Schema$Permission[] = [];
       for (const permission of this.permissions!.filter(
         (p) =>
           p.emailAddress &&
+          p.indexerAclState != Index.IndexEntry.State.Cached &&
           new RegExp(permissionsRegex || '.*').test(p.emailAddress)
       )) {
-        File.event.emit(
-          File.Event.Start,
-          `Adding ${permission.displayName} to ACL for ${this.index.path}`
-        );
         let entity: string;
         switch (permission.type) {
           case 'group':
@@ -324,19 +336,77 @@ class File extends Index.File {
               `Cannot handle permission type ${permission.type} (driveId: ${this.id}, emailAddress: ${permission.emailAddress})`
             );
         }
-        await this.exponentialBackoff(async () => {
-          await file.acl.add({
-            entity,
-            role: Google.Storage.acl.READER_ROLE
-          });
+
+        if (permission.indexerAclState == Index.IndexEntry.State.Expired) {
           File.event.emit(
-            File.Event.Succeed,
-            `${entity} added as reader to ACL for ${this.index.path}`
+            File.Event.Start,
+            `Removing ${permission.displayName} from ACL for ${this.index.path}`
           );
-        }, ignoreErrors);
+          try {
+            for (const uri of this.index.uri) {
+              const file = subfile(uri);
+              File.event.emit(File.Event.Start, file.name);
+              await file.acl.delete({ entity });
+              File.event.emit(
+                File.Event.Succeed,
+                `${permission.type}:${permission.emailAddress} removed from ACL for ${this.index.path}`
+              );
+            }
+          } catch (error) {
+            permission.indexerAclState = error.message || 'error';
+            updatedPermissions.push(permission);
+            File.event.emit(
+              File.Event.Fail,
+              `Error removing from ACL`,
+              { entity, driveId: this.id },
+              error
+            );
+          }
+        } else {
+          File.event.emit(
+            File.Event.Start,
+            `Adding ${permission.displayName} to ACL for ${this.index.path}`
+          );
+          await this.exponentialBackoff(async () => {
+            for (const uri of this.index.uri) {
+              const file = subfile(uri);
+              File.event.emit(
+                File.Event.Succeed,
+                `${permission.type}:${permission.emailAddress} added as reader to ACL for /${file.name}`
+              );
+              try {
+                await file.acl.add({
+                  entity,
+                  role: Google.Storage.acl.READER_ROLE
+                });
+                File.event.emit(
+                  File.Event.Succeed,
+                  `${permission.type}:${permission.emailAddress} added as reader to ACL for /${file.name}`
+                );
+              } catch (error) {
+                File.event.emit(
+                  File.Event.Fail,
+                  Helper.errorMessage(
+                    'Error adding reader to ACL',
+                    {
+                      driveId: this.id,
+                      file: file.name,
+                      email: permission.emailAddress
+                    },
+                    error
+                  )
+                );
+              }
+            }
+            permission.indexerAclState = Index.IndexEntry.State.Cached;
+            updatedPermissions.push(permission);
+          }, ignoreErrors);
+        }
       }
+      this.permissions = updatedPermissions;
+
+      this.index.update();
     }
-    this.index.update();
   }
 }
 

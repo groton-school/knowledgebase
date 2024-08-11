@@ -1,13 +1,13 @@
 import Cache from '../src/Cache';
 import * as Helper from '../src/Helper';
 import cli from '@battis/qui-cli';
+import Google from '@groton/knowledgebase.google';
 import fs from 'fs';
 import path from 'path';
 
-// TODO why does reset-permissions need to run separately from upload?
-// TODO version of reset-permissions that resets only recent uploads
-
 const defaultIndexPath = path.resolve(__dirname, '../../router/var/index.json');
+const defaultKeysPath = path.resolve(__dirname, '../var/keys.json');
+const defaultTokensPath = path.resolve(__dirname, '../var/tokens.json');
 
 const options = {
   bucketName: {
@@ -23,11 +23,19 @@ const options = {
     )})`,
     default: defaultIndexPath
   },
-  permissionsRegex: {
-    short: 'p',
-    description: `Regular expression to email addresses of users/groups to include in Cloud Storage Bucket (will be read from ${cli.colors.value(
-      'PERMISSIONS_REGEX'
-    )} environment variable if present)`
+  keysPath: {
+    short: 'k',
+    description: `Path to file containing downloaded OAuth2 credentials (defaults to ${cli.colors.url(
+      defaultKeysPath
+    )})`,
+    default: defaultKeysPath
+  },
+  tokensPath: {
+    short: 't',
+    description: `Path to file containing access tokens (defaults to ${cli.colors.url(
+      defaultTokensPath
+    )})`,
+    default: defaultTokensPath
   }
 };
 
@@ -47,7 +55,7 @@ const flags = {
 (async () => {
   const CWD = process.cwd();
   let {
-    values: { bucketName, indexPath, permissionsRegex, force, ignoreErrors }
+    values: { bucketName, indexPath, keysPath, tokensPath, force, ignoreErrors }
   } = cli.init({
     env: {
       root: path.join(__dirname, '../../..'),
@@ -58,6 +66,8 @@ const flags = {
       options
     }
   });
+
+  Google.Client.init({ keysPath, tokensPath });
 
   const spinner = cli.spinner();
 
@@ -85,17 +95,23 @@ const flags = {
       validate: cli.validators.lengthBetween(6, 30)
     }));
 
-  permissionsRegex = permissionsRegex || process.env.PERMISSIONS_REGEX || '.*';
-
-  for (const file of index) {
-    await file.resetPermissions({
-      bucketName,
-      permissionsRegex,
-      ignoreErrors: !!ignoreErrors
-    });
+  spinner.start('Reviewing index files');
+  const updatedIndex = new Cache(index.root);
+  for (let i = 0; i < index.length; i++) {
+    if (index[i].index.path != '.') {
+      const result = await index[i].cache({
+        bucketName,
+        force: !!force,
+        ignoreErrors: !!ignoreErrors
+      });
+      if (result) {
+        updatedIndex.push(result);
+      }
+    }
   }
+  spinner.succeed('All indexed files reviewed');
 
   spinner.start(`Saving index to ${cli.colors.url(indexPath)}`);
-  fs.writeFileSync(indexPath, JSON.stringify(index));
+  fs.writeFileSync(indexPath, JSON.stringify(updatedIndex));
   spinner.succeed(`Index saved to ${cli.colors.url(indexPath)}`);
 })();

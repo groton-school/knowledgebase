@@ -9,10 +9,12 @@
     "build:groups": "tsx bin/groups.ts",
     "upload": "run-s upload:*",
     "upload:build": "run-s build",
-    "upload:upload": "tsx bin/upload.ts",
-    "upload:reset-permissions": "tsx bin/reset-permissions.ts"
+    "upload:cache": "tsx bin/cache.ts",
+    "upload:acl": "tsx bin/acl.ts"
   },
   "devDependencies": {
+    "@battis/typescript-tricks": "^0.5.4",
+    "@google-cloud/storage": "^7.12.0",
     "@types/adm-zip": "^0.5.5",
     "@types/jsdom": "^21.1.7",
     "@types/mime-types": "^2.1.4",
