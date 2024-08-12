@@ -15,6 +15,7 @@ type UI = {
     thumbnails?: {
       root: PathString;
       default?: PathString;
+      directory?: PathString;
     };
   };
   webpack?: {

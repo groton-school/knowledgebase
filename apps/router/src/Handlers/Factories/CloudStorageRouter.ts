@@ -86,7 +86,12 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
                     ${pages
                       .map(
                         (page) =>
-                          `<div class="page">
+                          `<div class="page${
+                            page.mimeType ==
+                            'application/vnd.google-apps.folder'
+                              ? ' directory'
+                              : ''
+                          }">
                             <div class="name"><a href="/${page.index.path}/">${
                             page.name
                           }</a></div>${

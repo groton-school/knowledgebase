@@ -9,6 +9,7 @@ export default function normalizeFilename(filename: string): string {
   return filename!
     .replace('&', 'and')
     .replace(invalid, '-')
+    .replace(/-+/, '-')
     .replace(/-+$/, '')
     .toLowerCase();
 }

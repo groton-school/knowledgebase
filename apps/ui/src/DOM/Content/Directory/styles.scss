@@ -5,3 +5,10 @@
     }
   }
 }
+
+.page {
+  .thumbnail {
+    --ui-bgcolor: hsla(0, 0%, 0%, 0);
+    background: var(--ui-bgcolor);
+  }
+}

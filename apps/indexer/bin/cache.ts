@@ -84,7 +84,7 @@ const flags = {
   );
 
   spinner.start(`Loading index from ${cli.colors.url(indexPath)}`);
-  const index = await Cache.fromFile(indexPath, Cache.File);
+  const index = await Cache.fromFile(indexPath);
   spinner.succeed(`${cli.colors.value(index.root.name)} index loaded`);
 
   bucketName =
@@ -96,7 +96,7 @@ const flags = {
     }));
 
   spinner.start('Reviewing index files');
-  const updatedIndex = new Cache(index.root);
+  const updatedIndex = [index.root];
   for (let i = 0; i < index.length; i++) {
     if (index[i].index.path != '.') {
       const result = await index[i].cache({
