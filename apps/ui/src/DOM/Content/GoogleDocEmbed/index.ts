@@ -6,7 +6,14 @@ import './styles.scss';
 export default function GoogleDocEmbed(doc: HTMLDivElement) {
   TOC(doc);
   const card = document.createElement('div');
-  card.classList.add('card', 'col-md-6', 'order-1'); // TODO config spacing
+  card.classList.add(
+    'card',
+    'col-md-6',
+    'order-1',
+    Constants.bootstrap.padding,
+    'pb-5',
+    Constants.bootstrap.margin
+  ); // TODO config spacing
   doc.removeAttribute('style');
   doc.classList.add('card-body');
   doc.parentElement?.insertBefore(card, doc);

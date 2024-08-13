@@ -108,6 +108,7 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
                         : ''
                     }
                     </body>
+                    <html>
                     `);
             success = true;
           }

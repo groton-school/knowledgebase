@@ -21,8 +21,9 @@ export default function PageStructure() {
     wrapper.classList.add(
       'overflow-y-auto',
       'row',
+      'justify-content-center',
       'align-items-start',
-      'col-md-12'
+      'm-1'
     );
     //    let row = document.createElement('div');
     //    row.classList.add('row', 'align-items-start');

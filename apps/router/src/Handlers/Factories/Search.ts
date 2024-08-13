@@ -78,16 +78,54 @@ const Search: HandlerFactory = ({ index, groups, config } = {}) => {
       return unique;
     }, [] as API.Search.Result[]);
 
-    res.send(
-      results
-        .sort((a, b) => b.score - a.score)
-        .map((file) => ({
-          name: file.name,
-          href: `/${file.index.path}/`,
-          description: file.description,
-          score: file.score
-        }))
-    );
+    res.send(`<!doctype html>
+            <html lang="en">
+            <head>
+              <meta charset="utf-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1">
+              <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+              <title>Search: ${query}</title>${
+      config.ui?.site?.favicon
+        ? `
+              <link rel="icon" href="${config.ui.site.favicon}">`
+        : ''
+    }${
+      config.ui?.site?.css
+        ? `
+              <link rel="stylesheet" href="${config.ui.site.css}" />`
+        : ''
+    }
+            </head>
+            <body>
+            <div id="directory">
+            <h1 class="title">Search: ${query}</h1>
+            ${results
+              .sort((a, b) => b.score - a.score)
+              .map(
+                (page) =>
+                  `<div class="page${
+                    page.mimeType == 'application/vnd.google-apps.folder'
+                      ? ' directory'
+                      : ''
+                  }">
+                    <div class="name"><a href="/${page.index.path}/">${
+                    page.name
+                  }</a></div>${
+                    page.description
+                      ? `<div class="description">${page.description}</div>`
+                      : ''
+                  }</div>`
+              )
+              .join('')}
+            </div>${
+              config.ui?.site?.js
+                ? `
+              <script src="${config.ui.site.js}"></script>`
+                : ''
+            }
+            </body>
+            <html>
+            `);
   };
 };
 

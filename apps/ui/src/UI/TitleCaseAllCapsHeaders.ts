@@ -55,6 +55,7 @@ const properNouns = [
   'OneNote',
   'OpenAI',
   'Openpath',
+  'PC',
   'SEO',
   'September',
   'TV',
