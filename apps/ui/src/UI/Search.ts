@@ -21,7 +21,9 @@ export default function Search() {
     const body = response.match(/<body[^>]*>((.|\n)*)<\/body>/);
     results.innerHTML =
       body && body.length > 1 ? body[1] : `<p>No results.</p>`;
-    Array.from(results.querySelectorAll('.page')).forEach(PageThumbnail);
+    Array.from(results.querySelectorAll('.page')).forEach((page) =>
+      PageThumbnail(page as HTMLElement)
+    );
   });
   Helper.log('Search enabled');
 }

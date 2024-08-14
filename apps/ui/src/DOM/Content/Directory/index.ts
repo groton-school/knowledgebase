@@ -1,6 +1,6 @@
 import Constants from '../../../Constants';
 import Helper from '../../../Helper';
-import config from '../../../config';
+import ImageCanvas from './ImageCanvas';
 import PageThumbnail from './PageThumbnail';
 import './styles.scss';
 
@@ -13,23 +13,21 @@ export default function Directory(directory: HTMLDivElement) {
     Constants.bootstrap.padding,
     Constants.bootstrap.margin
   ); // TODO config spacing
-  directory.classList.add('card-body', 'row', 'align-items-center');
+  directory.classList.add('card-body', 'row', 'align-items-stretch');
   directory.parentElement?.insertBefore(card, directory);
   card.appendChild(directory);
-  Array.from(directory.querySelectorAll('.page')).forEach(PageThumbnail);
+  Array.from(directory.querySelectorAll('.page')).forEach((page) =>
+    PageThumbnail(page as HTMLElement)
+  );
 
-  const title = document.querySelector('.title');
+  const title = directory.querySelector('.title') as HTMLElement;
   if (title) {
-    const thumbnail = document.createElement('span');
-    thumbnail.className = 'thumbnail';
-    thumbnail.innerHTML = `
-        <img class="img-fluid" onerror="this.src='${
-          config.directory.thumbnails.default
-        }'" src="${
-      config.directory.thumbnails.root
-    }${window.location.pathname.replace(/\/$/, '')}.png" />
-      `;
-    title.prepend(thumbnail);
+    ImageCanvas({
+      href: window.location.href,
+      parent: title,
+      propertyParent: card,
+      isDirectory: true
+    });
   }
   Helper.log('Updated #directory DOM');
 }

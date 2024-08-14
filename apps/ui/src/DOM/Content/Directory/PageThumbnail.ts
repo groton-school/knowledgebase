@@ -1,7 +1,7 @@
 import Constants from '../../../Constants';
-import config from '../../../config';
+import ImageCanvas from './ImageCanvas';
 
-export default function PageThumbnail(page: Element) {
+export default function PageThumbnail(page: HTMLElement) {
   page.classList.add(
     'card',
     'col-md-4',
@@ -9,10 +9,10 @@ export default function PageThumbnail(page: Element) {
     'p-0',
     Constants.bootstrap.margin
   );
-  (page as HTMLElement).style.maxWidth = '3.5in';
+  page.style.maxWidth = '3.5in';
 
   const row = document.createElement('div');
-  row.classList.add('row', 'g-0', 'h-100');
+  row.classList.add('row', 'g-0', 'h-100', 'rounded-start');
   page.prepend(row);
 
   const a = page.querySelector('a');
@@ -21,57 +21,10 @@ export default function PageThumbnail(page: Element) {
   const thumbnail = document.createElement('div');
   thumbnail.classList.add('thumbnail', 'col-md-4', 'col-2');
 
-  const img = document.createElement('img');
-  img.style.display = 'none';
-  img.src = `${config.directory.thumbnails.root}${new URL(
-    a!.href
-  ).pathname.replace(/\/$/, '')}.png`;
-  img.addEventListener(
-    'error',
-    () =>
-      (img.src = page.classList.contains('directory')
-        ? config.directory.thumbnails.directory ||
-          config.directory.thumbnails.default
-        : config.directory.thumbnails.default)
-  );
-  img.addEventListener('load', () => {
-    const canvas = document.createElement('canvas');
-    canvas.classList.add('img-fluid', 'rounded-corner');
-    canvas.width = img.width;
-    canvas.height = img.height;
-    thumbnail.appendChild(canvas);
-    const context = canvas.getContext('2d');
-    if (context) {
-      context.drawImage(img, 0, 0);
-
-      const line = context?.getImageData(0, canvas.height - 2, canvas.width, 1);
-
-      const colors: Record<string, number> = {};
-      let rgba: string;
-      for (let pixel = 0; pixel < line.data.length; pixel += 4) {
-        const rgba = `rgba(${line.data[pixel]},${line.data[pixel + 1]},${
-          line.data[pixel + 2]
-        },${line.data[pixel + 3]})`;
-        if (colors[rgba]) {
-          colors[rgba]++;
-        } else {
-          colors[rgba] = 1;
-        }
-      }
-
-      thumbnail.style.setProperty(
-        '--ui-bgcolor',
-        Object.keys(colors).reduce(
-          (max, color) => (colors[max] > colors[color] ? max : color),
-          rgba!
-        )
-      );
-    }
-  });
-  thumbnail.appendChild(img);
-
-  row.append(thumbnail);
-
+  if (a && page) {
+    ImageCanvas({ href: a.href, page, parent: thumbnail });
+    row.append(thumbnail);
+  }
   let body = document.createElement('div');
   body.classList.add('col-md-8', 'col-10');
   row.append(body);
