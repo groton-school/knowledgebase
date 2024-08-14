@@ -23,7 +23,7 @@ export default function Directory(directory: HTMLDivElement) {
     const thumbnail = document.createElement('span');
     thumbnail.className = 'thumbnail';
     thumbnail.innerHTML = `
-        <img class="img-fluid rounded-start" onerror="this.src='${
+        <img class="img-fluid" onerror="this.src='${
           config.directory.thumbnails.default
         }'" src="${
       config.directory.thumbnails.root

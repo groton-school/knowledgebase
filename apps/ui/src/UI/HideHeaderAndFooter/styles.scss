@@ -1,5 +1,5 @@
 @use '../../Constants';
 
-#{Constants.$googleDocEmbed} > div:not(.kb-include) {
+#{Constants.$googleDocEmbed} > div:not(.ui-include) {
   display: none;
 }

@@ -13,8 +13,8 @@ function embed(paragraphs: HTMLElement[]) {
     const id = crypto.randomUUID();
     // TODO template
     p.outerHTML =
-      `<div id="${id}" class="kb-include">` +
-      `<div class="${styles.apps} kb-include">` +
+      `<div id="${id}" class="ui-include">` +
+      `<div class="${styles.apps} ui-include">` +
       (ios
         ? `<a class="${styles.ios}" href="${ios.href}" target="_blank"></a>`
         : '') +
