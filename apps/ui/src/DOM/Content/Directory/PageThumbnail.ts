@@ -12,17 +12,21 @@ export default function PageThumbnail(page: HTMLElement) {
   page.style.maxWidth = '3.5in';
 
   const row = document.createElement('div');
-  row.classList.add('row', 'g-0', 'h-100', 'rounded-start');
+  row.classList.add('row', 'g-0', 'h-100');
   page.prepend(row);
 
   const a = page.querySelector('a');
   a?.classList.add('stretched-link');
 
   const thumbnail = document.createElement('div');
-  thumbnail.classList.add('thumbnail', 'col-md-4', 'col-2');
+  thumbnail.classList.add('thumbnail', 'col-md-4', 'col-2', 'rounded-start');
 
   if (a && page) {
-    ImageCanvas({ href: a.href, page, parent: thumbnail });
+    ImageCanvas({
+      href: a.href,
+      parent: thumbnail,
+      isDirectory: page.classList.contains('directory')
+    });
     row.append(thumbnail);
   }
   let body = document.createElement('div');

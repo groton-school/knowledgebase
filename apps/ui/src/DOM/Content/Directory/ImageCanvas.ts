@@ -2,45 +2,49 @@ import config from '../../../config';
 
 export default function ImageCanvas({
   href,
-  page,
   parent,
+  where = 'afterbegin',
   propertyParent,
   isDirectory = false
 }: {
   href: string;
-  page?: HTMLElement;
   parent: HTMLElement;
+  where?: InsertPosition;
   propertyParent?: HTMLElement;
   isDirectory?: boolean;
 }) {
   const img = document.createElement('img');
-  img.style.display = 'none';
   img.src = `${config.directory.thumbnails.root}${new URL(
     href
   ).pathname.replace(/\/$/, '')}.png`;
+  img.classList.add(
+    'ui-thumbnail-image',
+    'img-fluid',
+    'rounded-corner',
+    'align-middle'
+  );
+  if (parent.classList.contains('title')) {
+    img.classList.add('me-3');
+  }
+
   img.addEventListener(
     'error',
     () =>
-      (img.src =
-        isDirectory || page?.classList.contains('directory')
-          ? config.directory.thumbnails.directory ||
-            config.directory.thumbnails.default
-          : config.directory.thumbnails.default)
+      (img.src = isDirectory
+        ? config.directory.thumbnails.directory ||
+          config.directory.thumbnails.default
+        : config.directory.thumbnails.default)
   );
+
   img.addEventListener('load', () => {
     const canvas = document.createElement('canvas');
-    canvas.classList.add('img-fluid', 'rounded-corner', 'align-middle');
-    if (parent.classList.contains('title')) {
-      canvas.classList.add('me-3');
-    }
     canvas.width = img.width;
     canvas.height = img.height;
-    parent.prepend(canvas);
     const context = canvas.getContext('2d');
     if (context) {
       context.drawImage(img, 0, 0);
 
-      const line = context?.getImageData(0, canvas.height - 2, canvas.width, 1);
+      const line = context?.getImageData(0, canvas.height - 1, canvas.width, 1);
 
       const colors: Record<string, number> = {};
       let rgba: string;
@@ -65,5 +69,6 @@ export default function ImageCanvas({
       }
     }
   });
-  parent.prepend(img);
+
+  parent.insertAdjacentElement(where, img);
 }

@@ -4,8 +4,8 @@
 }
 
 .title {
-  img,
-  canvas {
+  // TODO Prefix `.ui-thumbnail-image` consistently
+  .ui-thumbnail-image {
     height: 2em;
   }
 }
