@@ -2,6 +2,16 @@
   "name": "@groton/knowledgebase.indexer",
   "description": "Knowledgebase website",
   "version": "0.0.0",
+  "author": {
+    "name": "Seth Battis",
+    "email": "sbattis@groton.org"
+  },
+  "homepage": "https://github.com/groton-school/knowledgebase/tree/main/apps/indexer#readme",
+  "repository": {
+    "url": "https://github.com/groton-school/knowledgebase.git",
+    "type": "git",
+    "directory": "apps/indexer"
+  },
   "scripts": {
     "build": "run-s build:*",
     "build:sync-config": "tsx bin/sync-config.ts -c ../../config.json",

@@ -1,4 +1,13 @@
 {
+  "author": {
+    "name": "Seth Battis",
+    "email": "sbattis@groton.org"
+  },
+  "homepage": "https://github.com/groton-school/knowledgebase#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/groton-school/knowledgebase.git"
+  },
   "workspaces": [
     "packages/*"
   ],
@@ -25,6 +34,7 @@
     "@changesets/cli": "^2.27.7",
     "@groton/knowledgebase.config": "workspace:*",
     "@tsconfig/recommended": "^1.0.7",
+    "monorepo-package-paths": "^0.2.0",
     "npm-run-all": "^4.1.5",
     "syncpack": "^12.4.0",
     "tsx": "^4.16.5"

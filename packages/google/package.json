@@ -1,6 +1,16 @@
 {
   "name": "@groton/knowledgebase.google",
   "version": "0.0.0",
+  "author": {
+    "name": "Seth Battis",
+    "email": "sbattis@groton.org"
+  },
+  "homepage": "https://github.com/groton-school/knowledgebase/tree/main/packages/google#readme",
+  "repository": {
+    "url": "https://github.com/groton-school/knowledgebase.git",
+    "type": "git",
+    "directory": "packages/google"
+  },
   "main": "src/index.ts",
   "dependencies": {
     "@battis/qui-cli": "^0.4.2",

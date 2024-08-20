@@ -1,5 +1,15 @@
 {
   "name": "@groton/knowledgebase.strings",
   "version": "0.0.0",
+  "author": {
+    "name": "Seth Battis",
+    "email": "sbattis@groton.org"
+  },
+  "homepage": "https://github.com/groton-school/knowledgebase/tree/main/packages/strings#readme",
+  "repository": {
+    "url": "https://github.com/groton-school/knowledgebase.git",
+    "type": "git",
+    "directory": "packages/strings"
+  },
   "main": "src/index.ts"
 }

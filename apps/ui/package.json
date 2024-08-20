@@ -6,9 +6,11 @@
     "name": "Seth Battis",
     "email": "sbattis@groton.org"
   },
+  "homepage": "https://github.com/groton-school/knowledgebase/tree/main/apps/ui#readme",
   "repository": {
+    "url": "https://github.com/groton-school/knowledgebase.git",
     "type": "git",
-    "url": "https://github.com/groton-school/knowledgebase.git"
+    "directory": "apps/ui"
   },
   "license": "GPL-3.0",
   "scripts": {
