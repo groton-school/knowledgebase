@@ -1,9 +1,10 @@
-.env
-.env.*
-!.env.example
-build/
-node_modules/
-vendor/
+**/.env
+**/.env.*
+**/!.env.example
+**/build/
+**/node_modules/
+**/var/*
 *.cache
+*.cache.*
 /.grpcio
 /config.json
