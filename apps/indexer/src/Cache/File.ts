@@ -176,7 +176,7 @@ class File extends Index.File {
           try {
             const files = await this.fetchAsHtmlIfPossible();
             const deleted: string[] = [];
-            for (const uri in this.index.uri) {
+            for (const uri of this.index.uri) {
               if (
                 !Object.keys(files).includes(
                   uri.replace(new RegExp(`^.*${this.index.path}/(.*)$`), '$1')
