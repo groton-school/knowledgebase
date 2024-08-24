@@ -10,6 +10,18 @@ export type Name = Nonoptional<Google.Drive.drive_v3.Schema$File['name']>;
 interface File extends Google.Drive.drive_v3.Schema$File {}
 
 class File {
+  public static fields: (keyof Google.Drive.drive_v3.Schema$File)[] = [
+    'id',
+    'name',
+    'fileExtension',
+    'mimeType',
+    'description',
+    'parents',
+    'permissions',
+    'modifiedTime',
+    'shortcutDetails'
+  ];
+
   public readonly id: Id;
   public readonly name: Name;
   public readonly description: Google.Drive.drive_v3.Schema$File['description'];
@@ -27,6 +39,18 @@ class File {
     }: Google.Drive.drive_v3.Schema$File & { index?: IndexEntry },
     _index?: IndexEntry
   ) {
+    if (!rest.permissions) {
+      throw new Error(
+        `Attempted to instantiate a file without access to permissions information: ${JSON.stringify(
+          {
+            id,
+            name,
+            ...rest,
+            index
+          }
+        )}`
+      );
+    }
     if (id) {
       this.id = id;
     } else {

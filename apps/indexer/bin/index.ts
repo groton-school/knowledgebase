@@ -86,7 +86,7 @@ const options = {
   if (indexPath && fs.existsSync(path.resolve(CWD, indexPath))) {
     indexPath = path.resolve(CWD, indexPath);
     spinner.start(`Loading index from ${cli.colors.url(indexPath)}`);
-    const prevIndex = await Cache.fromFile(indexPath, Cache.File);
+    const prevIndex = await Cache.fromFile(indexPath);
     spinner.succeed(`${cli.colors.value(prevIndex.root.name)} index loaded`);
 
     const currIndex = [
@@ -109,7 +109,7 @@ const options = {
               (p) => p.emailAddress == permission.emailAddress
             )
           ) {
-            permission.indexerAclState = Cache.IndexEntry.State.Expired;
+            permission['indexerAclState'] = Cache.IndexEntry.State.Expired;
             spinner.fail(
               `Expired ${permission.emailAddress} from ${prev.index.path}`
             );

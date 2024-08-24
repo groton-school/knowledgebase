@@ -5,11 +5,26 @@ import Google from '@groton/knowledgebase.google';
 class FileFactory<T extends typeof File> {
   public constructor(private fileType: T) {}
 
+  private async resolveShortcut(file: Google.Drive.drive_v3.Schema$File) {
+    if (
+      file.mimeType == Google.MimeTypes.Shortcut &&
+      file.shortcutDetails?.targetId
+    ) {
+      const targetFile: Google.Drive.drive_v3.Schema$File =
+        await this.fromDriveId(file.shortcutDetails.targetId);
+      return { ...targetFile, parents: file.parents, name: file.name };
+    }
+    return file;
+  }
+
   public async fromDrive(
     file: Google.Drive.drive_v3.Schema$File,
     index?: IndexEntry
   ) {
-    return new this.fileType(file, index) as InstanceType<T>;
+    return new this.fileType(
+      await this.resolveShortcut(file),
+      index
+    ) as InstanceType<T>;
   }
 
   public async fromDriveId(fileId: Id, index?: IndexEntry) {
@@ -18,11 +33,13 @@ class FileFactory<T extends typeof File> {
         await Google.Client.getDrive()
       ).files.get({
         fileId,
-        fields:
-          'id,name,fileExtension,mimeType,description,parents,permissions,modifiedTime'
+        fields: File.fields.join(',')
       })
     ).data;
-    return new this.fileType(file, index) as InstanceType<T>;
+    return new this.fileType(
+      await this.resolveShortcut(file),
+      index
+    ) as InstanceType<T>;
   }
 }
 
