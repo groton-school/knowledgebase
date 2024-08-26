@@ -47,6 +47,7 @@ const properNouns = [
   'Loomis',
   'macOS',
   'March',
+  'MathType',
   'May',
   'MFA',
   'myGroton',
@@ -62,6 +63,7 @@ const properNouns = [
   'USB',
   'USB-C',
   'Windows',
+  'Wiris',
   'Zoom'
 ];
 
