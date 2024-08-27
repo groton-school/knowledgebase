@@ -2,7 +2,7 @@ import Helper from '../../Helper';
 
 const youTubeLink =
   'a[href*="youtu.be"]:not([href*="playlist"]), a[href*="youtube.com"]:not([href*="playlist"])';
-const playlistLink = 'a[href^="https://youtube.com/playlist"]';
+const playlistLink = 'a[href^="https://youtube.com/playlist"]'; // TODO also https://www.youtube.com
 
 /**
  * Replace YouTube links with the embedded video
