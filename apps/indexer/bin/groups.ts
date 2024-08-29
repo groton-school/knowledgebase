@@ -27,7 +27,10 @@ const options = {
 
   const spinner = cli.spinner();
 
-  let groups: Var.Groups = [];
+  const pattern = new RegExp(
+    permissionsRegex || process.env.PERMISSIONS_REGEX || '.*'
+  );
+  let groups: Var.Groups = {};
   let nextPageToken: string | undefined = undefined;
   do {
     const page = JSON.parse(
@@ -41,16 +44,34 @@ const options = {
         }`
       ).stdout
     );
-    groups.push(...page.groups);
+    for (const group of page.groups) {
+      if (pattern.test(group.groupKey.id)) {
+        groups[group.groupKey.id] = group;
+      }
+    }
     nextPageToken = page.nextPageToken;
   } while (nextPageToken);
-  const pattern = new RegExp(
-    permissionsRegex || process.env.PERMISSIONS_REGEX || '.*'
-  );
 
-  fs.writeFileSync(
-    filePath,
-    JSON.stringify(groups.filter((group) => pattern.test(group.groupKey.id)))
-  );
+  for (const group in groups) {
+    groups[group].members = [];
+    nextPageToken = undefined;
+    do {
+      const page = JSON.parse(
+        cli.shell.exec(
+          `gcloud identity groups memberships list --group-email=${group} --project=${
+            process.env.PROJECT
+          } --format=json --quiet${
+            nextPageToken ? ` --page-token="${nextPageToken}"` : ''
+          }`
+        ).stdout
+      );
+      groups[group].members.push(
+        ...page.map((member) => member.preferredMemberKey.id)
+      );
+      nextPageToken = page.nextPageToken;
+    } while (nextPageToken);
+  }
+
+  fs.writeFileSync(filePath, JSON.stringify(groups));
   spinner.succeed(`List saved to ${cli.colors.url(filePath)}`);
 })();

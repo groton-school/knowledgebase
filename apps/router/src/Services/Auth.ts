@@ -119,7 +119,6 @@ export default class Auth {
       scope: [
         // TODO examine these scopes more carefully
         'https://www.googleapis.com/auth/devstorage.read_only',
-        'https://www.googleapis.com/auth/cloud-identity.groups.readonly',
         'openid',
         'profile',
         'email'
