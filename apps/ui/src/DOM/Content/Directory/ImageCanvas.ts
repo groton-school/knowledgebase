@@ -1,4 +1,5 @@
 import config from '../../../config';
+import styles from './styles.module.scss';
 
 export default function ImageCanvas({
   href,
@@ -18,7 +19,7 @@ export default function ImageCanvas({
     href
   ).pathname.replace(/\/$/, '')}.png`;
   img.classList.add(
-    'ui-thumbnail-image',
+    styles.thumbnailImage,
     'img-fluid',
     'rounded-corner',
     'align-middle'
@@ -65,7 +66,7 @@ export default function ImageCanvas({
       );
       if (bgColor != 'rgba(0,0,0,0)') {
         propertyParent = propertyParent || parent;
-        propertyParent.style.setProperty('--ui-bgcolor', bgColor);
+        propertyParent.style.setProperty(styles.bgcolor, bgColor);
       }
     }
   });

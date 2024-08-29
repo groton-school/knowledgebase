@@ -1,17 +1,21 @@
+@use '../../../Constants';
+
+$thumbnail: Constants.$prefix + 'thumbnail';
+$thumbnailImage: Constants.$prefix + 'thumbnail-image';
+$bgcolor: '--' + Constants.$prefix + 'bgcolor';
+
 :root {
-  // TODO Prefix `--ui-bgcolor` consistently
-  --ui-bgcolor: transparent;
+  #{$bgcolor}: transparent;
 }
 
 .title {
-  // TODO Prefix `.ui-thumbnail-image` consistently
-  .ui-thumbnail-image {
+  .#{$thumbnailImage} {
     height: 2em;
   }
 }
 
 .page {
-  .thumbnail {
-    background: var(--ui-bgcolor);
+  .#{$thumbnail} {
+    background: var(#{$bgcolor});
   }
 }

@@ -1,5 +1,6 @@
 import Constants from '../../../Constants';
 import ImageCanvas from './ImageCanvas';
+import styles from './styles.module.scss';
 
 export default function PageThumbnail(page: HTMLElement) {
   page.classList.add(
@@ -19,7 +20,12 @@ export default function PageThumbnail(page: HTMLElement) {
   a?.classList.add('stretched-link');
 
   const thumbnail = document.createElement('div');
-  thumbnail.classList.add('thumbnail', 'col-md-4', 'col-2', 'rounded-start');
+  thumbnail.classList.add(
+    styles.thumbnail,
+    'col-md-4',
+    'col-2',
+    'rounded-start'
+  );
 
   if (a && page) {
     ImageCanvas({

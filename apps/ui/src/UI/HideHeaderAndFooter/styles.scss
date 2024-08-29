@@ -1,5 +1,7 @@
 @use '../../Constants';
 
-#{Constants.$googleDocEmbed} > div:not(.ui-include) {
+$include: Constants.$prefix + 'include';
+
+#{Constants.$googleDocEmbed} > div:not(.#{$include}) {
   display: none;
 }

@@ -1,5 +1,6 @@
 //import * as QRCode from 'qrcode';
 import Helper from '../../../Helper';
+import hideHeaderAndFooterStyles from '../../../UI/HideHeaderAndFooter/styles.module.scss';
 import styles from './styles.module.scss';
 import './styles.scss';
 
@@ -13,8 +14,8 @@ function embed(paragraphs: HTMLElement[]) {
     const id = crypto.randomUUID();
     // TODO template
     p.outerHTML =
-      `<div id="${id}" class="ui-include">` +
-      `<div class="${styles.apps} ui-include">` +
+      `<div id="${id}" class="${hideHeaderAndFooterStyles.include}">` +
+      `<div class="${styles.apps} ${hideHeaderAndFooterStyles.include}">` +
       (ios
         ? `<a class="${styles.ios}" href="${ios.href}" target="_blank"></a>`
         : '') +
