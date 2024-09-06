@@ -10,6 +10,7 @@ const properNouns = [
   'Android',
   'Adobe',
   'Apple',
+  'AppleCare',
   'April',
   'August',
   'AV',
