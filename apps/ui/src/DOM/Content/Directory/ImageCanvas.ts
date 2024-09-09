@@ -43,7 +43,7 @@ export default function ImageCanvas({
     canvas.height = img.height;
     const context = canvas.getContext('2d');
     if (context) {
-      context.drawImage(img, 0, 0);
+      context.drawImage(img, 0, 0, img.width, img.height);
 
       const line = context?.getImageData(0, canvas.height - 1, canvas.width, 1);
 
