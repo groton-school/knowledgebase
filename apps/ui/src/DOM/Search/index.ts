@@ -1,5 +1,6 @@
 import Constants from '../../Constants';
 import Helper from '../../Helper';
+import config from '../../config';
 import './styles.scss';
 
 export default function Search() {
@@ -22,7 +23,12 @@ export default function Search() {
     `
     <form role="search" id="search" class="ms-auto">
       <div class="input-group">
-        <input class="form-control" name="query" type="search" placeholder="How do I…" aria-label="Search">
+        <input class="form-control" name="query" type="search" placeholder="How do I…" aria-label="Search" data-bs-theme="${
+          (config.site.dark && config.site.darkSearchForm === undefined) ||
+          config.site.darkSearchForm
+            ? 'dark'
+            : 'light'
+        }">
         <button class="btn btn-outline-light" type="submit" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">Search</button>
       </div>
     </form>

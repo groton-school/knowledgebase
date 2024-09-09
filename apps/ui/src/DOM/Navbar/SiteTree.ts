@@ -21,7 +21,7 @@ export default async function SiteTree() {
     a.innerText = page.name;
     if (document.location.pathname.startsWith(page.href)) {
       a.setAttribute('aria-current', 'page');
-      li.classList.add('active');
+      a.classList.add('active');
     }
     li.appendChild(a);
     label(a);

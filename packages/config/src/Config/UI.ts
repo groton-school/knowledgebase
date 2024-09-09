@@ -8,6 +8,8 @@ type UI = {
     favicon?: PathString;
     background?: PathString;
     primaryColor?: CSSColorString;
+    dark?: boolean;
+    darkSearchForm?: boolean;
     js?: PathString;
     css?: PathString;
   };

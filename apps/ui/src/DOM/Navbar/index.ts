@@ -1,4 +1,5 @@
 import Constants from '../../Constants';
+import config from '../../config';
 import SiteTree from './SiteTree';
 import './styles.scss';
 
@@ -8,7 +9,9 @@ export default function Navbar() {
   const nav = document.createElement('nav');
   nav.classList.add('navbar', 'navbar-expand-lg', 'bg-primary', 'fixed-top');
   nav.id = 'nav';
-  // TODO template
+  if (config.site.dark) {
+    nav.setAttribute('data-bs-theme', 'dark');
+  } // TODO template
   // TODO consolidate Search in one directory
   nav.innerHTML = `
       <div class="container-fluid align-items-middle">
