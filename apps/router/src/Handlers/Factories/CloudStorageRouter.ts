@@ -117,7 +117,9 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
           if (path.extname(req.path) != '') {
             res.send(404);
           } else {
-            res.redirect(`/_/search?q=${req.path.split('/').join(' ').trim()}`);
+            res.redirect(
+              `/_/search?q=${req.path.split(/[\/-]/).join(' ').trim()}`
+            );
           }
         }
       }
