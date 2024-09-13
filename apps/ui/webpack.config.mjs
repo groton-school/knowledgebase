@@ -1,20 +1,20 @@
-require('dotenv').config();
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const cfg = require('./var/config.json');
+import bundle from '@battis/webpack';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+import dotenv from 'dotenv';
 
+dotenv.config();
 const DEBUGGING = JSON.parse(process.env.DEBUGGING);
 if (DEBUGGING) {
   console.log('DEBUGGING enabled, compiling in development mode');
 }
 
-const config = require('@battis/webpack/ts/vanilla')({
-  root: __dirname,
+const config = bundle.fromTS.toVanillaJS({
+  root: import.meta.dirname,
   bundle: 'ui',
-  filename: 'assets/[name]',
-  mode: DEBUGGING ? 'development' : 'production',
+  output: {
+    filename: 'assets/[name]'
+  },
   plugins: [
-    new CleanWebpackPlugin(),
     new CopyWebpackPlugin({
       patterns: DEBUGGING
         ? [
@@ -45,4 +45,4 @@ config.ignoreWarnings = [
   (warning) => /\/node_modules\/bootstrap\/scss\//.test(warning.warning)
 ];
 
-module.exports = config;
+export default config;

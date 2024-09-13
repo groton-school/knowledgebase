@@ -2,34 +2,45 @@
   "name": "@groton/knowledgebase.ui",
   "version": "0.1.8",
   "description": "Configuration and scripting for Overdrive.io integration",
+  "homepage": "https://github.com/groton-school/knowledgebase/tree/main/apps/ui#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/groton-school/knowledgebase.git",
+    "directory": "apps/ui"
+  },
+  "license": "GPL-3.0",
   "author": {
     "name": "Seth Battis",
     "email": "sbattis@groton.org"
   },
-  "homepage": "https://github.com/groton-school/knowledgebase/tree/main/apps/ui#readme",
-  "repository": {
-    "url": "https://github.com/groton-school/knowledgebase.git",
-    "type": "git",
-    "directory": "apps/ui"
-  },
-  "license": "GPL-3.0",
   "scripts": {
     "build": "run-s build:*",
-    "build:sync-config": "tsx bin/sync-config -c ../../config.json",
-    "build:apply-config": "tsx bin/apply-config -c var/config.json",
-    "build:compile": "webpack"
+    "build:00-sync-config": "tsx bin/sync-config -c ../../config.json",
+    "build:10-apply-config": "tsx bin/apply-config -c var/config.json",
+    "build:20-compile": "webpack"
+  },
+  "prettier": "@battis/prettier-config",
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "node": false
+    },
+    "extends": [
+      "@battis/eslint-config"
+    ]
   },
   "dependencies": {
     "@battis/typescript-tricks": "^0.5.4",
     "@groton/knowledgebase.api": "workspace:*",
     "@groton/knowledgebase.strings": "workspace:*",
-    "bootstrap": "^5.3.3"
+    "bootstrap": "^5.3.3",
+    "dotenv": "^16.4.5"
   },
   "devDependencies": {
     "@battis/eslint-config": "latest",
     "@battis/prettier-config": "latest",
     "@battis/qui-cli": "^0.4.2",
-    "@battis/webpack": "^0.4.8",
+    "@battis/webpack": "^1.0.0",
     "@csstools/css-parser-algorithms": "^2.7.1",
     "@csstools/css-tokenizer": "^2.4.1",
     "@popperjs/core": "^2.11.8",
@@ -71,15 +82,5 @@
     "webpack": "5.94.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.2"
-  },
-  "prettier": "@battis/prettier-config",
-  "eslintConfig": {
-    "extends": [
-      "@battis/eslint-config"
-    ],
-    "env": {
-      "browser": true,
-      "node": false
-    }
   }
 }

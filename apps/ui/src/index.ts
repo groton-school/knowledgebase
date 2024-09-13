@@ -1,9 +1,9 @@
+/// <reference types="@battis/webpack/types" />
 import pkg from '../package.json';
 import DOM from './DOM';
 import Embed from './Embed';
 import Helper from './Helper';
 import UI from './UI';
-import '@battis/webpack';
 
 const DEBUGGING = JSON.parse(process.env.DEBUGGING || '');
 

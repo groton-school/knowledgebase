@@ -43,7 +43,7 @@ export default function PageThumbnail(page: HTMLElement) {
 
   const name = page.querySelector('.name') as HTMLDivElement;
   const title = document.createElement('h5');
-  title.append(...name.childNodes);
+  title.append(...Array.from (name.childNodes));
   title.classList.add('card-title', 'name');
   body.append(title);
   name.remove();
@@ -53,7 +53,7 @@ export default function PageThumbnail(page: HTMLElement) {
     const text = document.createElement('p');
     text.classList.add('card-text', 'description');
     text.innerHTML = '<small class="text-body-secondary"></small>';
-    text.firstElementChild!.append(...description.childNodes);
+    text.firstElementChild!.append(... Array.from( description.childNodes));
     body.append(text);
     description.remove();
   }
