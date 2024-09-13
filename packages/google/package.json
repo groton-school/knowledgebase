@@ -15,9 +15,9 @@
   "dependencies": {
     "@battis/qui-cli": "^0.4.2",
     "@google-cloud/storage": "^7.12.1",
-    "@googleapis/drive": "^8.13.0",
-    "express": "^4.19.2",
-    "google-auth-library": "^9.14.0",
+    "@googleapis/drive": "^8.14.0",
+    "express": "^4.21.0",
+    "google-auth-library": "^9.14.1",
     "open": "^10.1.0"
   },
   "devDependencies": {
