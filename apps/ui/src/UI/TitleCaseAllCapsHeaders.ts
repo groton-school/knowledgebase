@@ -55,6 +55,7 @@ const properNouns = [
   'Microsoft',
   'Microsoft Office',
   'myGroton',
+  'NBM',
   'November',
   'October',
   'OneNote',
