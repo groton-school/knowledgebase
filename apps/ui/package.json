@@ -15,9 +15,9 @@
   },
   "scripts": {
     "build": "run-s build:*",
-    "build:00-sync-config": "tsx bin/sync-config -c ../../config.json",
-    "build:10-apply-config": "tsx bin/apply-config -c var/config.json",
-    "build:20-compile": "webpack"
+    "build:sync-config": "tsx bin/sync-config -c ../../config.json",
+    "build:apply-config": "tsx bin/apply-config -c var/config.json",
+    "build:compile": "webpack"
   },
   "prettier": "@battis/prettier-config",
   "eslintConfig": {
@@ -30,7 +30,7 @@
     ]
   },
   "dependencies": {
-    "@battis/typescript-tricks": "^0.5.4",
+    "@battis/typescript-tricks": "^0.5.5",
     "@groton/knowledgebase.api": "workspace:*",
     "@groton/knowledgebase.strings": "workspace:*",
     "bootstrap": "^5.3.3",
@@ -40,7 +40,7 @@
     "@battis/eslint-config": "latest",
     "@battis/prettier-config": "latest",
     "@battis/qui-cli": "^0.4.2",
-    "@battis/webpack": "^1.0.0",
+    "@battis/webpack": "^1.0.6",
     "@csstools/css-parser-algorithms": "^2.7.1",
     "@csstools/css-tokenizer": "^2.4.1",
     "@popperjs/core": "^2.11.8",
@@ -67,12 +67,13 @@
     "imagemin-optipng": "^8.0.0",
     "imagemin-svgo": "^10.0.1",
     "mini-css-extract-plugin": "^2.9.1",
-    "postcss": "^8.4.45",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.4.47",
     "postcss-loader": "^7.3.4",
     "postcss-preset-env": "^8.5.1",
     "postcss-selector-parser": "^6.1.2",
     "raw-loader": "^4.0.2",
-    "sass": "^1.78.0",
+    "sass": "^1.79.3",
     "sass-loader": "^13.3.3",
     "style-loader": "^3.3.4",
     "terser-webpack-plugin": "^5.3.10",

@@ -1,11 +1,17 @@
 import bundle from '@battis/webpack';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import dotenv from 'dotenv';
+import cfg from './var/config.json' with { type: 'json' };
 
 dotenv.config();
 const DEBUGGING = JSON.parse(process.env.DEBUGGING);
+let LOCAL_STATIC_FILES = false;
 if (DEBUGGING) {
   console.log('DEBUGGING enabled, compiling in development mode');
+  LOCAL_STATIC_FILES = JSON.parse(process.env.LOCAL_STATIC_FILES);
+  if (LOCAL_STATIC_FILES) {
+    console.log('LOCAL_STATIC_FILES enabled, including static files in build');
+  }
 }
 
 const config = bundle.fromTS.toVanillaJS({
@@ -16,7 +22,7 @@ const config = bundle.fromTS.toVanillaJS({
   },
   plugins: [
     new CopyWebpackPlugin({
-      patterns: DEBUGGING
+      patterns: LOCAL_STATIC_FILES
         ? [
             { from: 'assets', to: 'assets' },
             { from: 'public', to: '' }

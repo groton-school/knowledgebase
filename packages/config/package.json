@@ -18,6 +18,6 @@
     "@groton/knowledgebase.strings": "workspace:*"
   },
   "devDependencies": {
-    "@battis/typescript-tricks": "^0.5.4"
+    "@battis/typescript-tricks": "^0.5.5"
   }
 }

@@ -1,6 +1,11 @@
 {
-  "todo.workspace-ignore-names": [""],
-  "todo.workspace-ignore-paths": ["./.grpcio"],
-  "workspace.art_style": 1,
-  "workspace.color": 8
+  "prettier.module.path" : "\/Users\/sbattis\/Documents\/GitHub\/knowledgebase\/node_modules\/prettier",
+  "todo.workspace-ignore-names" : [
+    ""
+  ],
+  "todo.workspace-ignore-paths" : [
+    ".\/.grpcio"
+  ],
+  "workspace.art_style" : 1,
+  "workspace.color" : 8
 }

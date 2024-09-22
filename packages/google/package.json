@@ -14,7 +14,7 @@
   "main": "src/index.ts",
   "dependencies": {
     "@battis/qui-cli": "^0.4.2",
-    "@google-cloud/storage": "^7.12.1",
+    "@google-cloud/storage": "^7.13.0",
     "@googleapis/drive": "^8.14.0",
     "express": "^4.21.0",
     "google-auth-library": "^9.14.1",
