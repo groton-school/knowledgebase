@@ -36,6 +36,7 @@ const properNouns = [
   'Groton',
   'HDMI',
   'I',
+  'iCloud',
   'iOS',
   'iPad',
   'iPadOS',
@@ -56,6 +57,7 @@ const properNouns = [
   'Microsoft Office',
   'myGroton',
   'NBM',
+  'Notability',
   'November',
   'October',
   'OneNote',
@@ -95,12 +97,15 @@ function fixCase(text: string) {
         part
           .toLowerCase()
           .match(new RegExp(`^([^a-z]*)([${nonLetters}a-z]+)([^a-z]*)$`)) || [];
-      let fixed = properNouns.reduce((result, noun) => {
-        if (noun.toLowerCase() === result) {
-          return noun;
-        }
-        return result;
-      }, (word || '').toLowerCase());
+      let fixed = properNouns.reduce(
+        (result, noun) => {
+          if (noun.toLowerCase() === result) {
+            return noun;
+          }
+          return result;
+        },
+        (word || '').toLowerCase()
+      );
       if (i == 0) {
         fixed = fixed.substring(0, 1).toUpperCase() + fixed.substring(1);
       }
