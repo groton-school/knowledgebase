@@ -1,13 +1,13 @@
-import Helper from '../Helper';
-import pipelineHTML from './Actions/pipelineHTML';
-import FileFactory from './FileFactory';
-import IndexEntry from './IndexEntry';
 import Google from '@groton/knowledgebase.google';
 import Index from '@groton/knowledgebase.index';
 import Zip from 'adm-zip';
 import events from 'events';
 import mime from 'mime-types';
 import path from 'path';
+import Helper from '../Helper';
+import pipelineHTML from './Actions/pipelineHTML';
+import FileFactory from './FileFactory';
+import IndexEntry from './IndexEntry';
 
 class File extends Index.File {
   protected static readonly DEFAULT_PERMISSIONS_REGEX = /.*/;
@@ -21,9 +21,46 @@ class File extends Index.File {
       case Google.MimeTypes.Doc:
       case Google.MimeTypes.Sheet:
       case Google.MimeTypes.Slides:
-        return await this.fetchAsCompleteHtml();
-      case Google.MimeTypes.Shortcut:
-        throw new Error(`${this.mimeType} isn't handled yet`);
+        try {
+          return await this.fetchAsCompleteHtml();
+        } catch (error) {
+          if (
+            error.message == 'This file is too large to be exported.' &&
+            this.webViewLink
+          ) {
+            return {
+              'index.html': new Blob(
+                [
+                  `<html>
+                  <head>
+                    <link rel="icon" href="/static/_site/favicon.ico" />
+                    <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+                    <link rel="stylesheet" href="/assets/ui.css" />
+                  </head>
+                  <body>
+                    <div
+                      id="doc-content"
+                      class="doc-content"
+                    >
+                      <p>
+                        <span>Redirect to </span
+                        ><span><a
+                            href="${this.webViewLink}"
+                            >${this.webViewLink}</a
+                          ></span>
+                      </p>
+                    </div>
+                    <script src="/assets/ui.js"></script>
+                  </body>
+                </html>`
+                ],
+                { type: 'text/html' }
+              )
+            };
+          } else {
+            throw error;
+          }
+        }
       default:
         return {
           '.': (

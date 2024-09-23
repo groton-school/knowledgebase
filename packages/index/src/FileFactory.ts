@@ -1,6 +1,6 @@
+import Google from '@groton/knowledgebase.google';
 import File, { Id } from './File';
 import IndexEntry from './IndexEntry';
-import Google from '@groton/knowledgebase.google';
 
 class FileFactory<T extends typeof File> {
   public constructor(private fileType: T) {}

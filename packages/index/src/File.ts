@@ -1,6 +1,6 @@
-import IndexEntry from './IndexEntry';
 import { JSONObject } from '@battis/typescript-tricks';
 import Google from '@groton/knowledgebase.google';
+import IndexEntry from './IndexEntry';
 
 type Nonoptional<T> = Exclude<T, null | undefined>;
 
@@ -19,7 +19,8 @@ class File {
     'parents',
     'permissions',
     'modifiedTime',
-    'shortcutDetails'
+    'shortcutDetails',
+    'webViewLink'
   ];
 
   public readonly id: Id;
