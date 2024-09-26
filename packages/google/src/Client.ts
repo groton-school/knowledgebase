@@ -3,7 +3,7 @@ import { Storage } from '@google-cloud/storage';
 import * as Drive from '@googleapis/drive';
 import express from 'express';
 import fs from 'fs';
-import { OAuth2Client, Credentials } from 'google-auth-library';
+import { Credentials, OAuth2Client } from 'google-auth-library';
 import open from 'open';
 
 export default class Client {

@@ -28,16 +28,39 @@ class FileFactory<T extends typeof File> {
   }
 
   public async fromDriveId(fileId: Id, index?: IndexEntry) {
-    const file = (
-      await (
-        await Google.Client.getDrive()
-      ).files.get({
+    const drive = await Google.Client.getDrive();
+    const { data: file } = await drive.files.get({
+      fileId,
+      /**
+       * @see https://developers.google.com/drive/api/reference/rest/v3/files#File.FIELDS.permissions on shared drives, the permissions property is never populated
+       */
+      fields: File.fields.filter((field) => field != 'permissions').join(','),
+      supportsAllDrives: true
+    });
+
+    const {
+      data: { permissions: permissionsList }
+    } = await drive.permissions.list({
+      fileId,
+      supportsAllDrives: true
+    });
+
+    const permissions = [];
+    for (const permission of permissionsList!) {
+      const { data } = await drive.permissions.get({
         fileId,
-        fields: File.fields.join(',')
-      })
-    ).data;
+        permissionId: permission.id!,
+        fields: 'emailAddress,role,type',
+        supportsAllDrives: true
+      });
+      permissions.push(data);
+    }
+
     return new this.fileType(
-      await this.resolveShortcut(file),
+      await this.resolveShortcut({
+        ...file,
+        permissions
+      }),
       index
     ) as InstanceType<T>;
   }

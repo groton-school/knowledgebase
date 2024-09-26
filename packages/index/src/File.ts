@@ -27,7 +27,7 @@ class File {
   public readonly name: Name;
   public readonly description: Google.Drive.drive_v3.Schema$File['description'];
   public readonly modifiedTime: Google.Drive.drive_v3.Schema$File['modifiedTime'];
-  public readonly permissions: Google.Drive.drive_v3.Schema$File['permissions'];
+  public permissions: Google.Drive.drive_v3.Schema$File['permissions'];
   public readonly mimeType: Google.Drive.drive_v3.Schema$File['mimeType'];
   public index: IndexEntry;
 

@@ -1,9 +1,9 @@
-import Cache from '../src/Cache';
-import Helper from '../src/Helper';
 import cli from '@battis/qui-cli';
 import Google from '@groton/knowledgebase.google';
 import fs from 'fs';
 import path from 'path';
+import Cache from '../src/Cache';
+import Helper from '../src/Helper';
 
 const FOLDER_ID = '%FOLDER_ID%';
 const FOLDER_NAME = '%FOLDER_NAME%';
@@ -93,6 +93,12 @@ const options = {
       await new Cache.FileFactory(Cache.File).fromDriveId(prevIndex.root.id)
     ];
     currIndex.push(...(await currIndex[0].indexContents()));
+
+    currIndex.forEach((file) => {
+      file.permissions = file.permissions.filter((permission) =>
+        permissionsPattern.test(permission.emailAddress)
+      );
+    });
 
     spinner.start(`Comparing indices`);
     // TODO reset permissions

@@ -68,7 +68,8 @@ class File extends Index.File {
               await Google.Client.getDrive()
             ).files.get({
               fileId: this.id!,
-              alt: 'media'
+              alt: 'media',
+              supportsAllDrives: true
             })
           ).data
         };
@@ -126,6 +127,7 @@ class File extends Index.File {
           ).files.list({
             q: `'${this.id}' in parents and trashed = false`,
             supportsAllDrives: true,
+            includeTeamDriveItems: true,
             pageToken: folderContents?.nextPageToken || undefined
           })
         ).data;
