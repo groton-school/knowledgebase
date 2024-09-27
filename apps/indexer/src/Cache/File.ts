@@ -185,15 +185,17 @@ class File extends Index.File {
                 `${file.name} expired and deleted`
               );
             } catch (error) {
-              File.event.emit(
-                File.Event.Fail,
-                Helper.errorMessage(
-                  `Error deleting ${file.name}`,
-                  { driveId: this.id },
-                  error
-                )
-              );
-              success = false;
+              if (error.code != 404) {
+                File.event.emit(
+                  File.Event.Fail,
+                  Helper.errorMessage(
+                    `Error deleting ${file.name}`,
+                    { driveId: this.id },
+                    error
+                  )
+                );
+                success = false;
+              }
             }
           }
           File.event.emit(
