@@ -50,7 +50,7 @@ class FileFactory<T extends typeof File> {
       const { data } = await drive.permissions.get({
         fileId,
         permissionId: permission.id!,
-        fields: 'emailAddress,role,type',
+        fields: 'id,emailAddress,role,type',
         supportsAllDrives: true
       });
       permissions.push(data);
