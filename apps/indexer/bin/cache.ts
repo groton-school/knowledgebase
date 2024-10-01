@@ -1,9 +1,9 @@
-import Cache from '../src/Cache';
-import Helper from '../src/Helper';
 import cli from '@battis/qui-cli';
 import Google from '@groton/knowledgebase.google';
 import fs from 'fs';
 import path from 'path';
+import Cache from '../src/Cache';
+import Helper from '../src/Helper';
 
 const defaultIndexPath = path.resolve(__dirname, '../../router/var/index.json');
 const defaultKeysPath = path.resolve(__dirname, '../var/keys.json');
@@ -96,19 +96,22 @@ const flags = {
     }));
 
   spinner.start('Reviewing index files');
-  const updatedIndex = [index.root];
-  for (let i = 0; i < index.length; i++) {
-    if (index[i].index.path != '.') {
-      const result = await index[i].cache({
-        bucketName,
-        force: !!force,
-        ignoreErrors: !!ignoreErrors
-      });
-      if (result) {
-        updatedIndex.push(result);
-      }
-    }
-  }
+  const updatedIndex = [
+    index.root,
+    ...(
+      await Promise.all(
+        index.map((entry) => {
+          if (entry.index.path != '.') {
+            return entry.cache({
+              bucketName,
+              force: !!force,
+              ignoreErrors: !!ignoreErrors
+            });
+          }
+        })
+      )
+    ).filter((result) => result)
+  ];
   spinner.succeed('All indexed files reviewed');
 
   spinner.start(`Saving index to ${cli.colors.url(indexPath)}`);

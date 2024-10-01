@@ -1,8 +1,8 @@
-import ACL from '../src/ACL';
-import Helper from '../src/Helper';
 import cli from '@battis/qui-cli';
 import fs from 'fs';
 import path from 'path';
+import ACL from '../src/ACL';
+import Helper from '../src/Helper';
 
 // TODO why does reset-permissions need to run separately from upload?
 // TODO version of reset-permissions that resets only recent uploads
@@ -90,13 +90,11 @@ const flags = {
   permissionsRegex = permissionsRegex || process.env.PERMISSIONS_REGEX || '.*';
 
   spinner.start('Reviewing permission changes');
-  for (const file of index) {
-    await file.cache({
-      bucketName,
-      permissionsRegex,
-      ignoreErrors: !!ignoreErrors
-    });
-  }
+  await Promise.all(
+    index.map((file) =>
+      file.cache({ bucketName, permissionsRegex, ignoreErrors: !!ignoreErrors })
+    )
+  );
   spinner.succeed('All permission changes reviewed');
 
   spinner.start(`Saving index to ${cli.colors.url(indexPath)}`);

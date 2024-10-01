@@ -5,13 +5,16 @@ import IndexEntry from './IndexEntry';
 class FileFactory<T extends typeof File> {
   public constructor(private fileType: T) {}
 
-  private async resolveShortcut(file: Google.Drive.drive_v3.Schema$File) {
+  private async resolveShortcut(
+    file: Google.Drive.drive_v3.Schema$File,
+    permissionsRegex: RegExp
+  ) {
     if (
       file.mimeType == Google.MimeTypes.Shortcut &&
       file.shortcutDetails?.targetId
     ) {
       const targetFile: Google.Drive.drive_v3.Schema$File =
-        await this.fromDriveId(file.shortcutDetails.targetId);
+        await this.fromDriveId(file.shortcutDetails.targetId, permissionsRegex);
       return { ...targetFile, parents: file.parents, name: file.name };
     }
     return file;
@@ -19,15 +22,20 @@ class FileFactory<T extends typeof File> {
 
   public async fromDrive(
     file: Google.Drive.drive_v3.Schema$File,
+    permissionsRegex: RegExp,
     index?: IndexEntry
   ) {
     return new this.fileType(
-      await this.resolveShortcut(file),
+      await this.resolveShortcut(file, permissionsRegex),
       index
     ) as InstanceType<T>;
   }
 
-  public async fromDriveId(fileId: Id, index?: IndexEntry) {
+  public async fromDriveId(
+    fileId: Id,
+    permissionsRegex: RegExp,
+    index?: IndexEntry
+  ) {
     const drive = await Google.Client.getDrive();
     const { data: file } = await drive.files.get({
       fileId,
@@ -45,22 +53,33 @@ class FileFactory<T extends typeof File> {
       supportsAllDrives: true
     });
 
-    const permissions = [];
-    for (const permission of permissionsList!) {
-      const { data } = await drive.permissions.get({
-        fileId,
-        permissionId: permission.id!,
-        fields: 'id,emailAddress,role,type',
-        supportsAllDrives: true
-      });
-      permissions.push(data);
-    }
+    const permissions = (
+      await Promise.all(
+        permissionsList!.map((permission) =>
+          drive.permissions.get({
+            fileId,
+            permissionId: permission.id!,
+            fields: 'id,emailAddress,role,type',
+            supportsAllDrives: true
+          })
+        )
+      )
+    )
+      .map((response) => response.data)
+      .filter(
+        (permission) =>
+          permission.emailAddress &&
+          permissionsRegex.test(permission.emailAddress)
+      );
 
     return new this.fileType(
-      await this.resolveShortcut({
-        ...file,
-        permissions
-      }),
+      await this.resolveShortcut(
+        {
+          ...file,
+          permissions
+        },
+        permissionsRegex
+      ),
       index
     ) as InstanceType<T>;
   }

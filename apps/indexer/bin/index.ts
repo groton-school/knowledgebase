@@ -90,15 +90,12 @@ const options = {
     spinner.succeed(`${cli.colors.value(prevIndex.root.name)} index loaded`);
 
     const currIndex = [
-      await new Cache.FileFactory(Cache.File).fromDriveId(prevIndex.root.id)
+      await new Cache.FileFactory(Cache.File).fromDriveId(
+        prevIndex.root.id,
+        permissionsPattern
+      )
     ];
-    currIndex.push(...(await currIndex[0].indexContents()));
-
-    currIndex.forEach((file) => {
-      file.permissions = file.permissions.filter((permission) =>
-        permissionsPattern.test(permission.emailAddress)
-      );
-    });
+    currIndex.push(...(await currIndex[0].indexContents(permissionsPattern)));
 
     spinner.start(`Comparing indices`);
     // TODO reset permissions
@@ -162,10 +159,11 @@ const options = {
         validate: cli.validators.notEmpty
       }));
     const folder = await new Cache.FileFactory(Cache.File).fromDriveId(
-      folderId
+      folderId,
+      permissionsPattern
     );
     const index: Cache.File[] = [folder];
-    index.push(...(await folder.indexContents()));
+    index.push(...(await folder.indexContents(permissionsPattern)));
     indexPath = path.resolve(
       CWD,
       (

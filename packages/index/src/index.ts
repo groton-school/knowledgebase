@@ -12,7 +12,8 @@ namespace Index {
   export import IndexEntry = _IndexEntry;
   export async function fromFile<T extends typeof File>(
     fileType: T,
-    filePath: string
+    filePath: string,
+    permissionsRegex: RegExp
   ): Promise<_Index<InstanceType<T>>> {
     const fileFactory = new _FileFactory(fileType);
     const obj = JSON.parse(fs.readFileSync(filePath).toString());
@@ -20,7 +21,7 @@ namespace Index {
       return new _Index<InstanceType<T>>(
         ...(await Promise.all(
           obj.map(async (e: JSONObject) => {
-            return await fileFactory.fromDrive(e);
+            return await fileFactory.fromDrive(e, permissionsRegex);
           })
         ))
       );

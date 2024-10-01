@@ -114,7 +114,7 @@ class File extends Index.File {
     return path.join(basePath, subfileName);
   }
 
-  public async indexContents(): Promise<File[]> {
+  public async indexContents(permissionsRegex: RegExp): Promise<File[]> {
     if (this.isFolder()) {
       let contents: File[] = [];
       let folderContents: Google.Drive.drive_v3.Schema$FileList = {};
@@ -133,29 +133,40 @@ class File extends Index.File {
         ).data;
 
         if (folderContents.files?.length) {
-          for (const item of folderContents.files) {
-            if (!item.name) {
-              throw new Error(`${item.id} is unnamed`);
-            }
-            File.event.emit(
-              File.Event.Start,
-              `Indexing ${path.join(this.index.path, item.name)}`
-            );
-            const file = await fileFactory.fromDriveId(
-              item.id!,
-              new IndexEntry(this.index.path)
-            );
-            file.index = new IndexEntry(
-              path.join(this.index.path, Helper.normalizeFilename(file.name))
-            );
-            if (file.isFolder()) {
-              contents.push(file);
-              contents.push(...(await file.indexContents()));
-            } else {
-              contents.push(file);
-            }
-            File.event.emit(File.Event.Succeed, `${file.index.path} indexed`);
-          }
+          contents.push(
+            ...(await Promise.all(
+              folderContents.files.map(async (item) => {
+                if (!item.name) {
+                  throw new Error(`${item.id} is unnamed`);
+                }
+                File.event.emit(
+                  File.Event.Start,
+                  `Indexing ${path.join(this.index.path, item.name)}`
+                );
+                const file = await fileFactory.fromDriveId(
+                  item.id!,
+                  permissionsRegex,
+                  new IndexEntry(this.index.path)
+                );
+                file.index = new IndexEntry(
+                  path.join(
+                    this.index.path,
+                    Helper.normalizeFilename(file.name)
+                  )
+                );
+                if (file.isFolder()) {
+                  contents.push(
+                    ...(await file.indexContents(permissionsRegex))
+                  );
+                }
+                File.event.emit(
+                  File.Event.Succeed,
+                  `${file.index.path} indexed`
+                );
+                return file;
+              })
+            ))
+          );
         }
       } while (folderContents.nextPageToken);
       return contents;
