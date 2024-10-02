@@ -1,6 +1,8 @@
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import Constants from '../Constants';
 import Helper from '../Helper';
 import Analytics from './Analytics';
+import BreadCrumbs from './BreadCrumbs';
 import Directory from './Content/Directory';
 import GoogleDocEmbed from './Content/GoogleDocEmbed';
 import Head from './Head';
@@ -8,7 +10,6 @@ import Navbar from './Navbar';
 import Redirect from './Redirect';
 import Search from './Search';
 import './styles.scss';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 export default function PageStructure() {
   Analytics();
@@ -43,6 +44,7 @@ export default function PageStructure() {
           Directory(content);
           break;
       }
+      BreadCrumbs(wrapper);
     } else {
       document.body.appendChild(wrapper);
     }

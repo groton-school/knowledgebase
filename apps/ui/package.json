@@ -34,7 +34,8 @@
     "@groton/knowledgebase.api": "workspace:*",
     "@groton/knowledgebase.strings": "workspace:*",
     "bootstrap": "^5.3.3",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "path-browserify": "^1.0.1"
   },
   "devDependencies": {
     "@battis/eslint-config": "latest",
@@ -48,6 +49,7 @@
     "@types/bootstrap": "^5.2.10",
     "@types/gtag.js": "^0.0.12",
     "@types/node": "^20.16.5",
+    "@types/path-browserify": "^1.0.3",
     "acorn": "^8.12.1",
     "app-root-path": "^3.1.0",
     "browserslist": "^4.23.3",
