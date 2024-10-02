@@ -1,4 +1,5 @@
 import path from 'path-browserify';
+import Helper from '../Helper';
 
 export default function BreadCrumbs(root: HTMLElement) {
   const parts = path
@@ -25,4 +26,5 @@ export default function BreadCrumbs(root: HTMLElement) {
       </div>
     </div>`
   );
+  Helper.log('Breadcrumbs trailed');
 }
