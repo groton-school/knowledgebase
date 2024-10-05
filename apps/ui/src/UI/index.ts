@@ -9,7 +9,8 @@ import Search from './Search';
 import TOC from './TOC';
 import TitleCaseAllCapsHeaders from './TitleCaseAllCapsHeaders';
 import './google-docs.scss';
-import './unlock-img-width.scss';
+// import './unlock-img-width.scss';
+import LockImageWidth from './LockImgWidth';
 
 /**
  * Extend and enhance the user interface of Overdrive
@@ -25,6 +26,7 @@ export default function UI() {
   Search();
   Permalinks();
   H6IsNormalText();
+  LockImageWidth();
   Embiggen();
   HighlightAnchor();
   CleanGooglePassThrough();
