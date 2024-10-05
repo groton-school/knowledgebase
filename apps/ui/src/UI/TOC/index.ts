@@ -14,8 +14,10 @@ export default function TOC() {
       .map((d) => `h${d + 1}`)
       .join(','),
     (headings) => {
-      const toc = document.querySelector('#toc .dynamic-content');
-      if (toc) {
+      const dyn = document.querySelector(
+        '#toc .dynamic-content'
+      ) as HTMLDivElement;
+      if (dyn) {
         const builder = new Builder();
         headings.forEach((h) => {
           builder.add(
@@ -24,7 +26,9 @@ export default function TOC() {
             parseInt(h.tagName.substring(h.tagName.length - 1)) - 1
           );
         });
-        toc.append(builder.finalize().firstElementChild!); // TODO TOC hack
+        const list = builder.finalize().firstElementChild;
+        list!.classList.add('dynamic-content');
+        dyn.parentElement!.replaceChild(list!, dyn);
         Helper.log(`built TOC`);
       }
     }

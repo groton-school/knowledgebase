@@ -1,4 +1,4 @@
 // TODO should be .dynamic-content not ul
-#toc.card:has(ul:empty) {
+#toc.card:has(.dynamic-content:empty) {
   display: none;
 }
