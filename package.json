@@ -41,7 +41,7 @@
     "@changesets/cli": "^2.27.9",
     "@groton/knowledgebase.config": "workspace:*",
     "@tsconfig/recommended": "^1.0.7",
-    "add-peer-dependencies": "^0.1.5",
+    "add-peer-dependencies": "^0.1.6",
     "monorepo-package-paths": "^0.2.1",
     "npm-run-all": "^4.1.5",
     "syncpack": "^12.4.0",
