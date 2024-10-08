@@ -1,4 +1,4 @@
-import { EmailString, UrlString } from '@groton/knowledgebase.strings';
+import { EmailString, UrlString } from '@groton/knowledgebase.domain';
 
 namespace OpenID {
   // TODO surely this is defined somewhere in the Google clients?

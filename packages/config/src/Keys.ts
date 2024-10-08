@@ -1,4 +1,4 @@
-import { UrlString } from '@groton/knowledgebase.strings';
+import { UrlString } from '@groton/knowledgebase.domain';
 
 type Keys = {
   web: {

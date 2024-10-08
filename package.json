@@ -38,7 +38,7 @@
     "@battis/partly-gcloudy": "^0.4.5",
     "@battis/prettier-config": "latest",
     "@battis/qui-cli": "^0.4.2",
-    "@changesets/cli": "^2.27.8",
+    "@changesets/cli": "^2.27.9",
     "@groton/knowledgebase.config": "workspace:*",
     "@tsconfig/recommended": "^1.0.7",
     "add-peer-dependencies": "^0.1.5",

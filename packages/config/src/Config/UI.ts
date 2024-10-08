@@ -1,4 +1,4 @@
-import { PathString, CSSColorString } from '@groton/knowledgebase.strings';
+import { CSSColorString, PathString } from '@groton/knowledgebase.domain';
 
 type UI = {
   root?: PathString;

@@ -1,4 +1,4 @@
-import { UrlString } from '@groton/knowledgebase.strings';
+import { UrlString } from '@groton/knowledgebase.domain';
 
 export default async function addScript(src: UrlString) {
   return new Promise((resolve, reject) => {

@@ -1,10 +1,14 @@
+import { HostnameString } from '@groton/knowledgebase.domain';
+import ACL from './ACL';
+import Session from './Session';
+import Storage from './Storage';
 import UI from './UI';
-import { HostnameString } from '@groton/knowledgebase.strings';
 
 type Config = {
   hostname?: HostnameString;
-  session: { secret: string };
-  storage: { bucket: string };
+  session: Session;
+  storage: Storage;
+  acl?: ACL;
   ui?: UI;
 };
 

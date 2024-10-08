@@ -1,4 +1,4 @@
-import { EmailString } from '@groton/knowledgebase.strings';
+import { EmailString } from '@groton/knowledgebase.domain';
 
 export type Group = {
   displayName: string;
