@@ -1,7 +1,7 @@
 import bundle from '@battis/webpack';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import dotenv from 'dotenv';
-import cfg from './var/config.json' with { type: 'json' };
+import cfg from './var/config.json';
 
 dotenv.config();
 const DEBUGGING = JSON.parse(process.env.DEBUGGING);
