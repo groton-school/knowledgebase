@@ -13,14 +13,14 @@
   },
   "scripts": {
     "build": "run-s build:*",
-    "build:compile": "webpack",
-    "build:index": "node -e \"if (! require('fs').existsSync('var/index.json') || ! require('fs').existsSync('var/groups.json')) { process.exit(1)}\" || pnpm -F @groton/knowledgebase.index run upload",
     "build:sync-config": "tsx bin/sync-config.ts -c ../../config.json",
+    "build:index": "node -e \"if (! require('fs').existsSync('var/index.json') || ! require('fs').existsSync('var/groups.json')) { process.exit(1)}\" || pnpm -F @groton/knowledgebase.index run upload",
     "build:ui": "node -e \"if (! require('fs').existsSync('../ui/build')) { process.exit(1)}\" || pnpm -F @groton/knowledgebase.ui run build",
+    "build:compile": "webpack",
     "deploy": "run-s deploy:* || tsx bin/restore-lockfile.ts",
     "deploy:build": "run-s build",
-    "deploy:deploy": "tsx bin/deploy.ts",
     "deploy:prepare-lockfile": "tsx bin/prepare-lockfile.ts",
+    "deploy:deploy": "tsx bin/deploy.ts",
     "deploy:restore-lockfile": "tsx bin/restore-lockfile.ts",
     "deploy:unbork-pnpm": "pnpm i -rf",
     "start": "node build/index.js"
@@ -64,6 +64,7 @@
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.6.0",
     "mini-css-extract-plugin": "^2.9.1",
+    "npm-run-all": "^4.1.5",
     "postcss": "^8.4.47",
     "postcss-loader": "^8.1.1",
     "postcss-preset-env": "^10.0.6",
@@ -80,6 +81,7 @@
     "webpack": "5.95.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.1.0",
+    "webpack-node-externals": "^3.0.0",
     "winston": "^3.15.0"
   }
 }
