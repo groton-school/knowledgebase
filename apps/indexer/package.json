@@ -28,6 +28,7 @@
     "@groton/knowledgebase.google": "workspace:*",
     "@groton/knowledgebase.index": "workspace:*",
     "adm-zip": "^0.5.16",
+    "ejs": "^3.1.10",
     "jsdom": "^24.1.3",
     "mime-types": "^2.1.35"
   },
@@ -35,6 +36,7 @@
     "@battis/typescript-tricks": "^0.5.5",
     "@google-cloud/storage": "^7.13.0",
     "@types/adm-zip": "^0.5.5",
+    "@types/ejs": "^3.1.5",
     "@types/jsdom": "^21.1.7",
     "@types/mime-types": "^2.1.4",
     "@types/node": "^20.16.5",

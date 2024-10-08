@@ -28,35 +28,10 @@ class File extends Index.File {
             error.message == 'This file is too large to be exported.' &&
             this.webViewLink
           ) {
-            return {
-              'index.html': new Blob(
-                [
-                  `<html>
-                  <head>
-                    <link rel="icon" href="/static/_site/favicon.ico" />
-                    <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
-                    <link rel="stylesheet" href="/assets/ui.css" />
-                  </head>
-                  <body>
-                    <div
-                      id="doc-content"
-                      class="doc-content"
-                    >
-                      <p>
-                        <span>Redirect to </span
-                        ><span><a
-                            href="${this.webViewLink}"
-                            >${this.webViewLink}</a
-                          ></span>
-                      </p>
-                    </div>
-                    <script src="/assets/ui.js"></script>
-                  </body>
-                </html>`
-                ],
-                { type: 'text/html' }
-              )
-            };
+            return await Helper.renderBlob(
+              path.join(__dirname, 'Views/shortcut.ejs'),
+              this
+            );
           } else {
             throw error;
           }

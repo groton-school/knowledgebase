@@ -18,7 +18,11 @@ class File extends Cache.File {
     if (!this.isFolder()) {
       const bucket = Google.Client.getStorage().bucket(bucketName);
       const subfile = Helper.subfileFactory(bucket);
-      let updatedPermissions = [];
+      let updatedPermissions = [
+        ...this.permissions.filter(
+          (p) => p.indexerAclState == IndexEntry.State.Cached
+        )
+      ];
       for (const permission of this.permissions!.filter(
         (p) => p.indexerAclState != IndexEntry.State.Cached
       )) {
@@ -83,7 +87,8 @@ class File extends Cache.File {
               File.Event.Start,
               `Adding ${permission.displayName} to ACL for ${this.index.path}`
             );
-            await Helper.exponentialBackoff(async () => {
+            const success = await Helper.exponentialBackoff(async () => {
+              let success: string | true = true;
               for (const uri of this.index.uri) {
                 const file = subfile(uri);
                 File.event.emit(
@@ -99,7 +104,8 @@ class File extends Cache.File {
                     File.Event.Succeed,
                     `${permission.type}:${permission.emailAddress} added as reader to ACL for /${file.name}`
                   );
-                } catch (error) {
+                } catch (_e) {
+                  const error = _e as { code?: number; message?: string };
                   File.event.emit(
                     File.Event.Fail,
                     Helper.errorMessage(
@@ -112,11 +118,17 @@ class File extends Cache.File {
                       error
                     )
                   );
+                  success = error.message;
                 }
               }
-              permission.indexerAclState = IndexEntry.State.Cached;
-              updatedPermissions.push(permission);
+              return success;
             }, ignoreErrors);
+            if (success === true) {
+              permission.indexerAclState = IndexEntry.State.Cached;
+            } else {
+              permission.indexerAclState = success as IndexEntry.State;
+            }
+            updatedPermissions.push(permission);
           }
         }
       }

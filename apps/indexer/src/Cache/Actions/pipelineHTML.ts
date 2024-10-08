@@ -1,5 +1,5 @@
-import File from '../File';
 import { JSDOM } from 'jsdom';
+import File from '../File';
 
 // TODO pipelineHTML needs a re-think
 
@@ -8,7 +8,8 @@ type PipelineFunction = (params: { file: File; html: string }) => string;
 const injectGoogleDocId: PipelineFunction = ({ file, html }) => {
   return html.replace(
     '<style',
-    `<meta item-prop="kb.id" content="${file.id}" /><style`
+    `<meta item-prop="kb.id" content="${file.id}" />
+    ${file.webViewLink ? `<meta item-prop="kb.webViewLink" content="${file.webViewLink}" />` : ''}<style`
   );
 };
 

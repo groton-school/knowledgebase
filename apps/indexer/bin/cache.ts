@@ -1,5 +1,6 @@
 import cli from '@battis/qui-cli';
 import Google from '@groton/knowledgebase.google';
+import Index from '@groton/knowledgebase.index';
 import fs from 'fs';
 import path from 'path';
 import Cache from '../src/Cache';
@@ -110,7 +111,14 @@ const flags = {
           }
         })
       )
-    ).filter((result) => result)
+    ).filter(
+      (result) =>
+        result &&
+        !(
+          result.index.exists === false &&
+          result.index.status === Index.IndexEntry.State.Expired
+        )
+    )
   ];
   spinner.succeed('All indexed files reviewed');
 
