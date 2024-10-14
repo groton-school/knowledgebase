@@ -1,7 +1,7 @@
 //import * as QRCode from 'qrcode';
 import Helper from '../../../Helper';
-import styles from './styles.module.scss';
 import './styles.scss';
+import styles from './styles.scss';
 import icon from './workspace.png';
 
 const chromeWebStore = 'a[href^="https://workspace.google.com/marketplace/"]';

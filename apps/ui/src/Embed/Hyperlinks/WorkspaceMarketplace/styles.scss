@@ -2,6 +2,10 @@
 
 $marketplace: Constants.$prefix + 'workspace-marketplace';
 
+:export {
+  marketplace: #{$marketplace};
+}
+
 #{Constants.$googleDocEmbed} {
   .#{$marketplace} {
     font-family: 'Google Sans', Roboto, Arial, sans-serif;

@@ -1,8 +1,8 @@
 //import * as QRCode from 'qrcode';
 import Helper from '../../../Helper';
-import hideHeaderAndFooterStyles from '../../../UI/HideHeaderAndFooter/styles.module.scss';
-import styles from './styles.module.scss';
+import hideHeaderAndFooterStyles from '../../../UI/HideHeaderAndFooter/styles.scss';
 import './styles.scss';
+import styles from './styles.scss';
 
 const appStore = 'a[href^="https://apps.apple.com/"]'; // TODO handle iTunes links too?
 const playStore = 'a[href^="https://play.google.com/"]';

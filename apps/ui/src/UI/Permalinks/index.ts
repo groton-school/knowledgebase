@@ -1,6 +1,6 @@
 import Helper from '../../Helper';
-import styles from './styles.module.scss';
 import './styles.scss';
+import styles from './styles.scss';
 
 /**
  * Display permalinks to embedded Google doc headers

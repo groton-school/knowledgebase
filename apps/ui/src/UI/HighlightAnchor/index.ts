@@ -1,6 +1,6 @@
 import Helper from '../../Helper';
-import styles from './styles.module.scss';
 import './styles.scss';
+import styles from './styles.scss';
 
 function scrollToHash() {
   if (window.location.hash.length) {

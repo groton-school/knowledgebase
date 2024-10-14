@@ -1,5 +1,5 @@
-import styles from './styles.module.scss';
 import './styles.scss';
+import styles from './styles.scss';
 
 /**
  * Create a standardized iframe DOM element

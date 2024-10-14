@@ -4,6 +4,12 @@ $thumbnail: Constants.$prefix + 'thumbnail';
 $thumbnailImage: Constants.$prefix + 'thumbnail-image';
 $bgcolor: '--' + Constants.$prefix + 'bgcolor';
 
+:export {
+  thumbnail: #{$thumbnail};
+  thumbnailImage: #{$thumbnailImage};
+  bgcolor: #{$bgcolor};
+}
+
 :root {
   #{$bgcolor}: transparent;
 }

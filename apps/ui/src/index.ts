@@ -1,4 +1,4 @@
-/// <reference types="@battis/webpack/types" />
+import '@battis/webpack/types';
 import pkg from '../package.json';
 import DOM from './DOM';
 import Embed from './Embed';

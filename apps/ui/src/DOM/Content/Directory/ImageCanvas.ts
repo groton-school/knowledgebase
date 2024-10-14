@@ -1,5 +1,5 @@
 import config from '../../../config';
-import styles from './styles.module.scss';
+import styles from './styles.scss';
 
 export default function ImageCanvas({
   href,

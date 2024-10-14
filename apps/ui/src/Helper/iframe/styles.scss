@@ -2,6 +2,10 @@
 
 $frame: Constants.$prefix + 'frame';
 
+:export {
+  frame: #{$frame};
+}
+
 #{Constants.$googleDocEmbed} {
   .#{$frame} {
     border: none;

@@ -2,6 +2,10 @@
 
 $include: Constants.$prefix + 'include';
 
+:export {
+  include: #{$include};
+}
+
 #{Constants.$googleDocEmbed} > div:not(.#{$include}) {
   display: none;
 }

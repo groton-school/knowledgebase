@@ -14,6 +14,17 @@ $caption: $prefix + 'caption';
 $margin: 1em;
 $scrimColor: hsla(0, 0%, 25%, 0.85);
 
+:export {
+  embiggen: #{$embiggen};
+  image: #{$image};
+  original: #{$original};
+  scrim: #{$scrim};
+  closeBox: #{$closeBox};
+  wrapper: #{$wrapper};
+  zoomed: #{$zoomed};
+  caption: #{$caption};
+}
+
 #{Constants.$googleDocEmbed} {
   img.#{$embiggen}.#{$image}.#{$original} {
     cursor: zoom-in;

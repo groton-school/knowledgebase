@@ -1,4 +1,4 @@
-import Constants from '../Constants.module.scss';
+import Constants from '../Constants.scss';
 
 /** Name of the Google Doc embed custom event */
 export const GoogleDocEmbedEvent = 'kbe';

@@ -1,4 +1,4 @@
-import StyleConstants from './Constants.module.scss';
+import StyleConstants from './Constants.scss';
 
 const hosting = process.env.GOOGLE_HOSTING;
 const styles = StyleConstants;

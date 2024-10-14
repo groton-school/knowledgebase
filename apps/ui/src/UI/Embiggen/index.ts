@@ -2,8 +2,8 @@
  * I _think_ this is easier than trying to hook into the existing Lightbox and differentiating between UI elements and embedded images
  */
 import Helper from '../../Helper';
-import styles from './styles.module.scss';
 import './styles.scss';
+import styles from './styles.scss';
 
 function Embiggenate(e: MouseEvent) {
   const target = e.target as HTMLImageElement;

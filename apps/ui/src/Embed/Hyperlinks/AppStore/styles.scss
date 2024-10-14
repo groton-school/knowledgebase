@@ -5,6 +5,13 @@ $ios: Constants.$prefix + 'ios';
 $android: Constants.$prefix + 'android';
 $qr: Constants.$prefix + 'qr';
 
+:export {
+  apps: #{$apps};
+  ios: #{$ios};
+  android: #{$android};
+  qr: #{$qr};
+}
+
 #{Constants.$googleDocEmbed} {
   .#{$apps} {
     display: flex;

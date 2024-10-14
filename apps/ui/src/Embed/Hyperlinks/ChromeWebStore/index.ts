@@ -1,8 +1,8 @@
 //import * as QRCode from 'qrcode';
 import Helper from '../../../Helper';
 import icon from './chrome-web-store.png';
-import styles from './styles.module.scss';
 import './styles.scss';
+import styles from './styles.scss';
 
 const chromeWebStore = 'a[href^="https://chromewebstore.google.com/"]';
 

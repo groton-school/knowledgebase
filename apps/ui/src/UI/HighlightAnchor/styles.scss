@@ -2,6 +2,10 @@
 
 $highlight: Constants.$prefix + 'hilite';
 
+:export {
+  highlight: #{$highlight};
+}
+
 #{Constants.$googleDocEmbed} {
   .#{$highlight} {
     animation: 0.25s fadeOut 8;

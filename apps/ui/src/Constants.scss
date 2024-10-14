@@ -9,5 +9,15 @@ $favicon: config.$favicon;
 $background: config.$background;
 $logo: config.$logo;
 
+:export {
+  googleDocEmbed: #{$googleDocEmbed};
+  prefix: #{$prefix};
+  mobileCutoffWidthInPx: #{$mobileCutoffWidthInPx};
+
+  favicon: $favicon;
+  logo: $logo;
+  background: $background;
+}
+
 // bootstrap styling
 $primaryColor: config.$primaryColor;

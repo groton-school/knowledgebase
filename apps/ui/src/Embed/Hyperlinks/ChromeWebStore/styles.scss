@@ -2,6 +2,10 @@
 
 $chromeWebStore: Constants.$prefix + 'chrome-web-store';
 
+:export {
+  chromeWebStore: #{$chromeWebStore};
+}
+
 #{Constants.$googleDocEmbed} {
   .#{$chromeWebStore} {
     font-family: 'Google Sans', Roboto, Arial, sans-serif;

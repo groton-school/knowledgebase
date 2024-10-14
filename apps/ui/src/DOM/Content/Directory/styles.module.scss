@@ -1,7 +1,0 @@
-@use 'styles';
-
-:export {
-  thumbnail: #{styles.$thumbnail};
-  thumbnailImage: #{styles.$thumbnailImage};
-  bgcolor: #{styles.$bgcolor};
-}
