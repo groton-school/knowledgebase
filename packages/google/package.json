@@ -1,15 +1,15 @@
 {
   "name": "@groton/knowledgebase.google",
   "version": "0.0.0",
+  "homepage": "https://github.com/groton-school/knowledgebase/tree/main/packages/google#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/groton-school/knowledgebase.git",
+    "directory": "packages/google"
+  },
   "author": {
     "name": "Seth Battis",
     "email": "sbattis@groton.org"
-  },
-  "homepage": "https://github.com/groton-school/knowledgebase/tree/main/packages/google#readme",
-  "repository": {
-    "url": "https://github.com/groton-school/knowledgebase.git",
-    "type": "git",
-    "directory": "packages/google"
   },
   "main": "src/index.ts",
   "dependencies": {
@@ -17,7 +17,7 @@
     "@google-cloud/storage": "^7.13.0",
     "@googleapis/drive": "^8.14.0",
     "express": "^4.21.1",
-    "google-auth-library": "^9.14.1",
+    "google-auth-library": "9.14.1",
     "open": "^10.1.0"
   },
   "devDependencies": {
