@@ -130,8 +130,8 @@ importers:
         specifier: ^1.18.1
         version: 1.18.1
       google-auth-library:
-        specifier: 9.14.1
-        version: 9.14.1
+        specifier: ^9.14.2
+        version: 9.14.2
     devDependencies:
       '@battis/partly-gcloudy':
         specifier: ^0.4.5
@@ -140,8 +140,8 @@ importers:
         specifier: ^0.4.2
         version: 0.4.2
       '@battis/webpack':
-        specifier: ^1.1.0
-        version: 1.1.0(mrzbobpwvyl3qgyywyjcaup34i)
+        specifier: ^1.1.1
+        version: 1.1.1(mrzbobpwvyl3qgyywyjcaup34i)
       '@csstools/css-parser-algorithms':
         specifier: ^3.0.2
         version: 3.0.2(@csstools/css-tokenizer@3.0.2)
@@ -459,8 +459,8 @@ importers:
         specifier: ^4.21.1
         version: 4.21.1
       google-auth-library:
-        specifier: 9.14.1
-        version: 9.14.1
+        specifier: ^9.14.2
+        version: 9.14.2
       open:
         specifier: ^10.1.0
         version: 10.1.0
@@ -589,58 +589,6 @@ packages:
 
   '@battis/typescript-tricks@0.5.6':
     resolution: {integrity: sha512-XVlaH0Qi/dTSE+2W7qK32RicXsxmn/qTRFUX4HUBefsmF9Bh9G5P4c0L1pVYf0SbkwYbHpVyTc7fyHuyQBPLMA==}
-
-  '@battis/webpack@1.1.0':
-    resolution: {integrity: sha512-xhG2om3akqevgeUISIJKRibMXUx1YY7xllHdRJNFk+vfnPlmsN4t9kGuGiknBjhEm+y+MHgFqMMitHSJBrvc5Q==}
-    engines: {node: '>=12.17'}
-    peerDependencies:
-      add-peer-dependencies: 0.1.6
-      app-root-path: '*'
-      clean-webpack-plugin: ^4.0.0
-      copy-webpack-plugin: '*'
-      css-loader: '*'
-      css-minimizer-webpack-plugin: '*'
-      dotenv-webpack: '*'
-      favicons: '*'
-      favicons-webpack-plugin: '*'
-      file-loader: '*'
-      html-webpack-plugin: '*'
-      image-minimizer-webpack-plugin: '*'
-      imagemin: '*'
-      imagemin-gifsicle: '*'
-      imagemin-jpegtran: '*'
-      imagemin-optipng: '*'
-      imagemin-svgo: '*'
-      mini-css-extract-plugin: '*'
-      postcss: '*'
-      postcss-loader: '*'
-      postcss-preset-env: '*'
-      raw-loader: '*'
-      sass: ^1.0
-      sass-loader: '*'
-      style-loader: '*'
-      terser-webpack-plugin: '*'
-      ts-loader: '*'
-      typescript: ^5.0
-      url-loader: '*'
-      webpack: ^5.0
-      webpack-cli: '*'
-      webpack-dev-server: '*'
-    peerDependenciesMeta:
-      add-peer-dependencies:
-        optional: true
-      image-minimizer-webpack-plugin:
-        optional: true
-      imagemin:
-        optional: true
-      imagemin-gifsicle:
-        optional: true
-      imagemin-jpegtran:
-        optional: true
-      imagemin-optipng:
-        optional: true
-      imagemin-svgo:
-        optional: true
 
   '@battis/webpack@1.1.1':
     resolution: {integrity: sha512-j1z1/5yoGiADoo0CB8fwledC+DADW1O7J9JTuMzCNSdBcCzS5DAqcajKvX1ZheujYSu2L4dV49lBzxSrBwa/IQ==}
@@ -2651,8 +2599,8 @@ packages:
     resolution: {integrity: sha512-HTUrgRJ7r4dsZKU6GjmpfRK1O76h97Z8MfS1G0FozR+oF2kG6Vfe8JE6zwrkbxigziPHinCJ+gCPjA9EaBDtRw==}
     engines: {node: '>= 6'}
 
-  cssdb@8.1.1:
-    resolution: {integrity: sha512-kRbSRgZoxtZNl5snb3nOzBkFOt5AwnephcUTIEFc2DebKG9PN50/cHarlwOooTxYQ/gxsnKs3BxykhNLmfvyLg==}
+  cssdb@8.1.2:
+    resolution: {integrity: sha512-ba3HmHU/lxy9nfz/fQLA/Ul+/oSdSOXqoR53BDmRvXTfRbkGqHKqr2rSxADYMRF4uD8vZhMlCQ6c5TEfLLkkVA==}
 
   cssesc@3.0.0:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
@@ -2884,8 +2832,8 @@ packages:
     engines: {node: '>=0.10.0'}
     hasBin: true
 
-  electron-to-chromium@1.5.36:
-    resolution: {integrity: sha512-HYTX8tKge/VNp6FGO+f/uVDmUkq+cEfcxYhKf15Akc4M5yxt5YmorwlAitKWjWhWQnKcDRBAQKXkhqqXMqcrjw==}
+  electron-to-chromium@1.5.38:
+    resolution: {integrity: sha512-VbeVexmZ1IFh+5EfrYz1I0HTzHVIlJa112UEWhciPyeOcKJGeTv6N8WnG4wsQB81DGCaVEGhpSb6o6a8WYFXXg==}
 
   email-validator@2.0.4:
     resolution: {integrity: sha512-gYCwo7kh5S3IDyZPLZf6hSS0MnZT8QmJFqYvbqlDZSbwdZlY6QZWxJ4i/6UhITOJ4XzyI647Bm2MXKCLqnJ4nQ==}
@@ -3378,10 +3326,6 @@ packages:
   globby@6.1.0:
     resolution: {integrity: sha512-KVbFv2TQtbzCoxAnfD6JcHZTYCzyliEaaeM/gH8qQdkKr5s0OP9scEgvdcngyk7AVdY6YVW/TJHd+lQ/Df3Daw==}
     engines: {node: '>=0.10.0'}
-
-  google-auth-library@9.14.1:
-    resolution: {integrity: sha512-Rj+PMjoNFGFTmtItH7gHfbHpGVSb3vmnGK3nwNBqxQF9NoBpttSZI/rc0WiM63ma2uGDQtYEkMHkK9U6937NiA==}
-    engines: {node: '>=14'}
 
   google-auth-library@9.14.2:
     resolution: {integrity: sha512-R+FRIfk1GBo3RdlRYWPdwk8nmtVUOn6+BkDomAC46KoU8kzXzE1HLmOasSCbWUByMMAGkknVF0G5kQ69Vj7dlA==}
@@ -3932,8 +3876,8 @@ packages:
   jsonfile@6.1.0:
     resolution: {integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==}
 
-  jsox@1.2.119:
-    resolution: {integrity: sha512-f37obwxWKKuylcaOzNlUlzfDvURSCpqTXs8yEivhvsp86D/DTIySxP4v5Qdlg24qCuzDSZ0mJr3krc/f7TZ/5A==}
+  jsox@1.2.121:
+    resolution: {integrity: sha512-9Ag50tKhpTwS6r5wh3MJSAvpSof0UBr39Pto8OnzFT32Z/pAbxAsKHzyvsyMEHVslELvHyO/4/jaQELHk8wDcw==}
     hasBin: true
 
   jwa@2.0.0:
@@ -6158,36 +6102,6 @@ snapshots:
 
   '@battis/typescript-tricks@0.5.6': {}
 
-  '@battis/webpack@1.1.0(mrzbobpwvyl3qgyywyjcaup34i)':
-    dependencies:
-      app-root-path: 3.1.0
-      clean-webpack-plugin: 4.0.0(webpack@5.95.0(webpack-cli@5.1.4))
-      copy-webpack-plugin: 12.0.2(webpack@5.95.0(webpack-cli@5.1.4))
-      css-loader: 7.1.2(webpack@5.95.0(webpack-cli@5.1.4))
-      css-minimizer-webpack-plugin: 7.0.0(webpack@5.95.0(webpack-cli@5.1.4))
-      dotenv-webpack: 8.1.0(webpack@5.95.0(webpack-cli@5.1.4))
-      favicons: 7.2.0
-      favicons-webpack-plugin: 6.0.1(favicons@7.2.0)(webpack@5.95.0(webpack-cli@5.1.4))
-      file-loader: 6.2.0(webpack@5.95.0(webpack-cli@5.1.4))
-      html-webpack-plugin: 5.6.0(webpack@5.95.0(webpack-cli@5.1.4))
-      mini-css-extract-plugin: 2.9.1(webpack@5.95.0(webpack-cli@5.1.4))
-      postcss: 8.4.47
-      postcss-loader: 8.1.1(postcss@8.4.47)(typescript@5.6.3)(webpack@5.95.0(webpack-cli@5.1.4))
-      postcss-preset-env: 10.0.7(postcss@8.4.47)
-      raw-loader: 4.0.2(webpack@5.95.0(webpack-cli@5.1.4))
-      sass: 1.79.5
-      sass-loader: 16.0.2(sass@1.79.5)(webpack@5.95.0(webpack-cli@5.1.4))
-      style-loader: 4.0.0(webpack@5.95.0(webpack-cli@5.1.4))
-      terser-webpack-plugin: 5.3.10(webpack@5.95.0(webpack-cli@5.1.4))
-      ts-loader: 9.5.1(typescript@5.6.3)(webpack@5.95.0(webpack-cli@5.1.4))
-      typescript: 5.6.3
-      url-loader: 4.1.1(file-loader@6.2.0(webpack@5.95.0(webpack-cli@5.1.4)))(webpack@5.95.0(webpack-cli@5.1.4))
-      webpack: 5.95.0(webpack-cli@5.1.4)
-      webpack-cli: 5.1.4(webpack-dev-server@5.1.0)(webpack@5.95.0)
-      webpack-dev-server: 5.1.0(webpack-cli@5.1.4)(webpack@5.95.0)
-    optionalDependencies:
-      add-peer-dependencies: 0.1.6
-
   '@battis/webpack@1.1.1(mrzbobpwvyl3qgyywyjcaup34i)':
     dependencies:
       app-root-path: 3.1.0
@@ -6720,7 +6634,7 @@ snapshots:
       arrify: 2.0.1
       duplexify: 4.1.3
       extend: 3.0.2
-      google-auth-library: 9.14.1
+      google-auth-library: 9.14.2
       html-entities: 2.5.2
       retry-request: 7.0.2
       teeny-request: 9.0.0
@@ -6746,7 +6660,7 @@ snapshots:
   '@google-cloud/logging-winston@6.0.0(winston@3.15.0)':
     dependencies:
       '@google-cloud/logging': 11.2.0
-      google-auth-library: 9.14.1
+      google-auth-library: 9.14.2
       lodash.mapvalues: 4.6.0
       winston: 3.15.0
       winston-transport: 4.8.0
@@ -6766,7 +6680,7 @@ snapshots:
       eventid: 2.0.1
       extend: 3.0.2
       gcp-metadata: 6.1.0
-      google-auth-library: 9.14.1
+      google-auth-library: 9.14.2
       google-gax: 4.4.1
       on-finished: 2.4.1
       pumpify: 2.0.1
@@ -8105,7 +8019,7 @@ snapshots:
   browserslist@4.24.0:
     dependencies:
       caniuse-lite: 1.0.30001668
-      electron-to-chromium: 1.5.36
+      electron-to-chromium: 1.5.38
       node-releases: 2.0.18
       update-browserslist-db: 1.1.1(browserslist@4.24.0)
 
@@ -8434,7 +8348,7 @@ snapshots:
 
   css-what@6.1.0: {}
 
-  cssdb@8.1.1: {}
+  cssdb@8.1.2: {}
 
   cssesc@3.0.0: {}
 
@@ -8679,7 +8593,7 @@ snapshots:
     dependencies:
       jake: 10.9.2
 
-  electron-to-chromium@1.5.36: {}
+  electron-to-chromium@1.5.38: {}
 
   email-validator@2.0.4: {}
 
@@ -9326,18 +9240,6 @@ snapshots:
       pify: 2.3.0
       pinkie-promise: 2.0.1
 
-  google-auth-library@9.14.1:
-    dependencies:
-      base64-js: 1.5.1
-      ecdsa-sig-formatter: 1.0.11
-      gaxios: 6.7.1
-      gcp-metadata: 6.1.0
-      gtoken: 7.1.0
-      jws: 4.0.0
-    transitivePeerDependencies:
-      - encoding
-      - supports-color
-
   google-auth-library@9.14.2:
     dependencies:
       base64-js: 1.5.1
@@ -9357,7 +9259,7 @@ snapshots:
       '@types/long': 4.0.2
       abort-controller: 3.0.0
       duplexify: 4.1.3
-      google-auth-library: 9.14.1
+      google-auth-library: 9.14.2
       node-fetch: 2.7.0
       object-hash: 3.0.0
       proto3-json-serializer: 2.0.2
@@ -9372,7 +9274,7 @@ snapshots:
     dependencies:
       extend: 3.0.2
       gaxios: 6.7.1
-      google-auth-library: 9.14.1
+      google-auth-library: 9.14.2
       qs: 6.13.0
       url-template: 2.0.8
       uuid: 9.0.1
@@ -9902,7 +9804,7 @@ snapshots:
     optionalDependencies:
       graceful-fs: 4.2.11
 
-  jsox@1.2.119: {}
+  jsox@1.2.121: {}
 
   jwa@2.0.0:
     dependencies:
@@ -10770,7 +10672,7 @@ snapshots:
       css-blank-pseudo: 7.0.0(postcss@8.4.47)
       css-has-pseudo: 7.0.0(postcss@8.4.47)
       css-prefers-color-scheme: 10.0.0(postcss@8.4.47)
-      cssdb: 8.1.1
+      cssdb: 8.1.2
       postcss: 8.4.47
       postcss-attribute-case-insensitive: 7.0.0(postcss@8.4.47)
       postcss-clamp: 4.1.0(postcss@8.4.47)
@@ -10867,7 +10769,7 @@ snapshots:
 
   prettier-plugin-sql@0.18.1(prettier@3.3.3):
     dependencies:
-      jsox: 1.2.119
+      jsox: 1.2.121
       node-sql-parser: 4.18.0
       prettier: 3.3.3
       sql-formatter: 15.4.3

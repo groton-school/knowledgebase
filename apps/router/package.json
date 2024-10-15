@@ -35,12 +35,12 @@
     "@groton/knowledgebase.openid": "workspace:*",
     "express": "^4.21.1",
     "express-session": "^1.18.1",
-    "google-auth-library": "9.14.1"
+    "google-auth-library": "^9.14.2"
   },
   "devDependencies": {
     "@battis/partly-gcloudy": "^0.4.5",
     "@battis/qui-cli": "^0.4.2",
-    "@battis/webpack": "^1.1.0",
+    "@battis/webpack": "^1.1.1",
     "@csstools/css-parser-algorithms": "^3.0.2",
     "@csstools/css-tokenizer": "^3.0.2",
     "@google-cloud/firestore": "^7.10.0",
