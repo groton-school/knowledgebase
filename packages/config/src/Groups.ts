@@ -7,6 +7,4 @@ export type Group = {
   members?: EmailString[];
 };
 
-type Groups = Record<EmailString, Group>;
-
-export default Groups;
+export type Groups = Record<EmailString, Group>;

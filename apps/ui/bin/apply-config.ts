@@ -1,15 +1,15 @@
 import cli from '@battis/qui-cli';
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 
-let pathToConfig = path.resolve(__dirname, '../var/config.json');
+let pathToConfig = path.resolve(import.meta.dirname, '../var/config.json');
 
 const {
   values: { configPath }
 } = cli.init({
   env: {
-    root: path.dirname(__dirname),
-    loadDotEnv: path.resolve(__dirname, '../../../.env')
+    root: path.dirname(import.meta.dirname),
+    loadDotEnv: path.resolve(import.meta.dirname, '../../../.env')
   },
   args: {
     options: {
@@ -34,12 +34,12 @@ function quoted(key: string, value: string = '') {
 }
 
 const spinner = cli.spinner();
-pathToConfig = path.resolve(__dirname, '..', configPath);
+pathToConfig = path.resolve(import.meta.dirname, '..', configPath);
 spinner.start(`Loading configuration ${cli.colors.url(pathToConfig)}`);
 const config = JSON.parse(fs.readFileSync(pathToConfig).toString());
 spinner.succeed(`Configuration ${cli.colors.url(pathToConfig)}`);
 
-const pathToScss = path.resolve(__dirname, '../src/config.scss');
+const pathToScss = path.resolve(import.meta.dirname, '../src/config.scss');
 spinner.start(`Updating ${cli.colors.url(pathToScss)}`);
 if (config.ui?.site) {
   fs.writeFileSync(
@@ -57,7 +57,7 @@ if (config.ui?.site) {
 }
 spinner.succeed(`Configuration applied to ${cli.colors.url(pathToScss)}`);
 
-const pathToTs = path.resolve(__dirname, '../src/config.ts');
+const pathToTs = path.resolve(import.meta.dirname, '../src/config.ts');
 spinner.start(`Updating ${cli.colors.url(pathToTs)}`);
 if (config.ui?.site) {
   fs.writeFileSync(pathToTs, `export default ${JSON.stringify(config.ui)}`);

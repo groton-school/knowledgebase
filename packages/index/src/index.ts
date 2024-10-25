@@ -1,9 +1,9 @@
 import { JSONObject } from '@battis/typescript-tricks';
-import fs from 'fs';
-import _File from './File';
-import _FileFactory from './FileFactory';
-import _IndexEntry from './IndexEntry';
-import _Index from './_Index';
+import fs from 'node:fs';
+import _File from './File.js';
+import _FileFactory from './FileFactory.js';
+import _IndexEntry from './IndexEntry.js';
+import _Index from './_Index.js';
 
 namespace Index {
   export type Index<T extends Index.File> = _Index<T>;

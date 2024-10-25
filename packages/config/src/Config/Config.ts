@@ -1,15 +1,13 @@
 import { HostnameString } from '@groton/knowledgebase.domain';
-import ACL from './ACL';
-import Session from './Session';
-import Storage from './Storage';
-import UI from './UI';
+import ACL from './ACL.js';
+import Session from './Session.js';
+import Storage from './Storage.js';
+import UI from './UI.js';
 
-type Config = {
+export type Config = {
   hostname?: HostnameString;
   session: Session;
   storage: Storage;
   acl?: ACL;
   ui?: UI;
 };
-
-export default Config;

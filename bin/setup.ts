@@ -1,8 +1,8 @@
 import gcloud from '@battis/partly-gcloudy';
 import cli from '@battis/qui-cli';
-import Var from '@groton/knowledgebase.config';
-import fs from 'fs';
-import path from 'path';
+import { Config } from '@groton/knowledgebase.config';
+import fs from 'node:fs';
+import path from 'node:path';
 
 const options = {
   name: {
@@ -130,7 +130,7 @@ Download these credentials to ${cli.colors.url(
         cli.appRoot(),
         'apps/router/var/config.json'
       );
-      let config: Partial<Var.Config> = {};
+      let config: Partial<Config> = {};
       if (fs.existsSync(configFilePath)) {
         config = JSON.parse(fs.readFileSync(configFilePath).toString());
       } else {

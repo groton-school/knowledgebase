@@ -1,11 +1,11 @@
-import Var from '@groton/knowledgebase.config';
-import path from 'path';
+import { Config } from '@groton/knowledgebase.config';
+import path from 'node:path';
 
-Var.Config.sync(
+Config.sync(
   {
     env: {
-      root: path.dirname(__dirname),
-      loadDotEnv: path.resolve(__dirname, '../../../.env')
+      root: path.dirname(import.meta.dirname),
+      loadDotEnv: path.resolve(import.meta.dirname, '../../../.env')
     }
   },
   (config) => {

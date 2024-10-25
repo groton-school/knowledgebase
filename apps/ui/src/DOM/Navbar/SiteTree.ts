@@ -1,6 +1,6 @@
+import * as API from '@groton/knowledgebase.api';
 import Helper from '../../Helper';
 import { label } from '../../UI/LinkLabelByGroup';
-import API from '@groton/knowledgebase.api';
 
 export default async function SiteTree() {
   const pages = (await (

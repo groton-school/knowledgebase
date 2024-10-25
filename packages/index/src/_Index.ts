@@ -1,4 +1,4 @@
-import File from './File';
+import File from './File.js';
 
 export default class Index<T extends File> extends Array<T> {
   public constructor(...items: T[]) {

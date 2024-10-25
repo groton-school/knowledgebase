@@ -1,5 +1,5 @@
-import Config from './Config';
-import crypto from 'crypto';
+import * as crypto from 'node:crypto';
+import { Config } from './Config.js';
 
 export default function createDefault({
   bucket = process.env.BUCKET

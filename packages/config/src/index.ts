@@ -1,13 +1,4 @@
-import _Config from './Config';
-import _Groups from './Groups';
-import _Index from './IndexFile';
-import _Keys from './Keys';
-
-namespace Config {
-  export import Config = _Config;
-  export type Groups = _Groups;
-  export type Index = _Index;
-  export type Keys = _Keys;
-}
-
-export default Config;
+export { Config } from './Config.js';
+export type { Groups } from './Groups.js';
+export type { Index } from './IndexFile.js';
+export type { Keys } from './Keys.js';

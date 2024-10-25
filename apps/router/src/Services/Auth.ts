@@ -1,8 +1,8 @@
-import Logger from './Logger';
-import Var from '@groton/knowledgebase.config';
-import OpenID from '@groton/knowledgebase.openid';
-import { Request, Response, NextFunction } from 'express';
-import { OAuth2Client, Credentials } from 'google-auth-library';
+import { Config, Keys } from '@groton/knowledgebase.config';
+import { OpenID } from '@groton/knowledgebase.openid';
+import { NextFunction, Request, Response } from 'express';
+import { Credentials, OAuth2Client } from 'google-auth-library';
+import { Logger } from './Logger.js';
 
 /*
  * Noting for the security-conscious among us that, by using using Firestore
@@ -14,11 +14,11 @@ import { OAuth2Client, Credentials } from 'google-auth-library';
  */
 
 type AuthConfig = {
-  keys: Var.Keys;
-  config: Var.Config;
+  keys: Keys;
+  config: Config;
 };
 
-export default class Auth {
+export class Auth {
   private static _redirectURI: URL;
   private static _authClient: OAuth2Client;
 

@@ -1,4 +1,4 @@
-import Var from '@groton/knowledgebase.config';
+import * as Var from '@groton/knowledgebase.config';
 import { Handler } from 'express';
 
 type HandlerFactoryConfig = {
@@ -8,6 +8,4 @@ type HandlerFactoryConfig = {
   keys?: Var.Keys;
 };
 
-type HandlerFactory = (config?: HandlerFactoryConfig) => Handler;
-
-export default HandlerFactory;
+export type HandlerFactory = (config?: HandlerFactoryConfig) => Handler;

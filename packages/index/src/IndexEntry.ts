@@ -1,5 +1,5 @@
 import { JSONObject } from '@battis/typescript-tricks';
-import StateEnum from './State';
+import StateEnum from './IndexEntry/State.js';
 
 class IndexEntry {
   private _timestamp: string;

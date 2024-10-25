@@ -1,26 +1,23 @@
-import CloudStorageRouter from './Handlers/Factories/CloudStorageRouter';
-import Search from './Handlers/Factories/Search';
-import SiteTree from './Handlers/Factories/SiteTree';
-import Favicon from './Handlers/Favicon';
-import Helper from './Helper';
-import Session from './Middleware/Session';
-import Auth from './Services/Auth';
-import Logger from './Services/Logger';
-import API from '@groton/knowledgebase.api';
+/// <reference path="./session.d.ts" />
+import * as API from '@groton/knowledgebase.api';
 import express from 'express';
+import * as Handlers from './Handlers.js';
+import * as Helper from './Helper.js';
+import * as Middleware from './Middleware.js';
+import * as Services from './Services.js';
 
 (async () => {
   const [keys, config, groups, index] = await Helper.loadConfigFiles();
 
-  Auth.init({ keys, config });
+  Services.Auth.init({ keys, config });
 
   const app = express();
   app.set('trust proxy', true); // https://stackoverflow.com/a/77331306/294171
-  app.use(Session({ config }));
+  app.use(Middleware.Session({ config }));
 
-  app.get('/logout', Auth.deauthorize);
-  app.get(Auth.redirectUri.pathname, Auth.authorize);
-  app.get('*', Auth.refreshToken);
+  app.get('/logout', Services.Auth.deauthorize);
+  app.get(Services.Auth.redirectUri.pathname, Services.Auth.authorize);
+  app.get('*', Services.Auth.refreshToken);
   app.get('/', (_, res, next) => {
     if (config.ui?.root) {
       res.redirect(config.ui.root);
@@ -28,18 +25,27 @@ import express from 'express';
       next();
     }
   });
-  app.get('/favicon.ico', Favicon);
-  app.get(API.SiteTree.path, SiteTree({ config, groups, index }));
-  app.get(API.Search.path, Search({ config, groups, index }));
+  app.get('/favicon.ico', Handlers.Favicon);
+  app.get(
+    API.SiteTree.path,
+    Handlers.Factories.SiteTree({ config, groups, index })
+  );
+  app.get(
+    API.Search.path,
+    Handlers.Factories.Search({ config, groups, index })
+  );
 
   // TODO destroy /_ah/* sessions
 
   // exclude GAE `/_ah/*` endpoints but process others matching `/*`
   // https://stackoverflow.com/a/53606500/294171
-  app.get(/^(?!.*_ah).*$/, CloudStorageRouter({ config, index, groups }));
+  app.get(
+    /^(?!.*_ah).*$/,
+    Handlers.Factories.CloudStorageRouter({ config, index, groups })
+  );
 
   const port = process.env.PORT || 8080;
   app.listen(port, () => {
-    Logger.info(`HTTP server listening on port ${port}`);
+    Services.Logger.info(`HTTP server listening on port ${port}`);
   });
 })();

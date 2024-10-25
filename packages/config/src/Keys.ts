@@ -1,6 +1,6 @@
 import { UrlString } from '@groton/knowledgebase.domain';
 
-type Keys = {
+export type Keys = {
   web: {
     client_id: string;
     project_id: string;
@@ -12,5 +12,3 @@ type Keys = {
     javascript_origins: UrlString[];
   };
 };
-
-export default Keys;

@@ -1,7 +1,7 @@
-import ACL from '../../Services/ACL';
-import HandlerFactory from './HandlerFactory';
-import API from '@groton/knowledgebase.api';
+import * as API from '@groton/knowledgebase.api';
 import { Request, Response } from 'express';
+import { ACL } from '../../Services.js';
+import { HandlerFactory } from './HandlerFactory.js';
 
 function score(needle: string, haystack: string, base = 1, factor = 2) {
   const pattern = new RegExp(`^(.*\W)?${needle}(\W.*)?$`);
@@ -13,7 +13,7 @@ function score(needle: string, haystack: string, base = 1, factor = 2) {
   return 0;
 }
 
-const Search: HandlerFactory = ({ index, groups, config } = {}) => {
+export const Search: HandlerFactory = ({ index, groups, config } = {}) => {
   // TODO better way to do this?
   if (!config || !index || !groups) {
     throw new Error(
@@ -85,16 +85,16 @@ const Search: HandlerFactory = ({ index, groups, config } = {}) => {
               <meta name="viewport" content="width=device-width, initial-scale=1">
               <meta content="text/html; charset=UTF-8" http-equiv="content-type">
               <title>Search: ${query}</title>${
-      config.ui?.site?.favicon
-        ? `
+                config.ui?.site?.favicon
+                  ? `
               <link rel="icon" href="${config.ui.site.favicon}">`
-        : ''
-    }${
-      config.ui?.site?.css
-        ? `
+                  : ''
+              }${
+                config.ui?.site?.css
+                  ? `
               <link rel="stylesheet" href="${config.ui.site.css}" />`
-        : ''
-    }
+                  : ''
+              }
             </head>
             <body>
             <div id="directory">
@@ -109,12 +109,12 @@ const Search: HandlerFactory = ({ index, groups, config } = {}) => {
                       : ''
                   }">
                     <div class="name"><a href="/${page.index.path}/">${
-                    page.name
-                  }</a></div>${
-                    page.description
-                      ? `<div class="description">${page.description}</div>`
-                      : ''
-                  }</div>`
+                      page.name
+                    }</a></div>${
+                      page.description
+                        ? `<div class="description">${page.description}</div>`
+                        : ''
+                    }</div>`
               )
               .join('')}
             </div>${
@@ -128,5 +128,3 @@ const Search: HandlerFactory = ({ index, groups, config } = {}) => {
             `);
   };
 };
-
-export default Search;

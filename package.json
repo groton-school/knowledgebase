@@ -33,17 +33,20 @@
       "@battis/eslint-config"
     ]
   },
+  "dependencies": {
+    "@tsconfig/node20": "^20.1.4"
+  },
   "devDependencies": {
     "@battis/eslint-config": "latest",
     "@battis/partly-gcloudy": "^0.4.5",
     "@battis/prettier-config": "latest",
-    "@battis/qui-cli": "^0.4.2",
+    "@battis/qui-cli": "^0.5.0",
     "@changesets/cli": "^2.27.9",
     "@groton/knowledgebase.config": "workspace:*",
-    "@tsconfig/recommended": "^1.0.7",
+    "@groton/knowledgebase.tsconfig": "workspace:*",
     "add-peer-dependencies": "^0.1.6",
+    "lerna": "^8.1.8",
     "monorepo-package-paths": "^0.2.1",
-    "npm-check": "^6.0.1",
     "npm-run-all": "^4.1.5",
     "syncpack": "^12.4.0",
     "tsx": "^4.19.1"

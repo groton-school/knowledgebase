@@ -60,6 +60,7 @@ const properNouns = [
   'MFA',
   'Microsoft',
   'Microsoft Office',
+  'MIDI',
   'myGroton',
   'NBM',
   'Notability',

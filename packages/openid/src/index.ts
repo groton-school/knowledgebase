@@ -1,6 +1,6 @@
 import { EmailString, UrlString } from '@groton/knowledgebase.domain';
 
-namespace OpenID {
+export namespace OpenID {
   // TODO surely this is defined somewhere in the Google clients?
   export interface UserInfo {
     email?: EmailString;
@@ -11,5 +11,3 @@ namespace OpenID {
     family_name?: string;
   }
 }
-
-export default OpenID;

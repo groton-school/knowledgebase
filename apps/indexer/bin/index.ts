@@ -1,7 +1,7 @@
 import cli from '@battis/qui-cli';
 import Google from '@groton/knowledgebase.google';
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import Cache from '../src/Cache';
 import Helper from '../src/Helper';
 
@@ -9,9 +9,9 @@ const FOLDER_ID = '%FOLDER_ID%';
 const FOLDER_NAME = '%FOLDER_NAME%';
 const TIMESTAMP = '%TIMESTAMP%';
 
-const defaultIndexPath = path.resolve(__dirname, '../../router/var/index.json');
-const defaultKeysPath = path.resolve(__dirname, '../var/keys.json');
-const defaultTokensPath = path.resolve(__dirname, '../var/tokens.json');
+const defaultIndexPath = path.resolve(import.meta.dirname, '../../router/var/index.json');
+const defaultKeysPath = path.resolve(import.meta.dirname, '../var/keys.json');
+const defaultTokensPath = path.resolve(import.meta.dirname, '../var/tokens.json');
 
 const options = {
   folderId: {
@@ -61,8 +61,8 @@ const options = {
     values: { folderId, indexPath, keysPath, tokensPath, permissionsRegex }
   } = cli.init({
     env: {
-      root: path.join(__dirname, '../../..'),
-      loadDotEnv: path.join(__dirname, '../../../.env')
+      root: path.join(import.meta.dirname, '../../..'),
+      loadDotEnv: path.join(import.meta.dirname, '../../../.env')
     },
     args: { options }
   });

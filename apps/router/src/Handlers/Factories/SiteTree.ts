@@ -1,9 +1,9 @@
-import ACL from '../../Services/ACL';
-import HandlerFactory from './HandlerFactory';
-import API from '@groton/knowledgebase.api';
+import * as API from '@groton/knowledgebase.api';
 import { Request, Response } from 'express';
+import { ACL } from '../../Services.js';
+import { HandlerFactory } from './HandlerFactory.js';
 
-const SiteTree: HandlerFactory = ({ index, groups, config } = {}) => {
+export const SiteTree: HandlerFactory = ({ index, groups, config } = {}) => {
   // TODO better way to do this?
   if (!config || !index || !groups) {
     throw new Error(
@@ -38,5 +38,3 @@ const SiteTree: HandlerFactory = ({ index, groups, config } = {}) => {
     );
   };
 };
-
-export default SiteTree;

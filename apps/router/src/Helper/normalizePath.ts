@@ -1,4 +1,4 @@
-export default function normalizePath(requestPath: string) {
+export function normalizePath(requestPath: string) {
   if (requestPath.endsWith('/')) {
     requestPath = `${requestPath}index.html`;
   }

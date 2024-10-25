@@ -1,12 +1,12 @@
 import { drive_v3 } from '@googleapis/drive';
-import Var from '@groton/knowledgebase.config';
+import { Groups } from '@groton/knowledgebase.config';
 import { Request, Response } from 'express';
 
-export default class ACL {
+export class ACL {
   public constructor(
     private req: Request,
     private res: Response,
-    private groups: Var.Groups
+    private groups: Groups
   ) {}
 
   // FIXME this needs to have an expiration date and get refreshed regularly
@@ -32,6 +32,7 @@ export default class ACL {
     for (const permission of permissions) {
       if (
         permission.emailAddress &&
+        this.req.session.userInfo?.email &&
         this.groupContains(
           permission.emailAddress,
           this.req.session.userInfo.email

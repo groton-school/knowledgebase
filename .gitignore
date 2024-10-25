@@ -2,7 +2,10 @@
 **/.env.*
 **/!.env.example
 **/build/
+**/dist/
 **/node_modules/
+**/tmp/
+**/tmp_*/
 **/var/*
 *.cache
 *.cache.*

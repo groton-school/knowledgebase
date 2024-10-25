@@ -1,11 +1,13 @@
-import ACL from '../../Services/ACL';
-import Auth from '../../Services/Auth';
-import Logger from '../../Services/Logger';
-import HandlerFactory from './HandlerFactory';
 import { Storage } from '@google-cloud/storage';
-import path from 'path';
+import path from 'node:path';
+import * as Services from '../../Services.js';
+import { HandlerFactory } from './HandlerFactory.js';
 
-const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
+export const CloudStorageRouter: HandlerFactory = ({
+  config,
+  index,
+  groups
+} = {}) => {
   // TODO better way to do this?
   if (!config || !index || !groups) {
     throw new Error(
@@ -18,9 +20,9 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
   }
   return async (req, res) => {
     try {
-      if (await Auth.authorize(req, res)) {
+      if (await Services.Auth.authorize(req, res)) {
         const bucket = new Storage({
-          authClient: Auth.authClient,
+          authClient: Services.Auth.authClient,
           projectId: process.env.GOOGLE_CLOUD_PROJECT
         }).bucket(config.storage.bucket);
 
@@ -28,7 +30,7 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
           req.path.substring(1),
           /\.\w+$/.test(req.path) ? '' : 'index.html'
         );
-        const acl = await new ACL(req, res, groups).prepare();
+        const acl = await new Services.ACL(req, res, groups).prepare();
         const gsPath = `gs://${config.storage.bucket}/${reqPath}`;
         const reqFile = index.find(
           (f) => f.index.uri.includes(gsPath) && acl.hasAccess(f.permissions)
@@ -42,7 +44,7 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
           const stream = file.createReadStream();
           stream.on('data', (data) => res.write(data));
           stream.on('error', (error) =>
-            Logger.error(file.cloudStorageURI.href, error)
+            Services.Logger.error(file.cloudStorageURI.href, error)
           );
           stream.on('end', () => res.end());
           success = true;
@@ -69,16 +71,16 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
                       <meta content="text/html; charset=UTF-8" http-equiv="content-type">
                       <meta item-prop="kb.id" content="${requestedDir.id}">
                       <title>${requestedDir.name}</title>${
-              config.ui?.site?.favicon
-                ? `
+                        config.ui?.site?.favicon
+                          ? `
                       <link rel="icon" href="${config.ui.site.favicon}">`
-                : ''
-            }${
-              config.ui?.site?.css
-                ? `
+                          : ''
+                      }${
+                        config.ui?.site?.css
+                          ? `
                       <link rel="stylesheet" href="${config.ui.site.css}" />`
-                : ''
-            }
+                          : ''
+                      }
                     </head>
                     <body>
                     <div id="directory">
@@ -93,12 +95,12 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
                               : ''
                           }">
                             <div class="name"><a href="/${page.index.path}/">${
-                            page.name
-                          }</a></div>${
-                            page.description
-                              ? `<div class="description">${page.description}</div>`
-                              : ''
-                          }</div>`
+                              page.name
+                            }</a></div>${
+                              page.description
+                                ? `<div class="description">${page.description}</div>`
+                                : ''
+                            }</div>`
                       )
                       .join('')}
                     </div>${
@@ -128,9 +130,9 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
         // silent login if refresh token not present
         // TODO this should be caught/handled in Auth.authorize, not here
         req.session.redirect = req.url.replace(`https://${req.host}`, '');
-        res.redirect(Auth.authUrl);
+        res.redirect(Services.Auth.authUrl);
       } else {
-        Logger.error(req.originalUrl, {
+        Services.Logger.error(req.originalUrl, {
           function: 'CloudStorageRouter',
           error
         });
@@ -139,5 +141,3 @@ const CloudStorageRouter: HandlerFactory = ({ config, index, groups } = {}) => {
     }
   };
 };
-
-export default CloudStorageRouter;

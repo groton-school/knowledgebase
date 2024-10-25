@@ -2,8 +2,8 @@ import cli from '@battis/qui-cli';
 import { Storage } from '@google-cloud/storage';
 import * as Drive from '@googleapis/drive';
 import express from 'express';
-import fs from 'fs';
 import { Credentials, OAuth2Client } from 'google-auth-library';
+import fs from 'node:fs';
 import open from 'open';
 
 export default class Client {

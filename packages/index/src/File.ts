@@ -1,6 +1,6 @@
 import { JSONObject } from '@battis/typescript-tricks';
 import Google from '@groton/knowledgebase.google';
-import IndexEntry from './IndexEntry';
+import IndexEntry from './IndexEntry.js';
 
 type Nonoptional<T> = Exclude<T, null | undefined>;
 

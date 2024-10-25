@@ -1,13 +1,13 @@
 import cli from '@battis/qui-cli';
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import ACL from '../src/ACL';
 import Helper from '../src/Helper';
 
 // TODO why does reset-permissions need to run separately from upload?
 // TODO version of reset-permissions that resets only recent uploads
 
-const defaultIndexPath = path.resolve(__dirname, '../../router/var/index.json');
+const defaultIndexPath = path.resolve(import.meta.dirname, '../../router/var/index.json');
 
 const options = {
   bucketName: {
@@ -52,8 +52,8 @@ const flags = {
     values: { bucketName, indexPath, permissionsRegex, force, ignoreErrors }
   } = cli.init({
     env: {
-      root: path.join(__dirname, '../../..'),
-      loadDotEnv: path.join(__dirname, '../../../.env')
+      root: path.join(import.meta.dirname, '../../..'),
+      loadDotEnv: path.join(import.meta.dirname, '../../../.env')
     },
     args: {
       flags,

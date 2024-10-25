@@ -1,10 +1,13 @@
 import cli from '@battis/qui-cli';
-import Var from '@groton/knowledgebase.config';
-import fs from 'fs';
-import path from 'path';
+import { Groups } from '@groton/knowledgebase.config';
+import fs from 'node:fs';
+import path from 'node:path';
 import config from '../var/config.json';
 
-const defaultFilePath = path.resolve(__dirname, '../../router/var/groups.json');
+const defaultFilePath = path.resolve(
+  import.meta.dirname,
+  '../../router/var/groups.json'
+);
 
 const options = {
   filePath: {
@@ -51,7 +54,7 @@ const options = {
     const pattern = new RegExp(
       permissionsRegex || process.env.PERMISSIONS_REGEX || '.*'
     );
-    let groups: Var.Groups = {};
+    let groups: Groups = {};
     let nextPageToken: string | undefined = undefined;
     do {
       const page = JSON.parse(

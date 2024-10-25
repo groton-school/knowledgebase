@@ -1,9 +1,9 @@
-import Config from './Config';
-import createDefault from './createDefault';
 import cli from '@battis/qui-cli';
 import { JSONObject } from '@battis/typescript-tricks';
-import fs from 'fs';
-import path from 'path';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+import { Config } from './Config.js';
+import createDefault from './createDefault.js';
 
 function backup(targetPath: string) {
   let backupPath: string = targetPath;

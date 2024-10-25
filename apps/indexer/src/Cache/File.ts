@@ -1,9 +1,9 @@
 import Google from '@groton/knowledgebase.google';
 import Index from '@groton/knowledgebase.index';
 import Zip from 'adm-zip';
-import events from 'events';
 import mime from 'mime-types';
-import path from 'path';
+import events from 'node:events';
+import path from 'node:path';
 import Helper from '../Helper';
 import pipelineHTML from './Actions/pipelineHTML';
 import FileFactory from './FileFactory';
@@ -29,7 +29,7 @@ class File extends Index.File {
             this.webViewLink
           ) {
             return await Helper.renderBlob(
-              path.join(__dirname, 'Views/shortcut.ejs'),
+              path.join(import.meta.dirname, 'Views/shortcut.ejs'),
               this
             );
           } else {

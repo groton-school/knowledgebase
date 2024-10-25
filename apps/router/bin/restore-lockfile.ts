@@ -1,21 +1,20 @@
-import config from './lockfile.config.json';
 import cli from '@battis/qui-cli';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import fs from 'node:fs';
+import path from 'node:path';
+import config from './lockfile.config.json';
 
 cli.init({
   env: {
-    root: path.resolve(__dirname, '../'),
-    loadDotEnv: path.resolve(__dirname, '../../../.env')
+    root: path.resolve(import.meta.dirname, '../'),
+    loadDotEnv: path.resolve(import.meta.dirname, '../../../.env')
   }
 });
 
-const pkgPath = path.resolve(__dirname, config.packagePath);
-const pkgPathActual = path.resolve(__dirname, config.packagePathActual);
+const pkgPath = path.resolve(import.meta.dirname, config.packagePath);
+const pkgPathActual = path.resolve(
+  import.meta.dirname,
+  config.packagePathActual
+);
 
 const spinner = cli.spinner();
 

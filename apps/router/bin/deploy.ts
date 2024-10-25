@@ -1,22 +1,18 @@
 import gcloud from '@battis/partly-gcloudy';
 import cli from '@battis/qui-cli';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import path from 'node:path';
 
 (async () => {
   await gcloud.init({
     env: {
-      root: path.resolve(__dirname, '..'),
-      loadDotEnv: path.resolve(__dirname, '../../../.env')
+      root: path.resolve(import.meta.dirname, '..'),
+      loadDotEnv: path.resolve(import.meta.dirname, '../../../.env')
     }
   });
   cli.init({
     env: {
-      root: path.resolve(__dirname, '..'),
-      loadDotEnv: path.resolve(__dirname, '../../../.env')
+      root: path.resolve(import.meta.dirname, '..'),
+      loadDotEnv: path.resolve(import.meta.dirname, '../../../.env')
     }
   });
   try {

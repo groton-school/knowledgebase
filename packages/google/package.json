@@ -11,9 +11,17 @@
     "name": "Seth Battis",
     "email": "sbattis@groton.org"
   },
-  "main": "src/index.ts",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "run-s build:*",
+    "build:clean": "run-s clean",
+    "build:compile": "tsc",
+    "clean": "del ./dist/*"
+  },
   "dependencies": {
-    "@battis/qui-cli": "^0.4.2",
+    "@battis/qui-cli": "^0.5.0",
     "@google-cloud/storage": "^7.13.0",
     "@googleapis/drive": "^8.14.0",
     "express": "^4.21.1",
@@ -21,6 +29,9 @@
     "open": "^10.1.0"
   },
   "devDependencies": {
-    "@types/express": "^4.17.21"
+    "@types/express": "^4.17.21",
+    "del-cli": "^6.0.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.6.3"
   }
 }
