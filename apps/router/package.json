@@ -23,7 +23,7 @@
     "deploy": "run-s deploy:* || tsx ./bin/restore-lockfile.ts",
     "deploy:build": "run-s build",
     "deploy:prepare-lockfile": "tsx ./bin/prepare-lockfile.ts",
-    "deploy:deploy": "tsx bin/deploy.ts -v",
+    "deploy:deploy": "tsx bin/deploy.ts",
     "deploy:restore-lockfile": "tsx ./bin/restore-lockfile.ts",
     "deploy:unbork-pnpm": "pnpm i -rf",
     "start": "node build/main.cjs"
