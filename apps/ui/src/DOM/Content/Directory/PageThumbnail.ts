@@ -1,6 +1,5 @@
 import Constants from '../../../Constants';
 import ImageCanvas from './ImageCanvas';
-import styles from './styles.scss';
 
 export default function PageThumbnail(page: HTMLElement) {
   page.classList.add(
@@ -21,7 +20,9 @@ export default function PageThumbnail(page: HTMLElement) {
 
   const thumbnail = document.createElement('div');
   thumbnail.classList.add(
-    styles.thumbnail,
+    window
+      .getComputedStyle(document.body)
+      .getPropertyValue('--dom-content-directory-thumbnail'),
     'col-md-4',
     'col-2',
     'rounded-start'

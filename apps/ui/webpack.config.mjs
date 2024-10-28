@@ -1,6 +1,8 @@
 import bundle from '@battis/webpack';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import dotenv from 'dotenv';
+import webpack from 'webpack';
+import pkg from './package.json' with { type: 'json' };
 import cfg from './var/config.json' with { type: 'json' };
 
 dotenv.config();
@@ -20,7 +22,12 @@ const config = bundle.fromTS.toVanillaJS({
   output: {
     filename: 'assets/[name]'
   },
+  externals: 'gtag',
   plugins: [
+    new webpack.DefinePlugin({
+      __PKG_NAME__: JSON.stringify(pkg.name),
+      __PKG_VERSION__: JSON.stringify(pkg.version)
+    }),
     new CopyWebpackPlugin({
       patterns: LOCAL_STATIC_FILES
         ? [

@@ -1,6 +1,5 @@
 import Helper from '../../Helper';
 import './styles.scss';
-import styles from './styles.scss';
 
 function scrollToHash() {
   if (window.location.hash.length) {
@@ -13,13 +12,16 @@ function scrollToHash() {
       window.scrollTo(0, 0);
       const clone = anchor.cloneNode(true) as HTMLElement;
       anchor.parentNode?.replaceChild(clone, anchor);
-      Array.from(document.querySelectorAll(`.${styles.highlight}`)).forEach(
-        (h) => h.classList.remove(styles.highlight)
+      const highlight = window
+        .getComputedStyle(document.body)
+        .getPropertyValue('--ui-highlightanchor-highlight');
+      Array.from(document.querySelectorAll(`.${highlight}`)).forEach((h) =>
+        h.classList.remove(highlight)
       );
       if (clone.classList) {
-        clone.classList.add(styles.highlight);
+        clone.classList.add(highlight);
       } else {
-        clone.className = styles.highlight;
+        clone.className = highlight;
       }
     }
   }

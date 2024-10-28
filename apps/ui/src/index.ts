@@ -1,14 +1,17 @@
-import '@battis/webpack/types';
-import pkg from '../package.json';
 import DOM from './DOM';
 import Embed from './Embed';
 import Helper from './Helper';
 import UI from './UI';
 
+// from webpack
+declare const __webpack_hash__: string;
+declare const __PKG_NAME__: string;
+declare const __PKG_VERSION__: string;
+
 const DEBUGGING = JSON.parse(process.env.DEBUGGING || '');
 
 Helper.vanity(
-  `${pkg.name}\nv${pkg.version}.${__webpack_hash__}\n${
+  `${__PKG_NAME__}\nv${__PKG_VERSION__}.${__webpack_hash__}\n${
     DEBUGGING ? 'X' : '✓'
   } webpack.mode ${DEBUGGING ? 'development' : 'production'}`
 );

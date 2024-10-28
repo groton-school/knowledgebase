@@ -9,14 +9,9 @@ $favicon: config.$favicon;
 $background: config.$background;
 $logo: config.$logo;
 
-:export {
-  googleDocEmbed: #{$googleDocEmbed};
-  prefix: #{$prefix};
-  mobileCutoffWidthInPx: #{$mobileCutoffWidthInPx};
-
-  favicon: $favicon;
-  logo: $logo;
-  background: $background;
+:root {
+  --googleDocEmbed: #{$googleDocEmbed};
+  --logo: #{$logo};
 }
 
 // bootstrap styling

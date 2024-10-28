@@ -2,8 +2,8 @@
 
 $marketplace: Constants.$prefix + 'workspace-marketplace';
 
-:export {
-  marketplace: #{$marketplace};
+:root {
+  --embed-hyperlinks-workspacemarketplace-marketplace: #{$marketplace};
 }
 
 #{Constants.$googleDocEmbed} {

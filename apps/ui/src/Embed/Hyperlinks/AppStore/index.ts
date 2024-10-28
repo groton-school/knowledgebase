@@ -1,8 +1,6 @@
 //import * as QRCode from 'qrcode';
 import Helper from '../../../Helper';
-import hideHeaderAndFooterStyles from '../../../UI/HideHeaderAndFooter/styles.scss';
 import './styles.scss';
-import styles from './styles.scss';
 
 const appStore = 'a[href^="https://apps.apple.com/"]'; // TODO handle iTunes links too?
 const playStore = 'a[href^="https://play.google.com/"]';
@@ -12,15 +10,28 @@ function embed(paragraphs: HTMLElement[]) {
     const ios = p.querySelector(appStore) as HTMLAnchorElement;
     const android = p.querySelector(playStore) as HTMLAnchorElement;
     const id = crypto.randomUUID();
+    const include = window
+      .getComputedStyle(document.body)
+      .getPropertyValue('--ui-hideheaderandfooter-include');
     // TODO template
     p.outerHTML =
-      `<div id="${id}" class="${hideHeaderAndFooterStyles.include}">` +
-      `<div class="${styles.apps} ${hideHeaderAndFooterStyles.include}">` +
+      `<div id="${id}" class="${include}">` +
+      `<div class="${window
+        .getComputedStyle(document.body)
+        .getPropertyValue('--embed-hyperlinks-appstore-apps')} ${include}">` +
       (ios
-        ? `<a class="${styles.ios}" href="${ios.href}" target="_blank"></a>`
+        ? `<a class="${window
+            .getComputedStyle(document.body)
+            .getPropertyValue(
+              '--embed-hyperlinks-appstore-ios'
+            )}" href="${ios.href}" target="_blank"></a>`
         : '') +
       (android
-        ? `<a class="${styles.android}" href="${android.href}" target="_blank"></a>`
+        ? `<a class="${window
+            .getComputedStyle(document.body)
+            .getPropertyValue(
+              '--embed-hyperlinks-appstore-android'
+            )}" href="${android.href}" target="_blank"></a>`
         : '') +
       `</div>` +
       `</div>`;

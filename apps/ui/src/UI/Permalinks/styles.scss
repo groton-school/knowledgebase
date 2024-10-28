@@ -2,8 +2,8 @@
 
 $permalink: Constants.$prefix + 'permalink';
 
-:export {
-  permalink: #{$permalink};
+:root {
+  --ui-permalinks-permalink: #{$permalink};
 }
 
 #{Constants.$googleDocEmbed} {

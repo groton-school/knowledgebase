@@ -1,8 +1,7 @@
 //import * as QRCode from 'qrcode';
 import Helper from '../../../Helper';
 import './styles.scss';
-import styles from './styles.scss';
-import icon from './workspace.png';
+import './workspace.png';
 
 const chromeWebStore = 'a[href^="https://workspace.google.com/marketplace/"]';
 
@@ -16,7 +15,11 @@ export default function WorkspaceMarketplace() {
         const text = link.innerText;
         p.innerHTML = `
           <form action="${url}" method="get" target="_blank">
-            <button class="${styles.marketplace}" type="submit">
+            <button class="${window
+              .getComputedStyle(document.body)
+              .getPropertyValue(
+                '--embed-hyperlinks-workspacemarketplace-marketplace'
+              )}" type="submit">
               ${text} in the Workspace Marketplace
             </button>
           </form>

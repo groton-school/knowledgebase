@@ -1,4 +1,4 @@
-import Constants from '../Constants.scss';
+import Constants from '../Constants';
 
 /** Name of the Google Doc embed custom event */
 export const GoogleDocEmbedEvent = 'kbe';
@@ -7,7 +7,7 @@ export const GoogleDocEmbedEvent = 'kbe';
 export const GoogleDocRemoveEvent = 'kbr';
 
 /** CSS selector for root of embedded Google Doc */
-export const GoogleDocEmbedSelector = Constants.googleDocEmbed;
+export const GoogleDocEmbedSelector = Constants.styles.googleDocEmbed;
 
 function dispatchGoogleDocEmbed(detail: Element) {
   document.body.dispatchEvent(new CustomEvent(GoogleDocEmbedEvent, { detail }));

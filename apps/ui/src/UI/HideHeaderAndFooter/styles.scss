@@ -2,8 +2,8 @@
 
 $include: Constants.$prefix + 'include';
 
-:export {
-  include: #{$include};
+:root {
+  --ui-hideheaderandfooter-include: #{$include};
 }
 
 #{Constants.$googleDocEmbed} > div:not(.#{$include}) {

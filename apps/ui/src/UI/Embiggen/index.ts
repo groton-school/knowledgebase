@@ -3,31 +3,56 @@
  */
 import Helper from '../../Helper';
 import './styles.scss';
-import styles from './styles.scss';
 
 function Embiggenate(e: MouseEvent) {
   const target = e.target as HTMLImageElement;
 
   const scrim = document.createElement('div');
-  scrim.classList.add(styles.embiggen, styles.scrim);
+  scrim.classList.add(
+    window
+      .getComputedStyle(document.body)
+      .getPropertyValue('--ui-embiggen-embiggen'),
+    window
+      .getComputedStyle(document.body)
+      .getPropertyValue('--ui-embiggen-scrim')
+  );
 
   const closeBox = document.createElement('div');
-  closeBox.classList.add(styles.closeBox);
+  closeBox.classList.add(
+    window
+      .getComputedStyle(document.body)
+      .getPropertyValue('--ui-embiggen-closeBox')
+  );
   closeBox.innerText = '×';
   scrim.appendChild(closeBox);
 
   const wrapper = document.createElement('div');
-  wrapper.classList.add(styles.wrapper);
+  wrapper.classList.add(
+    window
+      .getComputedStyle(document.body)
+      .getPropertyValue('--ui-embiggen-wrapper')
+  );
   scrim.appendChild(wrapper);
 
   const image = document.createElement('div');
-  image.classList.add(styles.image, styles.zoomed);
+  image.classList.add(
+    window
+      .getComputedStyle(document.body)
+      .getPropertyValue('--ui-embiggen-image'),
+    window
+      .getComputedStyle(document.body)
+      .getPropertyValue('--ui-embiggen-zoomed')
+  );
   image.style.backgroundImage = `url(${target.src})`;
   wrapper.appendChild(image);
 
   if (target.alt) {
     const caption = document.createElement('p');
-    caption.classList.add(styles.caption);
+    caption.classList.add(
+      window
+        .getComputedStyle(document.body)
+        .getPropertyValue('--ui-embiggen-caption')
+    );
     caption.innerText = target.alt;
     wrapper.appendChild(caption);
   }
@@ -47,7 +72,17 @@ export default function Embiggen() {
     'span:only-child > img',
     (images) => {
       images.forEach((image) => {
-        image.classList.add(styles.embiggen, styles.image, styles.original);
+        image.classList.add(
+          window
+            .getComputedStyle(document.body)
+            .getPropertyValue('--ui-embiggen-embiggen'),
+          window
+            .getComputedStyle(document.body)
+            .getPropertyValue('--ui-embiggen-image'),
+          window
+            .getComputedStyle(document.body)
+            .getPropertyValue('--ui-embiggen-original')
+        );
         image.addEventListener('click', Embiggenate);
         Helper.log(`🖼️ ${image.alt || image.src} embiggenable`);
       });

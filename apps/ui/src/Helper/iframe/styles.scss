@@ -2,8 +2,8 @@
 
 $frame: Constants.$prefix + 'frame';
 
-:export {
-  frame: #{$frame};
+:root {
+  --helper-iframe-frame: #{$frame};
 }
 
 #{Constants.$googleDocEmbed} {

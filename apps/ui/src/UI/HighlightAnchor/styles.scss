@@ -2,8 +2,8 @@
 
 $highlight: Constants.$prefix + 'hilite';
 
-:export {
-  highlight: #{$highlight};
+:root {
+  --ui-highlightanchor-highlight: #{$highlight};
 }
 
 #{Constants.$googleDocEmbed} {

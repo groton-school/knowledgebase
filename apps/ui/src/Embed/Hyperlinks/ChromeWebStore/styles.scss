@@ -2,8 +2,8 @@
 
 $chromeWebStore: Constants.$prefix + 'chrome-web-store';
 
-:export {
-  chromeWebStore: #{$chromeWebStore};
+:root {
+  --embed-hyperlinks-chromewebstore-chromeWebStore: #{$chromeWebStore};
 }
 
 #{Constants.$googleDocEmbed} {

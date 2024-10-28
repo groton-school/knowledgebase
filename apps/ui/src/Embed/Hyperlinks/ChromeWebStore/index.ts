@@ -1,8 +1,7 @@
 //import * as QRCode from 'qrcode';
 import Helper from '../../../Helper';
-import icon from './chrome-web-store.png';
+import './chrome-web-store.png';
 import './styles.scss';
-import styles from './styles.scss';
 
 const chromeWebStore = 'a[href^="https://chromewebstore.google.com/"]';
 
@@ -16,7 +15,11 @@ export default function ChromeWebStore() {
         const text = link.innerText;
         p.innerHTML = `
           <form action="${url}" method="get" target="_blank">
-            <button class="${styles.chromeWebStore}" type="submit">
+            <button class="${window
+              .getComputedStyle(document.body)
+              .getPropertyValue(
+                '--embed-hyperlinks-chromewebstore-chromeWebStore'
+              )}" type="submit">
               ${text} in the Chrome Web Store
             </button>
           </form>

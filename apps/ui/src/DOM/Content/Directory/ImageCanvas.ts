@@ -1,5 +1,4 @@
 import config from '../../../config';
-import styles from './styles.scss';
 
 export default function ImageCanvas({
   href,
@@ -19,7 +18,9 @@ export default function ImageCanvas({
     href
   ).pathname.replace(/\/$/, '')}.png`;
   img.classList.add(
-    styles.thumbnailImage,
+    window
+      .getComputedStyle(document.body)
+      .getPropertyValue('--dom-content-directory-thumbnailImage'),
     'img-fluid',
     'rounded-corner',
     'align-middle'
@@ -66,7 +67,12 @@ export default function ImageCanvas({
       );
       if (bgColor != 'rgba(0,0,0,0)') {
         propertyParent = propertyParent || parent;
-        propertyParent.style.setProperty(styles.bgcolor, bgColor);
+        propertyParent.style.setProperty(
+          window
+            .getComputedStyle(document.body)
+            .getPropertyValue('--dom-content-directory-bgcolor'),
+          bgColor
+        );
       }
     }
   });

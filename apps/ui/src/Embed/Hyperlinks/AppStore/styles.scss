@@ -5,11 +5,11 @@ $ios: Constants.$prefix + 'ios';
 $android: Constants.$prefix + 'android';
 $qr: Constants.$prefix + 'qr';
 
-:export {
-  apps: #{$apps};
-  ios: #{$ios};
-  android: #{$android};
-  qr: #{$qr};
+:root {
+  --embed-hyperlinks-appstore-apps: #{$apps};
+  --embed-hyperlinks-appstore-ios: #{$ios};
+  --embed-hyperlinks-appstore-android: #{$android};
+  --embed-hyperlinks-appstore-qr: #{$qr};
 }
 
 #{Constants.$googleDocEmbed} {

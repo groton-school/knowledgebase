@@ -14,15 +14,15 @@ $caption: $prefix + 'caption';
 $margin: 1em;
 $scrimColor: hsla(0, 0%, 25%, 0.85);
 
-:export {
-  embiggen: #{$embiggen};
-  image: #{$image};
-  original: #{$original};
-  scrim: #{$scrim};
-  closeBox: #{$closeBox};
-  wrapper: #{$wrapper};
-  zoomed: #{$zoomed};
-  caption: #{$caption};
+:root {
+  --ui-embiggen-embiggen: #{$embiggen};
+  --ui-embiggen-image: #{$image};
+  --ui-embiggen-original: #{$original};
+  --ui-embiggen-scrim: #{$scrim};
+  --ui-embiggen-closeBox: #{$closeBox};
+  --ui-embiggen-wrapper: #{$wrapper};
+  --ui-embiggen-zoomed: #{$zoomed};
+  --ui-embiggen-caption: #{$caption};
 }
 
 #{Constants.$googleDocEmbed} {
