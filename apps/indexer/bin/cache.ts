@@ -3,12 +3,18 @@ import Google from '@groton/knowledgebase.google';
 import Index from '@groton/knowledgebase.index';
 import fs from 'node:fs';
 import path from 'node:path';
-import Cache from '../src/Cache';
-import Helper from '../src/Helper';
+import Cache from '../src/Cache/index.js';
+import Helper from '../src/Helper/index.js';
 
-const defaultIndexPath = path.resolve(import.meta.dirname, '../../router/var/index.json');
+const defaultIndexPath = path.resolve(
+  import.meta.dirname,
+  '../dist/index.json'
+);
 const defaultKeysPath = path.resolve(import.meta.dirname, '../var/keys.json');
-const defaultTokensPath = path.resolve(import.meta.dirname, '../var/tokens.json');
+const defaultTokensPath = path.resolve(
+  import.meta.dirname,
+  '../var/tokens.json'
+);
 
 const options = {
   bucketName: {
@@ -71,21 +77,18 @@ const flags = {
   Google.Client.init({ keysPath, tokensPath });
 
   const spinner = cli.spinner();
+  Cache.File.bindSpinner(spinner, Helper.colorizeStatus);
 
   indexPath = path.resolve(CWD, indexPath);
 
-  Cache.File.event.on(Cache.File.Event.Start, (status) => {
-    spinner.start(Helper.colorizeStatus(status));
-  });
-  Cache.File.event.on(Cache.File.Event.Succeed, (status) =>
-    spinner.succeed(Helper.colorizeStatus(status))
-  );
-  Cache.File.event.on(Cache.File.Event.Fail, (status) =>
-    spinner.fail(Helper.colorizeStatus(status))
-  );
-
   spinner.start(`Loading index from ${cli.colors.url(indexPath)}`);
   const index = await Cache.fromFile(indexPath);
+  if (!index.root) {
+    spinner.fail(
+      `Missing root path in ${cli.colors.url(path.dirname(indexPath))}/${cli.colors.value(path.basename(indexPath))}`
+    );
+    process.exit(1);
+  }
   spinner.succeed(`${cli.colors.value(index.root.name)} index loaded`);
 
   bucketName =
@@ -100,7 +103,7 @@ const flags = {
   const updatedIndex = [
     index.root,
     ...(
-      await Promise.all(
+      await Promise.allSettled(
         index.map((entry) => {
           if (entry.index.path != '.') {
             return entry.cache({
@@ -111,14 +114,19 @@ const flags = {
           }
         })
       )
-    ).filter(
-      (result) =>
-        result &&
+    ).reduce((all, result) => {
+      if (
+        result.status === 'fulfilled' &&
+        result.value &&
         !(
-          result.index.exists === false &&
-          result.index.status === Index.IndexEntry.State.Expired
+          result.value.index.exists === false &&
+          result.value.index.status === Index.IndexEntry.State.Expired
         )
-    )
+      ) {
+        all.push(result.value);
+      }
+      return all;
+    }, [] as Cache.File[])
   ];
   spinner.succeed('All indexed files reviewed');
 

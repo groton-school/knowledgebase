@@ -1,9 +1,9 @@
-import colorizeStatus from './colorizeStatus';
-import errorMessage from './errorMessage';
-import exponentialBackoff from './exponentialBackoff';
-import normalizeFilename from './normalizeFilename';
-import renderBlob from './renderBlob';
-import subfileFactory from './subfileFactory';
+import colorizeStatus from './colorizeStatus.js';
+import errorMessage from './errorMessage.js';
+import exponentialBackoff from './exponentialBackoff.js';
+import normalizeFilename from './normalizeFilename.js';
+import renderBlob from './renderBlob.js';
+import subfileFactory from './subfileFactory.js';
 
 export default {
   colorizeStatus,

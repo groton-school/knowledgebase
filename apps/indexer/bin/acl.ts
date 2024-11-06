@@ -1,13 +1,16 @@
 import cli from '@battis/qui-cli';
 import fs from 'node:fs';
 import path from 'node:path';
-import ACL from '../src/ACL';
-import Helper from '../src/Helper';
+import ACL from '../src/ACL/index.js';
+import Helper from '../src/Helper/index.js';
 
 // TODO why does reset-permissions need to run separately from upload?
 // TODO version of reset-permissions that resets only recent uploads
 
-const defaultIndexPath = path.resolve(import.meta.dirname, '../../router/var/index.json');
+const defaultIndexPath = path.resolve(
+  import.meta.dirname,
+  '../dist/index.json'
+);
 
 const options = {
   bucketName: {
@@ -62,21 +65,18 @@ const flags = {
   });
 
   const spinner = cli.spinner();
+  ACL.File.bindSpinner(spinner, Helper.colorizeStatus);
 
   indexPath = path.resolve(CWD, indexPath);
 
-  ACL.File.event.on(ACL.File.Event.Start, (status) => {
-    spinner.start(Helper.colorizeStatus(status));
-  });
-  ACL.File.event.on(ACL.File.Event.Succeed, (status) =>
-    spinner.succeed(Helper.colorizeStatus(status))
-  );
-  ACL.File.event.on(ACL.File.Event.Fail, (status) =>
-    spinner.fail(Helper.colorizeStatus(status))
-  );
-
   spinner.start(`Loading index from ${cli.colors.url(indexPath)}`);
   const index = await ACL.fromFile(indexPath);
+  if (!index.root) {
+    spinner.fail(
+      `Missing root path in ${cli.colors.url(path.dirname(indexPath))}/${cli.colors.value(path.basename(indexPath))}`
+    );
+    process.exit(1);
+  }
   spinner.succeed(`${cli.colors.value(index.root.name)} index loaded`);
 
   bucketName =
@@ -90,7 +90,7 @@ const flags = {
   permissionsRegex = permissionsRegex || process.env.PERMISSIONS_REGEX || '.*';
 
   spinner.start('Reviewing permission changes');
-  await Promise.all(
+  await Promise.allSettled(
     index.map((file) =>
       file.cache({ bucketName, permissionsRegex, ignoreErrors: !!ignoreErrors })
     )

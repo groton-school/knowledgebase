@@ -1,7 +1,7 @@
 import Google from '@groton/knowledgebase.google';
-import Cache from '../Cache';
-import Helper from '../Helper';
-import IndexEntry from './IndexEntry';
+import Cache from '../Cache/index.js';
+import Helper from '../Helper/index.js';
+import IndexEntry from './IndexEntry.js';
 
 interface File extends Cache.File {
   permissions: (Google.Drive.drive_v3.Schema$Permission & {
@@ -12,7 +12,6 @@ interface File extends Cache.File {
 class File extends Cache.File {
   public async cache({
     bucketName,
-    permissionsRegex = File.DEFAULT_PERMISSIONS_REGEX,
     ignoreErrors = File.DEFAULT_IGNORE_ERRORS
   }: Cache.File.Params.Cache) {
     if (!this.isFolder()) {
@@ -63,9 +62,11 @@ class File extends Cache.File {
                   `${permission.type}:${permission.emailAddress} removed from ACL for ${this.index.path}`
                 );
               }
-            } catch (error) {
+            } catch (e) {
+              const error = Google.CoerceRequestError(e);
               if (error.code != 404) {
-                permission.indexerAclState = error.message || 'error';
+                permission.indexerAclState = (error.message ||
+                  'error') as IndexEntry.State;
                 updatedPermissions.push(permission);
                 File.event.emit(
                   File.Event.Fail,
@@ -85,7 +86,7 @@ class File extends Cache.File {
           } else {
             File.event.emit(
               File.Event.Start,
-              `Adding ${permission.displayName} to ACL for ${this.index.path}`
+              `Adding ${permission.displayName || permission.emailAddress} to ACL for ${this.index.path}`
             );
             const success = await Helper.exponentialBackoff(async () => {
               let success: string | true = true;
@@ -118,7 +119,7 @@ class File extends Cache.File {
                       error
                     )
                   );
-                  success = error.message;
+                  success = error.message || 'error';
                 }
               }
               return success;

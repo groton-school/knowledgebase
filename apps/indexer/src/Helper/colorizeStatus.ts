@@ -1,10 +1,10 @@
 import cli from '@battis/qui-cli';
 import path from 'node:path';
-import valid from './validGCSFilenameCharacters';
+import valid from './validGCSFilenameCharacters.js';
 
 const GCSPath = new RegExp(`(\/?([${valid}]+\/)+[${valid}]+)`, 'gi');
 
-function fancyUrl(url) {
+function fancyUrl(url: string) {
   const urlPath = path.dirname(url);
   return `${urlPath != '.' ? cli.colors.url(`${urlPath}/`) : ''}${cli.colors.value(path.basename(url))}`;
 }

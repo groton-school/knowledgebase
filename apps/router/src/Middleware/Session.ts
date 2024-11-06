@@ -7,9 +7,13 @@ type SessionConfig = {
   config: Config;
 };
 
-export function Session({ config }: SessionConfig) {
+export function Session({
+  config: {
+    session: { secret }
+  }
+}: SessionConfig) {
   return session({
-    secret: config.session.secret, // if using cookies, use same secret!
+    secret, // if using cookies, use same secret!
     cookie: { secure: true, maxAge: 90 * 24 * 60 * 60 * 1000 },
     store: new FirestoreStore({
       dataset: new Firestore(),

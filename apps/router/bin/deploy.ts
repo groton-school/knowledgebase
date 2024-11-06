@@ -1,4 +1,4 @@
-import gcloud from '@battis/partly-gcloudy';
+import * as gcloud from '@battis/partly-gcloudy';
 import cli from '@battis/qui-cli';
 import path from 'node:path';
 

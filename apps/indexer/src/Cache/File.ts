@@ -1,13 +1,15 @@
+import cli from '@battis/qui-cli';
+import { CoerceError } from '@battis/typescript-tricks';
 import Google from '@groton/knowledgebase.google';
 import Index from '@groton/knowledgebase.index';
 import Zip from 'adm-zip';
 import mime from 'mime-types';
 import events from 'node:events';
 import path from 'node:path';
-import Helper from '../Helper';
-import pipelineHTML from './Actions/pipelineHTML';
-import FileFactory from './FileFactory';
-import IndexEntry from './IndexEntry';
+import Helper from '../Helper/index.js';
+import pipelineHTML from './Actions/pipelineHTML.js';
+import FileFactory from './FileFactory.js';
+import IndexEntry from './IndexEntry.js';
 
 class File extends Index.File {
   protected static readonly DEFAULT_PERMISSIONS_REGEX = /.*/;
@@ -16,6 +18,29 @@ class File extends Index.File {
 
   public static event = new events.EventEmitter();
 
+  public static bindSpinner(
+    spinner: ReturnType<typeof cli.spinner>,
+    transform?: (t: string) => string
+  ) {
+    for (const key in this.Event) {
+      const eventType = this.Event[key];
+      const spinnerMember = spinner[eventType];
+      if (typeof spinnerMember == 'function' && spinnerMember.length == 1) {
+        this.event.on(eventType, (status: string): void => {
+          (
+            spinnerMember.bind(spinner) as (
+              text?: string
+            ) => ReturnType<typeof cli.spinner>
+          )(transform ? transform(status) : status);
+        });
+      } else {
+        this.event.on(eventType, (status: string): void => {
+          spinner.info(transform ? transform(status) : status);
+        });
+      }
+    }
+  }
+
   public async fetchAsHtmlIfPossible() {
     switch (this.mimeType) {
       case Google.MimeTypes.Doc:
@@ -23,15 +48,20 @@ class File extends Index.File {
       case Google.MimeTypes.Slides:
         try {
           return await this.fetchAsCompleteHtml();
-        } catch (error) {
-          if (
-            error.message == 'This file is too large to be exported.' &&
-            this.webViewLink
-          ) {
-            return await Helper.renderBlob(
-              path.join(import.meta.dirname, 'Views/shortcut.ejs'),
-              this
-            );
+        } catch (e) {
+          const error = CoerceError(e);
+          if (error.message == 'This file is too large to be exported.') {
+            if (this.webViewLink) {
+              return await Helper.renderBlob(
+                path.join(import.meta.dirname, 'Views/shortcut.ejs'),
+                this
+              );
+            } else {
+              return await Helper.renderBlob(
+                path.join(import.meta.dirname, 'Views/tooLarge.ejs'),
+                this
+              );
+            }
           } else {
             throw error;
           }
@@ -109,43 +139,67 @@ class File extends Index.File {
 
         if (folderContents.files?.length) {
           contents.push(
-            ...(await Promise.all(
-              folderContents.files.map(async (item) => {
-                if (!item.name) {
-                  throw new Error(`${item.id} is unnamed`);
-                }
-                File.event.emit(
-                  File.Event.Start,
-                  `Indexing ${path.join(this.index.path, item.name)}`
-                );
-                const file = await fileFactory.fromDriveId(
-                  item.id!,
-                  permissionsRegex,
-                  new IndexEntry(this.index.path)
-                );
-                file.index = new IndexEntry(
-                  path.join(
-                    this.index.path,
-                    Helper.normalizeFilename(file.name)
-                  )
-                );
-                if (file.isFolder()) {
-                  contents.push(
-                    ...(await file.indexContents(permissionsRegex))
+            ...(
+              await Promise.allSettled(
+                folderContents.files.map(async (item) => {
+                  if (!item.name) {
+                    throw new Error(`${item.id} is unnamed`);
+                  }
+                  File.event.emit(
+                    File.Event.Start,
+                    `Indexing ${path.join(this.index.path, item.name)}`
+                  );
+                  const file = await fileFactory.fromDriveId(
+                    item.id!,
+                    permissionsRegex,
+                    new IndexEntry(this.index.path)
+                  );
+                  file.index = new IndexEntry(
+                    path.join(
+                      this.index.path,
+                      Helper.normalizeFilename(file.name)
+                    )
+                  );
+                  if (file.isFolder()) {
+                    contents.push(
+                      ...(await file.indexContents(permissionsRegex))
+                    );
+                  }
+                  File.event.emit(
+                    File.Event.Succeed,
+                    `${file.index.path} indexed`
+                  );
+                  return file;
+                })
+              )
+            ).reduce((all, result) => {
+              if (result.status == 'fulfilled') {
+                all.push(result.value);
+              } else {
+                const error = Google.CoerceRequestError(result.reason);
+                if (
+                  error.code == 404 &&
+                  'config' in error &&
+                  typeof error.config == 'object' &&
+                  error.config !== null &&
+                  'url' in error.config &&
+                  typeof error.config.url == 'string'
+                ) {
+                  const id = path.basename(new URL(error.config.url).pathname);
+                  File.event.emit(
+                    File.Event.Fail,
+                    `Could not index file ID ${id} (likely a broken shortcut)`
                   );
                 }
-                File.event.emit(
-                  File.Event.Succeed,
-                  `${file.index.path} indexed`
-                );
-                return file;
-              })
-            ))
+              }
+              return all;
+            }, [] as File[])
           );
         }
       } while (folderContents.nextPageToken);
       return contents;
     }
+    return [];
   }
 
   public async cache({
@@ -170,8 +224,9 @@ class File extends Index.File {
                 File.Event.Succeed,
                 `${file.name} expired and deleted`
               );
-            } catch (error) {
-              if (error.code != 404) {
+            } catch (e) {
+              const error = Google.CoerceRequestError(e);
+              if (error.code != '404') {
                 File.event.emit(
                   File.Event.Fail,
                   Helper.errorMessage(
@@ -253,8 +308,9 @@ class File extends Index.File {
               }, ignoreErrors);
             }
             this.index.status = IndexEntry.State.Cached;
-          } catch (error) {
-            this.index.status = error.message || 'error';
+          } catch (e) {
+            const error = CoerceError(e);
+            this.index.status = error.message;
             File.event.emit(
               File.Event.Fail,
               Helper.errorMessage(
@@ -272,11 +328,13 @@ class File extends Index.File {
 }
 
 namespace File {
-  export enum Event {
-    Start = 'start',
-    Succeed = 'succeed',
-    Fail = 'fail'
-  }
+  export const Event: Record<string, keyof ReturnType<typeof cli.spinner>> = {
+    Start: 'start',
+    Succeed: 'succeed',
+    Fail: 'fail',
+    Warn: 'warn',
+    Info: 'info'
+  };
 
   export namespace Params {
     export type Cache = {

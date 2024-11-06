@@ -1,4 +1,4 @@
-import valid from './validGCSFilenameCharacters';
+import valid from './validGCSFilenameCharacters.js';
 
 const invalid = new RegExp(`[^${valid}]+`, 'gi');
 

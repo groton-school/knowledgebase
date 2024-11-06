@@ -8,6 +8,10 @@ const gae = YAML.parse(
   fs.readFileSync(path.join(import.meta.dirname, 'app.yaml')).toString()
 );
 
+function ignoreInvisible(filePath) {
+  return !/^\./.test(path.basename(filePath));
+}
+
 const config = {
   mode: 'production',
   target: gae.runtime.replace('nodejs', 'node'),
@@ -25,7 +29,18 @@ const config = {
   ],
   plugins: [
     new CopyWebpackPlugin({
-      patterns: [{ from: '../ui/build', to: '' }]
+      patterns: [
+        {
+          from: './node_modules/@groton/knowledgebase.ui/build',
+          to: '',
+          filter: ignoreInvisible
+        },
+        {
+          from: './node_modules/@groton/knowledgebase.indexer/dist',
+          to: '../var',
+          filter: ignoreInvisible
+        }
+      ]
     })
   ],
   optimization: { minimize: true }

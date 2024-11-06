@@ -1,5 +1,5 @@
 export default function errorMessage(
-  message: string = undefined,
+  message: string | undefined = undefined,
   context: object,
   error: any
 ) {

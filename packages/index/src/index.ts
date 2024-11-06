@@ -13,17 +13,24 @@ namespace Index {
   export async function fromFile<T extends typeof File>(
     fileType: T,
     filePath: string,
-    permissionsRegex: RegExp
-  ): Promise<_Index<InstanceType<T>>> {
+    permissionsRegex?: RegExp
+  ): Promise<Index<InstanceType<T>>> {
     const fileFactory = new _FileFactory(fileType);
     const obj = JSON.parse(fs.readFileSync(filePath).toString());
     if (Array.isArray(obj)) {
       return new _Index<InstanceType<T>>(
-        ...(await Promise.all(
-          obj.map(async (e: JSONObject) => {
-            return await fileFactory.fromDrive(e, permissionsRegex);
-          })
-        ))
+        ...(
+          await Promise.allSettled(
+            obj.map(async (e: JSONObject) => {
+              return await fileFactory.fromDrive(e, permissionsRegex);
+            })
+          )
+        ).reduce((all, result) => {
+          if (result.status === 'fulfilled') {
+            all.push(result.value);
+          }
+          return all;
+        }, [] as InstanceType<T>[])
       );
     }
     return new _Index<InstanceType<T>>(...[]);

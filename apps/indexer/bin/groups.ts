@@ -6,7 +6,7 @@ import config from '../var/config.json';
 
 const defaultFilePath = path.resolve(
   import.meta.dirname,
-  '../../router/var/groups.json'
+  '../dist/groups.json'
 );
 
 const options = {

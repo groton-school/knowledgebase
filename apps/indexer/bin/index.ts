@@ -2,16 +2,23 @@ import cli from '@battis/qui-cli';
 import Google from '@groton/knowledgebase.google';
 import fs from 'node:fs';
 import path from 'node:path';
-import Cache from '../src/Cache';
-import Helper from '../src/Helper';
+import ACL from '../src/ACL/index.js';
+import Cache from '../src/Cache/index.js';
+import Helper from '../src/Helper/index.js';
 
 const FOLDER_ID = '%FOLDER_ID%';
 const FOLDER_NAME = '%FOLDER_NAME%';
 const TIMESTAMP = '%TIMESTAMP%';
 
-const defaultIndexPath = path.resolve(import.meta.dirname, '../../router/var/index.json');
+const defaultIndexPath = path.resolve(
+  import.meta.dirname,
+  '../dist/index.json'
+);
 const defaultKeysPath = path.resolve(import.meta.dirname, '../var/keys.json');
-const defaultTokensPath = path.resolve(import.meta.dirname, '../var/tokens.json');
+const defaultTokensPath = path.resolve(
+  import.meta.dirname,
+  '../var/tokens.json'
+);
 
 const options = {
   folderId: {
@@ -73,20 +80,18 @@ const options = {
   );
 
   const spinner = cli.spinner();
-  Cache.File.event.on(Cache.File.Event.Start, (status): void => {
-    spinner.start(Helper.colorizeStatus(status));
-  });
-  Cache.File.event.on(Cache.File.Event.Succeed, (status): void => {
-    spinner.succeed(Helper.colorizeStatus(status));
-  });
-  Cache.File.event.on(Cache.File.Event.Fail, (status): void => {
-    spinner.fail(Helper.colorizeStatus(status));
-  });
+  Cache.File.bindSpinner(spinner, Helper.colorizeStatus);
 
   if (indexPath && fs.existsSync(path.resolve(CWD, indexPath))) {
     indexPath = path.resolve(CWD, indexPath);
     spinner.start(`Loading index from ${cli.colors.url(indexPath)}`);
     const prevIndex = await Cache.fromFile(indexPath);
+    if (!prevIndex.root) {
+      spinner.fail(
+        `Missing root path in ${cli.colors.url(path.dirname(indexPath))}/${cli.colors.value(path.basename(indexPath))}`
+      );
+      process.exit(1);
+    }
     spinner.succeed(`${cli.colors.value(prevIndex.root.name)} index loaded`);
 
     const currIndex = [
@@ -99,29 +104,31 @@ const options = {
 
     spinner.start(`Comparing indices`);
     // TODO reset permissions
-    const nextIndex = [];
-    prevIndex.forEach((prev) => {
+    const nextIndex: typeof currIndex = [];
+    prevIndex.forEach((p) => {
+      const prev = p as ACL.File;
       spinner.start(prev.index.path);
-      let update = prev;
+      let update = p;
       const i = currIndex.findIndex((elt) => elt.index.path == prev.index.path);
       if (i >= 0) {
         const permissions: Google.Drive.drive_v3.Schema$Permission[] = [];
-        for (const permission of prev.permissions) {
+        for (const permission of prev.permissions || []) {
           if (
-            !currIndex[i].permissions.find(
-              (p) => p.emailAddress == permission.emailAddress
+            !(currIndex[i].permissions || []).find(
+              (p: Google.Drive.drive_v3.Schema$Permission) =>
+                p.emailAddress == permission.emailAddress
             )
           ) {
-            permission['indexerAclState'] = Cache.IndexEntry.State.Expired;
+            permission.indexerAclState = Cache.IndexEntry.State.Expired;
             spinner.fail(
               `Expired ${permission.emailAddress} from ${prev.index.path}`
             );
           }
           permissions.push(permission);
         }
-        for (const permission of currIndex[i].permissions) {
+        for (const permission of currIndex[i].permissions || []) {
           if (
-            permissionsPattern.test(permission.emailAddress) &&
+            permissionsPattern.test(permission.emailAddress || '') &&
             !permissions.find((p) => p.emailAddress == permission.emailAddress)
           ) {
             permissions.push(permission);

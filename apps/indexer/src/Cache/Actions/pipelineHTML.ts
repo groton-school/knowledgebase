@@ -1,5 +1,5 @@
 import { JSDOM } from 'jsdom';
-import File from '../File';
+import File from '../File.js';
 
 // TODO pipelineHTML needs a re-think
 

@@ -1,13 +1,9 @@
+import Google from '@groton/knowledgebase.google/src/index.js';
 import crypto from 'crypto';
-import File from '../Cache/File';
-import errorMessage from './errorMessage';
+import File from '../Cache/File.js';
+import errorMessage from './errorMessage.js';
 
 type RetriableAction<T> = () => T | Promise<T>;
-
-type ApiError = {
-  code?: number;
-  message?: string;
-};
 
 export default async function exponentialBackoff<T = any>(
   action: RetriableAction<T>,
@@ -18,8 +14,8 @@ export default async function exponentialBackoff<T = any>(
   return new Promise(async (resolve, reject) => {
     try {
       resolve(await action());
-    } catch (_e) {
-      const error = _e as ApiError;
+    } catch (e) {
+      const error = Google.CoerceRequestError(e);
       if (error.code == 503 && retries > 0) {
         File.event.emit(File.Event.Start, `${retries} retries left`);
         const timeout = lastTimeout
@@ -38,7 +34,7 @@ export default async function exponentialBackoff<T = any>(
           timeout
         );
       } else {
-        this.index.status = error.message || JSON.stringify(error);
+        // this.index.status = error.message || JSON.stringify(error);
         File.event.emit(File.Event.Fail, errorMessage(undefined, {}, error));
         if (!ignoreErrors) {
           reject(error);

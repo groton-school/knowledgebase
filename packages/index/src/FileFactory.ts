@@ -7,7 +7,7 @@ class FileFactory<T extends typeof File> {
 
   private async resolveShortcut(
     file: Google.Drive.drive_v3.Schema$File,
-    permissionsRegex: RegExp
+    permissionsRegex?: RegExp
   ) {
     if (
       file.mimeType == Google.MimeTypes.Shortcut &&
@@ -22,7 +22,7 @@ class FileFactory<T extends typeof File> {
 
   public async fromDrive(
     file: Google.Drive.drive_v3.Schema$File,
-    permissionsRegex: RegExp,
+    permissionsRegex?: RegExp,
     index?: IndexEntry
   ) {
     return new this.fileType(
@@ -33,7 +33,7 @@ class FileFactory<T extends typeof File> {
 
   public async fromDriveId(
     fileId: Id,
-    permissionsRegex: RegExp,
+    permissionsRegex?: RegExp,
     index?: IndexEntry
   ) {
     const drive = await Google.Client.getDrive();
@@ -54,7 +54,7 @@ class FileFactory<T extends typeof File> {
     });
 
     const permissions = (
-      await Promise.all(
+      await Promise.allSettled(
         permissionsList!.map((permission) =>
           drive.permissions.get({
             fileId,
@@ -64,13 +64,17 @@ class FileFactory<T extends typeof File> {
           })
         )
       )
-    )
-      .map((response) => response.data)
-      .filter(
-        (permission) =>
-          permission.emailAddress &&
-          permissionsRegex.test(permission.emailAddress)
-      );
+    ).reduce((all, result) => {
+      if (
+        result.status == 'fulfilled' &&
+        result.value.data.emailAddress &&
+        (permissionsRegex === undefined ||
+          permissionsRegex.test(result.value.data.emailAddress))
+      ) {
+        all.push(result.value.data);
+      }
+      return all;
+    }, [] as Google.Drive.drive_v3.Schema$Permission[]);
 
     return new this.fileType(
       await this.resolveShortcut(
