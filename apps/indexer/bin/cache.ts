@@ -1,6 +1,5 @@
 import cli from '@battis/qui-cli';
 import Google from '@groton/knowledgebase.google';
-import Index from '@groton/knowledgebase.index';
 import fs from 'node:fs';
 import path from 'node:path';
 import Cache from '../src/Cache/index.js';
@@ -43,6 +42,10 @@ const options = {
       defaultTokensPath
     )})`,
     default: defaultTokensPath
+  },
+  chunkSize: {
+    description: `Number of files to simultaneously cache (defaults to ${cli.colors.value(25)})`,
+    default: '25'
   }
 };
 
@@ -62,7 +65,15 @@ const flags = {
 (async () => {
   const CWD = process.cwd();
   let {
-    values: { bucketName, indexPath, keysPath, tokensPath, force, ignoreErrors }
+    values: {
+      bucketName,
+      indexPath,
+      keysPath,
+      tokensPath,
+      force,
+      ignoreErrors,
+      chunkSize: _chunkSize
+    }
   } = cli.init({
     env: {
       root: path.join(import.meta.dirname, '../../..'),
@@ -73,6 +84,7 @@ const flags = {
       options
     }
   });
+  const chunkSize = parseInt(_chunkSize);
 
   Google.Client.init({ keysPath, tokensPath });
 
@@ -100,34 +112,26 @@ const flags = {
     }));
 
   spinner.start('Reviewing index files');
-  const updatedIndex = [
-    index.root,
-    ...(
-      await Promise.allSettled(
-        index.map((entry) => {
-          if (entry.index.path != '.') {
-            return entry.cache({
-              bucketName,
-              force: !!force,
-              ignoreErrors: !!ignoreErrors
-            });
-          }
-        })
+  for (let i = 0; i < index.length; i += chunkSize) {
+    await Promise.allSettled(
+      index.slice(i, i + chunkSize).map((entry) => {
+        if (entry.index.path != '.') {
+          return entry.cache({
+            bucketName,
+            force: !!force,
+            ignoreErrors: !!ignoreErrors
+          });
+        }
+      })
+    );
+  }
+  const updatedIndex = index.filter(
+    (entry) =>
+      !(
+        entry.index.exists === false &&
+        entry.index.status === Cache.IndexEntry.State.Expired
       )
-    ).reduce((all, result) => {
-      if (
-        result.status === 'fulfilled' &&
-        result.value &&
-        !(
-          result.value.index.exists === false &&
-          result.value.index.status === Index.IndexEntry.State.Expired
-        )
-      ) {
-        all.push(result.value);
-      }
-      return all;
-    }, [] as Cache.File[])
-  ];
+  );
   spinner.succeed('All indexed files reviewed');
 
   spinner.start(`Saving index to ${cli.colors.url(indexPath)}`);

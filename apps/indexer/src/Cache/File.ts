@@ -49,18 +49,30 @@ class File extends Index.File {
         try {
           return await this.fetchAsCompleteHtml();
         } catch (e) {
-          const error = CoerceError(e);
-          if (error.message == 'This file is too large to be exported.') {
+          const error = Google.CoerceRequestError(e);
+          if (error.code == 403) {
             if (this.webViewLink) {
-              return await Helper.renderBlob(
-                path.join(import.meta.dirname, 'Views/shortcut.ejs'),
-                this
+              File.event.emit(
+                File.Event.Warn,
+                `${this.index.path}: ${error.message} Caching a redirect page.`
               );
+              return {
+                'index.html': await Helper.renderBlob(
+                  path.join(import.meta.dirname, 'Views/redirect.ejs'),
+                  this
+                )
+              };
             } else {
-              return await Helper.renderBlob(
-                path.join(import.meta.dirname, 'Views/tooLarge.ejs'),
-                this
+              File.event.emit(
+                File.Event.Warn,
+                `${this.index.path}: ${error.message} No webViewLink available, caching an error message.`
               );
+              return {
+                'index.html': await Helper.renderBlob(
+                  path.join(import.meta.dirname, 'Views/tooLarge.ejs'),
+                  this
+                )
+              };
             }
           } else {
             throw error;
@@ -177,15 +189,10 @@ class File extends Index.File {
                 all.push(result.value);
               } else {
                 const error = Google.CoerceRequestError(result.reason);
-                if (
-                  error.code == 404 &&
-                  'config' in error &&
-                  typeof error.config == 'object' &&
-                  error.config !== null &&
-                  'url' in error.config &&
-                  typeof error.config.url == 'string'
-                ) {
-                  const id = path.basename(new URL(error.config.url).pathname);
+                if (error.code == 404) {
+                  const id = path.basename(
+                    new URL(error.config?.url || '').pathname
+                  );
                   File.event.emit(
                     File.Event.Fail,
                     `Could not index file ID ${id} (likely a broken shortcut)`
@@ -298,7 +305,7 @@ class File extends Index.File {
                 const file = bucket.file(filename);
                 const blob = await pipelineHTML({
                   file: this,
-                  blob: (files as Record<string, Blob>)[subfileName] // TODO better fix than manual typing
+                  blob: files[subfileName]
                 });
                 file.save(Buffer.from(await blob.arrayBuffer()));
                 if (!this.index.uri.includes(file.cloudStorageURI.href)) {

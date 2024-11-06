@@ -65,13 +65,14 @@ class FileFactory<T extends typeof File> {
         )
       )
     ).reduce((all, result) => {
-      if (
-        result.status == 'fulfilled' &&
-        result.value.data.emailAddress &&
-        (permissionsRegex === undefined ||
-          permissionsRegex.test(result.value.data.emailAddress))
-      ) {
-        all.push(result.value.data);
+      if (result.status == 'fulfilled') {
+        if (
+          result.value.data.emailAddress &&
+          (permissionsRegex === undefined ||
+            permissionsRegex.test(result.value.data.emailAddress))
+        ) {
+          all.push(result.value.data);
+        }
       }
       return all;
     }, [] as Google.Drive.drive_v3.Schema$Permission[]);

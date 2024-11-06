@@ -34,8 +34,10 @@ export default async function exponentialBackoff<T = any>(
           timeout
         );
       } else {
-        // this.index.status = error.message || JSON.stringify(error);
-        File.event.emit(File.Event.Fail, errorMessage(undefined, {}, error));
+        File.event.emit(
+          File.Event.Fail,
+          errorMessage('could not retry', action, e)
+        );
         if (!ignoreErrors) {
           reject(error);
         }
