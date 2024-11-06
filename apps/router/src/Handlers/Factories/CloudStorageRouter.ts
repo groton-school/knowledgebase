@@ -94,7 +94,7 @@ export const CloudStorageRouter: HandlerFactory = ({
                               ? ' directory'
                               : ''
                           }">
-                            <div class="name"><a href="/${page.index.path}/">${
+                            <div class="name"><a href="/${page.index.path}${/\..+$/.test(page.index.path) ? '' : '/'}">${
                               page.name
                             }</a></div>${
                               page.description
