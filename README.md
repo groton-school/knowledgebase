@@ -26,7 +26,7 @@ git clone git@github.com:groton-school/knowledgebase.git path/to/repo
 
 ```sh
 cd path/to/repo
-pnpm i -r
+pnpm install
 ```
 
 3. [Create a new Google Cloud Project](https://console.cloud.google.com/projectcreate) -- make a note of the project ID (e.g. `egregious-juniper-123456` or similar). While the setup script (below) _can_ create a new project for you, it _cannot_ configure OAuth consent...
