@@ -1,11 +1,10 @@
 import cli from '@battis/qui-cli';
+import { ArrayElement } from '@battis/typescript-tricks';
+import { Groups } from '@groton/knowledgebase.config';
 import converter from 'json-2-csv';
 import fs from 'node:fs';
 import path from 'node:path';
-
-// https://stackoverflow.com/a/51399781/294171
-type ArrayElement<ArrayType extends readonly unknown[]> =
-  ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
+import * as Users from '../src/Users.js';
 
 let {
   positionals: [groupsPath, outputPath],
@@ -43,25 +42,12 @@ let {
 });
 
 format = format.toLowerCase();
-groupFormat = groupFormat.toLowerCase();
-switch (groupFormat) {
-  case 'displayname':
-    groupFormat = 'displayName';
-    break;
-  case 'groupkey':
-    groupFormat = 'groupKey';
-    break;
-  default:
-  // leave as is
-}
+Users.setGroupFormat(groupFormat);
 const spinner = cli.spinner();
 
 spinner.start(`Reading groups from ${cli.colors.url(groupsPath)}`);
-let users: ({ user: string } & Record<string, boolean | string>)[] = [];
-let groups: Record<
-  string,
-  { displayName: string; groupKey: string; name: string; members: string[] }
->;
+let users: Users.User[] = [];
+let groups: Groups;
 try {
   groupsPath = path.resolve(process.cwd(), groupsPath);
   if (!outputPath) {
@@ -75,67 +61,29 @@ try {
   spinner.fail(`Could not read groups from ${cli.colors.url(groupsPath)}`);
   throw e;
 }
-console.log({ groupsPath, outputPath, format, groupFormat, list });
 
-const preceding: Record<string, false> = {};
-let subgroups: typeof users = [];
-
-function append(
-  member: string,
-  group: string,
-  value: boolean | string,
-  list: typeof users
-) {
-  const user = list.find((u) => u.user === member);
-  if (user) {
-    user[group] = value;
-  } else {
-    list.push({ user: member, ...preceding, [group]: value });
-  }
-}
-
-function fill(group: string, list: typeof users) {
-  for (const user of list) {
-    if (user[group] === undefined) {
-      user[group] = groupFormat === 'boolean' ? false : '';
-    }
-  }
-}
-
-function apply(
-  subgroup: string,
-  group: string,
-  value: boolean | string,
-  list: typeof users
-) {
-  for (const user of users) {
-    if (user[subgroup]) {
-      user[group] = value;
-    }
-  }
-}
+let subgroups: Users.User[] = [];
 
 for (const group in groups) {
   spinner.start(cli.colors.quotedValue(`"${group}"`));
-  for (const member of groups[group].members) {
+  for (const member of groups[group].members || []) {
     if (member in groups) {
-      append(
+      Users.append(
         member,
         group,
-        groupFormat === 'email' ? 'group' : groups[group][groupFormat],
+        Users.applyGroupFormat(groups[group], group),
         subgroups
       );
     } else {
-      append(
+      Users.append(
         member,
         group,
-        groupFormat === 'email' ? 'group' : groups[group][groupFormat],
+        Users.applyGroupFormat(groups[group], group),
         users
       );
     }
-    fill(group, users);
-    fill(group, subgroups);
-    preceding[group] = groupFormat === 'boolean' ? false : '';
+    Users.fill(group, users);
+    Users.fill(group, subgroups);
   }
   spinner.succeed(cli.colors.quotedValue(`"${group}"`));
 }
@@ -158,16 +106,16 @@ while (
   spinner.start(cli.colors.quotedValue(`"${subgroup.user}"`));
   for (const group of Object.keys(subgroup).filter((k) => k !== 'user')) {
     if (subgroup[group]) {
-      apply(
+      Users.apply(
         subgroup.user,
         group,
-        groupFormat === 'email' ? 'group' : groups[group][groupFormat],
+        Users.applyGroupFormat(groups[group], group),
         users
       );
-      apply(
+      Users.apply(
         subgroup.user,
         group,
-        groupFormat === 'email' ? 'group' : groups[group][groupFormat],
+        Users.applyGroupFormat(groups[group], group),
         subgroups
       );
     }
@@ -204,7 +152,7 @@ if (list) {
     user: user.user,
     groups: Object.keys(user).reduce((values, key) => {
       if (key != 'user' && user[key] && user[key] !== '') {
-        values.push(user[key] === true ? key : user[key]);
+        values.push(user[key] === true ? key : user[key].toString());
       }
       return values;
     }, [] as string[])
@@ -212,7 +160,9 @@ if (list) {
 
   if (format == 'csv') {
     users = users.map((user) => {
-      user.groups = user.groups.join(',');
+      user.groups = Array.isArray(user.groups)
+        ? user.groups.join(',')
+        : user.groups;
       return user;
     });
   }
