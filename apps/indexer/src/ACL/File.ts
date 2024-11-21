@@ -88,42 +88,45 @@ class File extends Cache.File {
               File.Event.Start,
               `Adding ${permission.displayName || permission.emailAddress} to ACL for ${this.index.path}`
             );
-            const success = await Helper.exponentialBackoff(async () => {
-              let success: string | true = true;
-              for (const uri of this.index.uri) {
-                const file = subfile(uri);
-                File.event.emit(
-                  File.Event.Succeed,
-                  `${permission.type}:${permission.emailAddress} added as reader to ACL for /${file.name}`
-                );
-                try {
-                  await file.acl.add({
-                    entity,
-                    role: Google.Storage.acl.READER_ROLE
-                  });
+            const success = await Helper.exponentialBackoff(
+              (async () => {
+                let success: string | true = true;
+                for (const uri of this.index.uri) {
+                  const file = subfile(uri);
                   File.event.emit(
                     File.Event.Succeed,
                     `${permission.type}:${permission.emailAddress} added as reader to ACL for /${file.name}`
                   );
-                } catch (_e) {
-                  const error = _e as { code?: number; message?: string };
-                  File.event.emit(
-                    File.Event.Fail,
-                    Helper.errorMessage(
-                      'Error adding reader to ACL',
-                      {
-                        driveId: this.id,
-                        file: file.name,
-                        email: permission.emailAddress
-                      },
-                      error
-                    )
-                  );
-                  success = error.message || 'error';
+                  try {
+                    await file.acl.add({
+                      entity,
+                      role: Google.Storage.acl.READER_ROLE
+                    });
+                    File.event.emit(
+                      File.Event.Succeed,
+                      `${permission.type}:${permission.emailAddress} added as reader to ACL for /${file.name}`
+                    );
+                  } catch (_e) {
+                    const error = _e as { code?: number; message?: string };
+                    File.event.emit(
+                      File.Event.Fail,
+                      Helper.errorMessage(
+                        'Error adding reader to ACL',
+                        {
+                          driveId: this.id,
+                          file: file.name,
+                          email: permission.emailAddress
+                        },
+                        error
+                      )
+                    );
+                    success = error.message || 'error';
+                  }
                 }
-              }
-              return success;
-            }, ignoreErrors);
+                return success;
+              }).bind(this),
+              ignoreErrors
+            );
             if (success === true) {
               permission.indexerAclState = IndexEntry.State.Cached;
             } else {

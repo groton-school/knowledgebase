@@ -214,73 +214,29 @@ class File extends Index.File {
     force = File.DEFAULT_FORCE,
     ignoreErrors = File.DEFAULT_IGNORE_ERRORS
   }: File.Params.Cache) {
-    if (!this.isFolder()) {
+    if (this.isFolder()) {
+      this.index.status = IndexEntry.State.Dynamic;
+    } else {
       const bucket = Google.Client.getStorage().bucket(bucketName);
       const subfile = Helper.subfileFactory(bucket);
 
       if (!this.index.exists) {
         File.event.emit(File.Event.Start, `${this.index.path} expired`);
         let success = true;
-        await Helper.exponentialBackoff(async () => {
-          for (const uri of this.index.uri) {
-            File.event.emit(File.Event.Start, `${uri} expired`);
-            const file = subfile(uri);
-            try {
-              await file.delete();
-              File.event.emit(
-                File.Event.Succeed,
-                `${file.name} expired and deleted`
-              );
-            } catch (e) {
-              const error = Google.CoerceRequestError(e);
-              if (error.code != '404') {
-                File.event.emit(
-                  File.Event.Fail,
-                  Helper.errorMessage(
-                    `Error deleting ${file.name}`,
-                    { driveId: this.id },
-                    error
-                  )
-                );
-                success = false;
-              }
-            }
-          }
-          File.event.emit(
-            success ? File.Event.Succeed : File.Event.Fail,
-            `${this.index.path} expired and deleted${
-              success ? '' : ' with error'
-            }`
-          );
-          return false;
-        }, ignoreErrors);
-      } else if (
-        force ||
-        this.index.uri.length == 0 ||
-        (this.modifiedTime && this.modifiedTime > this.index.timestamp)
-      ) {
-        File.event.emit(File.Event.Start, `Caching ${this.index.path}`);
-        this.index.status = IndexEntry.State.PreparingCache;
-        await Helper.exponentialBackoff(async () => {
-          try {
-            const files = await this.fetchAsHtmlIfPossible();
-            const deleted: string[] = [];
+        await Helper.exponentialBackoff(
+          (async () => {
             for (const uri of this.index.uri) {
-              if (
-                !Object.keys(files).includes(
-                  uri.replace(new RegExp(`^.*${this.index.path}/(.*)$`), '$1')
-                )
-              ) {
-                File.event.emit(File.Event.Start, `${uri} expired`);
-                const file = subfile(uri);
-                try {
-                  await file.delete();
-                  deleted.push(uri);
-                  File.event.emit(
-                    File.Event.Succeed,
-                    `${file.name} expired and deleted`
-                  );
-                } catch (error) {
+              File.event.emit(File.Event.Start, `${uri} expired`);
+              const file = subfile(uri);
+              try {
+                await file.delete();
+                File.event.emit(
+                  File.Event.Succeed,
+                  `${file.name} expired and deleted`
+                );
+              } catch (e) {
+                const error = Google.CoerceRequestError(e);
+                if (error.code != '404') {
                   File.event.emit(
                     File.Event.Fail,
                     Helper.errorMessage(
@@ -289,45 +245,105 @@ class File extends Index.File {
                       error
                     )
                   );
+                  success = false;
                 }
               }
             }
-            this.index.uri = this.index.uri.filter(
-              (uri) => !deleted.includes(uri)
-            );
-            for (const subfileName in files) {
-              await Helper.exponentialBackoff(async () => {
-                let filename = File.normalizeSubfileName(
-                  this.index.path,
-                  subfileName
-                );
-                File.event.emit(File.Event.Start, `Caching ${filename}`);
-                const file = bucket.file(filename);
-                const blob = await pipelineHTML({
-                  file: this,
-                  blob: files[subfileName]
-                });
-                file.save(Buffer.from(await blob.arrayBuffer()));
-                if (!this.index.uri.includes(file.cloudStorageURI.href)) {
-                  this.index.uri.push(file.cloudStorageURI.href);
-                }
-                File.event.emit(File.Event.Succeed, `${filename} cached`);
-              }, ignoreErrors);
-            }
-            this.index.status = IndexEntry.State.Cached;
-          } catch (e) {
-            const error = CoerceError(e);
-            this.index.status = error.message;
             File.event.emit(
-              File.Event.Fail,
-              Helper.errorMessage(
-                `${this.index.path}`,
-                { driveId: this.id },
-                error
-              )
+              success ? File.Event.Succeed : File.Event.Fail,
+              `${this.index.path} expired and deleted${
+                success ? '' : ' with error'
+              }`
             );
-          }
-        }, ignoreErrors);
+            return false;
+          }).bind(this),
+          ignoreErrors
+        );
+      } else if (
+        force ||
+        this.index.uri.length == 0 ||
+        (this.modifiedTime && this.modifiedTime > this.index.timestamp)
+      ) {
+        File.event.emit(File.Event.Start, `Caching ${this.index.path}`);
+        this.index.status = IndexEntry.State.PreparingCache;
+        await Helper.exponentialBackoff(
+          (async () => {
+            try {
+              const files = await this.fetchAsHtmlIfPossible();
+              const deleted: string[] = [];
+              for (const uri of this.index.uri) {
+                if (
+                  !Object.keys(files).includes(
+                    uri.replace(new RegExp(`^.*${this.index.path}/(.*)$`), '$1')
+                  )
+                ) {
+                  File.event.emit(File.Event.Start, `${uri} expired`);
+                  const file = subfile(uri);
+                  try {
+                    await file.delete();
+                    deleted.push(uri);
+                    File.event.emit(
+                      File.Event.Succeed,
+                      `${file.name} expired and deleted`
+                    );
+                  } catch (error) {
+                    File.event.emit(
+                      File.Event.Fail,
+                      Helper.errorMessage(
+                        `Error deleting ${file.name}`,
+                        { driveId: this.id },
+                        error
+                      )
+                    );
+                  }
+                }
+              }
+              this.index.uri = this.index.uri.filter(
+                (uri) => !deleted.includes(uri)
+              );
+              let subfileName: keyof typeof files;
+              for (subfileName in files) {
+                await Helper.exponentialBackoff(
+                  (async () => {
+                    let filename = File.normalizeSubfileName(
+                      this.index.path,
+                      subfileName
+                    );
+                    File.event.emit(File.Event.Start, `Caching ${filename}`);
+                    const file = bucket.file(filename);
+                    const blob = await pipelineHTML({
+                      file: this,
+                      blob: files[subfileName] as Blob
+                    });
+                    try {
+                      file.save(Buffer.from(await blob.arrayBuffer()));
+                    } catch (error) {
+                      cli.log.debug({ file: this.id, blob, error });
+                    }
+                    if (!this.index.uri.includes(file.cloudStorageURI.href)) {
+                      this.index.uri.push(file.cloudStorageURI.href);
+                    }
+                    File.event.emit(File.Event.Succeed, `${filename} cached`);
+                  }).bind(this),
+                  ignoreErrors
+                );
+              }
+              this.index.status = IndexEntry.State.Cached;
+            } catch (e) {
+              const error = CoerceError(e);
+              this.index.status = error.message;
+              File.event.emit(
+                File.Event.Fail,
+                Helper.errorMessage(
+                  `${this.index.path}`,
+                  { driveId: this.id },
+                  error
+                )
+              );
+            }
+          }).bind(this),
+          ignoreErrors
+        );
       }
     }
     return this;
