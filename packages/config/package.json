@@ -21,7 +21,7 @@
     "build:compile": "tsc"
   },
   "dependencies": {
-    "@battis/qui-cli": "^0.6.2",
+    "@battis/qui-cli": "^0.7.3",
     "@groton/knowledgebase.domain": "workspace:*",
     "@groton/knowledgebase.index": "workspace:*"
   },
@@ -30,6 +30,6 @@
     "@groton/knowledgebase.tsconfig": "workspace:*",
     "del-cli": "^6.0.0",
     "npm-run-all": "^4.1.5",
-    "typescript": "^5.6.3"
+    "typescript": "^5.7.2"
   }
 }

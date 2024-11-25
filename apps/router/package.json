@@ -21,7 +21,7 @@
     "deploy": "run-s deploy:* || tsx ./bin/restore-lockfile.ts",
     "deploy:build": "run-s build",
     "deploy:prepare-lockfile": "tsx ./bin/prepare-lockfile.ts",
-    "deploy:deploy": "tsx bin/deploy.ts",
+    "deploy:deploy": "tsx bin/deploy.ts --commands --silent",
     "deploy:restore-lockfile": "tsx ./bin/restore-lockfile.ts",
     "deploy:unbork-pnpm": "pnpm i -rf",
     "start": "node build/main.cjs"
@@ -39,25 +39,25 @@
     "@groton/knowledgebase.ui": "workspace:*",
     "express": "^4.21.1",
     "express-session": "^1.18.1",
-    "google-auth-library": "^9.14.2",
-    "winston": "^3.16.0"
+    "google-auth-library": "^9.15.0",
+    "winston": "^3.17.0"
   },
   "devDependencies": {
     "@battis/partly-gcloudy": "^0.6.0",
-    "@battis/qui-cli": "^0.6.2",
+    "@battis/qui-cli": "^0.6.3",
     "@pnpm/make-dedicated-lockfile": "^0.6.20",
     "@tsconfig/node20": "^20.1.4",
     "@types/express": "^4.17.21",
     "@types/express-session": "^1.18.0",
-    "@types/node": "^20.17.6",
+    "@types/node": "^20.17.7",
     "copy-webpack-plugin": "^12.0.2",
     "del-cli": "^6.0.0",
     "npm-run-all": "^4.1.5",
     "tsx": "^4.19.2",
-    "typescript": "^5.6.3",
+    "typescript": "^5.7.2",
     "webpack": "5.95.0",
     "webpack-cli": "^5.1.4",
     "webpack-node-externals": "^3.0.0",
-    "yaml": "^2.6.0"
+    "yaml": "^2.6.1"
   }
 }

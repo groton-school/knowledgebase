@@ -1,9 +1,11 @@
+import cli from '@battis/qui-cli';
+
 export default function errorMessage(
   message: string | undefined = undefined,
   context: object,
   error: any
 ) {
-  return `${message ? `${message} (` : ''}${
+  return `${message ? `${message} ${cli.colors.error('(')}` : ''}${cli.colors.error(
     error
       ? `${
           typeof error == 'object'
@@ -13,5 +15,5 @@ export default function errorMessage(
             : error
         }, `
       : ''
-  }${JSON.stringify(context)}${message ? ')' : ''}`;
+  )}${JSON.stringify(context)}${message ? cli.colors.error(')') : ''}`;
 }
