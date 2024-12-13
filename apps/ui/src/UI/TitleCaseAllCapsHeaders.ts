@@ -23,6 +23,7 @@ const properNouns = [
   'Chaffee',
   'ChatGPT',
   'Chrome',
+  'Chromebook',
   'Creative Cloud',
   'Creative Cloud Express',
   'December',
