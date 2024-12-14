@@ -48,7 +48,7 @@
     "@popperjs/core": "^2.11.8",
     "@tsconfig/recommended": "^1.0.8",
     "@types/bootstrap": "^5.2.10",
-    "@types/gtag.js": "^0.0.12",
+    "@types/gtag.js": "^0.0.20",
     "@types/node": "^20.17.9",
     "@types/path-browserify": "^1.0.3",
     "acorn": "^8.14.0",
