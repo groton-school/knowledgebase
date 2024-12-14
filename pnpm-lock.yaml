@@ -22,8 +22,8 @@ importers:
         specifier: ^1.5.5
         version: 1.5.5(@vue/compiler-sfc@3.5.12)(typescript@5.7.2)
       '@battis/qui-cli':
-        specifier: ^0.7.3
-        version: 0.7.3
+        specifier: ^0.8.4
+        version: 0.8.4
       '@changesets/cli':
         specifier: ^2.27.10
         version: 2.27.10
@@ -55,8 +55,8 @@ importers:
   apps/indexer:
     dependencies:
       '@battis/qui-cli':
-        specifier: ^0.7.3
-        version: 0.7.3
+        specifier: ^0.8.4
+        version: 0.8.4
       '@groton/knowledgebase.config':
         specifier: workspace:*
         version: link:../../packages/config
@@ -159,8 +159,8 @@ importers:
         specifier: ^0.6.0
         version: 0.6.0
       '@battis/qui-cli':
-        specifier: ^0.6.3
-        version: 0.6.3
+        specifier: ^0.8.4
+        version: 0.8.4
       '@pnpm/make-dedicated-lockfile':
         specifier: ^0.6.20
         version: 0.6.20
@@ -232,8 +232,8 @@ importers:
         specifier: latest
         version: 1.5.5(@vue/compiler-sfc@3.5.12)(typescript@5.7.2)
       '@battis/qui-cli':
-        specifier: ^0.7.3
-        version: 0.7.3
+        specifier: ^0.8.4
+        version: 0.8.4
       '@battis/webpack':
         specifier: ^2.0.1
         version: 2.0.1(add-peer-dependencies@0.1.7)(app-root-path@3.1.0)(copy-webpack-plugin@12.0.2(webpack@5.97.1))(css-loader@7.1.2(webpack@5.97.1))(css-minimizer-webpack-plugin@7.0.0(webpack@5.97.1))(dotenv-webpack@8.1.0(webpack@5.97.1))(favicons-webpack-plugin@6.0.1(favicons@7.2.0)(webpack@5.97.1))(favicons@7.2.0)(file-loader@6.2.0(webpack@5.97.1))(html-webpack-plugin@5.6.3(webpack@5.97.1))(mini-css-extract-plugin@2.9.2(webpack@5.97.1))(postcss-loader@8.1.1(postcss@8.4.49)(typescript@5.7.2)(webpack@5.97.1))(postcss-preset-env@10.1.1(postcss@8.4.49))(postcss@8.4.49)(raw-loader@4.0.2(webpack@5.97.1))(sass-loader@16.0.4(sass@1.82.0)(webpack@5.97.1))(sass@1.82.0)(style-loader@4.0.0(webpack@5.97.1))(terser-webpack-plugin@5.3.10(webpack@5.97.1))(ts-loader@9.5.1(typescript@5.7.2)(webpack@5.97.1))(typescript@5.7.2)(url-loader@4.1.1(file-loader@6.2.0(webpack@5.97.1))(webpack@5.97.1))(webpack-cli@5.1.4)(webpack-dev-server@5.1.0)(webpack@5.97.1)
@@ -377,8 +377,8 @@ importers:
   packages/config:
     dependencies:
       '@battis/qui-cli':
-        specifier: ^0.7.3
-        version: 0.7.3
+        specifier: ^0.8.4
+        version: 0.8.4
       '@groton/knowledgebase.domain':
         specifier: workspace:*
         version: link:../domain
@@ -417,8 +417,8 @@ importers:
   packages/google:
     dependencies:
       '@battis/qui-cli':
-        specifier: ^0.7.3
-        version: 0.7.3
+        specifier: ^0.8.4
+        version: 0.8.4
       '@battis/typescript-tricks':
         specifier: ^0.6.1
         version: 0.6.1
@@ -580,16 +580,36 @@ packages:
     resolution: {integrity: sha512-g+1W+5Tjmeo0U7vWu0JCl8EYsuUV8StaUSkby66bN6VzWv21HpZYtSzV4MgzLSiRvXEuKAGGUN98kh1MXSjwGQ==}
     engines: {node: '>=12.17'}
 
+  '@battis/qui-cli.colors@0.8.2':
+    resolution: {integrity: sha512-VzkixmUvtqzX5lS8KTldwlRa+Pub6QGYgBYXjfBLT3iFYpYxf4Q/hYcqZeuk3tPAZ6cf+n7TuFEX0c5tYyJeIA==}
+
+  '@battis/qui-cli.core@0.8.4':
+    resolution: {integrity: sha512-dyQzmtzYMVJT3pBQjyn0XkkvHRrN1L5qZWosAZXKLZnpJ5sivPhY+XHbSU5Dy9rqC05xue/kUjwNEpfmfIOG2w==}
+
+  '@battis/qui-cli.env@0.8.2':
+    resolution: {integrity: sha512-MDYhKe1U39jSputb3K1rVHuL6t9r1nFhBE8owny4CpGps95D4oL6ivtdcEN8op5KrWiUVlq6GxHxPkd6If1Vxg==}
+
+  '@battis/qui-cli.log@0.8.2':
+    resolution: {integrity: sha512-eAkr1mzer8fuBtGQYDxk4P2EdcWcaAktnqU9nbCVAsxTXKCvlmGEgGybCb0dz9SuKSKdzsbUNKfxiuDsjgZCPg==}
+
+  '@battis/qui-cli.plugin@0.1.2':
+    resolution: {integrity: sha512-AOPm0kHDDDkvmkw4kz7ckHEfxoOE/Z/JzzE71jhzMk5oAHpbY5CBGshIwFgx+Xt4Q5Tvj03yui/W35KqZHfvlg==}
+
+  '@battis/qui-cli.root@0.8.2':
+    resolution: {integrity: sha512-QOW5urXUQsHp0pDvH3WDvsMIw8qqpg6/J0MZeRXQo08dRZYwt9cOGih8YP3fieHj4YgQ/qBa1KnmLOZCxnxfvw==}
+
+  '@battis/qui-cli.shell@0.8.2':
+    resolution: {integrity: sha512-6B7d4OBMWPGy9pMzfJ5gle97peunQcChtfYt3ul3VtFYCF931rCTLiriGW5X4ruzgBPKhVl4LLrUR49NxvLOCg==}
+
+  '@battis/qui-cli.validators@0.8.2':
+    resolution: {integrity: sha512-KI+qLAyxMvMN9niB8i5o/DfhuOxENX3Wwalc11nep++1FMzSLUVVMmNptIvOde2ca2lhC7E3DGX8/TuZo1UlOQ==}
+
   '@battis/qui-cli@0.4.2':
     resolution: {integrity: sha512-IiSLPNjSQ7HH8+kQwjEOTWhzJpXpiU4mxc1Jn5Prko/RUyzR5Gcahe/Y2sGy/N9TRXjNHjiQtErOaypw6OAMQw==}
     engines: {node: '>=12.17'}
 
-  '@battis/qui-cli@0.6.3':
-    resolution: {integrity: sha512-fdor3FhwHNuKK42vRLwW3YP8vQ+Ifw9pm1KSZ4a0V0pdAF1f4zesX4jfRX15SEKNI+NR/M1i3kbCiGSXHwnxzA==}
-    engines: {node: '>=12.17'}
-
-  '@battis/qui-cli@0.7.3':
-    resolution: {integrity: sha512-APsUhhJGqjo9JDGrlgpWg68mnKGciBFwvqywW9K+I7HybVDqiFJ9DDCkBjE0REZge3wuV10/NZ9e2ONFmG2Mcg==}
+  '@battis/qui-cli@0.8.4':
+    resolution: {integrity: sha512-VKDugEnm17NHwWn593T/nknEZWXb14AsFEblERsBTb3zCiNmr5zgmqv+cfin0rJwLoMsuJBwImnd/CRSGwAWiQ==}
     engines: {node: '>=12.17'}
 
   '@battis/typescript-tricks@0.4.3':
@@ -7412,6 +7432,56 @@ snapshots:
       - typescript
       - vue-tsc
 
+  '@battis/qui-cli.colors@0.8.2':
+    dependencies:
+      '@battis/qui-cli.plugin': 0.1.2
+      chalk: 4.1.2
+
+  '@battis/qui-cli.core@0.8.4':
+    dependencies:
+      '@battis/qui-cli.plugin': 0.1.2
+      jackspeak: 2.3.6
+
+  '@battis/qui-cli.env@0.8.2':
+    dependencies:
+      '@battis/qui-cli.plugin': 0.1.2
+      '@battis/qui-cli.root': 0.8.2
+      dotenv: 16.4.7
+
+  '@battis/qui-cli.log@0.8.2':
+    dependencies:
+      '@battis/qui-cli.colors': 0.8.2
+      '@battis/qui-cli.plugin': 0.1.2
+      ora: 6.3.1
+      strip-ansi: 7.1.0
+      winston: 3.17.0
+
+  '@battis/qui-cli.plugin@0.1.2':
+    dependencies:
+      jackspeak: 2.3.6
+
+  '@battis/qui-cli.root@0.8.2':
+    dependencies:
+      '@battis/qui-cli.plugin': 0.1.2
+      app-root-path: 3.1.0
+
+  '@battis/qui-cli.shell@0.8.2':
+    dependencies:
+      '@battis/qui-cli.colors': 0.8.2
+      '@battis/qui-cli.log': 0.8.2
+      '@battis/qui-cli.plugin': 0.1.2
+      ora: 6.3.1
+      shelljs: 0.8.5
+
+  '@battis/qui-cli.validators@0.8.2':
+    dependencies:
+      '@battis/qui-cli.plugin': 0.1.2
+      '@battis/qui-cli.root': 0.8.2
+      '@tahul/is-valid-domain': 1.0.5
+      cron-validate: 1.4.5
+      email-validator: 2.0.4
+      is-valid-path: 0.1.1
+
   '@battis/qui-cli@0.4.2':
     dependencies:
       '@inquirer/prompts': 2.3.1
@@ -7428,37 +7498,18 @@ snapshots:
       strip-ansi: 7.1.0
       winston: 3.17.0
 
-  '@battis/qui-cli@0.6.3':
+  '@battis/qui-cli@0.8.4':
     dependencies:
+      '@battis/qui-cli.colors': 0.8.2
+      '@battis/qui-cli.core': 0.8.4
+      '@battis/qui-cli.env': 0.8.2
+      '@battis/qui-cli.log': 0.8.2
+      '@battis/qui-cli.plugin': 0.1.2
+      '@battis/qui-cli.root': 0.8.2
+      '@battis/qui-cli.shell': 0.8.2
+      '@battis/qui-cli.validators': 0.8.2
       '@inquirer/prompts': 2.3.1
-      '@tahul/is-valid-domain': 1.0.5
-      app-root-path: 3.1.0
-      chalk: 4.1.2
-      cron-validate: 1.4.5
-      dotenv: 16.4.7
-      email-validator: 2.0.4
-      is-valid-path: 0.1.1
-      jackspeak: 2.3.6
       ora: 6.3.1
-      shelljs: 0.8.5
-      strip-ansi: 7.1.0
-      winston: 3.17.0
-
-  '@battis/qui-cli@0.7.3':
-    dependencies:
-      '@inquirer/prompts': 2.3.1
-      '@tahul/is-valid-domain': 1.0.5
-      app-root-path: 3.1.0
-      chalk: 4.1.2
-      cron-validate: 1.4.5
-      dotenv: 16.4.7
-      email-validator: 2.0.4
-      is-valid-path: 0.1.1
-      jackspeak: 2.3.6
-      ora: 6.3.1
-      shelljs: 0.8.5
-      strip-ansi: 7.1.0
-      winston: 3.17.0
 
   '@battis/typescript-tricks@0.4.3': {}
 
@@ -12926,9 +12977,9 @@ snapshots:
   ora@5.3.0:
     dependencies:
       bl: 4.1.0
-      chalk: 4.1.0
+      chalk: 4.1.2
       cli-cursor: 3.1.0
-      cli-spinners: 2.6.1
+      cli-spinners: 2.9.2
       is-interactive: 1.0.0
       log-symbols: 4.1.0
       strip-ansi: 6.0.1

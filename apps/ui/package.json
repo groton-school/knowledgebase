@@ -41,7 +41,7 @@
   "devDependencies": {
     "@battis/eslint-config": "latest",
     "@battis/prettier-config": "latest",
-    "@battis/qui-cli": "^0.7.3",
+    "@battis/qui-cli": "^0.8.4",
     "@battis/webpack": "^2.0.1",
     "@csstools/css-parser-algorithms": "^3.0.4",
     "@csstools/css-tokenizer": "^3.0.3",
