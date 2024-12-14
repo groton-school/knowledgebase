@@ -253,8 +253,8 @@ importers:
         specifier: ^5.2.10
         version: 5.2.10
       '@types/gtag.js':
-        specifier: ^0.0.12
-        version: 0.0.12
+        specifier: ^0.0.20
+        version: 0.0.20
       '@types/node':
         specifier: ^20.17.9
         version: 20.17.9
@@ -2075,8 +2075,8 @@ packages:
   '@types/glob@7.2.0':
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
 
-  '@types/gtag.js@0.0.12':
-    resolution: {integrity: sha512-YQV9bUsemkzG81Ea295/nF/5GijnD2Af7QhEofh7xu+kvCN6RdodgNwwGWXB5GMI3NoyvQo0odNctoH/qLMIpg==}
+  '@types/gtag.js@0.0.20':
+    resolution: {integrity: sha512-wwAbk3SA2QeU67unN7zPxjEHmPmlXwZXZvQEpbEUQuMCRGgKyE1m6XDuTUA9b6pCGb/GqJmdfMOY5LuDjJSbbg==}
 
   '@types/html-minifier-terser@6.1.0':
     resolution: {integrity: sha512-oh/6byDPnL1zeNXFrDXFLyZjkr1MsBG667IM792caf1L2UPOOMf65NFzjUH/ltyfwjAGfs1rsX1eftK0jC/KIg==}
@@ -9319,7 +9319,7 @@ snapshots:
       '@types/minimatch': 5.1.2
       '@types/node': 20.17.9
 
-  '@types/gtag.js@0.0.12': {}
+  '@types/gtag.js@0.0.20': {}
 
   '@types/html-minifier-terser@6.1.0': {}
 
