@@ -16,7 +16,9 @@ import * as Services from './Services.js';
   app.use(Middleware.Session({ config }));
 
   app.get('/logout', Services.Auth.deauthorize);
-  app.get(Services.Auth.redirectUri.pathname, Services.Auth.authorize);
+  app.get(Services.Auth.redirectUri.pathname, (req, res) => {
+    Services.Auth.authorize(req, res);
+  });
   app.get('*', Services.Auth.refreshToken);
   app.get('/', (_, res, next) => {
     if (config.ui?.root) {
