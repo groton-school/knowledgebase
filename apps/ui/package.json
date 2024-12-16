@@ -31,7 +31,7 @@
     ]
   },
   "dependencies": {
-    "@battis/typescript-tricks": "^0.6.1",
+    "@battis/typescript-tricks": "^0.7.0",
     "@groton/knowledgebase.api": "workspace:*",
     "@groton/knowledgebase.domain": "workspace:*",
     "bootstrap": "^5.3.3",

@@ -24,7 +24,7 @@
     "@groton/knowledgebase.google": "workspace:*"
   },
   "devDependencies": {
-    "@battis/typescript-tricks": "^0.6.1",
+    "@battis/typescript-tricks": "^0.7.0",
     "del-cli": "^6.0.0",
     "npm-run-all": "^4.1.5",
     "typescript": "^5.7.2"
