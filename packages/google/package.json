@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@battis/qui-cli": "^0.8.4",
-    "@battis/typescript-tricks": "^0.6.1",
+    "@battis/typescript-tricks": "^0.7.0",
     "@google-cloud/storage": "^7.14.0",
     "@googleapis/drive": "^8.14.0",
     "express": "^4.21.2",

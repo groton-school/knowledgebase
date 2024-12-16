@@ -207,8 +207,8 @@ importers:
   apps/ui:
     dependencies:
       '@battis/typescript-tricks':
-        specifier: ^0.6.1
-        version: 0.6.1
+        specifier: ^0.7.0
+        version: 0.7.0
       '@groton/knowledgebase.api':
         specifier: workspace:*
         version: link:../../packages/api
@@ -387,8 +387,8 @@ importers:
         version: link:../index
     devDependencies:
       '@battis/typescript-tricks':
-        specifier: ^0.6.1
-        version: 0.6.1
+        specifier: ^0.7.0
+        version: 0.7.0
       '@groton/knowledgebase.tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
@@ -420,8 +420,8 @@ importers:
         specifier: ^0.8.4
         version: 0.8.4
       '@battis/typescript-tricks':
-        specifier: ^0.6.1
-        version: 0.6.1
+        specifier: ^0.7.0
+        version: 0.7.0
       '@google-cloud/storage':
         specifier: ^7.14.0
         version: 7.14.0(encoding@0.1.13)
@@ -458,8 +458,8 @@ importers:
         version: link:../google
     devDependencies:
       '@battis/typescript-tricks':
-        specifier: ^0.6.1
-        version: 0.6.1
+        specifier: ^0.7.0
+        version: 0.7.0
       del-cli:
         specifier: ^6.0.0
         version: 6.0.0
@@ -611,9 +611,6 @@ packages:
 
   '@battis/typescript-tricks@0.4.3':
     resolution: {integrity: sha512-7uHRia+kAWWXbTJFMjax3XXmTSIAAnqegLFONN9dAjMv1T5dqRTj+adkKcAlUrZBBQq3A2f0pZz8OFWNwXYTOg==}
-
-  '@battis/typescript-tricks@0.6.1':
-    resolution: {integrity: sha512-vI87YZ7W1WEUeGxPl3Kwt2l3jigPSx5bb9Kvc/4DihZvN1m1PLYW7U+rG5N9nW9WAXWI/3JVgYANsbUmGAdjLA==}
 
   '@battis/typescript-tricks@0.7.0':
     resolution: {integrity: sha512-MdcMWCLKa0sBgEDnAI//uYAVBxZ0EP/vkGiGcFpkqd6YjlbiIqNPSH5KM1SFAlPRWP6DuUBr53Bm7UTJltqzrg==}
@@ -7512,8 +7509,6 @@ snapshots:
       ora: 6.3.1
 
   '@battis/typescript-tricks@0.4.3': {}
-
-  '@battis/typescript-tricks@0.6.1': {}
 
   '@battis/typescript-tricks@0.7.0': {}
 
