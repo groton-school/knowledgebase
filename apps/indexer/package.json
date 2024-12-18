@@ -24,7 +24,7 @@
     "upload:acl": "tsx bin/acl.ts"
   },
   "dependencies": {
-    "@battis/qui-cli": "^0.8.4",
+    "@battis/qui-cli": "^0.8.5",
     "@groton/knowledgebase.config": "workspace:*",
     "@groton/knowledgebase.google": "workspace:*",
     "@groton/knowledgebase.index": "workspace:*",

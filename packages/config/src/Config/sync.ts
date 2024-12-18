@@ -70,7 +70,7 @@ export default function sync(
     args
   });
 
-  configPath = path.resolve(env.root, configPath);
+  configPath = path.resolve(env.root, configPath!);
   const localConfigPath = args.options.configPath.default;
 
   const spinner = cli.spinner();

@@ -82,7 +82,9 @@ export default class Client {
 
         const app = express();
         const server = app.listen(redirectUri.port);
-        app.get('/favicon.ico', (_, res) => res.send());
+        app.get('/favicon.ico', (_, res) => {
+          res.send();
+        });
         app.get('*', async (req, res): Promise<void> => {
           if (req.path != redirectUri.pathname) {
             const error = `Path mismatch (expected '${redirectUri.pathname}', received '${req.path}'`;
