@@ -8,7 +8,21 @@ export default function TOC(doc: HTMLDivElement) {
     // TODO config spacing
     `<div id="toc" class="card col-md-3 order-md-2 ${Constants.bootstrap.padding} ${Constants.bootstrap.margin} sticky-lg-top">
           <div class="card-body">
-            <h5 class="card-title">On this page</h5>
+            <h5 class="card-title">On this page
+              <a
+                href="${
+                  (
+                    document.head.querySelector(
+                      'meta[item-prop="kb.webViewLink"]'
+                    ) as HTMLMetaElement
+                  )?.content
+                }"
+                class="printable-view float-end"
+                target="_blank"
+              >
+                <i class="bi bi-printer-fill"></i>
+              </a>
+            </h5>
             <div class="card-text">
               <div class="dynamic-content"></div>
             </div>

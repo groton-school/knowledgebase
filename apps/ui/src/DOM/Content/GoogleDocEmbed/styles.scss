@@ -3,3 +3,7 @@
   max-width: 7in;
   margin: auto;
 }
+
+.printable-view[href*='undefined'] {
+  display: none;
+}
