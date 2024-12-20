@@ -5,13 +5,13 @@ import path from 'node:path';
 (async () => {
   await gcloud.init({
     env: {
-      root: path.resolve(import.meta.dirname, '..'),
+      root: path.resolve(import.meta.dirname, '../.tmp/isolate'),
       loadDotEnv: path.resolve(import.meta.dirname, '../../../.env')
     }
   });
   cli.init({
     env: {
-      root: path.resolve(import.meta.dirname, '..'),
+      root: path.resolve(import.meta.dirname, '../.tmp/isolate'),
       loadDotEnv: path.resolve(import.meta.dirname, '../../../.env')
     }
   });

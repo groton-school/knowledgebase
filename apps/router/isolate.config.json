@@ -1,0 +1,5 @@
+{
+  "buildDirName": "./build",
+  "pickFromScripts": ["start"],
+  "isolateDirName": "./.tmp/isolate"
+}

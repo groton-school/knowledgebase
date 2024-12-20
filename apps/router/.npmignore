@@ -1,0 +1,8 @@
+.*
+/bin
+/isolate.config.json
+/src
+/tsconfig.json
+/package.actual.json
+/pnpm-workspace.yaml
+/webpack.config.mjs
