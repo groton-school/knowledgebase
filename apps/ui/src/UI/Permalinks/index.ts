@@ -14,7 +14,7 @@ export default function Permalinks() {
       if (!document.querySelector(`.${permalink}`)) {
         headers.forEach((h) => {
           const a = document.createElement('a');
-          a.append('🔗');
+          a.innerHTML = '<i class="bi bi-link-45deg"></i>';
           a.href = `#${h.id}`;
           a.className = permalink;
           h.append(a);
