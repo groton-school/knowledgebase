@@ -15,7 +15,7 @@ function ignoreInvisible(filePath) {
 const config = {
   mode: 'production',
   target: gae.runtime.replace('nodejs', 'node'),
-  entry: path.join(import.meta.dirname, 'tmp_tsc/index.js'),
+  entry: path.join(import.meta.dirname, '.tmp/tsc/index.js'),
   output: {
     path: path.join(import.meta.dirname, 'build'),
     filename: '[name].cjs',

@@ -4,6 +4,3 @@ basic_scaling:
 handlers:
   - url: /assets
     static_dir: build/assets
-build_env_variables:
-  # disable build script (pre-built before deploy)
-  GOOGLE_NODE_RUN_SCRIPTS: ''

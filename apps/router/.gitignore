@@ -1,2 +1,4 @@
 /package.actual.json
 /pnpm-lock.yaml
+/.isolate/
+/.tmp/
