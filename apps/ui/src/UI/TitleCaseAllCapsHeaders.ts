@@ -29,6 +29,8 @@ const properNouns = [
   'December',
   'Dell',
   'DLP',
+  'DTEN',
+  'DTEN Me',
   'DVD',
   'Edpuzzle',
   'Epson',
