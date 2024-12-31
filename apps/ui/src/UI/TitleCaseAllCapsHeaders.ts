@@ -29,6 +29,7 @@ const properNouns = [
   'December',
   'Dell',
   'DLP',
+  'DMZ',
   'DTEN',
   'DTEN Me',
   'DVD',
@@ -100,29 +101,32 @@ const nonLetters = [
   .replace('-', '\\-');
 
 function fixCase(text: string) {
-  return text
-    .trim()
-    .split(' ')
-    .map((part, i) => {
-      const [, prefix, word, suffix] =
-        part
-          .toLowerCase()
-          .match(new RegExp(`^([^a-z]*)([${nonLetters}a-z]+)([^a-z]*)$`)) || [];
-      let fixed = properNouns.reduce(
-        (result, noun) => {
-          if (noun.toLowerCase() === result) {
-            return noun;
+  return text.includes(' ') // non-breaking space
+    ? text
+    : text
+        .trim()
+        .split(' ')
+        .map((part, i) => {
+          const [, prefix, word, suffix] =
+            part
+              .toLowerCase()
+              .match(new RegExp(`^([^a-z]*)([${nonLetters}a-z]+)([^a-z]*)$`)) ||
+            [];
+          let fixed = properNouns.reduce(
+            (result, noun) => {
+              if (noun.toLowerCase() === result) {
+                return noun;
+              }
+              return result;
+            },
+            (word || '').toLowerCase()
+          );
+          if (i == 0) {
+            fixed = fixed.substring(0, 1).toUpperCase() + fixed.substring(1);
           }
-          return result;
-        },
-        (word || '').toLowerCase()
-      );
-      if (i == 0) {
-        fixed = fixed.substring(0, 1).toUpperCase() + fixed.substring(1);
-      }
-      return `${prefix || ''}${fixed}${suffix || ''}`;
-    })
-    .join(' ');
+          return `${prefix || ''}${fixed}${suffix || ''}`;
+        })
+        .join(' ');
 }
 
 export default function TitleCaseAllCapsHeaders() {

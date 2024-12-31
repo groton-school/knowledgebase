@@ -1,4 +1,13 @@
 {
+  "eablokker.tabsSidebar.config.collapsedFolders" : [
+
+  ],
+  "eablokker.tabsSidebar.config.customKindGroupsOrder" : [
+    "json"
+  ],
+  "eablokker.tabsSidebar.config.customTabOrder" : [
+    "file:\/\/\/Users\/sbattis\/Documents\/GitHub\/knowledgebase\/.nova\/Configuration.json"
+  ],
   "prettier.module.path" : "\/Users\/sbattis\/Documents\/GitHub\/knowledgebase\/node_modules\/prettier",
   "todo.workspace-ignore-names" : [
     ""
