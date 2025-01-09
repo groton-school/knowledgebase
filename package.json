@@ -27,15 +27,6 @@
     "sync:router": "pnpm -F @groton/knowledgebase.router run deploy",
     "log": "source .env; PATH=\".grpcio/bin:$PATH\" VIRTUAL_ENV=\".grpcio/bin/python\" gcloud alpha logging tail --project=$PROJECT"
   },
-  "prettier": "@battis/prettier-config",
-  "eslintConfig": {
-    "extends": [
-      "@battis/eslint-config"
-    ]
-  },
-  "dependencies": {
-    "@tsconfig/node20": "^20.1.4"
-  },
   "devDependencies": {
     "@battis/eslint-config": "^2.0.3",
     "@battis/partly-gcloudy": "^0.6.0",
@@ -44,6 +35,7 @@
     "@changesets/cli": "^2.27.11",
     "@groton/knowledgebase.config": "workspace:*",
     "@groton/knowledgebase.tsconfig": "workspace:*",
+    "@tsconfig/node20": "^20.1.4",
     "add-peer-dependencies": "^0.1.10",
     "lerna": "^8.1.9",
     "monorepo-package-paths": "^0.3.8",
