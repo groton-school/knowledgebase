@@ -34,6 +34,10 @@ const injectAssets: PipelineFunction = ({ html }) => {
     .replace('</body>', `<script src="/assets/ui.js"></script></body>`);
 };
 
+const injectTitle: PipelineFunction = ({ file, html }) => {
+  return html.replace('<head>', `<head><title>${file.name}</title>`);
+};
+
 const removeScripts: PipelineFunction = ({ html }) => {
   const dom = new JSDOM(html);
   Array.from(dom.window.document.querySelectorAll('script')).forEach((s) =>
@@ -55,6 +59,7 @@ async function pipelineHTML({
       removeScripts,
       demoteBodyToDiv,
       injectGoogleDocId,
+      injectTitle,
       injectAssets
     ]) {
       html = processor({ file, html });
