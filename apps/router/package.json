@@ -19,10 +19,8 @@
     "build:bundle": "webpack",
     "deploy": "run-s deploy:*",
     "deploy:build": "run-s build",
-    "deploy:strip": "tsx ./bin/strip.ts --backup ./.tmp/package.json --strip",
     "deploy:isolate": "isolate || run-s deploy:unstrip",
     "deploy:deploy": "tsx ./bin/deploy.ts",
-    "deploy:unstrip": "tsx ./bin/strip.ts --backup ./.tmp/package.json --no-strip",
     "start": "node build/main.cjs"
   },
   "dependencies": {
