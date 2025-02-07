@@ -67,7 +67,16 @@ const options = {
         gcloud.services.API.GoogleCloudStorageJSONAPI
       );
       await gcloud.services.enable(gcloud.services.API.CloudIdentityAPI);
+
       await gcloud.services.enable(gcloud.services.API.CloudFirestoreAPI);
+      const [{ name: database }] = JSON.parse(
+        cli.shell.exec(
+          `gcloud firestore databases list --project=${project.projectId} --format=json --quiet`
+        )
+      );
+      cli.shell.exec(
+        `gcloud firestore databases update --type=firestore-native --database="${database}" --project=${project.projectId} --format=json --quiet`
+      );
 
       permissionsRegex =
         permissionsRegex ||
