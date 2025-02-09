@@ -24,14 +24,14 @@
     "upload:acl": "tsx bin/acl.ts"
   },
   "dependencies": {
-    "@battis/qui-cli": "^0.8.5",
+    "@battis/qui-cli": "^0.9.9",
     "@groton/knowledgebase.config": "workspace:*",
     "@groton/knowledgebase.google": "workspace:*",
     "@groton/knowledgebase.index": "workspace:*",
     "adm-zip": "^0.5.16",
     "ejs": "^3.1.10",
     "jsdom": "^25.0.1",
-    "json-2-csv": "^5.5.7",
+    "json-2-csv": "^5.5.8",
     "mime-types": "^2.1.35"
   },
   "devDependencies": {
@@ -41,7 +41,7 @@
     "@types/ejs": "^3.1.5",
     "@types/jsdom": "^21.1.7",
     "@types/mime-types": "^2.1.4",
-    "@types/node": "^22.10.5",
+    "@types/node": "^22.13.1",
     "npm-run-all": "^4.1.5",
     "tsx": "^4.19.2"
   }
