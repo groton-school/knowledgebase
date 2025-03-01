@@ -46,7 +46,7 @@ importers:
         version: 8.1.9(encoding@0.1.13)
       monorepo-package-paths:
         specifier: ^0.3.8
-        version: 0.3.8(prettier@3.5.2)
+        version: 0.3.10(@types/node@22.13.8)(prettier@3.5.2)
       npm-run-all:
         specifier: ^4.1.5
         version: 4.1.5
@@ -4312,6 +4312,10 @@ packages:
     resolution: {integrity: sha512-Ld2g8rrAyMYFXBhEqMz8ZAHBi4J4uS1i/CxGMDnjyFWddMXLVcDp051DZfu+t7+ab7Wv6SMqpWmyFIj5UbfFvg==}
     engines: {node: '>=14'}
 
+  foreground-child@3.3.1:
+    resolution: {integrity: sha512-gIXjKqtFuWEgzFRJA9WCQeSJLZDjgJUOMCMzxtvFq/37KojM1BFGufqsCy0r4qSQmYLsZYMeyRqzIWOMup03sw==}
+    engines: {node: '>=14'}
+
   form-data@2.5.2:
     resolution: {integrity: sha512-GgwY0PS7DbXqajuGf4OYlsrIu3zgxD6Vvql43IBhm6MahqA5SK/7mwhtNj2AdH2z35YR34ujJ7BN+3fFC3jP5Q==}
     engines: {node: '>= 0.12'}
@@ -5645,8 +5649,8 @@ packages:
     resolution: {integrity: sha512-xV2bxeN6F7oYjZWTe/YPAy6MN2M+sL4u/Rlm2AHCIVGfo2p1yGmBHQ6vHehl4bRTZBdHu3TSkWdYgkwpYzAGSw==}
     engines: {node: '>=0.10.0'}
 
-  monorepo-package-paths@0.3.8:
-    resolution: {integrity: sha512-pXxpBYPBwP43R0+bM9QC9LyBgMnwBIF8HIxVSxHEnlotm+KsJehm8fqzWqjBKynUgl1Iy5iY5BsKgqoB3IPENw==}
+  monorepo-package-paths@0.3.10:
+    resolution: {integrity: sha512-tH5HTm9o/yC/31SxRMRHAE9wbVPl2YDjJDrKaVyzdyTG+AiHnGcaenIBpo6EE4u3my5OJB0wFHl++UEgfkiI2w==}
     hasBin: true
     peerDependencies:
       prettier: ^3.0
@@ -12433,6 +12437,11 @@ snapshots:
       cross-spawn: 7.0.6
       signal-exit: 4.1.0
 
+  foreground-child@3.3.1:
+    dependencies:
+      cross-spawn: 7.0.6
+      signal-exit: 4.1.0
+
   form-data@2.5.2:
     dependencies:
       asynckit: 0.4.0
@@ -12631,7 +12640,7 @@ snapshots:
 
   glob@11.0.1:
     dependencies:
-      foreground-child: 3.3.0
+      foreground-child: 3.3.1
       jackspeak: 4.1.0
       minimatch: 10.0.1
       minipass: 7.1.2
@@ -13934,15 +13943,19 @@ snapshots:
 
   modify-values@1.0.1: {}
 
-  monorepo-package-paths@0.3.8(prettier@3.5.2):
+  monorepo-package-paths@0.3.10(@types/node@22.13.8)(prettier@3.5.2):
     dependencies:
       '@battis/import-package-json': 0.1.7
-      '@battis/qui-cli': 0.8.5
+      '@battis/qui-cli': 2.1.1
+      '@inquirer/input': 4.1.6(@types/node@22.13.8)
       glob: 11.0.1
+      ora: 8.2.0
       package-json-type: 1.0.3
       yaml: 2.7.0
     optionalDependencies:
       prettier: 3.5.2
+    transitivePeerDependencies:
+      - '@types/node'
 
   moo@0.5.2: {}
 
