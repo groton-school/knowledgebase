@@ -1,6 +1,7 @@
 import cli from '@battis/qui-cli';
 import fs from 'node:fs';
 import path from 'node:path';
+import ora from 'ora';
 
 let pathToConfig = path.resolve(import.meta.dirname, '../var/config.json');
 
@@ -33,7 +34,7 @@ function quoted(key: string, value: string = '') {
   }
 }
 
-const spinner = cli.spinner();
+const spinner = ora();
 pathToConfig = path.resolve(import.meta.dirname, '..', configPath);
 spinner.start(`Loading configuration ${cli.colors.url(pathToConfig)}`);
 const config = JSON.parse(fs.readFileSync(pathToConfig).toString());
