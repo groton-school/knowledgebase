@@ -14,13 +14,13 @@
   "type": "module",
   "scripts": {
     "build": "run-s build:*",
-    "build:sync-config": "source .env && tsx ./bin/sync-config.ts -c $CONFIG",
+    "build:sync-config": "source .env && tsx ./bin/sync-config.ts -c \"$CONFIG\"",
     "build:compile": "tsc",
     "build:bundle": "webpack",
     "deploy": "run-s deploy:*",
     "deploy:build": "run-s build",
-    "deploy:isolate": "isolate || run-s deploy:unstrip",
-    "deploy:deploy": "tsx ./bin/deploy.ts",
+    "deploy:isolate": "isolate",
+    "deploy:deploy": "tsx ./bin/deploy.ts -v",
     "start": "node build/main.cjs"
   },
   "dependencies": {
@@ -40,8 +40,8 @@
     "winston": "^3.17.0"
   },
   "devDependencies": {
-    "@battis/partly-gcloudy": "^0.6.9",
-    "@battis/qui-cli": "^0.9.9",
+    "@battis/partly-gcloudy": "^1.0",
+    "@battis/qui-cli": "^2.0",
     "@tsconfig/node20": "^20.1.4",
     "@types/express": "^5.0.0",
     "@types/express-session": "^1.18.1",
