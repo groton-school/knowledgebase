@@ -10,4 +10,6 @@
 *.cache
 *.cache.*
 /.grpcio
+/.nx/
 /config.json
+
