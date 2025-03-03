@@ -2,6 +2,7 @@ import cli from '@battis/qui-cli';
 import { JSONObject } from '@battis/typescript-tricks';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
+import ora from 'ora';
 import { Config } from './Config.js';
 import createDefault from './createDefault.js';
 
@@ -73,7 +74,7 @@ export default function sync(
   configPath = path.resolve(env.root, configPath!);
   const localConfigPath = args.options.configPath.default;
 
-  const spinner = cli.spinner();
+  const spinner = ora();
   spinner.start(`Seeking configuration ${cli.colors.url(configPath)}`);
 
   let src: JSONObject,
