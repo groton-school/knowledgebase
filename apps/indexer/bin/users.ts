@@ -4,6 +4,7 @@ import { Groups } from '@groton/knowledgebase.config';
 import converter from 'json-2-csv';
 import fs from 'node:fs';
 import path from 'node:path';
+import ora from 'ora';
 import * as Users from '../src/Users.js';
 
 let {
@@ -43,7 +44,7 @@ let {
 
 format = format.toLowerCase();
 Users.setGroupFormat(groupFormat);
-const spinner = cli.spinner();
+const spinner = ora();
 
 spinner.start(`Reading groups from ${cli.colors.url(groupsPath)}`);
 let users: Users.User[] = [];

@@ -1,6 +1,7 @@
 import cli from '@battis/qui-cli';
 import fs from 'node:fs';
 import path from 'node:path';
+import ora from 'ora';
 import ACL from '../src/ACL/index.js';
 import Helper from '../src/Helper/index.js';
 
@@ -64,7 +65,7 @@ const flags = {
     }
   });
 
-  const spinner = cli.spinner();
+  const spinner = ora();
   ACL.File.bindSpinner(spinner, Helper.colorizeStatus);
 
   indexPath = path.resolve(CWD, indexPath);

@@ -6,6 +6,7 @@ import Zip from 'adm-zip';
 import mime from 'mime-types';
 import events from 'node:events';
 import path from 'node:path';
+import ora from 'ora';
 import Helper from '../Helper/index.js';
 import pipelineHTML from './Actions/pipelineHTML.js';
 import FileFactory from './FileFactory.js';
@@ -19,7 +20,7 @@ class File extends Index.File {
   public static event = new events.EventEmitter();
 
   public static bindSpinner(
-    spinner: ReturnType<typeof cli.spinner>,
+    spinner: ReturnType<typeof ora>,
     transform?: (t: string) => string
   ) {
     for (const key in this.Event) {
@@ -351,7 +352,7 @@ class File extends Index.File {
 }
 
 namespace File {
-  export const Event: Record<string, keyof ReturnType<typeof cli.spinner>> = {
+  export const Event: Record<string, keyof ReturnType<typeof ora>> = {
     Start: 'start',
     Succeed: 'succeed',
     Fail: 'fail',

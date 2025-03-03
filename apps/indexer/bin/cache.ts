@@ -2,6 +2,7 @@ import cli from '@battis/qui-cli';
 import Google from '@groton/knowledgebase.google';
 import fs from 'node:fs';
 import path from 'node:path';
+import ora from 'ora';
 import Cache from '../src/Cache/index.js';
 import Helper from '../src/Helper/index.js';
 
@@ -88,7 +89,7 @@ const flags = {
 
   Google.Client.init({ keysPath, tokensPath });
 
-  const spinner = cli.spinner();
+  const spinner = ora();
   Cache.File.bindSpinner(spinner, Helper.colorizeStatus);
 
   indexPath = path.resolve(CWD, indexPath);

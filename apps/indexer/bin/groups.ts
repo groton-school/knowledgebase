@@ -2,6 +2,7 @@ import cli from '@battis/qui-cli';
 import { Groups } from '@groton/knowledgebase.config';
 import fs from 'node:fs';
 import path from 'node:path';
+import ora from 'ora';
 import config from '../var/config.json';
 
 const defaultFilePath = path.resolve(
@@ -39,7 +40,7 @@ const options = {
     }
   });
 
-  const spinner = cli.spinner();
+  const spinner = ora();
 
   const lastSync = process.env.GROUP_SYNC_TIMESTAMP
     ? new Date(parseInt(process.env.GROUP_SYNC_TIMESTAMP))
