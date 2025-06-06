@@ -49,6 +49,7 @@ const properNouns = [
   'HDMI',
   'I',
   'iCloud',
+  'InQuizitive',
   'iOS',
   'iPad',
   'iPadOS',
