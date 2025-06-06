@@ -2,63 +2,11 @@
   "targetDefaults": {
     "build": {
       "cache": true,
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        "{projectRoot}/dist"
-      ]
-    },
-    "build:sync-config": {
-      "dependsOn": []
-    },
-    "build:index": {
-      "dependsOn": []
-    },
-    "build:groups": {
-      "dependsOn": []
-    },
-    "upload": {
-      "dependsOn": []
-    },
-    "upload:build": {
-      "dependsOn": []
-    },
-    "upload:cache": {
-      "dependsOn": []
-    },
-    "upload:acl": {
-      "dependsOn": []
-    },
-    "build:compile": {
-      "dependsOn": []
-    },
-    "build:bundle": {
-      "dependsOn": []
+      "dependsOn": ["^build"],
+      "outputs": ["{projectRoot}/dist"]
     },
     "deploy": {
-      "dependsOn": []
-    },
-    "deploy:build": {
-      "dependsOn": []
-    },
-    "deploy:isolate": {
-      "dependsOn": []
-    },
-    "deploy:deploy": {
-      "dependsOn": []
-    },
-    "start": {
-      "dependsOn": []
-    },
-    "build:apply-config": {
-      "dependsOn": []
-    },
-    "clean": {
-      "dependsOn": []
-    },
-    "build:clean": {
-      "dependsOn": []
+      "dependsOn": ["build"]
     }
   }
 }
