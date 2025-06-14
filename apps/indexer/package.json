@@ -30,7 +30,7 @@
     "@groton/knowledgebase.index": "workspace:*",
     "adm-zip": "^0.5.16",
     "ejs": "^3.1.10",
-    "jsdom": "^25.0.1",
+    "jsdom": "^26.1.0",
     "json-2-csv": "^5.5.9",
     "mime-types": "^2.1.35",
     "ora": "^8.2.0"
