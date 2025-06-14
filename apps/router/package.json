@@ -34,7 +34,7 @@
     "@groton/knowledgebase.indexer": "workspace:*",
     "@groton/knowledgebase.openid": "workspace:*",
     "@groton/knowledgebase.ui": "workspace:*",
-    "express": "^4.21.2",
+    "express": "^5.1.0",
     "express-session": "^1.18.1",
     "google-auth-library": "^9.15.1",
     "winston": "^3.17.0"
