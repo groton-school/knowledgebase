@@ -29,7 +29,7 @@
     "@battis/eslint-config": "^2.0.4",
     "@battis/partly-gcloudy": "^0.6.9",
     "@battis/prettier-config": "^1.6.1",
-    "@battis/qui-cli": "^0.9.9",
+    "@battis/qui-cli": "^2.1.3",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@commitlint/config-pnpm-scopes": "^19.8.1",
