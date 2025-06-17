@@ -22,7 +22,7 @@
     "setup:log:grpcio": "python3 -m pip install -r requirements.txt",
     "build": "lerna run build",
     "deploy": "lerna run deploy --stream",
-    "sync": "run-s deploy",
+    "sync": "lerna run deploy --stream --skip-nx-cache",
     "log": "source .env; PATH=\".grpcio/bin:$PATH\" VIRTUAL_ENV=\".grpcio/bin/python\" gcloud alpha logging tail --project=$PROJECT"
   },
   "devDependencies": {
