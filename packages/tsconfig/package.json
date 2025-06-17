@@ -3,6 +3,6 @@
   "version": "0.0.0",
   "main": "./tsconfig.json",
   "devDependencies": {
-    "@tsconfig/node20": "^20.1.5"
+    "@tsconfig/node20": "^20.1.6"
   }
 }
