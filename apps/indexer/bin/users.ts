@@ -1,4 +1,4 @@
-import cli from '@battis/qui-cli';
+import CLI from '@battis/qui-cli';
 import { ArrayElement } from '@battis/typescript-tricks';
 import { Groups } from '@groton/knowledgebase.config';
 import converter from 'json-2-csv';
@@ -7,50 +7,52 @@ import path from 'node:path';
 import ora from 'ora';
 import * as Users from '../src/Users.js';
 
-let {
-  positionals: [groupsPath, outputPath],
-  values: { format, groupFormat, list, pretty }
-} = cli.init({
+await CLI.configure({
   env: {
     root: path.join(import.meta.dirname, '..'),
     loadDotEnv: path.join(import.meta.dirname, '../../../.env')
-  },
-  args: {
-    requirePositionals: true,
-    options: {
-      format: {
-        description: `Output format (default: ${cli.colors.quotedValue('"csv"')}, ${cli.colors.quotedValue('"json"')} also supported)`,
-        default: 'csv',
-        short: 'f'
-      },
-      groupFormat: {
-        description: `Output format for group entries for each user (default: ${cli.colors.quotedValue('"displayName"')}, alternatives include ${cli.colors.quotedValue('"email"')}, ${cli.colors.quotedValue('"groupKey"')}, ${cli.colors.quotedValue('"name"')}, ${cli.colors.quotedValue('"boolean"')})`,
-        default: 'displayName',
-        short: 'g'
-      }
+  }
+});
+let {
+  positionals: [groupsPath, outputPath],
+  // eslint-disable-next-line prefer-const
+  values: { format, groupFormat, list, pretty }
+} = await CLI.init({
+  requirePositionals: true,
+  opt: {
+    format: {
+      description: `Output format (default: ${CLI.colors.quotedValue('"csv"')}, ${CLI.colors.quotedValue('"json"')} also supported)`,
+      default: 'csv',
+      short: 'f'
     },
-    flags: {
-      list: {
-        description: `Output groups as a list (default: each group is a field for each user)`,
-        short: 'l'
-      },
-      pretty: {
-        description: `Pretty-print output (if applicable, default: ${cli.colors.value('false')})`,
-        short: 'p'
-      }
+    groupFormat: {
+      description: `Output format for group entries for each user (default: ${CLI.colors.quotedValue('"displayName"')}, alternatives include ${CLI.colors.quotedValue('"email"')}, ${CLI.colors.quotedValue('"groupKey"')}, ${CLI.colors.quotedValue('"name"')}, ${CLI.colors.quotedValue('"boolean"')})`,
+      default: 'displayName',
+      short: 'g'
+    }
+  },
+  // @ts-expect-error 2322 -- help intentionally not included (will be merged in)
+  flag: {
+    list: {
+      description: `Output groups as a list (default: each group is a field for each user)`,
+      short: 'l'
+    },
+    pretty: {
+      description: `Pretty-print output (if applicable, default: ${CLI.colors.value('false')})`,
+      short: 'p'
     }
   }
 });
 
-format = format.toLowerCase();
-Users.setGroupFormat(groupFormat);
+format = (format || 'csv').toLowerCase();
+Users.setGroupFormat(groupFormat || 'displayName');
 const spinner = ora();
 
-spinner.start(`Reading groups from ${cli.colors.url(groupsPath)}`);
+spinner.start(`Reading groups from ${CLI.colors.url(groupsPath)}`);
 let users: Users.User[] = [];
 let groups: Groups;
 try {
-  groupsPath = path.resolve(process.cwd(), groupsPath);
+  groupsPath = path.resolve(process.cwd(), groupsPath!);
   if (!outputPath) {
     outputPath = groupsPath.replace(
       /groups\.json$/,
@@ -59,14 +61,14 @@ try {
   }
   groups = JSON.parse(fs.readFileSync(groupsPath).toString());
 } catch (e) {
-  spinner.fail(`Could not read groups from ${cli.colors.url(groupsPath)}`);
+  spinner.fail(`Could not read groups from ${CLI.colors.url(groupsPath)}`);
   throw e;
 }
 
-let subgroups: Users.User[] = [];
+const subgroups: Users.User[] = [];
 
 for (const group in groups) {
-  spinner.start(cli.colors.quotedValue(`"${group}"`));
+  spinner.start(CLI.colors.quotedValue(`"${group}"`));
   for (const member of groups[group].members || []) {
     if (member in groups) {
       Users.append(
@@ -86,7 +88,7 @@ for (const group in groups) {
     Users.fill(group, users);
     Users.fill(group, subgroups);
   }
-  spinner.succeed(cli.colors.quotedValue(`"${group}"`));
+  spinner.succeed(CLI.colors.quotedValue(`"${group}"`));
 }
 
 spinner.start(`Processing subgroups`);
@@ -104,7 +106,7 @@ while (
 ) {
   const subgroup = subgroups[i];
   subgroups.splice(i, 1);
-  spinner.start(cli.colors.quotedValue(`"${subgroup.user}"`));
+  spinner.start(CLI.colors.quotedValue(`"${subgroup.user}"`));
   for (const group of Object.keys(subgroup).filter((k) => k !== 'user')) {
     if (subgroup[group]) {
       Users.apply(
@@ -121,11 +123,11 @@ while (
       );
     }
   }
-  spinner.succeed(cli.colors.quotedValue(`"${subgroup.user}"`));
+  spinner.succeed(CLI.colors.quotedValue(`"${subgroup.user}"`));
 }
 if (subgroups.length > 0) {
   spinner.fail(
-    cli.colors.error(
+    CLI.colors.error(
       `${subgroups.length} circular dependencies found in subgroups`
     )
   );
@@ -169,7 +171,7 @@ if (list) {
   }
 }
 
-spinner.start(`Writing users to ${cli.colors.url(outputPath)}`);
+spinner.start(`Writing users to ${CLI.colors.url(outputPath)}`);
 fs.writeFileSync(
   outputPath,
   format == 'csv'
@@ -178,4 +180,4 @@ fs.writeFileSync(
       ? JSON.stringify(users, null, 2)
       : JSON.stringify(users)
 );
-spinner.succeed(`Wrote users to ${cli.colors.url(outputPath)}`);
+spinner.succeed(`Wrote users to ${CLI.colors.url(outputPath)}`);

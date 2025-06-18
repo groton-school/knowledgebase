@@ -1,16 +1,16 @@
-import cli from '@battis/qui-cli';
+import CLI from '@battis/qui-cli';
 import path from 'node:path';
 import valid from './validGCSFilenameCharacters.js';
 
-const GCSPath = new RegExp(`(\/?([${valid}]+\/)+[${valid}]+)`, 'gi');
+const GCSPath = new RegExp(`(/?([${valid}]+/)+[${valid}]+)`, 'gi');
 
 function fancyUrl(url: string) {
   const urlPath = path.dirname(url);
-  return `${urlPath != '.' ? cli.colors.url(`${urlPath}/`) : ''}${cli.colors.value(path.basename(url))}`;
+  return `${urlPath != '.' ? CLI.colors.url(`${urlPath}/`) : ''}${CLI.colors.value(path.basename(url))}`;
 }
 
 export default function colorizeStatus(status: string) {
-  let [, pre = '', url] = status.match(/^(Indexing )(.+)$/) || [];
+  const [, pre = '', url] = status.match(/^(Indexing )(.+)$/) || [];
   if (url) {
     status = `${pre}${fancyUrl(url)}`;
   } else {
@@ -22,6 +22,6 @@ export default function colorizeStatus(status: string) {
 
   return status.replace(
     /((user|group):[a-z0-9._-]+@[a-z0-9._-]+)/gi,
-    cli.colors.value('$1')
+    CLI.colors.value('$1')
   );
 }

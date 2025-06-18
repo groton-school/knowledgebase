@@ -1,9 +1,9 @@
 import { Group } from '@groton/knowledgebase.config';
 
 export type User = {
+  [key: string]: string | boolean;
   user: string;
-  groups?: string[] | string;
-} & Record<string, string | boolean>;
+} & { groups?: string[] | string };
 
 type GroupFormat = Exclude<keyof Group, 'members'> | 'email' | 'boolean';
 

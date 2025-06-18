@@ -1,5 +1,6 @@
-import cli from '@battis/qui-cli';
+import CLI from '@battis/qui-cli';
 import Google from '@groton/knowledgebase.google';
+import { input } from '@inquirer/prompts';
 import fs from 'node:fs';
 import path from 'node:path';
 import ora from 'ora';
@@ -21,42 +22,42 @@ const defaultTokensPath = path.resolve(
   '../var/tokens.json'
 );
 
-const options = {
+const opt = {
   folderId: {
     short: 'f',
-    description: `Google Drive ID of folder to index (will be read from ${cli.colors.value(
+    description: `Google Drive ID of folder to index (will be read from ${CLI.colors.value(
       'ROOT_FOLDER_ID'
     )} environment variable if present)`
   },
   indexPath: {
     short: 'i',
-    description: `Output JSON file path (use ${cli.colors.value(
+    description: `Output JSON file path (use ${CLI.colors.value(
       FOLDER_NAME
-    )}, ${cli.colors.value(FOLDER_ID)}, and ${cli.colors.value(
+    )}, ${CLI.colors.value(FOLDER_ID)}, and ${CLI.colors.value(
       TIMESTAMP
-    )} placeholders, if so desired). If the file already exists, the index will be updated. (defaults to ${cli.colors.url(
+    )} placeholders, if so desired). If the file already exists, the index will be updated. (defaults to ${CLI.colors.url(
       defaultIndexPath
     )})`,
     default: defaultIndexPath
   },
   permissionsRegex: {
     short: 'p',
-    description: `Regular expression to match processed users/groups (will be read from ${cli.colors.value(
+    description: `Regular expression to match processed users/groups (will be read from ${CLI.colors.value(
       'PERMISSIONS_REGEX'
-    )} environment variable if present or default to ${cli.colors.value(
+    )} environment variable if present or default to ${CLI.colors.value(
       '.*'
     )} if no enviroment variable is set or argument is passed)`
   },
   keysPath: {
     short: 'k',
-    description: `Path to file containing downloaded OAuth2 credentials (defaults to ${cli.colors.url(
+    description: `Path to file containing downloaded OAuth2 credentials (defaults to ${CLI.colors.url(
       defaultKeysPath
     )})`,
     default: defaultKeysPath
   },
   tokensPath: {
     short: 't',
-    description: `Path to file containing access tokens (defaults to ${cli.colors.url(
+    description: `Path to file containing access tokens (defaults to ${CLI.colors.url(
       defaultTokensPath
     )})`,
     default: defaultTokensPath
@@ -65,17 +66,21 @@ const options = {
 
 (async () => {
   const CWD = process.cwd();
-  let {
-    values: { folderId, indexPath, keysPath, tokensPath, permissionsRegex }
-  } = cli.init({
+  await CLI.configure({
     env: {
       root: path.join(import.meta.dirname, '../../..'),
       loadDotEnv: path.join(import.meta.dirname, '../../../.env')
-    },
-    args: { options }
+    }
   });
+  let {
+    // eslint-disable-next-line prefer-const
+    values: { folderId, indexPath, keysPath, tokensPath, permissionsRegex }
+  } = await CLI.init({ opt });
 
-  Google.Client.init({ keysPath, tokensPath });
+  Google.Client.init({
+    keysPath: keysPath || defaultKeysPath,
+    tokensPath: tokensPath || defaultTokensPath
+  });
   const permissionsPattern = new RegExp(
     permissionsRegex || process.env.PERMISSIONS_REGEX || '.*'
   );
@@ -85,15 +90,15 @@ const options = {
 
   if (indexPath && fs.existsSync(path.resolve(CWD, indexPath))) {
     indexPath = path.resolve(CWD, indexPath);
-    spinner.start(`Loading index from ${cli.colors.url(indexPath)}`);
+    spinner.start(`Loading index from ${CLI.colors.url(indexPath)}`);
     const prevIndex = await Cache.fromFile(indexPath);
     if (!prevIndex.root) {
       spinner.fail(
-        `Missing root path in ${cli.colors.url(path.dirname(indexPath))}/${cli.colors.value(path.basename(indexPath))}`
+        `Missing root path in ${CLI.colors.url(path.dirname(indexPath))}/${CLI.colors.value(path.basename(indexPath))}`
       );
       process.exit(1);
     }
-    spinner.succeed(`${cli.colors.value(prevIndex.root.name)} index loaded`);
+    spinner.succeed(`${CLI.colors.value(prevIndex.root.name)} index loaded`);
 
     const currIndex = [
       await new Cache.FileFactory(Cache.File).fromDriveId(
@@ -154,17 +159,17 @@ const options = {
     });
     spinner.succeed('Indices merged');
 
-    spinner.start(`Writing new index to ${cli.colors.url(indexPath)}`);
+    spinner.start(`Writing new index to ${CLI.colors.url(indexPath)}`);
     fs.writeFileSync(indexPath, JSON.stringify(nextIndex));
-    spinner.succeed(`Updated index at ${cli.colors.url(indexPath)}`);
+    spinner.succeed(`Updated index at ${CLI.colors.url(indexPath)}`);
   } else {
     // build from scratch
     folderId =
       folderId ||
       process.env.ROOT_FOLDER_ID ||
-      (await cli.prompts.input({
-        message: options.folderId.description,
-        validate: cli.validators.notEmpty
+      (await input({
+        message: opt.folderId.description,
+        validate: CLI.validators.notEmpty
       }));
     const folder = await new Cache.FileFactory(Cache.File).fromDriveId(
       folderId,
@@ -176,10 +181,10 @@ const options = {
       CWD,
       (
         indexPath ||
-        (await cli.prompts.input({
-          message: options.indexPath.description,
-          default: path.resolve(cli.appRoot(), '../router/var/index.json'),
-          validate: cli.validators.notEmpty
+        (await input({
+          message: opt.indexPath.description,
+          default: path.resolve(CLI.root.path(), '../router/var/index.json'),
+          validate: CLI.validators.notEmpty
         }))
       )
         .replace(FOLDER_ID, folderId)
@@ -189,8 +194,8 @@ const options = {
 
     spinner.start(`Saving index to ${indexPath}`);
     const content = JSON.stringify(index);
-    cli.shell.mkdir('-p', path.dirname(indexPath));
+    CLI.shell.mkdir('-p', path.dirname(indexPath));
     fs.writeFileSync(indexPath, content);
-    spinner.succeed(`Index saved to ${cli.colors.url(indexPath)}`);
+    spinner.succeed(`Index saved to ${CLI.colors.url(indexPath)}`);
   }
 })();

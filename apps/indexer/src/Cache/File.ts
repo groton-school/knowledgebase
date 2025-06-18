@@ -1,4 +1,5 @@
-import cli from '@battis/qui-cli';
+/* eslint-disable @typescript-eslint/no-namespace */
+import CLI from '@battis/qui-cli';
 import { CoerceError } from '@battis/typescript-tricks';
 import Google from '@groton/knowledgebase.google';
 import Index from '@groton/knowledgebase.index';
@@ -31,7 +32,7 @@ class File extends Index.File {
           (
             spinnerMember.bind(spinner) as (
               text?: string
-            ) => ReturnType<typeof cli.spinner>
+            ) => ReturnType<typeof ora>
           )(transform ? transform(status) : status);
         });
       } else {
@@ -95,6 +96,7 @@ class File extends Index.File {
   }
 
   protected async fetchAsCompleteHtml(): Promise<Record<string, Blob>> {
+    // eslint-disable-next-line no-async-promise-executor
     return new Promise(async (resolve, reject) => {
       try {
         const response = await (
@@ -134,7 +136,7 @@ class File extends Index.File {
 
   public async indexContents(permissionsRegex: RegExp): Promise<File[]> {
     if (this.isFolder()) {
-      let contents: File[] = [];
+      const contents: File[] = [];
       let folderContents: Google.Drive.drive_v3.Schema$FileList = {};
       const fileFactory = new FileFactory(File);
 
@@ -306,7 +308,7 @@ class File extends Index.File {
               for (subfileName in files) {
                 await Helper.exponentialBackoff(
                   (async () => {
-                    let filename = File.normalizeSubfileName(
+                    const filename = File.normalizeSubfileName(
                       this.index.path,
                       subfileName
                     );
@@ -319,7 +321,7 @@ class File extends Index.File {
                     try {
                       file.save(Buffer.from(await blob.arrayBuffer()));
                     } catch (error) {
-                      cli.log.debug({ file: this.id, blob, error });
+                      CLI.log.debug({ file: this.id, blob, error });
                     }
                     if (!this.index.uri.includes(file.cloudStorageURI.href)) {
                       this.index.uri.push(file.cloudStorageURI.href);

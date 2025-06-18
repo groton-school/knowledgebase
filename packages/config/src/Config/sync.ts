@@ -1,4 +1,4 @@
-import cli from '@battis/qui-cli';
+import CLI from '@battis/qui-cli';
 import { JSONObject } from '@battis/typescript-tricks';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
@@ -11,10 +11,11 @@ function backup(targetPath: string) {
   for (let counter = 1; fs.existsSync(backupPath); counter++) {
     backupPath = targetPath.replace(/(\.\w+)$/, `.${counter}$1`);
   }
-  cli.shell.mv(targetPath, backupPath);
+  CLI.shell.mv(targetPath, backupPath);
   return backupPath;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function compare(a: any, b: any): boolean {
   for (const aKey in a) {
     if (!(aKey in b) || typeof b[aKey] != typeof a[aKey]) {
@@ -35,7 +36,7 @@ function compare(a: any, b: any): boolean {
   return true;
 }
 
-export default function sync(
+export default async function sync(
   {
     env
   }: {
@@ -43,18 +44,18 @@ export default function sync(
   },
   filter?: (config: JSONObject) => JSONObject
 ) {
-  const defaultConfigPath = path.resolve(env.root, 'var/config.json');
+  let configPath = path.resolve(env.root, 'var/config.json');
   const args = {
-    options: {
+    opt: {
       configPath: {
         short: 'c',
-        description: `Path to the configuration file, relative to package root (default ${cli.colors.url(
-          defaultConfigPath
+        description: `Path to the configuration file, relative to package root (default ${CLI.colors.url(
+          configPath
         )})`,
-        default: defaultConfigPath
+        default: configPath
       }
     },
-    flags: {
+    flag: {
       overwrite: {
         short: 'o',
         description:
@@ -64,18 +65,17 @@ export default function sync(
     }
   };
 
+  await CLI.configure({ env });
   let {
-    values: { configPath, overwrite, verify }
-  } = cli.init({
-    env,
-    args
-  });
+    // eslint-disable-next-line prefer-const
+    values: { configPath: _configPath, overwrite }
+  } = await CLI.init(args);
 
-  configPath = path.resolve(env.root, configPath!);
-  const localConfigPath = args.options.configPath.default;
+  configPath = path.resolve(env.root, _configPath!);
+  const localConfigPath = args.opt.configPath.default;
 
   const spinner = ora();
-  spinner.start(`Seeking configuration ${cli.colors.url(configPath)}`);
+  spinner.start(`Seeking configuration ${CLI.colors.url(configPath)}`);
 
   let src: JSONObject,
     dest: JSONObject,
@@ -86,7 +86,7 @@ export default function sync(
     spinner.start(`Configuration parsed`);
   } else {
     src = createDefault();
-    spinner.fail(`$Configuration ${cli.colors.url(configPath)} not found`);
+    spinner.fail(`$Configuration ${CLI.colors.url(configPath)} not found`);
     spinner.succeed('Default configuration created');
   }
 
@@ -101,15 +101,15 @@ export default function sync(
     dest = src;
   }
 
-  if (!!!overwrite && curr && !compare(dest, curr)) {
-    spinner.start(`Backing up ${cli.colors.url(localConfigPath)}`);
+  if (!overwrite && curr && !compare(dest, curr)) {
+    spinner.start(`Backing up ${CLI.colors.url(localConfigPath)}`);
     spinner.succeed(
-      `Backup created at ${cli.colors.url(backup(localConfigPath))}`
+      `Backup created at ${CLI.colors.url(backup(localConfigPath))}`
     );
   }
 
   fs.writeFileSync(localConfigPath, JSON.stringify(dest));
-  spinner.succeed(`Configuration synced to ${cli.colors.url(localConfigPath)}`);
+  spinner.succeed(`Configuration synced to ${CLI.colors.url(localConfigPath)}`);
 
   return dest as Partial<Config>;
 }

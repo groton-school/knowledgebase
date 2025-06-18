@@ -1,6 +1,6 @@
-import cli from '@battis/qui-cli';
 import { Storage } from '@google-cloud/storage';
 import * as Drive from '@googleapis/drive';
+import { input } from '@inquirer/prompts';
 import express from 'express';
 import { Credentials, OAuth2Client } from 'google-auth-library';
 import fs from 'node:fs';
@@ -51,6 +51,7 @@ export default class Client {
   }: {
     scope: string;
   }): Promise<OAuth2Client> {
+    // eslint-disable-next-line no-async-promise-executor
     return new Promise(async (resolve, reject) => {
       if (!Client.keysPath || !Client.tokensPath) {
         throw new Error('Client not initialized');
@@ -62,7 +63,7 @@ export default class Client {
             ? keys.web.redirect_uris
                 .filter((uri: string) => uri.match(/^http:\/\/localhost/))
                 .shift()!
-            : await cli.prompts.input({ message: 'Redirect URI' })
+            : await input({ message: 'Redirect URI' })
         );
         const oauth2 = new OAuth2Client({
           clientId: keys.web.client_id,

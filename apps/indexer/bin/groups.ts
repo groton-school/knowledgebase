@@ -1,41 +1,39 @@
-import cli from '@battis/qui-cli';
+import CLI from '@battis/qui-cli';
 import { Groups } from '@groton/knowledgebase.config';
 import fs from 'node:fs';
 import path from 'node:path';
 import ora from 'ora';
-import config from '../var/config.json';
+import config from '../var/config.json' with { type: 'json' };
 
 const defaultFilePath = path.resolve(
   import.meta.dirname,
   '../dist/groups.json'
 );
 
-const options = {
+const opt = {
   filePath: {
     short: 'f',
-    description: `Output JSON file path. If the file already exists, the list will be updated. (defaults to ${cli.colors.url(
+    description: `Output JSON file path. If the file already exists, the list will be updated. (defaults to ${CLI.colors.url(
       defaultFilePath
     )})`,
     default: defaultFilePath
   },
   permissionsRegex: {
-    description: `Regular expression to email addresses of users/groups to include in Cloud Storage Bucket (will be read from ${cli.colors.value(
+    description: `Regular expression to email addresses of users/groups to include in Cloud Storage Bucket (will be read from ${CLI.colors.value(
       'PERMISSIONS_REGEX'
     )} environment variable if present)`
   }
 };
 
 (async () => {
-  let {
-    values: { filePath, permissionsRegex, force }
-  } = cli.init({
-    args: {
-      options,
-      flags: {
-        force: {
-          description: 'Force a sync',
-          default: false
-        }
+  const {
+    values: { filePath, permissionsRegex }
+  } = await CLI.init({
+    opt,
+    flag: {
+      force: {
+        description: 'Force a sync',
+        default: false
       }
     }
   });
@@ -47,7 +45,7 @@ const options = {
     : undefined;
   let sync = true;
   if (config.acl?.updateFrequency && lastSync) {
-    cli.log.info(`Previously synced ${lastSync.toLocaleString()}`);
+    CLI.log.info(`Previously synced ${lastSync.toLocaleString()}`);
     sync = lastSync < new Date(Date.now() - config.acl.updateFrequency * 1000);
   }
 
@@ -55,11 +53,11 @@ const options = {
     const pattern = new RegExp(
       permissionsRegex || process.env.PERMISSIONS_REGEX || '.*'
     );
-    let groups: Groups = {};
+    const groups: Groups = {};
     let nextPageToken: string | undefined = undefined;
     do {
       const page = JSON.parse(
-        cli.shell.exec(
+        CLI.shell.exec(
           `gcloud identity groups search --labels="cloudidentity.googleapis.com/groups.${
             process.env.GROUP_TYPE
           }" --customer="${process.env.CUSTOMER}" --project="${
@@ -82,14 +80,16 @@ const options = {
       nextPageToken = undefined;
       do {
         const page = JSON.parse(
-          cli.shell.exec(
+          CLI.shell.exec(
             `gcloud identity groups memberships list --group-email=${group} --project=${
               process.env.PROJECT
             } --format=json --quiet${
               nextPageToken ? ` --page-token="${nextPageToken}"` : ''
             }`
           ).stdout
-        );
+        ) as {
+          preferredMemberKey: { id: string };
+        }[] & { nextPageToken?: string };
         groups[group].members.push(
           ...page.map((member) => member.preferredMemberKey.id)
         );
@@ -97,10 +97,10 @@ const options = {
       } while (nextPageToken);
     }
 
-    fs.writeFileSync(filePath, JSON.stringify(groups));
-    cli.env.set({ key: 'GROUP_SYNC_TIMESTAMP', value: '' + Date.now() });
-    spinner.succeed(`List saved to ${cli.colors.url(filePath)}`);
+    fs.writeFileSync(filePath || defaultFilePath, JSON.stringify(groups));
+    CLI.env.set({ key: 'GROUP_SYNC_TIMESTAMP', value: '' + Date.now() });
+    spinner.succeed(`List saved to ${CLI.colors.url(filePath)}`);
   } else {
-    cli.log.info('No additional sync required at this time');
+    CLI.log.info('No additional sync required at this time');
   }
 })();

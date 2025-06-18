@@ -1,26 +1,26 @@
-import cli from '@battis/qui-cli';
+import CLI from '@battis/qui-cli';
 import fs from 'node:fs';
 import path from 'node:path';
 import ora from 'ora';
 
 let pathToConfig = path.resolve(import.meta.dirname, '../var/config.json');
 
-const {
-  values: { configPath }
-} = cli.init({
+await CLI.configure({
   env: {
     root: path.dirname(import.meta.dirname),
     loadDotEnv: path.resolve(import.meta.dirname, '../../../.env')
-  },
-  args: {
-    options: {
-      configPath: {
-        short: 'c',
-        description: `Path to config file, defaults to ${cli.colors.url(
-          pathToConfig
-        )}`,
-        default: pathToConfig
-      }
+  }
+});
+const {
+  values: { configPath }
+} = await CLI.init({
+  opt: {
+    configPath: {
+      short: 'c',
+      description: `Path to config file, defaults to ${CLI.colors.url(
+        pathToConfig
+      )}`,
+      default: pathToConfig
     }
   }
 });
@@ -35,13 +35,17 @@ function quoted(key: string, value: string = '') {
 }
 
 const spinner = ora();
-pathToConfig = path.resolve(import.meta.dirname, '..', configPath);
-spinner.start(`Loading configuration ${cli.colors.url(pathToConfig)}`);
+pathToConfig = path.resolve(
+  import.meta.dirname,
+  '..',
+  configPath || pathToConfig
+);
+spinner.start(`Loading configuration ${CLI.colors.url(pathToConfig)}`);
 const config = JSON.parse(fs.readFileSync(pathToConfig).toString());
-spinner.succeed(`Configuration ${cli.colors.url(pathToConfig)}`);
+spinner.succeed(`Configuration ${CLI.colors.url(pathToConfig)}`);
 
 const pathToScss = path.resolve(import.meta.dirname, '../src/config.scss');
-spinner.start(`Updating ${cli.colors.url(pathToScss)}`);
+spinner.start(`Updating ${CLI.colors.url(pathToScss)}`);
 if (config.ui?.site) {
   fs.writeFileSync(
     pathToScss,
@@ -56,11 +60,11 @@ if (config.ui?.site) {
       .join('\n')
   );
 }
-spinner.succeed(`Configuration applied to ${cli.colors.url(pathToScss)}`);
+spinner.succeed(`Configuration applied to ${CLI.colors.url(pathToScss)}`);
 
 const pathToTs = path.resolve(import.meta.dirname, '../src/config.ts');
-spinner.start(`Updating ${cli.colors.url(pathToTs)}`);
+spinner.start(`Updating ${CLI.colors.url(pathToTs)}`);
 if (config.ui?.site) {
   fs.writeFileSync(pathToTs, `export default ${JSON.stringify(config.ui)}`);
 }
-spinner.succeed(`Configuration applied to ${cli.colors.url(pathToTs)}`);
+spinner.succeed(`Configuration applied to ${CLI.colors.url(pathToTs)}`);
