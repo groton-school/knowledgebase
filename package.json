@@ -21,8 +21,11 @@
     "setup:log:venv": "node -e \"if (! require('fs').existsSync('.grpcio')) { process.exit(1)}\" || python3 -m venv .grpcio",
     "setup:log:grpcio": "python3 -m pip install -r requirements.txt",
     "build": "lerna run build",
-    "deploy": "lerna run deploy --stream",
-    "sync": "lerna run deploy --stream --skip-nx-cache",
+    "deploy": "run-s deploy:*",
+    "deploy:build": "run-s build",
+    "deploy:index": "pnpm -F @groton/knowledgebase.indexer run deploy",
+    "deploy:router": "pnpm -F @groton/knowledgebase.router run deploy",
+    "sync": "run-s deploy",
     "log": "source .env; PATH=\".grpcio/bin:$PATH\" VIRTUAL_ENV=\".grpcio/bin/python\" gcloud alpha logging tail --project=$PROJECT"
   },
   "devDependencies": {
