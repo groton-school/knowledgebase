@@ -1,7 +1,0 @@
-{
-  "extends": "@groton/knowledgebase.tsconfig",
-  "compilerOptions": {
-    "outDir": "./dist"
-  },
-  "include": ["./src"]
-}

@@ -24,12 +24,12 @@
   "dependencies": {
     "@battis/typescript-tricks": "^0.7.4",
     "@groton/knowledgebase.api": "workspace:*",
-    "@groton/knowledgebase.domain": "workspace:*",
     "bootstrap": "^5.3.7",
     "dotenv": "^16.5.0",
     "path-browserify": "^1.0.1"
   },
   "devDependencies": {
+    "@battis/descriptive-types": "*",
     "@battis/eslint-config": "^2.0.4",
     "@battis/prettier-config": "^1.6.2",
     "@battis/qui-cli": "^2.1.4",

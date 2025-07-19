@@ -1,7 +1,6 @@
-import { Seconds } from '@groton/knowledgebase.domain';
-
 type ACL = {
-  updateFrequency: Seconds;
+  /** Seconds */
+  updateFrequency: number;
 };
 
 export default ACL;

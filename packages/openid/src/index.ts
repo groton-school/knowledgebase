@@ -1,4 +1,4 @@
-import { EmailString, UrlString } from '@groton/knowledgebase.domain';
+import { EmailString, URLString } from '@battis/descriptive-types';
 
 export namespace OpenID {
   // TODO surely this is defined somewhere in the Google clients?
@@ -6,7 +6,7 @@ export namespace OpenID {
     email?: EmailString;
     email_verified?: boolean;
     name?: string;
-    picture?: UrlString;
+    picture?: URLString;
     given_name?: string;
     family_name?: string;
   }

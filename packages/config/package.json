@@ -21,12 +21,12 @@
     "build:compile": "tsc"
   },
   "dependencies": {
-    "@battis/qui-cli": "^2.1.4",
-    "@groton/knowledgebase.domain": "workspace:*",
+    "@battis/qui-cli": "^2.1.6",
     "@groton/knowledgebase.index": "workspace:*",
     "ora": "^8.2.0"
   },
   "devDependencies": {
+    "@battis/descriptive-types": "^0.2.3",
     "@battis/typescript-tricks": "^0.7.4",
     "@groton/knowledgebase.tsconfig": "workspace:*",
     "del-cli": "^6.0.0",

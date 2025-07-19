@@ -1,4 +1,4 @@
-import { CSSColorString, PathString } from '@groton/knowledgebase.domain';
+import { PathString } from '@battis/descriptive-types';
 
 type UI = {
   root?: PathString;
@@ -7,7 +7,7 @@ type UI = {
     logo?: PathString;
     favicon?: PathString;
     background?: PathString;
-    primaryColor?: CSSColorString;
+    primaryColor?: string;
     dark?: boolean;
     darkSearchForm?: boolean;
     js?: PathString;
