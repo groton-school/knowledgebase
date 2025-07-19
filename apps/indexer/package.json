@@ -23,7 +23,7 @@
     "build": "run-s build:*",
     "prebuild:clean": "run-s clean",
     "prebuild:compile": "tsc",
-    "build:sync-config": "source .env && node scripts/sync-config.ts -c \"$CONFIG\"",
+    "build:sync-config": "source .env && sync-config \"$CONFIG\" ./var/config.json",
     "build:index": "indexer sync",
     "build:groups": "indexer groups --silent --commands",
     "deploy": "run-s deploy:*",
@@ -54,7 +54,7 @@
     "typescript": "^5.8.3"
   },
   "devDependencies": {
-    "@battis/descriptive-types": "*",
+    "@battis/descriptive-types": "^0.2.3",
     "@battis/typescript-tricks": "^0.7.4",
     "@google-cloud/storage": "^7.16.0",
     "@inquirer/prompts": "^7.6.0",

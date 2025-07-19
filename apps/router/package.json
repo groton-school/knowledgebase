@@ -14,7 +14,7 @@
   "type": "module",
   "scripts": {
     "build": "run-s build:*",
-    "build:sync-config": "source .env && tsx ./bin/sync-config.ts -c \"$CONFIG\"",
+    "build:sync-config": "source .env && sync-config \"$CONFIG\" ./var/config.json",
     "build:compile": "tsc",
     "build:bundle": "webpack",
     "deploy": "run-s deploy:*",

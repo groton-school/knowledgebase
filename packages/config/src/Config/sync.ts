@@ -1,17 +1,67 @@
-import CLI from '@battis/qui-cli';
+import { Colors } from '@battis/qui-cli.colors';
+import { Positionals } from '@battis/qui-cli.core';
+import { Env } from '@battis/qui-cli.env';
+import * as Plugin from '@battis/qui-cli.plugin';
 import { JSONObject } from '@battis/typescript-tricks';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import ora from 'ora';
+import shelljs from 'shelljs';
 import { Config } from './Config.js';
 import createDefault from './createDefault.js';
+
+export type Configuration = Plugin.Configuration & {
+  overwrite?: boolean;
+  filter?: (config: JSONObject) => JSONObject;
+};
+
+const CWD = process.cwd();
+
+export const name = 'sync-config';
+
+let overwrite = false;
+let filter = (a: JSONObject) => a;
+
+export function configure(config: Configuration = {}) {
+  overwrite = Plugin.hydrate(config.overwrite, overwrite);
+  filter = Plugin.hydrate(config.filter, filter);
+}
+
+export function options(): Plugin.Options {
+  Positionals.require({
+    source: {
+      description: `Path to source config.json`
+    },
+    destination: {
+      description: `Path to local destination config.json`
+    }
+  });
+  Positionals.allowOnlyNamedArgs();
+  return {
+    flag: {
+      overwrite: {
+        short: 'o',
+        description:
+          'Overwrite any existing local configuration file (if false, sequential backups are made)',
+        default: overwrite
+      }
+    }
+  };
+}
+
+export async function init({
+  values
+}: Plugin.ExpectedArguments<typeof options>) {
+  await Env.configure();
+  configure(values);
+}
 
 function backup(targetPath: string) {
   let backupPath: string = targetPath;
   for (let counter = 1; fs.existsSync(backupPath); counter++) {
     backupPath = targetPath.replace(/(\.\w+)$/, `.${counter}$1`);
   }
-  CLI.shell.mv(targetPath, backupPath);
+  shelljs.mv(targetPath, backupPath);
   return backupPath;
 }
 
@@ -36,62 +86,34 @@ function compare(a: any, b: any): boolean {
   return true;
 }
 
-export default async function sync(
-  {
-    env
-  }: {
-    env: { root: string; loadDotEnv?: string };
-  },
-  filter?: (config: JSONObject) => JSONObject
-) {
-  let configPath = path.resolve(env.root, 'var/config.json');
-  const args = {
-    opt: {
-      configPath: {
-        short: 'c',
-        description: `Path to the configuration file, relative to package root (default ${CLI.colors.url(
-          configPath
-        )})`,
-        default: configPath
-      }
-    },
-    flag: {
-      overwrite: {
-        short: 'o',
-        description:
-          'Overwrite any existing local configuration file (if false, sequential backups are made)',
-        default: false
-      }
-    }
-  };
+export async function run() {
+  const source = Positionals.get('source');
+  const destination = Positionals.get('destination');
+  if (!source || !destination) {
+    throw new Error();
+  }
 
-  await CLI.configure({ env });
-  let {
-    // eslint-disable-next-line prefer-const
-    values: { configPath: _configPath, overwrite }
-  } = await CLI.init(args);
-
-  configPath = path.resolve(env.root, _configPath!);
-  const localConfigPath = args.opt.configPath.default;
+  const sourcePath = path.resolve(CWD, source);
+  const destPath = path.resolve(CWD, destination);
 
   const spinner = ora();
-  spinner.start(`Seeking configuration ${CLI.colors.url(configPath)}`);
+  spinner.start(`Seeking configuration ${Colors.url(sourcePath)}`);
 
   let src: JSONObject,
     dest: JSONObject,
     curr: object | undefined = undefined;
 
-  if (fs.existsSync(configPath)) {
-    src = JSON.parse(fs.readFileSync(configPath).toString());
+  if (fs.existsSync(sourcePath)) {
+    src = JSON.parse(fs.readFileSync(sourcePath).toString());
     spinner.start(`Configuration parsed`);
   } else {
     src = createDefault();
-    spinner.fail(`$Configuration ${CLI.colors.url(configPath)} not found`);
+    spinner.fail(`$Configuration ${Colors.url(sourcePath)} not found`);
     spinner.succeed('Default configuration created');
   }
 
-  if (fs.existsSync(localConfigPath)) {
-    curr = JSON.parse(fs.readFileSync(localConfigPath).toString());
+  if (fs.existsSync(destPath)) {
+    curr = JSON.parse(fs.readFileSync(destPath).toString());
   }
 
   if (filter) {
@@ -102,14 +124,12 @@ export default async function sync(
   }
 
   if (!overwrite && curr && !compare(dest, curr)) {
-    spinner.start(`Backing up ${CLI.colors.url(localConfigPath)}`);
-    spinner.succeed(
-      `Backup created at ${CLI.colors.url(backup(localConfigPath))}`
-    );
+    spinner.start(`Backing up ${Colors.url(destPath)}`);
+    spinner.succeed(`Backup created at ${Colors.url(backup(destPath))}`);
   }
 
-  fs.writeFileSync(localConfigPath, JSON.stringify(dest));
-  spinner.succeed(`Configuration synced to ${CLI.colors.url(localConfigPath)}`);
+  fs.writeFileSync(destPath, JSON.stringify(dest));
+  spinner.succeed(`Configuration synced to ${Colors.url(destPath)}`);
 
   return dest as Partial<Config>;
 }
