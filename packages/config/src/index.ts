@@ -1,4 +1,4 @@
-export { Config } from './Config.js';
-export type { Group, Groups } from './Groups.js';
-export type { Index } from './IndexFile.js';
-export type { Keys } from './Keys.js';
+export * as Config from './Config/index.js';
+export * from './Groups.js';
+export * from './IndexFile.js';
+export * from './Keys.js';
