@@ -1,8 +1,13 @@
 {
   "targetDefaults": {
+    "prebuild": {
+      "cache": true,
+      "dependsOn": ["^prebuild"],
+      "outputs": ["(projectRoot/build"]
+    },
     "build": {
       "cache": true,
-      "dependsOn": ["^build"],
+      "dependsOn": ["prebuild", "^build"],
       "outputs": ["{projectRoot}/dist"]
     },
     "deploy": {
