@@ -1,3 +1,4 @@
 declare module '*.ejs' {
-  default: string;
+  const content: string;
+  export default content;
 }
