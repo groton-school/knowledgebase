@@ -3,7 +3,7 @@
     "prebuild": {
       "cache": true,
       "dependsOn": ["^prebuild"],
-      "outputs": ["(projectRoot/build"]
+      "outputs": ["{projectRoot}/build"]
     },
     "build": {
       "cache": true,
