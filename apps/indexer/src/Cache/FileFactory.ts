@@ -1,3 +1,3 @@
-import { Index } from '@groton/knowledgebase.index';
+import { FileFactory } from '@groton/knowledgebase.index';
 
-export default Index.FileFactory;
+export default FileFactory;

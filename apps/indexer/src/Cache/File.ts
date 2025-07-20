@@ -2,7 +2,7 @@
 import CLI from '@battis/qui-cli';
 import { CoerceError } from '@battis/typescript-tricks';
 import { Google } from '@groton/knowledgebase.google';
-import { Index } from '@groton/knowledgebase.index';
+import * as Index from '@groton/knowledgebase.index';
 import Zip from 'adm-zip';
 import mime from 'mime-types';
 import events from 'node:events';

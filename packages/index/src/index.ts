@@ -2,13 +2,12 @@ import { JSONObject } from '@battis/typescript-tricks';
 import fs from 'node:fs';
 import { File } from './File.js';
 import { FileFactory } from './FileFactory.js';
-import { IndexEntry } from './IndexEntry.js';
+
+export * from './File.js';
+export * from './FileFactory.js';
+export * from './IndexEntry.js';
 
 export class Index<T extends File> extends Array<T> {
-  public static File = File;
-  public static FileFactory = FileFactory;
-  public static IndexEntry = IndexEntry;
-
   public constructor(...items: T[]) {
     super();
     this.push(...items);

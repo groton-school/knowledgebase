@@ -1,3 +1,3 @@
-import { Index } from '@groton/knowledgebase.index';
+import { IndexEntry } from '@groton/knowledgebase.index';
 
-export default Index.IndexEntry;
+export default IndexEntry;
