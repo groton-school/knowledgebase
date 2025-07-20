@@ -12,17 +12,17 @@ importers:
         specifier: ^2.0.4
         version: 2.0.4(@eslint/js@9.31.0)(eslint-config-prettier@10.1.8(eslint@9.31.0(jiti@2.4.2)))(eslint-plugin-html@8.1.3)(eslint-plugin-markdown@5.1.0(eslint@9.31.0(jiti@2.4.2)))(eslint@9.31.0(jiti@2.4.2))(globals@16.3.0)(typescript-eslint@8.37.0(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.3))(typescript@5.8.3)
       '@battis/partly-gcloudy':
-        specifier: ^1.2.0
-        version: 1.3.0(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.log@2.2.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.shell@2.1.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.log@2.2.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.validators@2.0.4(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@types/node@22.16.5)
+        specifier: ^1.3.0
+        version: 1.3.0(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.log@2.2.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.shell@2.1.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.log@2.2.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.validators@2.0.4(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@types/node@24.0.15)
       '@battis/prettier-config':
-        specifier: ^1.6.2
+        specifier: ^1.6.4
         version: 1.6.4(@prettier/plugin-xml@3.4.2(prettier@3.5.3))(@trivago/prettier-plugin-sort-imports@5.2.2(prettier@3.5.3))(prettier-plugin-jsdoc@1.3.3(prettier@3.5.3))(prettier-plugin-organize-imports@4.1.0(prettier@3.5.3)(typescript@5.8.3))(prettier-plugin-packagejson@2.5.18(prettier@3.5.3))(prettier-plugin-sql@0.19.2(prettier@3.5.3))(prettier@3.5.3)
       '@battis/qui-cli':
-        specifier: ^2.1.4
-        version: 2.1.6(dr5okvxgji3552e3vzsnt7sl3u)
+        specifier: ^2.1.6
+        version: 2.1.6(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.log@2.2.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.progress@2.0.3(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.shell@2.1.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.log@2.2.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.validators@2.0.4(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@inquirer/prompts@7.6.0(@types/node@24.0.15))
       '@commitlint/cli':
         specifier: ^19.8.1
-        version: 19.8.1(@types/node@22.16.5)(typescript@5.8.3)
+        version: 19.8.1(@types/node@24.0.15)(typescript@5.8.3)
       '@commitlint/config-conventional':
         specifier: ^19.8.1
         version: 19.8.1
@@ -32,24 +32,24 @@ importers:
       '@groton/knowledgebase.config':
         specifier: workspace:*
         version: link:packages/config
-      '@groton/knowledgebase.tsconfig':
-        specifier: workspace:*
-        version: link:packages/tsconfig
       '@inquirer/prompts':
-        specifier: ^7.5.3
-        version: 7.6.0(@types/node@22.16.5)
+        specifier: ^7.6.0
+        version: 7.6.0(@types/node@24.0.15)
       '@tsconfig/node20':
         specifier: ^20.1.6
         version: 20.1.6
       add-peer-dependencies:
-        specifier: ^0.1.12
+        specifier: ^0.1.13
         version: 0.1.13
+      del-cli:
+        specifier: ^6.0.0
+        version: 6.0.0
       lerna:
-        specifier: ^8.2.2
+        specifier: ^8.2.3
         version: 8.2.3(encoding@0.1.13)
       monorepo-package-paths:
         specifier: ^0.3.10
-        version: 0.3.10(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.log@2.2.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.progress@2.0.3(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.shell@2.1.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.log@2.2.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.validators@2.0.4(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@inquirer/prompts@7.6.0(@types/node@22.16.5))(@types/node@22.16.5)(prettier@3.5.3)
+        version: 0.3.10(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.log@2.2.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.progress@2.0.3(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.shell@2.1.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.log@2.2.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.validators@2.0.4(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@inquirer/prompts@7.6.0(@types/node@24.0.15))(@types/node@24.0.15)(prettier@3.5.3)
       npm-run-all:
         specifier: ^4.1.5
         version: 4.1.5
@@ -166,7 +166,7 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0(@google-cloud/firestore@7.11.3(encoding@0.1.13))
       '@google-cloud/firestore':
-        specifier: ^7.11.1
+        specifier: ^7.11.3
         version: 7.11.3(encoding@0.1.13)
       '@google-cloud/logging-winston':
         specifier: ^6.0.1
@@ -196,7 +196,7 @@ importers:
         specifier: ^4.21.2
         version: 4.21.2
       express-session:
-        specifier: ^1.18.1
+        specifier: ^1.18.2
         version: 1.18.2
       google-auth-library:
         specifier: ^9.15.1
@@ -206,10 +206,10 @@ importers:
         version: 3.17.0
     devDependencies:
       '@battis/partly-gcloudy':
-        specifier: ^1.2.0
+        specifier: ^1.3.0
         version: 1.3.0(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.log@2.2.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.shell@2.1.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.log@2.2.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.validators@2.0.4(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@types/node@22.16.5)
       '@battis/qui-cli':
-        specifier: ^2.1.4
+        specifier: ^2.1.6
         version: 2.1.6(dr5okvxgji3552e3vzsnt7sl3u)
       '@tsconfig/node20':
         specifier: ^20.1.6
@@ -221,13 +221,13 @@ importers:
         specifier: ^1.18.2
         version: 1.18.2
       '@types/node':
-        specifier: ^22.15.32
+        specifier: ^22.16.5
         version: 22.16.5
       copy-webpack-plugin:
         specifier: ^12.0.2
         version: 12.0.2(webpack@5.97.1)
       isolate-package:
-        specifier: ^1.23.0
+        specifier: ^1.24.0
         version: 1.24.0
       npm-run-all:
         specifier: ^4.1.5
@@ -276,10 +276,10 @@ importers:
         specifier: ^2.0.4
         version: 2.0.4(@eslint/js@9.31.0)(eslint-config-prettier@10.1.8(eslint@9.31.0(jiti@2.4.2)))(eslint-plugin-html@8.1.3)(eslint-plugin-markdown@5.1.0(eslint@9.31.0(jiti@2.4.2)))(eslint@9.31.0(jiti@2.4.2))(globals@16.3.0)(typescript-eslint@8.37.0(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.3))(typescript@5.8.3)
       '@battis/prettier-config':
-        specifier: ^1.6.2
+        specifier: ^1.6.4
         version: 1.6.4(@prettier/plugin-xml@3.4.2(prettier@3.5.3))(@trivago/prettier-plugin-sort-imports@5.2.2(prettier@3.5.3))(prettier-plugin-jsdoc@1.3.3(prettier@3.5.3))(prettier-plugin-organize-imports@4.1.0(prettier@3.5.3)(typescript@5.8.3))(prettier-plugin-packagejson@2.5.18(prettier@3.5.3))(prettier-plugin-sql@0.19.2(prettier@3.5.3))(prettier@3.5.3)
       '@battis/qui-cli':
-        specifier: ^2.1.4
+        specifier: ^2.1.6
         version: 2.1.6(dr5okvxgji3552e3vzsnt7sl3u)
       '@battis/webpack':
         specifier: ^2.0.5
@@ -294,7 +294,7 @@ importers:
         specifier: ^2.11.8
         version: 2.11.8
       '@tsconfig/recommended':
-        specifier: ^1.0.9
+        specifier: ^1.0.10
         version: 1.0.10
       '@types/bootstrap':
         specifier: ^5.2.10
@@ -303,7 +303,7 @@ importers:
         specifier: ^0.0.20
         version: 0.0.20
       '@types/node':
-        specifier: ^22.15.32
+        specifier: ^22.16.5
         version: 22.16.5
       '@types/path-browserify':
         specifier: ^1.0.3
@@ -312,13 +312,13 @@ importers:
         specifier: ^8.15.0
         version: 8.15.0
       add-peer-dependencies:
-        specifier: ^0.1.12
+        specifier: ^0.1.13
         version: 0.1.13
       app-root-path:
         specifier: ^3.1.0
         version: 3.1.0
       browserslist:
-        specifier: ^4.25.0
+        specifier: ^4.25.1
         version: 4.25.1
       clean-webpack-plugin:
         specifier: ^4.0.0
@@ -333,7 +333,7 @@ importers:
         specifier: ^7.0.2
         version: 7.0.2(webpack@5.100.2)
       dotenv-webpack:
-        specifier: ^8.1.0
+        specifier: ^8.1.1
         version: 8.1.1(webpack@5.100.2)
       favicons:
         specifier: ^7.2.0
@@ -345,7 +345,7 @@ importers:
         specifier: ^6.2.0
         version: 6.2.0(webpack@5.100.2)
       globals:
-        specifier: ^16.2.0
+        specifier: ^16.3.0
         version: 16.3.0
       html-webpack-plugin:
         specifier: ^5.6.3
@@ -366,7 +366,7 @@ importers:
         specifier: ^8.1.1
         version: 8.1.1(postcss@8.5.6)(typescript@5.8.3)(webpack@5.100.2)
       postcss-preset-env:
-        specifier: ^10.2.3
+        specifier: ^10.2.4
         version: 10.2.4(postcss@8.5.6)
       postcss-selector-parser:
         specifier: ^7.1.0
@@ -399,7 +399,7 @@ importers:
         specifier: ^4.1.1
         version: 4.1.1(file-loader@6.2.0(webpack@5.100.2))(webpack@5.100.2)
       webpack:
-        specifier: ^5.99.9
+        specifier: ^5.100.2
         version: 5.100.2(webpack-cli@6.0.1)
       webpack-cli:
         specifier: ^6.0.1
@@ -414,9 +414,9 @@ importers:
         specifier: workspace:*
         version: link:../index
     devDependencies:
-      '@groton/knowledgebase.tsconfig':
-        specifier: workspace:*
-        version: link:../tsconfig
+      '@tsconfig/node20':
+        specifier: ^20.1.6
+        version: 20.1.6
       del-cli:
         specifier: ^6.0.0
         version: 6.0.0
@@ -457,9 +457,9 @@ importers:
       '@battis/typescript-tricks':
         specifier: ^0.7.4
         version: 0.7.4
-      '@groton/knowledgebase.tsconfig':
-        specifier: workspace:*
-        version: link:../tsconfig
+      '@tsconfig/node20':
+        specifier: ^20.1.6
+        version: 20.1.6
       '@types/shelljs':
         specifier: ^0.8.17
         version: 0.8.17
@@ -485,8 +485,8 @@ importers:
         specifier: ^8.16.0
         version: 8.16.0(encoding@0.1.13)
       '@inquirer/prompts':
-        specifier: ^7.5.3
-        version: 7.6.0(@types/node@22.16.5)
+        specifier: ^7.6.0
+        version: 7.6.0(@types/node@24.0.15)
       express:
         specifier: ^4.21.2
         version: 4.21.2
@@ -494,9 +494,12 @@ importers:
         specifier: ^9.15.1
         version: 9.15.1(encoding@0.1.13)
       open:
-        specifier: ^10.1.2
+        specifier: ^10.2.0
         version: 10.2.0
     devDependencies:
+      '@tsconfig/node20':
+        specifier: ^20.1.6
+        version: 20.1.6
       '@types/express':
         specifier: ^5.0.3
         version: 5.0.3
@@ -519,6 +522,9 @@ importers:
       '@battis/typescript-tricks':
         specifier: ^0.7.4
         version: 0.7.4
+      '@tsconfig/node20':
+        specifier: ^20.1.6
+        version: 20.1.6
       del-cli:
         specifier: ^6.0.0
         version: 6.0.0
@@ -534,6 +540,9 @@ importers:
       '@battis/descriptive-types':
         specifier: ^0.2.3
         version: 0.2.3
+      '@tsconfig/node20':
+        specifier: ^20.1.6
+        version: 20.1.6
       del-cli:
         specifier: ^6.0.0
         version: 6.0.0
@@ -543,12 +552,6 @@ importers:
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
-
-  packages/tsconfig:
-    devDependencies:
-      '@tsconfig/node20':
-        specifier: ^20.1.6
-        version: 20.1.6
 
 packages:
 
@@ -2428,6 +2431,9 @@ packages:
 
   '@types/node@22.16.5':
     resolution: {integrity: sha512-bJFoMATwIGaxxx8VJPeM8TonI8t579oRvgAuT8zFugJsJZgzqv0Fu8Mhp68iecjzG7cnN3mO2dJQ5uUM2EFrgQ==}
+
+  '@types/node@24.0.15':
+    resolution: {integrity: sha512-oaeTSbCef7U/z7rDeJA138xpG3NuKc64/rZ2qmUFkFJmnMsAPaluIifqyWd8hSSMxyP9oie3dLAqYPblag9KgA==}
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
@@ -8041,6 +8047,9 @@ packages:
   undici-types@6.21.0:
     resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
 
+  undici-types@7.8.0:
+    resolution: {integrity: sha512-9UJ2xGDvQ43tYyVMpuHlsgApydB8ZKfVYTsLDhXkFL/6gfkp+U8xTGdh8pMJv1SpZna0zxG1DwsKZsreLbXBxw==}
+
   unicorn-magic@0.1.0:
     resolution: {integrity: sha512-lRfVq8fE8gz6QMBuDM6a+LO3IAzTi05H6gCVaUpir2E1Rwpo4ZUog45KpNXKC/Mn3Yb9UDuHumeFTo9iV/D9FQ==}
     engines: {node: '>=18'}
@@ -8552,6 +8561,22 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
+  '@battis/partly-gcloudy@1.3.0(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.log@2.2.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.shell@2.1.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.log@2.2.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.validators@2.0.4(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@types/node@24.0.15)':
+    dependencies:
+      '@battis/qui-cli.colors': 2.1.0(@battis/qui-cli.plugin@2.4.2)
+      '@battis/qui-cli.log': 2.2.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2))
+      '@battis/qui-cli.plugin': 2.4.2
+      '@battis/qui-cli.root': 2.0.5(@battis/qui-cli.plugin@2.4.2)
+      '@battis/qui-cli.shell': 2.1.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.log@2.2.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@battis/qui-cli.plugin@2.4.2)
+      '@battis/qui-cli.validators': 2.0.4(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2))
+      '@inquirer/prompts': 7.6.0(@types/node@24.0.15)
+      lodash: 4.17.21
+      ora: 8.2.0
+      rword: 4.0.0
+      rword-english-extended: 1.0.0
+    transitivePeerDependencies:
+      - '@types/node'
+
   '@battis/prettier-config@1.6.4(@prettier/plugin-xml@3.4.2(prettier@3.5.3))(@trivago/prettier-plugin-sort-imports@5.2.2(prettier@3.5.3))(prettier-plugin-jsdoc@1.3.3(prettier@3.5.3))(prettier-plugin-organize-imports@4.1.0(prettier@3.5.3)(typescript@5.8.3))(prettier-plugin-packagejson@2.5.18(prettier@3.5.3))(prettier-plugin-sql@0.19.2(prettier@3.5.3))(prettier@3.5.3)':
     dependencies:
       '@prettier/plugin-xml': 3.4.2(prettier@3.5.3)
@@ -8631,6 +8656,17 @@ snapshots:
       email-validator: 2.0.4
       is-valid-path: 0.1.1
 
+  '@battis/qui-cli@2.1.6(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.log@2.2.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.progress@2.0.3(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.shell@2.1.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.log@2.2.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.validators@2.0.4(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@inquirer/prompts@7.6.0(@types/node@24.0.15))':
+    dependencies:
+      '@battis/qui-cli.colors': 2.1.0(@battis/qui-cli.plugin@2.4.2)
+      '@battis/qui-cli.log': 2.2.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2))
+      '@battis/qui-cli.plugin': 2.4.2
+      '@battis/qui-cli.progress': 2.0.3(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2)
+      '@battis/qui-cli.root': 2.0.5(@battis/qui-cli.plugin@2.4.2)
+      '@battis/qui-cli.shell': 2.1.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.log@2.2.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@battis/qui-cli.plugin@2.4.2)
+      '@battis/qui-cli.validators': 2.0.4(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2))
+      '@inquirer/prompts': 7.6.0(@types/node@24.0.15)
+
   '@battis/qui-cli@2.1.6(dr5okvxgji3552e3vzsnt7sl3u)':
     dependencies:
       '@battis/qui-cli.colors': 2.1.0(@battis/qui-cli.plugin@2.4.2)
@@ -8684,11 +8720,11 @@ snapshots:
 
   '@colors/colors@1.6.0': {}
 
-  '@commitlint/cli@19.8.1(@types/node@22.16.5)(typescript@5.8.3)':
+  '@commitlint/cli@19.8.1(@types/node@24.0.15)(typescript@5.8.3)':
     dependencies:
       '@commitlint/format': 19.8.1
       '@commitlint/lint': 19.8.1
-      '@commitlint/load': 19.8.1(@types/node@22.16.5)(typescript@5.8.3)
+      '@commitlint/load': 19.8.1(@types/node@24.0.15)(typescript@5.8.3)
       '@commitlint/read': 19.8.1
       '@commitlint/types': 19.8.1
       tinyexec: 1.0.1
@@ -8741,7 +8777,7 @@ snapshots:
       '@commitlint/rules': 19.8.1
       '@commitlint/types': 19.8.1
 
-  '@commitlint/load@19.8.1(@types/node@22.16.5)(typescript@5.8.3)':
+  '@commitlint/load@19.8.1(@types/node@24.0.15)(typescript@5.8.3)':
     dependencies:
       '@commitlint/config-validator': 19.8.1
       '@commitlint/execute-rule': 19.8.1
@@ -8749,7 +8785,7 @@ snapshots:
       '@commitlint/types': 19.8.1
       chalk: 5.4.1
       cosmiconfig: 9.0.0(typescript@5.8.3)
-      cosmiconfig-typescript-loader: 6.1.0(@types/node@22.16.5)(cosmiconfig@9.0.0(typescript@5.8.3))(typescript@5.8.3)
+      cosmiconfig-typescript-loader: 6.1.0(@types/node@24.0.15)(cosmiconfig@9.0.0(typescript@5.8.3))(typescript@5.8.3)
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       lodash.uniq: 4.5.0
@@ -9420,12 +9456,29 @@ snapshots:
     optionalDependencies:
       '@types/node': 22.16.5
 
+  '@inquirer/checkbox@4.1.9(@types/node@24.0.15)':
+    dependencies:
+      '@inquirer/core': 10.1.14(@types/node@24.0.15)
+      '@inquirer/figures': 1.0.12
+      '@inquirer/type': 3.0.7(@types/node@24.0.15)
+      ansi-escapes: 4.3.2
+      yoctocolors-cjs: 2.1.2
+    optionalDependencies:
+      '@types/node': 24.0.15
+
   '@inquirer/confirm@5.1.13(@types/node@22.16.5)':
     dependencies:
       '@inquirer/core': 10.1.14(@types/node@22.16.5)
       '@inquirer/type': 3.0.7(@types/node@22.16.5)
     optionalDependencies:
       '@types/node': 22.16.5
+
+  '@inquirer/confirm@5.1.13(@types/node@24.0.15)':
+    dependencies:
+      '@inquirer/core': 10.1.14(@types/node@24.0.15)
+      '@inquirer/type': 3.0.7(@types/node@24.0.15)
+    optionalDependencies:
+      '@types/node': 24.0.15
 
   '@inquirer/core@10.1.14(@types/node@22.16.5)':
     dependencies:
@@ -9440,6 +9493,19 @@ snapshots:
     optionalDependencies:
       '@types/node': 22.16.5
 
+  '@inquirer/core@10.1.14(@types/node@24.0.15)':
+    dependencies:
+      '@inquirer/figures': 1.0.12
+      '@inquirer/type': 3.0.7(@types/node@24.0.15)
+      ansi-escapes: 4.3.2
+      cli-width: 4.1.0
+      mute-stream: 2.0.0
+      signal-exit: 4.1.0
+      wrap-ansi: 6.2.0
+      yoctocolors-cjs: 2.1.2
+    optionalDependencies:
+      '@types/node': 24.0.15
+
   '@inquirer/editor@4.2.14(@types/node@22.16.5)':
     dependencies:
       '@inquirer/core': 10.1.14(@types/node@22.16.5)
@@ -9448,6 +9514,14 @@ snapshots:
     optionalDependencies:
       '@types/node': 22.16.5
 
+  '@inquirer/editor@4.2.14(@types/node@24.0.15)':
+    dependencies:
+      '@inquirer/core': 10.1.14(@types/node@24.0.15)
+      '@inquirer/type': 3.0.7(@types/node@24.0.15)
+      external-editor: 3.1.0
+    optionalDependencies:
+      '@types/node': 24.0.15
+
   '@inquirer/expand@4.0.16(@types/node@22.16.5)':
     dependencies:
       '@inquirer/core': 10.1.14(@types/node@22.16.5)
@@ -9455,6 +9529,14 @@ snapshots:
       yoctocolors-cjs: 2.1.2
     optionalDependencies:
       '@types/node': 22.16.5
+
+  '@inquirer/expand@4.0.16(@types/node@24.0.15)':
+    dependencies:
+      '@inquirer/core': 10.1.14(@types/node@24.0.15)
+      '@inquirer/type': 3.0.7(@types/node@24.0.15)
+      yoctocolors-cjs: 2.1.2
+    optionalDependencies:
+      '@types/node': 24.0.15
 
   '@inquirer/figures@1.0.12': {}
 
@@ -9465,12 +9547,26 @@ snapshots:
     optionalDependencies:
       '@types/node': 22.16.5
 
+  '@inquirer/input@4.2.0(@types/node@24.0.15)':
+    dependencies:
+      '@inquirer/core': 10.1.14(@types/node@24.0.15)
+      '@inquirer/type': 3.0.7(@types/node@24.0.15)
+    optionalDependencies:
+      '@types/node': 24.0.15
+
   '@inquirer/number@3.0.16(@types/node@22.16.5)':
     dependencies:
       '@inquirer/core': 10.1.14(@types/node@22.16.5)
       '@inquirer/type': 3.0.7(@types/node@22.16.5)
     optionalDependencies:
       '@types/node': 22.16.5
+
+  '@inquirer/number@3.0.16(@types/node@24.0.15)':
+    dependencies:
+      '@inquirer/core': 10.1.14(@types/node@24.0.15)
+      '@inquirer/type': 3.0.7(@types/node@24.0.15)
+    optionalDependencies:
+      '@types/node': 24.0.15
 
   '@inquirer/password@4.0.16(@types/node@22.16.5)':
     dependencies:
@@ -9479,6 +9575,14 @@ snapshots:
       ansi-escapes: 4.3.2
     optionalDependencies:
       '@types/node': 22.16.5
+
+  '@inquirer/password@4.0.16(@types/node@24.0.15)':
+    dependencies:
+      '@inquirer/core': 10.1.14(@types/node@24.0.15)
+      '@inquirer/type': 3.0.7(@types/node@24.0.15)
+      ansi-escapes: 4.3.2
+    optionalDependencies:
+      '@types/node': 24.0.15
 
   '@inquirer/prompts@7.6.0(@types/node@22.16.5)':
     dependencies:
@@ -9495,6 +9599,21 @@ snapshots:
     optionalDependencies:
       '@types/node': 22.16.5
 
+  '@inquirer/prompts@7.6.0(@types/node@24.0.15)':
+    dependencies:
+      '@inquirer/checkbox': 4.1.9(@types/node@24.0.15)
+      '@inquirer/confirm': 5.1.13(@types/node@24.0.15)
+      '@inquirer/editor': 4.2.14(@types/node@24.0.15)
+      '@inquirer/expand': 4.0.16(@types/node@24.0.15)
+      '@inquirer/input': 4.2.0(@types/node@24.0.15)
+      '@inquirer/number': 3.0.16(@types/node@24.0.15)
+      '@inquirer/password': 4.0.16(@types/node@24.0.15)
+      '@inquirer/rawlist': 4.1.4(@types/node@24.0.15)
+      '@inquirer/search': 3.0.16(@types/node@24.0.15)
+      '@inquirer/select': 4.2.4(@types/node@24.0.15)
+    optionalDependencies:
+      '@types/node': 24.0.15
+
   '@inquirer/rawlist@4.1.4(@types/node@22.16.5)':
     dependencies:
       '@inquirer/core': 10.1.14(@types/node@22.16.5)
@@ -9502,6 +9621,14 @@ snapshots:
       yoctocolors-cjs: 2.1.2
     optionalDependencies:
       '@types/node': 22.16.5
+
+  '@inquirer/rawlist@4.1.4(@types/node@24.0.15)':
+    dependencies:
+      '@inquirer/core': 10.1.14(@types/node@24.0.15)
+      '@inquirer/type': 3.0.7(@types/node@24.0.15)
+      yoctocolors-cjs: 2.1.2
+    optionalDependencies:
+      '@types/node': 24.0.15
 
   '@inquirer/search@3.0.16(@types/node@22.16.5)':
     dependencies:
@@ -9511,6 +9638,15 @@ snapshots:
       yoctocolors-cjs: 2.1.2
     optionalDependencies:
       '@types/node': 22.16.5
+
+  '@inquirer/search@3.0.16(@types/node@24.0.15)':
+    dependencies:
+      '@inquirer/core': 10.1.14(@types/node@24.0.15)
+      '@inquirer/figures': 1.0.12
+      '@inquirer/type': 3.0.7(@types/node@24.0.15)
+      yoctocolors-cjs: 2.1.2
+    optionalDependencies:
+      '@types/node': 24.0.15
 
   '@inquirer/select@4.2.4(@types/node@22.16.5)':
     dependencies:
@@ -9522,9 +9658,23 @@ snapshots:
     optionalDependencies:
       '@types/node': 22.16.5
 
+  '@inquirer/select@4.2.4(@types/node@24.0.15)':
+    dependencies:
+      '@inquirer/core': 10.1.14(@types/node@24.0.15)
+      '@inquirer/figures': 1.0.12
+      '@inquirer/type': 3.0.7(@types/node@24.0.15)
+      ansi-escapes: 4.3.2
+      yoctocolors-cjs: 2.1.2
+    optionalDependencies:
+      '@types/node': 24.0.15
+
   '@inquirer/type@3.0.7(@types/node@22.16.5)':
     optionalDependencies:
       '@types/node': 22.16.5
+
+  '@inquirer/type@3.0.7(@types/node@24.0.15)':
+    optionalDependencies:
+      '@types/node': 24.0.15
 
   '@isaacs/balanced-match@4.0.1': {}
 
@@ -10460,7 +10610,7 @@ snapshots:
 
   '@types/conventional-commits-parser@5.0.1':
     dependencies:
-      '@types/node': 22.16.5
+      '@types/node': 24.0.15
 
   '@types/debug@4.1.12':
     dependencies:
@@ -10580,6 +10730,10 @@ snapshots:
     dependencies:
       undici-types: 6.21.0
 
+  '@types/node@24.0.15':
+    dependencies:
+      undici-types: 7.8.0
+
   '@types/normalize-package-data@2.4.4': {}
 
   '@types/path-browserify@1.0.3': {}
@@ -10610,7 +10764,7 @@ snapshots:
 
   '@types/serve-index@1.9.4':
     dependencies:
-      '@types/express': 5.0.3
+      '@types/express': 4.17.23
 
   '@types/serve-static@1.15.8':
     dependencies:
@@ -11651,9 +11805,9 @@ snapshots:
 
   core-util-is@1.0.3: {}
 
-  cosmiconfig-typescript-loader@6.1.0(@types/node@22.16.5)(cosmiconfig@9.0.0(typescript@5.8.3))(typescript@5.8.3):
+  cosmiconfig-typescript-loader@6.1.0(@types/node@24.0.15)(cosmiconfig@9.0.0(typescript@5.8.3))(typescript@5.8.3):
     dependencies:
-      '@types/node': 22.16.5
+      '@types/node': 24.0.15
       cosmiconfig: 9.0.0(typescript@5.8.3)
       jiti: 2.4.2
       typescript: 5.8.3
@@ -12079,7 +12233,7 @@ snapshots:
 
   dotenv-expand@11.0.7:
     dependencies:
-      dotenv: 16.6.1
+      dotenv: 16.4.7
 
   dotenv-webpack@8.1.1(webpack@5.100.2):
     dependencies:
@@ -14586,11 +14740,11 @@ snapshots:
 
   modify-values@1.0.1: {}
 
-  monorepo-package-paths@0.3.10(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.log@2.2.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.progress@2.0.3(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.shell@2.1.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.log@2.2.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.validators@2.0.4(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@inquirer/prompts@7.6.0(@types/node@22.16.5))(@types/node@22.16.5)(prettier@3.5.3):
+  monorepo-package-paths@0.3.10(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.log@2.2.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.progress@2.0.3(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.shell@2.1.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.log@2.2.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.validators@2.0.4(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@inquirer/prompts@7.6.0(@types/node@24.0.15))(@types/node@24.0.15)(prettier@3.5.3):
     dependencies:
       '@battis/import-package-json': 0.1.7
-      '@battis/qui-cli': 2.1.6(dr5okvxgji3552e3vzsnt7sl3u)
-      '@inquirer/input': 4.2.0(@types/node@22.16.5)
+      '@battis/qui-cli': 2.1.6(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.log@2.2.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.progress@2.0.3(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.shell@2.1.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.log@2.2.2(@battis/qui-cli.colors@2.1.0(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@battis/qui-cli.plugin@2.4.2))(@battis/qui-cli.validators@2.0.4(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2)))(@inquirer/prompts@7.6.0(@types/node@24.0.15))
+      '@inquirer/input': 4.2.0(@types/node@24.0.15)
       glob: 11.0.3
       ora: 8.2.0
       package-json-type: 1.0.3
@@ -16978,6 +17132,8 @@ snapshots:
       through: 2.3.8
 
   undici-types@6.21.0: {}
+
+  undici-types@7.8.0: {}
 
   unicorn-magic@0.1.0: {}
 

@@ -1,6 +1,7 @@
 {
-  "extends": "@groton/knowledgebase.tsconfig",
+  "extends": "@tsconfig/node20/tsconfig.json",
   "compilerOptions": {
+    "declaration": true,
     "outDir": "./dist"
   },
   "include": ["./src"]
