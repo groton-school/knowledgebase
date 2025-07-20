@@ -1,12 +1,14 @@
 import { JSONObject } from '@battis/typescript-tricks';
-import StateEnum from './IndexEntry/State.js';
+import { State } from './IndexEntry/State.js';
 
-class IndexEntry {
+export class IndexEntry {
   private _timestamp: string;
+
+  public static State = State;
 
   public constructor(
     private _path: string = '.',
-    private _status: string = IndexEntry.State.Indexed,
+    private _status: string = State.Indexed,
     private _uri: string[] = [],
     private _exists: boolean = true,
     private _hidden: boolean = false
@@ -66,7 +68,7 @@ class IndexEntry {
 
   public set exists(value) {
     this._exists = value;
-    this.update;
+    this.update();
   }
 
   public get hidden() {
@@ -75,7 +77,7 @@ class IndexEntry {
 
   public set hidden(value) {
     this._hidden = value;
-    this.update;
+    this.update();
   }
 
   public toJSON() {
@@ -92,9 +94,3 @@ class IndexEntry {
     return json;
   }
 }
-
-namespace IndexEntry {
-  export import State = StateEnum;
-}
-
-export default IndexEntry;

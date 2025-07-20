@@ -1,4 +1,4 @@
-import Index from '@groton/knowledgebase.index'
+import { Index } from '@groton/knowledgebase.index';
 
 export type Result = Index.File & {
   name: string;

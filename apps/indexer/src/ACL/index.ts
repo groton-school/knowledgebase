@@ -1,4 +1,4 @@
-import Index from '@groton/knowledgebase.index';
+import { Index } from '@groton/knowledgebase.index';
 import _File from './File.js';
 import _FileFactory from './FileFactory.js';
 import _IndexEntry from './IndexEntry.js';

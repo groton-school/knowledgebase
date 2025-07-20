@@ -1,8 +1,8 @@
-import Google from '@groton/knowledgebase.google';
-import File, { Id } from './File.js';
-import IndexEntry from './IndexEntry.js';
+import { Google } from '@groton/knowledgebase.google';
+import { File, Id } from './File.js';
+import { IndexEntry } from './IndexEntry.js';
 
-class FileFactory<T extends typeof File> {
+export class FileFactory<T extends typeof File> {
   public constructor(private fileType: T) {}
 
   private async resolveShortcut(
@@ -39,9 +39,7 @@ class FileFactory<T extends typeof File> {
     const drive = await Google.Client.getDrive();
     const { data: file } = await drive.files.get({
       fileId,
-      /**
-       * @see https://developers.google.com/drive/api/reference/rest/v3/files#File.FIELDS.permissions on shared drives, the permissions property is never populated
-       */
+      /** @see https://developers.google.com/drive/api/reference/rest/v3/files#File.FIELDS.permissions on shared drives, the permissions property is never populated */
       fields: File.fields.filter((field) => field != 'permissions').join(','),
       supportsAllDrives: true
     });
@@ -89,7 +87,3 @@ class FileFactory<T extends typeof File> {
     ) as InstanceType<T>;
   }
 }
-
-namespace FileFactory {}
-
-export default FileFactory;

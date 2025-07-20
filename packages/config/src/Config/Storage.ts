@@ -1,3 +1,1 @@
-type Storage = { bucket: string };
-
-export default Storage;
+export type Storage = { bucket: string };

@@ -3,7 +3,7 @@ import { Colors } from '@battis/qui-cli.colors';
 import { Env } from '@battis/qui-cli.env';
 import * as Plugin from '@battis/qui-cli.plugin';
 import { Validators } from '@battis/qui-cli.validators';
-import Google from '@groton/knowledgebase.google';
+import { Google } from '@groton/knowledgebase.google';
 import { input } from '@inquirer/prompts';
 import fs from 'node:fs';
 import path from 'node:path';

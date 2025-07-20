@@ -1,6 +1,6 @@
 import { PathString } from '@battis/descriptive-types';
 
-type UI = {
+export type UI = {
   root?: PathString;
   search?: { include?: PathString[]; exclude?: PathString[] };
   site?: {
@@ -27,5 +27,3 @@ type UI = {
     trackingId: string;
   };
 };
-
-export default UI;

@@ -1,3 +1,3 @@
-import $Index from '@groton/knowledgebase.index';
+import { File } from '@groton/knowledgebase.index/dist/File.js';
 
-export type Index = $Index.File[];
+export type Index = File[];

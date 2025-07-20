@@ -1,4 +1,4 @@
-import Google from '@groton/knowledgebase.google/src/index.js';
+import { Google } from '@groton/knowledgebase.google/src/index.js';
 import crypto from 'crypto';
 import File from '../Cache/File.js';
 import errorMessage from './errorMessage.js';

@@ -1,3 +1,1 @@
-type Session = { secret: string };
-
-export default Session;
+export type Session = { secret: string };

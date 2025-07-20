@@ -6,7 +6,7 @@ import { Credentials, OAuth2Client } from 'google-auth-library';
 import fs from 'node:fs';
 import open from 'open';
 
-export default class Client {
+export class Client {
   private static oauth2?: OAuth2Client;
   private static drive?: Drive.drive_v3.Drive;
   private static storage?: Storage;

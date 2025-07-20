@@ -1,15 +1,13 @@
 import { JSONObject } from '@battis/typescript-tricks';
-import Google from '@groton/knowledgebase.google';
-import IndexEntry from './IndexEntry.js';
+import { Google } from '@groton/knowledgebase.google';
+import { IndexEntry } from './IndexEntry.js';
 
 type Nonoptional<T> = Exclude<T, null | undefined>;
 
 export type Id = Nonoptional<Google.Drive.drive_v3.Schema$File['id']>;
 export type Name = Nonoptional<Google.Drive.drive_v3.Schema$File['name']>;
 
-interface File extends Google.Drive.drive_v3.Schema$File {}
-
-class File {
+export class File implements Google.Drive.drive_v3.Schema$File {
   public static fields: (keyof Google.Drive.drive_v3.Schema$File)[] = [
     'id',
     'name',
@@ -77,7 +75,3 @@ class File {
     return this.mimeType == Google.MimeTypes.Folder;
   }
 }
-
-namespace File {}
-
-export default File;

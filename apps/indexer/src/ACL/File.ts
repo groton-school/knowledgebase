@@ -1,4 +1,4 @@
-import Google from '@groton/knowledgebase.google';
+import { Google } from '@groton/knowledgebase.google';
 import Cache from '../Cache/index.js';
 import Helper from '../Helper/index.js';
 import IndexEntry from './IndexEntry.js';
