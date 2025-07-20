@@ -8,7 +8,7 @@ import * as path from 'node:path';
 import ora from 'ora';
 import shelljs from 'shelljs';
 import { Config } from './Config.js';
-import createDefault from './createDefault.js';
+import { createDefault } from './createDefault.js';
 
 export type Configuration = Plugin.Configuration & {
   overwrite?: boolean;
