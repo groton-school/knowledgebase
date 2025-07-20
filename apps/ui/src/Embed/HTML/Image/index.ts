@@ -1,7 +1,7 @@
-import Helper from '../../../Helper';
+import * as Helper from '../../../Helper';
 import './styles.scss';
 
-export default function Image() {
+export function Image() {
   Helper.onGoogleDocEmbed<HTMLParagraphElement>('p', (paragraphs) => {
     paragraphs
       .filter((p) =>

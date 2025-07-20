@@ -1,9 +1,9 @@
 import { HTMLFormElements } from '@battis/typescript-tricks';
 import * as API from '@groton/knowledgebase.api';
-import PageThumbnail from '../DOM/Content/Directory/PageThumbnail';
-import Helper from '../Helper';
+import { PageThumbnail } from '../DOM/Content/Directory/PageThumbnail';
+import * as Helper from '../Helper';
 
-export default function Search() {
+export function Search() {
   const search = document.querySelector('#search') as HTMLFormElement;
   const query = (search.elements as HTMLFormElements<'query'>)['query'];
   const results = document.querySelector(

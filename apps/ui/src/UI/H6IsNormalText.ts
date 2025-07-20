@@ -1,6 +1,6 @@
-import Helper from '../Helper';
+import * as Helper from '../Helper';
 
-export default function H6IsNormalText() {
+export function H6IsNormalText() {
   Helper.onGoogleDocEmbed<HTMLHeadingElement>('h6', (headings) => {
     headings.forEach((heading) => {
       heading.classList.add('od-theme-noinherit-h6-font-size');

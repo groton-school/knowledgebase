@@ -1,4 +1,4 @@
-export default class Stack<T> extends Array<T> {
+export class Stack<T> extends Array<T> {
   public top(): T {
     return this[this.length - 1];
   }

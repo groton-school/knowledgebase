@@ -1,6 +1,6 @@
 import { URLString } from '@battis/descriptive-types';
 
-export default async function addScript(src: URLString) {
+export async function addScript(src: URLString) {
   return new Promise((resolve, reject) => {
     const el = document.createElement('script');
     el.src = src;

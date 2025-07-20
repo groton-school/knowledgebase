@@ -1,9 +1,9 @@
-import Constants from '../../../Constants';
-import Helper from '../../../Helper';
-import TOC from './TOC';
+import * as Constants from '../../../Constants';
+import * as Helper from '../../../Helper';
+import { TOC } from './TOC';
 import './styles.scss';
 
-export default function GoogleDocEmbed(doc: HTMLDivElement) {
+export function GoogleDocEmbed(doc: HTMLDivElement) {
   TOC(doc);
   const card = document.createElement('div');
   card.classList.add(

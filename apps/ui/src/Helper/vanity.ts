@@ -1,4 +1,4 @@
-export default function Vanity(text: string) {
+export function vanity(text: string) {
   const lines = text.split('\n');
   const pad = (width: number, line: string) =>
     `${line}${

@@ -1,11 +1,11 @@
 //import * as QRCode from 'qrcode';
-import Helper from '../../../Helper';
+import * as Helper from '../../../Helper';
 import './styles.scss';
 import './workspace.png';
 
 const chromeWebStore = 'a[href^="https://workspace.google.com/marketplace/"]';
 
-export default function WorkspaceMarketplace() {
+export function WorkspaceMarketplace() {
   Helper.onGoogleDocEmbed<HTMLParagraphElement>(
     `p:has(${chromeWebStore})`,
     (paragraphs) => {

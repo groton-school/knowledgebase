@@ -1,4 +1,4 @@
-import Helper from '../../Helper';
+import * as Helper from '../../Helper';
 
 const youTubeLink =
   'a[href*="youtu.be"]:not([href*="playlist"]), a[href*="youtube.com"]:not([href*="playlist"])';
@@ -7,14 +7,22 @@ const playlistLink = 'a[href^="https://youtube.com/playlist"]'; // TODO also htt
 /**
  * Replace YouTube links with the embedded video
  *
- * This looks for paragraphs that contain YouTube links and then replace the entire paragraph with the embedded video. Thus, YouTube links should be set out from other text (not inline), but could include a preview thumbnail as well in the document for visual clarity. (For example, use https://youtube-thumbnail-grabber.com/ to download a thumbnail and https://fbutube.com/add-play-button-to-image to add a play button.) A paragraph would look like this:
+ * This looks for paragraphs that contain YouTube links and then replace the
+ * entire paragraph with the embedded video. Thus, YouTube links should be set
+ * out from other text (not inline), but could include a preview thumbnail as
+ * well in the document for visual clarity. (For example, use
+ * https://youtube-thumbnail-grabber.com/ to download a thumbnail and
+ * https://fbutube.com/add-play-button-to-image to add a play button.) A
+ * paragraph would look like this:
  *
  * ```html
- * <p><img src="VIDEO_THUMBNAIL"/><br/>
- * <a href="VIDEO_URL">VIDEO_URL</a></p>
+ * <p>
+ *   <img src="VIDEO_THUMBNAIL" /><br />
+ *   <a href="VIDEO_URL">VIDEO_URL</a>
+ * </p>
  * ```
  */
-export default function YouTube() {
+export function YouTube() {
   Helper.onGoogleDocEmbed<HTMLParagraphElement>(
     `p:has(${youTubeLink})`,
     (paragraphs) => {

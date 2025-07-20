@@ -1,4 +1,4 @@
-export default function Head() {
+export function Head() {
   document.head.insertAdjacentHTML(
     'afterbegin',
     `

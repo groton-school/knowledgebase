@@ -1,6 +1,6 @@
-import Helper from '../Helper';
+import * as Helper from '../Helper';
 
-export default function LockImageWidth() {
+export function LockImageWidth() {
   Helper.onGoogleDocEmbed<HTMLSpanElement>(
     'span[style*="width"]:only-child',
     (spans) => {

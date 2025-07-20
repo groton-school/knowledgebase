@@ -1,7 +1,7 @@
-import Constants from '../../../Constants';
-import Helper from '../../../Helper';
+import * as Constants from '../../../Constants';
+import * as Helper from '../../../Helper';
 
-export default function TOC(doc: HTMLDivElement) {
+export function TOC(doc: HTMLDivElement) {
   doc.parentElement?.insertAdjacentHTML(
     'afterbegin',
     // TODO template

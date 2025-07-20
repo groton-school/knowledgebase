@@ -1,9 +1,9 @@
-import Constants from '../../Constants';
-import Helper from '../../Helper';
-import config from '../../config';
+import * as Constants from '../../Constants';
+import * as Helper from '../../Helper';
+import { config } from '../../config';
 import './styles.scss';
 
-export default function Search() {
+export function Search() {
   document.querySelector('#wrapper')?.insertAdjacentHTML(
     'afterbegin',
     `

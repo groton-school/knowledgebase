@@ -1,10 +1,8 @@
-import Helper from '../../Helper';
+import * as Helper from '../../Helper';
 import './styles.scss';
 
-/**
- * Display permalinks to embedded Google doc headers
- */
-export default function Permalinks() {
+/** Display permalinks to embedded Google doc headers */
+export function Permalinks() {
   Helper.onGoogleDocEmbed<HTMLHeadingElement>(
     [...Array(5).keys()].map((level) => `h${level + 1}:not([id=""])`).join(','),
     (headers) => {

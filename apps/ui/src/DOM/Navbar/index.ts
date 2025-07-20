@@ -1,11 +1,11 @@
-import Constants from '../../Constants';
-import config from '../../config';
-import SiteTree from './SiteTree';
+import * as Constants from '../../Constants';
+import { config } from '../../config';
+import { SiteTree } from './SiteTree';
 import './styles.scss';
 
 // TODO config logo
 
-export default function Navbar() {
+export function Navbar() {
   const nav = document.createElement('nav');
   nav.classList.add('navbar', 'navbar-expand-lg', 'bg-primary', 'fixed-top');
   nav.id = 'nav';

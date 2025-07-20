@@ -1,14 +1,12 @@
-import Helper from '../../Helper';
-import Builder from './Builder';
+import * as Helper from '../../Helper';
+import { Builder } from './Builder';
 import './styles.scss';
 
 /* Maximum header level to display */
 const MAX_DEPTH = 3; // TODO config
 
-/**
- * Generate Google Doc-style outline as TOC
- */
-export default function TOC() {
+/** Generate Google Doc-style outline as TOC */
+export function TOC() {
   Helper.onGoogleDocEmbed<HTMLHeadingElement>(
     [...Array(Math.min(6, Math.max(0, MAX_DEPTH))).keys()]
       .map((d) => `h${d + 1}`)

@@ -3,10 +3,10 @@
  *
  * @param {string} selector Valid CSS selector for target element
  * @param {string} rejectSelector (Optional) Valid CSS selector for elements
- *    that, if found, indicate that the target element will not be found and
- *    the observer should be discontinued
+ *   that, if found, indicate that the target element will not be found and the
+ *   observer should be discontinued
  */
-export default function onSelectorReady<T extends HTMLElement>(
+export function onSelectorReady<T extends HTMLElement>(
   selector: string,
   rejectSelector?: string
 ): Promise<T[]> {

@@ -1,5 +1,5 @@
-import Helper from '../Helper';
-import config from '../config';
+import * as Helper from '../Helper';
+import { config } from '../config';
 
 declare global {
   interface Window {
@@ -7,7 +7,7 @@ declare global {
   }
 }
 
-export default async function Analytics() {
+export async function Analytics() {
   await Helper.addScript(
     `https://www.googletagmanager.com/gtag/js?id=${config.googleAnalytics.trackingId}`
   );

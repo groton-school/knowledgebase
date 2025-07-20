@@ -1,5 +1,5 @@
 //import * as QRCode from 'qrcode';
-import Helper from '../../../Helper';
+import * as Helper from '../../../Helper';
 import './styles.scss';
 
 const appStore = 'a[href^="https://apps.apple.com/"]'; // TODO handle iTunes links too?
@@ -68,14 +68,14 @@ function waitForLib(paragraphs: HTMLElement[]) {
 }
 */
 
-export default function AppStore() {
+export function AppStore() {
   Helper.onGoogleDocEmbed<HTMLParagraphElement>(
     `p:has(${appStore}), p:has(${playStore})`,
     (paragraphs) => {
       /*
       const lib = document.createElement('script') as HTMLScriptElement;
       lib.src =
-        'https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.1/qrcode.min.js';
+        'https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.1/qrcode.min';
       lib.integrity =
         'sha512-PEhlWBZBrQL7flpJPY8lXx8tIN7HWX912GzGhFTDqA3iWFrakVH3lVHomCoU9BhfKzgxfEk6EG2C3xej+9srOQ==';
       lib.crossOrigin = 'anonymous';

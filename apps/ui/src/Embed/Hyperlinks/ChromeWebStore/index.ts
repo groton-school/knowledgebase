@@ -1,11 +1,11 @@
 //import * as QRCode from 'qrcode';
-import Helper from '../../../Helper';
+import * as Helper from '../../../Helper';
 import './chrome-web-store.png';
 import './styles.scss';
 
 const chromeWebStore = 'a[href^="https://chromewebstore.google.com/"]';
 
-export default function ChromeWebStore() {
+export function ChromeWebStore() {
   Helper.onGoogleDocEmbed<HTMLParagraphElement>(
     `p:has(${chromeWebStore})`,
     (paragraphs) => {

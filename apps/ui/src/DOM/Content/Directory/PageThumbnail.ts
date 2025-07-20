@@ -1,7 +1,7 @@
-import Constants from '../../../Constants';
-import ImageCanvas from './ImageCanvas';
+import * as Constants from '../../../Constants';
+import { ImageCanvas } from './ImageCanvas';
 
-export default function PageThumbnail(page: HTMLElement) {
+export function PageThumbnail(page: HTMLElement) {
   page.classList.add(
     'card',
     'col-md-4',

@@ -1,17 +1,17 @@
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import Constants from '../Constants';
-import Helper from '../Helper';
-import Analytics from './Analytics';
-import BreadCrumbs from './BreadCrumbs';
-import Directory from './Content/Directory';
-import GoogleDocEmbed from './Content/GoogleDocEmbed';
-import Head from './Head';
-import Navbar from './Navbar';
-import Redirect from './Redirect';
-import Search from './Search';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+import * as Constants from '../Constants';
+import * as Helper from '../Helper';
+import { Analytics } from './Analytics';
+import { BreadCrumbs } from './BreadCrumbs';
+import { Directory } from './Content/Directory';
+import { GoogleDocEmbed } from './Content/GoogleDocEmbed';
+import { Head } from './Head';
+import { Navbar } from './Navbar';
+import { Redirect } from './Redirect';
+import { Search } from './Search';
 import './styles.scss';
 
-export default function PageStructure() {
+export function DOM() {
   Analytics();
   if (!Redirect()) {
     Head();

@@ -1,7 +1,7 @@
 /*
  * I _think_ this is easier than trying to hook into the existing Lightbox and differentiating between UI elements and embedded images
  */
-import Helper from '../../Helper';
+import * as Helper from '../../Helper';
 import './styles.scss';
 
 function Embiggenate(e: MouseEvent) {
@@ -67,7 +67,7 @@ function Disembiggenate(scrim: HTMLDivElement) {
   Helper.log(`Disembiggening`);
 }
 
-export default function Embiggen() {
+export function Embiggen() {
   Helper.onGoogleDocEmbed<HTMLImageElement>(
     'span:only-child > img',
     (images) => {

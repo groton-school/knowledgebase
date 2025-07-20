@@ -65,6 +65,9 @@ spinner.succeed(`Configuration applied to ${CLI.colors.url(pathToScss)}`);
 const pathToTs = path.resolve(import.meta.dirname, '../src/config.ts');
 spinner.start(`Updating ${CLI.colors.url(pathToTs)}`);
 if (config.ui?.site) {
-  fs.writeFileSync(pathToTs, `export default ${JSON.stringify(config.ui)}`);
+  fs.writeFileSync(
+    pathToTs,
+    `export const config = ${JSON.stringify(config.ui)}`
+  );
 }
 spinner.succeed(`Configuration applied to ${CLI.colors.url(pathToTs)}`);

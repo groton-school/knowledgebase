@@ -1,7 +1,7 @@
 import path from 'path-browserify';
-import Helper from '../Helper';
+import * as Helper from '../Helper';
 
-export default function BreadCrumbs(root: HTMLElement) {
+export function BreadCrumbs(root: HTMLElement) {
   const parts = path
     .dirname(window.location.pathname)
     .split('/')

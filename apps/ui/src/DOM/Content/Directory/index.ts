@@ -1,10 +1,10 @@
-import Constants from '../../../Constants';
-import Helper from '../../../Helper';
-import ImageCanvas from './ImageCanvas';
-import PageThumbnail from './PageThumbnail';
+import * as Constants from '../../../Constants';
+import * as Helper from '../../../Helper/index';
+import { ImageCanvas } from './ImageCanvas';
+import { PageThumbnail } from './PageThumbnail';
 import './styles.scss';
 
-export default function Directory(directory: HTMLDivElement) {
+export function Directory(directory: HTMLDivElement) {
   const card = document.createElement('div');
   card.classList.add(
     'card',

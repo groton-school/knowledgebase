@@ -1,17 +1,13 @@
 const disclosureTriangleOffset = 10;
 
-/**
- * Add a couple standard stack operations to the almost-stack Array
- */
+/** Add a couple standard stack operations to the almost-stack Array */
 class Stack extends Array {
   public top = () => this[this.length - 1];
   public isEmpty = () => !this.length;
 }
 
-/**
- * TOC factory
- */
-export default class Builder {
+/** TOC factory */
+export class Builder {
   private stack: Stack;
   private wrapper: HTMLDivElement;
   private toc: HTMLUListElement;
@@ -40,10 +36,11 @@ export default class Builder {
 
   /**
    * Create a new node of the TOC
+   *
    * @param {string} innerText Text to display
    * @param {string} href Hyperlink target
    * @param {number} level Depth (like H1, H2, H3)
-   * @returns {HTMLLIElement}  - description
+   * @returns {HTMLLIElement} - Description
    */
   private node(innerText: string, href: string, level: number): HTMLLIElement {
     const node = document.createElement('li');
@@ -69,6 +66,7 @@ export default class Builder {
 
   /**
    * Calculate `data-child-count` for TOC folding
+   *
    * @param {HTMLElement} elt Parent? element
    */
   private calcChildCount(elt: HTMLElement) {
@@ -82,6 +80,7 @@ export default class Builder {
 
   /**
    * Add another TOC entry
+   *
    * @param {string} innerText Text to display
    * @param {string} href Hyperlink target
    * @param {number} level Depth (like H1, H2, H3)
@@ -111,9 +110,7 @@ export default class Builder {
     this.stack.push(elt);
   }
 
-  /**
-   * Render the TOC as a DOM element
-   */
+  /** Render the TOC as a DOM element */
   public finalize(): HTMLDivElement {
     while (this.stack.top() != this.wrapper) {
       this.calcChildCount(this.stack.pop());

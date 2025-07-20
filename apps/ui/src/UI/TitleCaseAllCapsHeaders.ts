@@ -1,4 +1,4 @@
-import Helper from '../Helper';
+import * as Helper from '../Helper';
 
 const properNouns = [
   '2FA',
@@ -138,7 +138,7 @@ function fixCase(text: string) {
         .join(' ');
 }
 
-export default function TitleCaseAllCapsHeaders() {
+export function TitleCaseAllCapsHeaders() {
   Helper.onGoogleDocEmbed<HTMLHeadingElement>('h1, h2', (headings) => {
     headings.forEach((heading) => {
       const prev = heading.innerText;

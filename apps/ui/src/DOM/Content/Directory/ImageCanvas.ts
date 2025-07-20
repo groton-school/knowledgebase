@@ -1,6 +1,6 @@
-import config from '../../../config';
+import { config } from '../../../config';
 
-export default function ImageCanvas({
+export function ImageCanvas({
   href,
   parent,
   where = 'afterbegin',

@@ -1,4 +1,4 @@
-import Helper from '../Helper';
+import * as Helper from '../Helper';
 
 function scrollToHash() {
   if (window.location.hash.length) {
@@ -55,10 +55,8 @@ function semanticallyContained(container: HTMLElement, element: HTMLElement) {
   return c < e;
 }
 
-/**
- * Scroll to anchor element in embedded Google Doc when loaded
- */
-export default function HighlightAnchor() {
+/** Scroll to anchor element in embedded Google Doc when loaded */
+export function HighlightAnchor() {
   addEventListener('hashchange', scrollToHash);
   Helper.onGoogleDocEmbed<HTMLHeadingElement>(
     'h1, h2, h3, h4, h5, h6',

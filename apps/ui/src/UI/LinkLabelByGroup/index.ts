@@ -1,4 +1,4 @@
-import Helper from '../../Helper';
+import * as Helper from '../../Helper';
 import './styles.scss';
 
 function replace(needle: RegExp, replacement: string, haystack: Element) {
@@ -33,7 +33,7 @@ export function label(link: HTMLAnchorElement) {
   }
 }
 
-export default async function LinkLabelByGroup() {
+export async function LinkLabelByGroup() {
   const anchors = await Helper.onSelectorReady<HTMLAnchorElement>('a');
   for (const anchor of anchors) {
     label(anchor);

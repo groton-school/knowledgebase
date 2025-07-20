@@ -1,4 +1,4 @@
-import Helper from '../Helper';
+import * as Helper from '../Helper';
 
 export function CleanGooglePassThrough() {
   Helper.onGoogleDocEmbed<HTMLAnchorElement>('a', (links) => {

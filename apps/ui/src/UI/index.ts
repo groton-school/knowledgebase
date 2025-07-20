@@ -1,16 +1,16 @@
 import { CleanGooglePassThrough } from './CleanGooglePassThrough';
-import Embiggen from './Embiggen';
-import H6IsNormalText from './H6IsNormalText';
-import HideHeaderAndFooter from './HideHeaderAndFooter';
-import HighlightAnchor from './HighlightAnchor';
-import LinkLabelByGroup from './LinkLabelByGroup';
-import Permalinks from './Permalinks';
-import Search from './Search';
-import TOC from './TOC';
-import TitleCaseAllCapsHeaders from './TitleCaseAllCapsHeaders';
+import { Embiggen } from './Embiggen';
+import { H6IsNormalText } from './H6IsNormalText';
+import { HideHeaderAndFooter } from './HideHeaderAndFooter';
+import { HighlightAnchor } from './HighlightAnchor';
+import { LinkLabelByGroup } from './LinkLabelByGroup';
+import { Permalinks } from './Permalinks';
+import { Search } from './Search';
+import { TOC } from './TOC';
+import { TitleCaseAllCapsHeaders } from './TitleCaseAllCapsHeaders';
 import './google-docs.scss';
 // import './unlock-img-width.scss';
-import LockImageWidth from './LockImgWidth';
+import { LockImageWidth } from './LockImgWidth';
 
 /**
  * Extend and enhance the user interface of Overdrive
@@ -18,7 +18,7 @@ import LockImageWidth from './LockImgWidth';
  * The goal is to add utility, but not become necessary: add nothing that will
  * make the site unusable if removed.
  */
-export default function UI() {
+export function UI() {
   HideHeaderAndFooter();
   TitleCaseAllCapsHeaders();
   LinkLabelByGroup();

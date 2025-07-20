@@ -1,4 +1,4 @@
-import Constants from '../Constants';
+import * as Constants from '../Constants';
 
 /** Name of the Google Doc embed custom event */
 export const GoogleDocEmbedEvent = 'kbe';
@@ -17,8 +17,8 @@ function dispatchGoogleDocEmbed(detail: Element) {
  * Observe the DOM for added or removed Google Doc embeds
  *
  * Embedding a Google Doc fires a custom event with the `details` property
- * referencing the embedded doc. Removing an embedded doc fires a simple
- * event with no `details` property.
+ * referencing the embedded doc. Removing an embedded doc fires a simple event
+ * with no `details` property.
  */
 function observe() {
   const observer = new MutationObserver((mutations) => {
@@ -65,9 +65,7 @@ function observe() {
   observer.observe(document.body, { childList: true, subtree: true });
 }
 
-/**
- * Load the core MutationObservers on the page when loaded
- */
+/** Load the core MutationObservers on the page when loaded */
 export function activate() {
   if (document.readyState === 'loading') {
     window.addEventListener('load', observe);

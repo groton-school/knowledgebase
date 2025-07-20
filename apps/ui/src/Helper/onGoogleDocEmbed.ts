@@ -9,7 +9,7 @@ import { GoogleDocEmbedEvent } from './onLoad';
  * @param {string} selector Valid CSS selector
  * @param {Function} handler
  */
-export default function onGoogleDocEmbed<T extends HTMLElement>(
+export function onGoogleDocEmbed<T extends HTMLElement>(
   selector: string,
   handler: (elts: T[]) => any
 ) {

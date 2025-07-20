@@ -1,7 +1,7 @@
-import DOM from './DOM';
-import Embed from './Embed';
-import Helper from './Helper';
-import UI from './UI';
+import { DOM } from './DOM';
+import { Embed } from './Embed';
+import * as Helper from './Helper';
+import { UI } from './UI';
 
 // from webpack
 declare const __webpack_hash__: string;
