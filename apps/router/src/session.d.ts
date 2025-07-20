@@ -1,4 +1,4 @@
-import OpenID from '@groton/knowledgebase.openid';
+import { OpenID } from '@groton/knowledgebase.openid';
 import { Credentials } from 'google-auth-library';
 
 // https://akoskm.com/how-to-use-express-session-with-custom-sessiondata-typescript
