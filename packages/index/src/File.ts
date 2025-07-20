@@ -23,10 +23,16 @@ export class File implements Google.Drive.drive_v3.Schema$File {
 
   public readonly id: Id;
   public readonly name: Name;
-  public readonly description: Google.Drive.drive_v3.Schema$File['description'];
-  public readonly modifiedTime: Google.Drive.drive_v3.Schema$File['modifiedTime'];
-  public permissions: Google.Drive.drive_v3.Schema$File['permissions'];
+  public readonly fileExtension: Google.Drive.drive_v3.Schema$File['fileExtension'];
   public readonly mimeType: Google.Drive.drive_v3.Schema$File['mimeType'];
+  public readonly description: Google.Drive.drive_v3.Schema$File['description'];
+  public readonly parents: Google.Drive.drive_v3.Schema$File['parents'];
+  public readonly modifiedTime: Google.Drive.drive_v3.Schema$File['modifiedTime'];
+  public readonly shortcutDetails: Google.Drive.drive_v3.Schema$File['shortcutDetails'];
+  public readonly webViewLink: Google.Drive.drive_v3.Schema$File['webViewLink'];
+
+  public permissions: Google.Drive.drive_v3.Schema$File['permissions'];
+
   public index: IndexEntry;
 
   public constructor(
@@ -73,5 +79,9 @@ export class File implements Google.Drive.drive_v3.Schema$File {
 
   public isFolder() {
     return this.mimeType == Google.MimeTypes.Folder;
+  }
+
+  public data() {
+    return {};
   }
 }
