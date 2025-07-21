@@ -1,9 +1,6 @@
 import ejs from 'ejs';
 
-export default async function renderBlob(
-  filePath: string,
-  data: Record<string, any>
-) {
+export async function renderBlob(filePath: string, data: ejs.Data) {
   return new Blob([await ejs.renderFile(filePath, data)], {
     type: 'text/html'
   });

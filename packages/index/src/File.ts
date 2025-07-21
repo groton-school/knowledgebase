@@ -80,8 +80,4 @@ export class File implements Google.Drive.drive_v3.Schema$File {
   public isFolder() {
     return this.mimeType == Google.MimeTypes.Folder;
   }
-
-  public data() {
-    return {};
-  }
 }
