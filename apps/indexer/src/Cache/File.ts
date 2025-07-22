@@ -8,12 +8,25 @@ import mime from 'mime-types';
 import events from 'node:events';
 import path from 'node:path';
 import ora from 'ora';
-import Helper from '../Helper/index.js';
-import pipelineHTML from './Actions/pipelineHTML.js';
-import FileFactory from './FileFactory.js';
-import IndexEntry from './IndexEntry.js';
+import * as Helper from '../Helper/index.js';
+import { pipelineHTML } from './Actions/pipelineHTML.js';
 
-class File extends Index.File {
+export type CacheOptions = {
+  bucketName: string;
+  permissionsRegex?: string | RegExp;
+  force?: boolean;
+  ignoreErrors?: boolean;
+};
+
+export class File extends Index.File {
+  public static readonly Event: Record<string, keyof ReturnType<typeof ora>> = {
+    Start: 'start',
+    Succeed: 'succeed',
+    Fail: 'fail',
+    Warn: 'warn',
+    Info: 'info'
+  };
+
   protected static readonly DEFAULT_PERMISSIONS_REGEX = /.*/;
   protected static readonly DEFAULT_FORCE = false;
   protected static readonly DEFAULT_IGNORE_ERRORS = true;
@@ -138,7 +151,7 @@ class File extends Index.File {
     if (this.isFolder()) {
       const contents: File[] = [];
       let folderContents: Google.Drive.drive_v3.Schema$FileList = {};
-      const fileFactory = new FileFactory(File);
+      const fileFactory = new Index.FileFactory(File);
 
       do {
         folderContents = (
@@ -167,9 +180,9 @@ class File extends Index.File {
                   const file = await fileFactory.fromDriveId(
                     item.id!,
                     permissionsRegex,
-                    new IndexEntry(this.index.path)
+                    new Index.IndexEntry(this.index.path)
                   );
-                  file.index = new IndexEntry(
+                  file.index = new Index.IndexEntry(
                     path.join(
                       this.index.path,
                       Helper.normalizeFilename(file.name)
@@ -216,9 +229,9 @@ class File extends Index.File {
     bucketName,
     force = File.DEFAULT_FORCE,
     ignoreErrors = File.DEFAULT_IGNORE_ERRORS
-  }: File.Params.Cache) {
+  }: CacheOptions) {
     if (this.isFolder()) {
-      this.index.status = IndexEntry.State.Dynamic;
+      this.index.status = Index.State.Dynamic;
     } else {
       const bucket = Google.Client.getStorage().bucket(bucketName);
       const subfile = Helper.subfileFactory(bucket);
@@ -268,7 +281,7 @@ class File extends Index.File {
         (this.modifiedTime && this.modifiedTime > this.index.timestamp)
       ) {
         File.event.emit(File.Event.Start, `Caching ${this.index.path}`);
-        this.index.status = IndexEntry.State.PreparingCache;
+        this.index.status = Index.State.PreparingCache;
         await Helper.exponentialBackoff(
           (async () => {
             try {
@@ -331,7 +344,7 @@ class File extends Index.File {
                   ignoreErrors
                 );
               }
-              this.index.status = IndexEntry.State.Cached;
+              this.index.status = Index.State.Cached;
             } catch (e) {
               const error = CoerceError(e);
               this.index.status = error.message;
@@ -352,24 +365,3 @@ class File extends Index.File {
     return this;
   }
 }
-
-namespace File {
-  export const Event: Record<string, keyof ReturnType<typeof ora>> = {
-    Start: 'start',
-    Succeed: 'succeed',
-    Fail: 'fail',
-    Warn: 'warn',
-    Info: 'info'
-  };
-
-  export namespace Params {
-    export type Cache = {
-      bucketName: string;
-      permissionsRegex?: string | RegExp;
-      force?: boolean;
-      ignoreErrors?: boolean;
-    };
-  }
-}
-
-export default File;

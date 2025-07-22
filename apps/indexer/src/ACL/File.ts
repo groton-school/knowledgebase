@@ -1,36 +1,36 @@
 import { Google } from '@groton/knowledgebase.google';
-import Cache from '../Cache/index.js';
-import Helper from '../Helper/index.js';
-import IndexEntry from './IndexEntry.js';
+import { State } from '@groton/knowledgebase.index';
+import * as Cache from '../Cache/index.js';
+import * as Helper from '../Helper/index.js';
 
-interface File extends Cache.File {
-  permissions: (Google.Drive.drive_v3.Schema$Permission & {
-    indexerAclState?: IndexEntry.State;
-  })[];
+export interface PermissionsWithAclState
+  extends Google.Drive.drive_v3.Schema$Permission {
+  indexerAclState?: State;
 }
 
-class File extends Cache.File {
+export class File extends Cache.File {
   public async cache({
     bucketName,
     ignoreErrors = File.DEFAULT_IGNORE_ERRORS
-  }: Cache.File.Params.Cache) {
+  }: Cache.CacheOptions) {
     if (!this.isFolder()) {
       const bucket = Google.Client.getStorage().bucket(bucketName);
       const subfile = Helper.subfileFactory(bucket);
-      let updatedPermissions = [
-        ...this.permissions.filter(
-          (p) => p.indexerAclState == IndexEntry.State.Cached
-        )
+      const updatedPermissions = [
+        ...(this.permissions?.filter(
+          (p: PermissionsWithAclState) => p.indexerAclState == State.Cached
+        ) || [])
       ];
-      for (const permission of this.permissions!.filter(
-        (p) => p.indexerAclState != IndexEntry.State.Cached
+      let permission: PermissionsWithAclState;
+      for (permission of this.permissions!.filter(
+        (p: PermissionsWithAclState) => p.indexerAclState != State.Cached
       )) {
         if (!permission.emailAddress) {
           File.event.emit(
             File.Event.Fail,
             `Permission for ${this.index.path} is missing an email address: ${JSON.stringify(permission)}`
           );
-          permission.indexerAclState = 'missing email' as IndexEntry.State;
+          permission.indexerAclState = 'missing email' as State;
           updatedPermissions.push(permission);
         } else {
           let entity: string;
@@ -47,7 +47,7 @@ class File extends Cache.File {
               );
           }
 
-          if (permission.indexerAclState == IndexEntry.State.Expired) {
+          if (permission.indexerAclState == State.Expired) {
             File.event.emit(
               File.Event.Start,
               `Removing ${permission.emailAddress} from ACL for ${this.index.path}`
@@ -66,7 +66,7 @@ class File extends Cache.File {
               const error = Google.CoerceRequestError(e);
               if (error.code != 404) {
                 permission.indexerAclState = (error.message ||
-                  'error') as IndexEntry.State;
+                  'error') as State;
                 updatedPermissions.push(permission);
                 File.event.emit(
                   File.Event.Fail,
@@ -128,9 +128,9 @@ class File extends Cache.File {
               ignoreErrors
             );
             if (success === true) {
-              permission.indexerAclState = IndexEntry.State.Cached;
+              permission.indexerAclState = State.Cached;
             } else {
-              permission.indexerAclState = success as IndexEntry.State;
+              permission.indexerAclState = success as State;
             }
             updatedPermissions.push(permission);
           }
@@ -141,7 +141,3 @@ class File extends Cache.File {
     return this;
   }
 }
-
-namespace File {}
-
-export default File;

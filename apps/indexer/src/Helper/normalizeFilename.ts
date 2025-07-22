@@ -1,11 +1,9 @@
-import valid from './validGCSFilenameCharacters.js';
+import { validGCSFilenameCharacters } from './validGCSFilenameCharacters.js';
 
-const invalid = new RegExp(`[^${valid}]+`, 'gi');
+const invalid = new RegExp(`[^${validGCSFilenameCharacters}]+`, 'gi');
 
-/**
- * Backwards-compatible with Overdrive.io naming scheme
- */
-export default function normalizeFilename(filename: string): string {
+/** Backwards-compatible with Overdrive.io naming scheme */
+export function normalizeFilename(filename: string): string {
   return filename!
     .replace('&', 'and')
     .replace(invalid, '-')

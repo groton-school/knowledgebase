@@ -1,13 +1,13 @@
-import CLI from '@battis/qui-cli';
+import { Colors } from '@battis/qui-cli.colors';
 
-export default function errorMessage(
+export function errorMessage(
   message: string | undefined = undefined,
   context: object,
   error: unknown
 ) {
-  return `${message ? `${message} (` : ''}${CLI.colors.error(
+  return `${message ? `${message} (` : ''}${Colors.error(
     error
-      ? `${CLI.colors.error(
+      ? `${Colors.error(
           typeof error == 'object'
             ? 'message' in error
               ? error.message

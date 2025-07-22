@@ -1,5 +1,5 @@
 import { JSDOM } from 'jsdom';
-import File from '../File.js';
+import { File } from '../File.js';
 
 // TODO pipelineHTML needs a re-think
 
@@ -46,7 +46,7 @@ const removeScripts: PipelineFunction = ({ html }) => {
   return dom.window.document.documentElement.outerHTML;
 };
 
-async function pipelineHTML({
+export async function pipelineHTML({
   file,
   blob
 }: {
@@ -68,4 +68,3 @@ async function pipelineHTML({
   }
   return blob;
 }
-export default pipelineHTML;

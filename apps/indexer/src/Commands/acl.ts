@@ -3,12 +3,13 @@ import { Colors } from '@battis/qui-cli.colors';
 import { Env } from '@battis/qui-cli.env';
 import * as Plugin from '@battis/qui-cli.plugin';
 import { Validators } from '@battis/qui-cli.validators';
+import { IndexFactory } from '@groton/knowledgebase.index';
 import { input } from '@inquirer/prompts';
 import fs from 'node:fs';
 import path from 'node:path';
 import ora from 'ora';
-import ACL from '../ACL/index.js';
-import Helper from '../Helper/index.js';
+import * as ACL from '../ACL/index.js';
+import * as Helper from '../Helper/index.js';
 
 // TODO why does reset-permissions need to run separately from upload?
 // TODO version of reset-permissions that resets only recent uploads
@@ -102,7 +103,8 @@ export async function run() {
   indexPath = path.resolve(CWD, indexPath);
 
   spinner.start(`Loading index from ${Colors.url(indexPath)}`);
-  const index = await ACL.fromFile(indexPath);
+
+  const index = await new IndexFactory(ACL.File).fromFile(indexPath);
   if (!index.root) {
     spinner.fail(
       `Missing root path in ${Colors.url(path.dirname(indexPath))}/${Colors.value(path.basename(indexPath))}`

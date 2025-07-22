@@ -5,14 +5,15 @@ import * as Plugin from '@battis/qui-cli.plugin';
 import { Root } from '@battis/qui-cli.root';
 import { Validators } from '@battis/qui-cli.validators';
 import { Google } from '@groton/knowledgebase.google';
+import { FileFactory, IndexFactory, State } from '@groton/knowledgebase.index';
 import { input } from '@inquirer/prompts';
 import fs from 'node:fs';
 import path from 'node:path';
 import ora from 'ora';
 import shelljs from 'shelljs';
-import ACL from '../ACL/index.js';
-import Cache from '../Cache/index.js';
-import Helper from '../Helper/index.js';
+import * as ACL from '../ACL/index.js';
+import * as Cache from '../Cache/index.js';
+import * as Helper from '../Helper/index.js';
 
 export type Configuration = Plugin.Configuration & {
   folderId?: string;
@@ -123,7 +124,7 @@ export async function run() {
   if (indexPath && fs.existsSync(path.resolve(CWD, indexPath))) {
     indexPath = path.resolve(CWD, indexPath);
     spinner.start(`Loading index from ${Colors.url(indexPath)}`);
-    const prevIndex = await Cache.fromFile(indexPath);
+    const prevIndex = await new IndexFactory(Cache.File).fromFile(indexPath);
     if (!prevIndex.root) {
       spinner.fail(
         `Missing root path in ${Colors.url(path.dirname(indexPath))}/${Colors.value(path.basename(indexPath))}`
@@ -133,7 +134,7 @@ export async function run() {
     spinner.succeed(`${Colors.value(prevIndex.root.name)} index loaded`);
 
     const currIndex = [
-      await new Cache.FileFactory(Cache.File).fromDriveId(
+      await new FileFactory(Cache.File).fromDriveId(
         prevIndex.root.id,
         permissionsRegex
       )
@@ -150,14 +151,15 @@ export async function run() {
       const i = currIndex.findIndex((elt) => elt.index.path == prev.index.path);
       if (i >= 0) {
         const permissions: Google.Drive.drive_v3.Schema$Permission[] = [];
-        for (const permission of prev.permissions || []) {
+        let permission: ACL.PermissionsWithAclState;
+        for (permission of prev.permissions || []) {
           if (
             !(currIndex[i].permissions || []).find(
               (p: Google.Drive.drive_v3.Schema$Permission) =>
                 p.emailAddress == permission.emailAddress
             )
           ) {
-            permission.indexerAclState = Cache.IndexEntry.State.Expired;
+            permission.indexerAclState = State.Expired;
             spinner.fail(
               `Expired ${permission.emailAddress} from ${prev.index.path}`
             );
@@ -180,7 +182,7 @@ export async function run() {
         update.permissions = permissions;
         currIndex.splice(i, 1);
       } else {
-        update.index.status = Cache.IndexEntry.State.Expired;
+        update.index.status = State.Expired;
         update.index.exists = false;
       }
       nextIndex.push(update);
@@ -203,7 +205,7 @@ export async function run() {
         message: options().opt!.folderId.description!,
         validate: Validators.notEmpty
       }));
-    const folder = await new Cache.FileFactory(Cache.File).fromDriveId(
+    const folder = await new FileFactory(Cache.File).fromDriveId(
       folderId,
       permissionsRegex
     );

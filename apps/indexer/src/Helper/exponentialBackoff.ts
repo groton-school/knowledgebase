@@ -1,19 +1,24 @@
-import { Google } from '@groton/knowledgebase.google/src/index.js';
-import crypto from 'crypto';
-import File from '../Cache/File.js';
-import errorMessage from './errorMessage.js';
+import { Google } from '@groton/knowledgebase.google';
+import crypto from 'node:crypto';
+import { File } from '../Cache/File.js';
+import { errorMessage } from './errorMessage.js';
 
 type RetriableAction<T> = () => T | Promise<T>;
 
-export default async function exponentialBackoff<T = any>(
+export async function exponentialBackoff<T = unknown>(
   action: RetriableAction<T>,
   ignoreErrors = true,
   retries = 5,
   lastTimeout = 0
 ): Promise<T> {
-  return new Promise(async (resolve, reject) => {
+  return new Promise((resolve, reject) => {
     try {
-      resolve(await action());
+      const result = action();
+      if (result instanceof Promise) {
+        result.then(resolve);
+      } else {
+        resolve(result);
+      }
     } catch (e) {
       const error = Google.CoerceRequestError(e);
       if (error.code == 503 && retries > 0) {

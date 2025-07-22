@@ -1,3 +1,1 @@
-const valid = 'a-z0-9()!@*_.-';
-
-export default valid;
+export const validGCSFilenameCharacters = 'a-z0-9()!@*_.-';

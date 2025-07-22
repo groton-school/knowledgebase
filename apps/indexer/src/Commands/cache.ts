@@ -4,12 +4,13 @@ import { Env } from '@battis/qui-cli.env';
 import * as Plugin from '@battis/qui-cli.plugin';
 import { Validators } from '@battis/qui-cli.validators';
 import { Google } from '@groton/knowledgebase.google';
+import { IndexFactory, State } from '@groton/knowledgebase.index';
 import { input } from '@inquirer/prompts';
 import fs from 'node:fs';
 import path from 'node:path';
 import ora from 'ora';
-import Cache from '../Cache/index.js';
-import Helper from '../Helper/index.js';
+import * as Cache from '../Cache/index.js';
+import * as Helper from '../Helper/index.js';
 
 export type Configuration = Plugin.Configuration & {
   bucketName?: string;
@@ -121,7 +122,7 @@ export async function run() {
   indexPath = path.resolve(CWD, indexPath);
 
   spinner.start(`Loading index from ${Colors.url(indexPath)}`);
-  const index = await Cache.fromFile(indexPath);
+  const index = await new IndexFactory(Cache.File).fromFile(indexPath);
   if (!index.root) {
     spinner.fail(
       `Missing root path in ${Colors.url(path.dirname(indexPath))}/${Colors.value(path.basename(indexPath))}`
@@ -153,10 +154,7 @@ export async function run() {
   }
   const updatedIndex = index.filter(
     (entry) =>
-      !(
-        entry.index.exists === false &&
-        entry.index.status === Cache.IndexEntry.State.Expired
-      )
+      !(entry.index.exists === false && entry.index.status === State.Expired)
   );
   spinner.succeed('All indexed files reviewed');
 
