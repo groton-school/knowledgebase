@@ -2,10 +2,9 @@ import { JSONObject } from '@battis/typescript-tricks';
 import { Google } from '@groton/knowledgebase.google';
 import { IndexEntry } from './IndexEntry.js';
 
-type Nonoptional<T> = Exclude<T, null | undefined>;
+type Required<T> = Exclude<T, null | undefined>;
 
-export type Id = Nonoptional<Google.Drive.drive_v3.Schema$File['id']>;
-export type Name = Nonoptional<Google.Drive.drive_v3.Schema$File['name']>;
+export type Id = Required<Google.Drive.drive_v3.Schema$File['id']>;
 
 export class File implements Google.Drive.drive_v3.Schema$File {
   public static fields: (keyof Google.Drive.drive_v3.Schema$File)[] = [
@@ -22,16 +21,15 @@ export class File implements Google.Drive.drive_v3.Schema$File {
   ];
 
   public readonly id: Id;
-  public readonly name: Name;
+  public readonly name: Required<Google.Drive.drive_v3.Schema$File['name']>;
   public readonly fileExtension: Google.Drive.drive_v3.Schema$File['fileExtension'];
   public readonly mimeType: Google.Drive.drive_v3.Schema$File['mimeType'];
   public readonly description: Google.Drive.drive_v3.Schema$File['description'];
   public readonly parents: Google.Drive.drive_v3.Schema$File['parents'];
+  public permissions: Google.Drive.drive_v3.Schema$File['permissions'];
   public readonly modifiedTime: Google.Drive.drive_v3.Schema$File['modifiedTime'];
   public readonly shortcutDetails: Google.Drive.drive_v3.Schema$File['shortcutDetails'];
   public readonly webViewLink: Google.Drive.drive_v3.Schema$File['webViewLink'];
-
-  public permissions: Google.Drive.drive_v3.Schema$File['permissions'];
 
   public index: IndexEntry;
 
