@@ -3,7 +3,7 @@ import { Handler } from 'express';
 
 type HandlerFactoryConfig = {
   index?: Var.Index;
-  config?: Var.Config;
+  config?: Var.Config.Config;
   groups?: Var.Groups;
   keys?: Var.Keys;
 };

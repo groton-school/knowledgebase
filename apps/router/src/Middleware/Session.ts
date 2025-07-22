@@ -4,7 +4,7 @@ import { Config } from '@groton/knowledgebase.config';
 import session from 'express-session';
 
 type SessionConfig = {
-  config: Config;
+  config: Config.Config;
 };
 
 export function Session({

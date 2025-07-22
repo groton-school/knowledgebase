@@ -15,7 +15,7 @@ import { Logger } from './Logger.js';
 
 type AuthConfig = {
   keys: Keys;
-  config: Config;
+  config: Config.Config;
 };
 
 export class Auth {

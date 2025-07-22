@@ -2,7 +2,7 @@ import * as Var from '@groton/knowledgebase.config';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-type Configs = [Var.Keys, Var.Config, Var.Groups, Var.Index];
+type Configs = [Var.Keys, Var.Config.Config, Var.Groups, Var.Index];
 
 export async function loadConfigFiles(): Promise<Configs> {
   return (
