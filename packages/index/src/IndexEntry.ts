@@ -1,10 +1,15 @@
 import { JSONObject } from '@battis/typescript-tricks';
-import { State } from './IndexEntry/State.js';
+
+export enum State {
+  Indexed = 'indexed',
+  PreparingCache = 'preparing cache',
+  Cached = 'cached',
+  Expired = 'expired',
+  Dynamic = 'dynamic'
+}
 
 export class IndexEntry {
   private _timestamp: string;
-
-  public static State = State;
 
   public constructor(
     private _path: string = '.',
