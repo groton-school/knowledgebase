@@ -1,10 +1,9 @@
-/// <reference path="./session.d.ts" />
 import * as API from '@groton/knowledgebase.api';
 import express from 'express';
-import * as Handlers from './Handlers.js';
-import * as Helper from './Helper.js';
-import * as Middleware from './Middleware.js';
-import * as Services from './Services.js';
+import * as Handlers from './Handlers/index.js';
+import * as Helper from './Helper/index.js';
+import * as Middleware from './Middleware/index.js';
+import * as Services from './Services/index.js';
 
 (async () => {
   const [keys, config, groups, index] = await Helper.loadConfigFiles();

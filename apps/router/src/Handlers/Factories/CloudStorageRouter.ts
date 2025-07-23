@@ -1,6 +1,6 @@
 import { Storage } from '@google-cloud/storage';
 import path from 'node:path';
-import * as Services from '../../Services.js';
+import * as Services from '../../Services/index.js';
 import { HandlerFactory } from './HandlerFactory.js';
 
 export const CloudStorageRouter: HandlerFactory = ({

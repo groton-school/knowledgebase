@@ -1,6 +1,6 @@
 import * as API from '@groton/knowledgebase.api';
 import { Request, Response } from 'express';
-import { ACL } from '../../Services.js';
+import { ACL } from '../../Services/index.js';
 import { HandlerFactory } from './HandlerFactory.js';
 
 function score(needle: string, haystack: string, base = 1, factor = 2) {
