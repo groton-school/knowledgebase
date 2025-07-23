@@ -8,7 +8,7 @@ export default {
     main: path.resolve(import.meta.dirname, 'src/index.ts')
   },
   output: {
-    filename: '[name].js',
+    filename: '[name].cjs',
     path: path.resolve(import.meta.dirname, 'build'),
     clean: true
   },

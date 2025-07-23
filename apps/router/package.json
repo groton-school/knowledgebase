@@ -19,7 +19,7 @@
     "deploy": "run-s deploy:*",
     "deploy:build": "run-s build",
     "deploy:deploy": "node ./scripts/deploy.mjs -v",
-    "start": "node ./build/main.js"
+    "start": "node ./build/main.cjs"
   },
   "dependencies": {
     "@google-cloud/connect-firestore": "^3.0.0",
