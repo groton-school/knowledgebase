@@ -6,11 +6,11 @@ type Configs = [Keys, Config.Config, Groups, Index];
 
 export async function loadConfigFiles(): Promise<Configs> {
   return (
-    await Promise.all([
-      fs.readFile(path.resolve(process.cwd(), 'var/keys.json')),
-      fs.readFile(path.resolve(process.cwd(), 'var/config.json')),
-      fs.readFile(path.resolve(process.cwd(), 'var/groups.json')),
-      fs.readFile(path.resolve(process.cwd(), 'var/index.json'))
-    ])
+    await Promise.all(
+      ['keys.json', 'config.json', 'groups.json', 'index.json'].map(
+        (filename) =>
+          fs.readFile(path.resolve(process.cwd(), `build/data/${filename}`))
+      )
+    )
   ).map((response) => JSON.parse(response.toString())) as Configs;
 }
