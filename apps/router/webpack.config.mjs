@@ -1,49 +1,55 @@
-import CopyWebpackPlugin from 'copy-webpack-plugin';
-import fs from 'node:fs';
+import CopyPlugin from 'copy-webpack-plugin';
 import path from 'node:path';
 import nodeExternals from 'webpack-node-externals';
-import YAML from 'yaml';
 
-const gae = YAML.parse(
-  fs.readFileSync(path.join(import.meta.dirname, 'app.yaml')).toString()
-);
-
-function ignoreInvisible(filePath) {
-  return !/^\./.test(path.basename(filePath));
-}
-
-const config = {
+export default {
   mode: 'production',
-  target: gae.runtime.replace('nodejs', 'node'),
-  entry: path.join(import.meta.dirname, '.tmp/tsc/index.js'),
+  entry: {
+    main: path.resolve(import.meta.dirname, 'src/index.ts')
+  },
   output: {
-    path: path.join(import.meta.dirname, 'build'),
-    filename: '[name].cjs',
+    filename: '[name].js',
+    path: path.resolve(import.meta.dirname, 'build'),
     clean: true
   },
+  module: {
+    rules: [
+      {
+        test: /\.ts$/,
+        use: 'ts-loader',
+        exclude: [/node_modules/]
+      }
+    ]
+  },
+  resolve: {
+    extensions: ['.ts'],
+    extensionAlias: {
+      '.js': ['.js', '.ts']
+    }
+  },
   externalsPresets: { node: true },
-  externals: [
-    nodeExternals({
-      allowlist: [/^@groton\/knowledgebase\..*/]
-    })
-  ],
+  externals: [nodeExternals({ allowlist: [/^@groton\/knowledgebase\..*/] })],
   plugins: [
-    new CopyWebpackPlugin({
+    new CopyPlugin({
       patterns: [
         {
-          from: './node_modules/@groton/knowledgebase.ui/build',
-          to: '',
-          filter: ignoreInvisible
+          from: path.resolve(
+            import.meta.dirname,
+            'node_modules/@groton/knowledgebase.ui/build'
+          )
         },
         {
-          from: './node_modules/@groton/knowledgebase.indexer/dist',
-          to: '../var',
-          filter: ignoreInvisible
+          from: path.resolve(
+            import.meta.dirname,
+            'node_modules/@groton/knowledgebase.indexer/dist'
+          ),
+          to: 'data'
+        },
+        {
+          from: path.resolve(import.meta.dirname, 'var'),
+          to: 'data'
         }
       ]
     })
-  ],
-  optimization: { minimize: true }
+  ]
 };
-
-export default config;

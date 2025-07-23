@@ -1,7 +1,8 @@
 {
   "extends": "@tsconfig/node20/tsconfig.json",
   "compilerOptions": {
-    "outDir": "./.tmp/tsc"
+    "sourceMap": true,
+    "outDir": "./dist"
   },
   "include": ["./src"]
 }
