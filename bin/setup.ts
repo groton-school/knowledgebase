@@ -65,6 +65,9 @@ const opt = {
   if (publishResponse) {
     const { project, appEngine } = publishResponse;
 
+    // TODO generate and post API Keys for router
+    await gcloud.secrets.enableAppEngineAccess();
+
     await gcloud.services.enable(gcloud.services.API.GoogleDocsAPI);
     await gcloud.services.enable(gcloud.services.API.GoogleDriveAPI);
     await gcloud.services.enable(gcloud.services.API.GoogleCloudStorageJSONAPI);
