@@ -27,7 +27,11 @@ export default {
     }
   },
   externalsPresets: { node: true },
-  externals: [nodeExternals({ allowlist: [/^@groton\/knowledgebase\..*/] })],
+  externals: [
+    nodeExternals({
+      allowlist: [/^@groton\/knowledgebase\..*/]
+    })
+  ],
   plugins: [
     new CopyPlugin({
       patterns: [
