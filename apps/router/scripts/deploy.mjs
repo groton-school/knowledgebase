@@ -1,5 +1,37 @@
 import gcloud from '@battis/partly-gcloudy';
 import { Core } from '@battis/qui-cli.core';
+import { Env } from '@battis/qui-cli.env';
+import fs from 'node:fs';
+import path from 'node:path';
 
+await Env.configure();
 await Core.run();
+const pkg = JSON.parse(
+  await fs
+    .readFileSync(path.resolve(import.meta.dirname, '../package.json'))
+    .toString()
+);
+delete pkg.devDependencies;
+pkg.dependencies = Object.keys(pkg.dependencies).reduce((dep, mod) => {
+  if (pkg.dependencies[mod] !== 'workspace:*') {
+    dep[mod] = pkg.dependencies[mod];
+  }
+  return dep;
+}, {});
+if (fs.existsSync(path.resolve(import.meta.dirname, '../package.json.bak'))) {
+  throw new Error('Package backup already exists, aborting.');
+}
+fs.copyFileSync(
+  path.resolve(import.meta.dirname, '../package.json'),
+  path.resolve(import.meta.dirname, '../package.json.bak')
+);
+fs.writeFileSync(
+  path.resolve(import.meta.dirname, '../package.json'),
+  JSON.stringify(pkg)
+);
 await gcloud.batch.appEngineDeployAndCleanup({ retainVersions: 2 });
+fs.rmSync(path.resolve(import.meta.dirname, '../package.json'));
+fs.renameSync(
+  path.resolve(import.meta.dirname, '../package.json.bak'),
+  path.resolve(import.meta.dirname, '../package.json')
+);
