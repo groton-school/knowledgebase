@@ -221,8 +221,8 @@ importers:
         specifier: ^22.16.5
         version: 22.16.5
       copy-webpack-plugin:
-        specifier: ^12.0.2
-        version: 12.0.2(webpack@5.100.2)
+        specifier: ^13.0.0
+        version: 13.0.0(webpack@5.100.2)
       npm-run-all:
         specifier: ^4.1.5
         version: 4.1.5
@@ -271,7 +271,7 @@ importers:
         version: 2.1.6(ggm2vkkfnlqjqbkj2mhdckjfny)
       '@battis/webpack':
         specifier: ^2.0.5
-        version: 2.0.5(fnuvnare3rufpb7yjnodd2tlai)
+        version: 2.0.5(twmturgtmop6b2pqg4neyirwqe)
       '@csstools/css-parser-algorithms':
         specifier: ^3.0.5
         version: 3.0.5(@csstools/css-tokenizer@3.0.4)
@@ -312,8 +312,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0(webpack@5.100.2)
       copy-webpack-plugin:
-        specifier: ^12.0.2
-        version: 12.0.2(webpack@5.100.2)
+        specifier: ^13.0.0
+        version: 13.0.0(webpack@5.100.2)
       css-loader:
         specifier: ^7.1.2
         version: 7.1.2(webpack@5.100.2)
@@ -3191,8 +3191,8 @@ packages:
     resolution: {integrity: sha512-yki5XnKuf750l50uGTllt6kKILY4nQ1eNIQatoXEByZ5dWgnKqbnqmTrBE5B4N7lrMJKQ2ytWMiTO2o0v6Ew/w==}
     engines: {node: '>= 0.6'}
 
-  copy-webpack-plugin@12.0.2:
-    resolution: {integrity: sha512-SNwdBeHyII+rWvee/bTnAYyO8vfVdcSTud4EIb6jcZ8inLeWucJE0DnxXQBjlQ5zlteuuvooGQy3LIyGxhvlOA==}
+  copy-webpack-plugin@13.0.0:
+    resolution: {integrity: sha512-FgR/h5a6hzJqATDGd9YG41SeDViH+0bkHn6WNXCi5zKAZkeESeSxLySSsFLHqLEVCh0E+rITmCf0dusXWYukeQ==}
     engines: {node: '>= 18.12.0'}
     peerDependencies:
       webpack: ^5.1.0
@@ -8310,11 +8310,11 @@ snapshots:
 
   '@battis/typescript-tricks@0.7.4': {}
 
-  '@battis/webpack@2.0.5(fnuvnare3rufpb7yjnodd2tlai)':
+  '@battis/webpack@2.0.5(twmturgtmop6b2pqg4neyirwqe)':
     dependencies:
       '@tsconfig/recommended': 1.0.10
       app-root-path: 3.1.0
-      copy-webpack-plugin: 12.0.2(webpack@5.100.2)
+      copy-webpack-plugin: 13.0.0(webpack@5.100.2)
       css-loader: 7.1.2(webpack@5.100.2)
       css-minimizer-webpack-plugin: 7.0.2(webpack@5.100.2)
       dotenv-webpack: 8.1.1(webpack@5.100.2)
@@ -10998,14 +10998,13 @@ snapshots:
 
   cookie@0.7.2: {}
 
-  copy-webpack-plugin@12.0.2(webpack@5.100.2):
+  copy-webpack-plugin@13.0.0(webpack@5.100.2):
     dependencies:
-      fast-glob: 3.3.3
       glob-parent: 6.0.2
-      globby: 14.1.0
       normalize-path: 3.0.0
       schema-utils: 4.3.2
       serialize-javascript: 6.0.2
+      tinyglobby: 0.2.14
       webpack: 5.100.2(webpack-cli@6.0.1)
 
   core-util-is@1.0.3: {}

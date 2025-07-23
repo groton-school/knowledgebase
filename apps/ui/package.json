@@ -47,7 +47,7 @@
     "app-root-path": "^3.1.0",
     "browserslist": "^4.25.1",
     "clean-webpack-plugin": "^4.0.0",
-    "copy-webpack-plugin": "^12.0.2",
+    "copy-webpack-plugin": "^13.0.0",
     "css-loader": "^7.1.2",
     "css-minimizer-webpack-plugin": "^7.0.2",
     "dotenv-webpack": "^8.1.1",
