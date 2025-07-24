@@ -18,7 +18,7 @@
   ],
   "scripts": {
     "setup": "run-s setup:*",
-    "setup:gcp": "tsx ./bin/index.js",
+    "setup:gcp": "tsx ./scripts/setup.ts",
     "setup:deploy": "run-s deploy",
     "setup:log": "run-s setup:log:*",
     "setup:log:venv": "node -e \"if (! require('fs').existsSync('.grpcio')) { process.exit(1)}\" || python3 -m venv .grpcio",
