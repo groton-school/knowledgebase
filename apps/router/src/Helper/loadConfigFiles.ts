@@ -10,7 +10,7 @@ export async function loadConfigFiles(): Promise<Configs> {
     (async () => {
       const client = new SecretManagerServiceClient();
       const [response] = await client.accessSecretVersion({
-        name: 'GOOGLE_API_KEYS'
+        name: `projects/${process.env.GOOGLE_CLOUD_PROJECT}/secrets/GOOGLE_API_KEYS/versions/latest`
       });
       if (!response.payload?.data) {
         throw new Error();
@@ -19,9 +19,11 @@ export async function loadConfigFiles(): Promise<Configs> {
     })(),
     ...['config.json', 'groups.json', 'index.json'].map(async (filename) =>
       JSON.parse(
-        await fs
-          .readFile(path.resolve(process.cwd(), `build/data/${filename}`))
-          .toString()
+        (
+          await fs.readFile(
+            path.resolve(process.cwd(), `build/data/${filename}`)
+          )
+        ).toString()
       )
     )
   ])) as Configs;
