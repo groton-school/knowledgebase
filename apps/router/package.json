@@ -27,7 +27,7 @@
     "@google-cloud/logging-winston": "^6.0.1",
     "@google-cloud/secret-manager": "^6.1.0",
     "@google-cloud/storage": "^7.16.0",
-    "@googleapis/drive": "^8.16.0",
+    "@googleapis/drive": "^14.2.0",
     "@groton/knowledgebase.api": "workspace:*",
     "@groton/knowledgebase.config": "workspace:*",
     "@groton/knowledgebase.indexer": "workspace:*",
