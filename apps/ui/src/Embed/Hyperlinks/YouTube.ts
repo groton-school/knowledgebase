@@ -30,7 +30,7 @@ export function YouTube() {
         const link = p.querySelector(youTubeLink) as HTMLAnchorElement;
         const url = link.href;
         const id = link.href.replace(
-          /^https:\/\/(?:youtu\.be)|(?:(?:www\.)?youtube\.com\/watch\?v=)\/(.+)\/?/,
+          /^https:\/\/(?:(?:youtu\.be\/)|(?:(?:www\.)?youtube\.com\/watch\?v=))(.+)\/?/,
           '$1'
         );
         p.replaceWith(
