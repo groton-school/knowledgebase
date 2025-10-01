@@ -40,7 +40,7 @@
     "@battis/qui-cli.plugin": "^2.4.2",
     "@battis/qui-cli.root": "^2.0.5",
     "@battis/qui-cli.shell": "^2.1.2",
-    "@battis/qui-cli.structured": "^0.1.4",
+    "@battis/qui-cli.structured": "^1.0.1",
     "@battis/qui-cli.validators": "^2.0.4",
     "@groton/knowledgebase.config": "workspace:*",
     "@groton/knowledgebase.google": "workspace:*",
