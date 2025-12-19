@@ -32,6 +32,9 @@ importers:
       '@groton/knowledgebase.config':
         specifier: workspace:*
         version: link:packages/config
+      '@groton/knowledgebase.indexer':
+        specifier: workspace:*
+        version: link:apps/indexer
       '@inquirer/prompts':
         specifier: ^7.7.0
         version: 7.7.0(@types/node@22.16.5)
@@ -3834,6 +3837,7 @@ packages:
   eslint-plugin-markdown@5.1.0:
     resolution: {integrity: sha512-SJeyKko1K6GwI0AN6xeCDToXDkfKZfXcexA6B+O2Wr2btUS9GrC+YgwSyVli5DJnctUHjFXcQ2cqTaAmVoLi2A==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    deprecated: Please use @eslint/markdown instead
     peerDependencies:
       eslint: '>=8'
 
@@ -5218,6 +5222,7 @@ packages:
 
   jsox@1.2.123:
     resolution: {integrity: sha512-LYordXJ/0Q4G8pUE1Pvh4fkfGvZY7lRe4WIJKl0wr0rtFDVw9lcdNW95GH0DceJ6E9xh41zJNW0vreEz7xOxCw==}
+    deprecated: Discovered syntax errors in ts bindings
     hasBin: true
 
   junk@4.0.1:
