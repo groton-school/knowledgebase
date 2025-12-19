@@ -7,6 +7,7 @@
 **/tmp/
 **/tmp_*/
 **/var/*
+!**/var/.gitignore
 *.cache
 *.cache.*
 /.grpcio
