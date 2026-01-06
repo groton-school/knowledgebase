@@ -29,8 +29,8 @@ export const name = 'cache';
 
 let bucketName: string | undefined = undefined;
 let indexPath = path.resolve(import.meta.dirname, '../../dist/index.json');
-let keysPath = path.resolve(import.meta.dirname, '../../var/keys.json');
-let tokensPath = path.resolve(import.meta.dirname, '../../var/tokens.json');
+let keysPath = path.resolve(import.meta.dirname, '../../var/keys.json'); //FIXME keys.json needs to be downloaded as part of the setup wizard
+let tokensPath = path.resolve(import.meta.dirname, '../../var/tokens.json'); // FIXME tokens should be stored in 1Password
 let chunkSize = 25;
 let force = false;
 let ignoreErrors = true;
