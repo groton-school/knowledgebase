@@ -23,6 +23,7 @@
     "build": "run-s build:*",
     "prebuild:clean": "run-s clean",
     "prebuild:compile": "tsc",
+    "prebuild:ejs": "copyfiles -u 1 \"src/**/*.ejs\" build",
     "build:prebuild": "run-s prebuild",
     "build:sync-config": "source .env && sync-config \"$CONFIG\" ./var/config.json",
     "build:index": "indexer sync",
@@ -65,6 +66,7 @@
     "@types/mime-types": "^2.1.4",
     "@types/node": "^22.16.5",
     "@types/shelljs": "^0.8.17",
+    "copyfiles": "^2.4.1",
     "del-cli": "^6.0.0",
     "npm-run-all": "^4.1.5",
     "ora": "^8.2.0"
