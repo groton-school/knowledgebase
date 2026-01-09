@@ -1,0 +1,5 @@
+{
+  "path": ".",
+  "tag-prefix": "config/",
+  "releaseCommitMessageFormat": "chore: release @groton/knowledgebase.config@{{currentTag}}"
+}
