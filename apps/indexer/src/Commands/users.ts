@@ -1,9 +1,9 @@
-import { Colors } from '@battis/qui-cli.colors';
-import { Positionals } from '@battis/qui-cli.core';
-import { Env } from '@battis/qui-cli.env';
-import * as Plugin from '@battis/qui-cli.plugin';
 import { ArrayElement } from '@battis/typescript-tricks';
 import { Groups } from '@groton/knowledgebase.config';
+import { Colors } from '@qui-cli/colors';
+import { Positionals } from '@qui-cli/core';
+import { Env } from '@qui-cli/env-1password';
+import * as Plugin from '@qui-cli/plugin';
 import converter from 'json-2-csv';
 import fs from 'node:fs';
 import path from 'node:path';

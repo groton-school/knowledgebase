@@ -41,7 +41,7 @@ const config = bundle.fromTS.toVanillaJS({
 });
 
 // do not resolve unresolvable URLs!
-const rule = config.module.rules.findIndex((rule) => rule.test.test('.scss'));
+/*const rule = config.module.rules.findIndex((rule) => rule.test.test('.scss'));
 const loader = config.module.rules[rule].use.findIndex(
   (use) => use.loader == 'css-loader'
 );
@@ -52,7 +52,7 @@ config.module.rules[rule].use[loader].options.url = {
       true
     )
 };
-
+*/
 // ignore Bootstrap's SCSS
 config.ignoreWarnings = [
   (warning) => /\/node_modules\/bootstrap\/scss\//.test(warning.warning)

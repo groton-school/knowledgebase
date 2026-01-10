@@ -1,8 +1,8 @@
-import { Colors } from '@battis/qui-cli.colors';
-import { Positionals } from '@battis/qui-cli.core';
-import { Env } from '@battis/qui-cli.env';
-import * as Plugin from '@battis/qui-cli.plugin';
 import { JSONObject } from '@battis/typescript-tricks';
+import { Colors } from '@qui-cli/colors';
+import { Positionals } from '@qui-cli/core';
+import { Env } from '@qui-cli/env-1password';
+import * as Plugin from '@qui-cli/plugin';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import ora from 'ora';

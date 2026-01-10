@@ -1,4 +1,4 @@
-import { Colors } from '@battis/qui-cli.colors';
+import { Colors } from '@qui-cli/colors';
 
 export function errorMessage(
   message: string | undefined = undefined,

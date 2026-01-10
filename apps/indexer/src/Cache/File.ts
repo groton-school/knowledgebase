@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import CLI from '@battis/qui-cli';
 import { CoerceError } from '@battis/typescript-tricks';
 import { Google } from '@groton/knowledgebase.google';
 import * as Index from '@groton/knowledgebase.index';
+import { Log } from '@qui-cli/log';
 import Zip from 'adm-zip';
 import mime from 'mime-types';
 import events from 'node:events';
@@ -125,7 +125,7 @@ export class File extends Index.File {
         zip.getEntries().forEach((entry) => {
           const data = zip.readFile(entry);
           if (data) {
-            blobs[entry.entryName] = new Blob([data], {
+            blobs[entry.entryName] = new Blob([Buffer.from(data)], {
               type: mime.contentType(entry.name) || undefined
             });
           }
@@ -334,7 +334,7 @@ export class File extends Index.File {
                     try {
                       file.save(Buffer.from(await blob.arrayBuffer()));
                     } catch (error) {
-                      CLI.log.debug({ file: this.id, blob, error });
+                      Log.debug({ file: this.id, blob, error });
                     }
                     if (!this.index.uri.includes(file.cloudStorageURI.href)) {
                       this.index.uri.push(file.cloudStorageURI.href);

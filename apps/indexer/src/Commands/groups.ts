@@ -1,10 +1,10 @@
 import { PathString } from '@battis/descriptive-types';
-import { Colors } from '@battis/qui-cli.colors';
-import { Env } from '@battis/qui-cli.env';
-import { Log } from '@battis/qui-cli.log';
-import * as Plugin from '@battis/qui-cli.plugin';
-import { Shell } from '@battis/qui-cli.shell';
 import { Groups } from '@groton/knowledgebase.config';
+import { Colors } from '@qui-cli/colors';
+import { Env } from '@qui-cli/env-1password';
+import { Log } from '@qui-cli/log';
+import * as Plugin from '@qui-cli/plugin';
+import { Shell } from '@qui-cli/shell';
 import fs from 'node:fs';
 import path from 'node:path';
 import ora from 'ora';

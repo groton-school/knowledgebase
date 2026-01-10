@@ -25,22 +25,22 @@
     "release": "commit-and-tag-version"
   },
   "dependencies": {
-    "@battis/qui-cli.colors": "^2.1.0",
-    "@battis/qui-cli.core": "^3.0.0",
-    "@battis/qui-cli.env": "^3.1.1",
-    "@battis/qui-cli.plugin": "^2.4.2",
     "@groton/knowledgebase.index": "workspace:*",
-    "ora": "^8.2.0",
+    "@qui-cli/colors": "^3.2.1",
+    "@qui-cli/core": "^5.0.2",
+    "@qui-cli/env": "^5.0.3",
+    "@qui-cli/plugin": "^4.0.0",
+    "ora": "^9.0.0",
     "shelljs": "^0.10.0"
   },
   "devDependencies": {
-    "@battis/descriptive-types": "^0.2.3",
-    "@battis/typescript-tricks": "^0.7.4",
-    "@tsconfig/node20": "^20.1.6",
+    "@battis/descriptive-types": "^0.2.6",
+    "@battis/typescript-tricks": "^0.7.6",
+    "@tsconfig/node24": "^24.0.3",
     "@types/shelljs": "^0.8.17",
     "commit-and-tag-version": "^12.6.1",
     "del-cli": "^6.0.0",
     "npm-run-all": "^4.1.5",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.3"
   }
 }

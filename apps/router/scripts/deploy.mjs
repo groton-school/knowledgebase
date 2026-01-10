@@ -1,6 +1,6 @@
 import gcloud from '@battis/partly-gcloudy';
-import { Core } from '@battis/qui-cli.core';
-import { Env } from '@battis/qui-cli.env';
+import { Core } from '@qui-cli/core';
+import { Env } from '@qui-cli/env-1password';
 import fs from 'node:fs';
 import path from 'node:path';
 

@@ -1,11 +1,12 @@
-import CLI from '@battis/qui-cli';
+import { Colors } from '@qui-cli/colors';
+import { Core } from '@qui-cli/core';
 import fs from 'node:fs';
 import path from 'node:path';
 import ora from 'ora';
 
 let pathToConfig = path.resolve(import.meta.dirname, '../var/config.json');
 
-await CLI.configure({
+await Core.configure({
   env: {
     root: path.dirname(import.meta.dirname),
     loadDotEnv: path.resolve(import.meta.dirname, '../../../.env')
@@ -13,11 +14,11 @@ await CLI.configure({
 });
 const {
   values: { configPath }
-} = await CLI.init({
+} = await Core.init({
   opt: {
     configPath: {
       short: 'c',
-      description: `Path to config file, defaults to ${CLI.colors.url(
+      description: `Path to config file, defaults to ${Colors.url(
         pathToConfig
       )}`,
       default: pathToConfig
@@ -40,12 +41,12 @@ pathToConfig = path.resolve(
   '..',
   configPath || pathToConfig
 );
-spinner.start(`Loading configuration ${CLI.colors.url(pathToConfig)}`);
+spinner.start(`Loading configuration ${Colors.path(pathToConfig)}`);
 const config = JSON.parse(fs.readFileSync(pathToConfig).toString());
-spinner.succeed(`Configuration ${CLI.colors.url(pathToConfig)}`);
+spinner.succeed(`Configuration ${Colors.path(pathToConfig)}`);
 
 const pathToScss = path.resolve(import.meta.dirname, '../src/config.scss');
-spinner.start(`Updating ${CLI.colors.url(pathToScss)}`);
+spinner.start(`Updating ${Colors.path(pathToScss)}`);
 if (config.ui?.site) {
   fs.writeFileSync(
     pathToScss,
@@ -60,14 +61,14 @@ if (config.ui?.site) {
       .join('\n')
   );
 }
-spinner.succeed(`Configuration applied to ${CLI.colors.url(pathToScss)}`);
+spinner.succeed(`Configuration applied to ${Colors.path(pathToScss)}`);
 
 const pathToTs = path.resolve(import.meta.dirname, '../src/config.ts');
-spinner.start(`Updating ${CLI.colors.url(pathToTs)}`);
+spinner.start(`Updating ${Colors.path(pathToTs)}`);
 if (config.ui?.site) {
   fs.writeFileSync(
     pathToTs,
     `export const config = ${JSON.stringify(config.ui)}`
   );
 }
-spinner.succeed(`Configuration applied to ${CLI.colors.url(pathToTs)}`);
+spinner.succeed(`Configuration applied to ${Colors.path(pathToTs)}`);

@@ -1,11 +1,11 @@
 import { PathString } from '@battis/descriptive-types';
-import { Colors } from '@battis/qui-cli.colors';
-import { Env } from '@battis/qui-cli.env';
-import * as Plugin from '@battis/qui-cli.plugin';
-import { Validators } from '@battis/qui-cli.validators';
 import { Google } from '@groton/knowledgebase.google';
 import { IndexFactory, State } from '@groton/knowledgebase.index';
 import { input } from '@inquirer/prompts';
+import { Colors } from '@qui-cli/colors';
+import { Env } from '@qui-cli/env-1password';
+import * as Plugin from '@qui-cli/plugin';
+import { Validators } from '@qui-cli/validators';
 import fs from 'node:fs';
 import path from 'node:path';
 import ora from 'ora';
