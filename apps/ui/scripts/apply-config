@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { Colors } from '@qui-cli/colors';
 import { Core } from '@qui-cli/core';
 import fs from 'node:fs';

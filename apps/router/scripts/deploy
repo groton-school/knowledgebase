@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import gcloud from '@battis/partly-gcloudy';
 import { Core } from '@qui-cli/core';
 import { Env } from '@qui-cli/env-1password';

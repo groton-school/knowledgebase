@@ -1,6 +1,7 @@
+#!/usr/bin/env node
+
 import gcloud from '@battis/partly-gcloudy';
 import * as lib from '@battis/partly-gcloudy/dist/lib/index.js';
-import { Config } from '@groton/knowledgebase.config';
 import { input } from '@inquirer/prompts';
 import { Colors } from '@qui-cli/colors';
 import { Core } from '@qui-cli/core';
@@ -149,7 +150,7 @@ Download these credentials to ${Colors.url(
       Root.path(),
       'apps/router/var/config.json'
     );
-    let config: Partial<Config.Config> = {};
+    let config = {};
     if (fs.existsSync(configFilePath)) {
       config = JSON.parse(fs.readFileSync(configFilePath).toString());
     } else {

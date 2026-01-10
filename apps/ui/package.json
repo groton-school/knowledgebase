@@ -17,7 +17,7 @@
   "scripts": {
     "build": "run-s build:*",
     "build:sync-config": "source .env && sync-config \"$CONFIG\" ./var/config.json",
-    "build:apply-config": "tsx bin/apply-config -c var/config.json",
+    "build:apply-config": "./scripts/apply-config -c var/config.json",
     "build:compile": "webpack",
     "release": "commit-and-tag-version"
   },

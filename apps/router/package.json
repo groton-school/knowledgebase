@@ -19,7 +19,7 @@
     "release": "commit-and-tag-version",
     "deploy": "run-s deploy:*",
     "deploy:build": "run-s build",
-    "deploy:deploy": "node ./scripts/deploy.mjs -v",
+    "deploy:deploy": "./scripts/deploy -v",
     "start": "node ./build/main.cjs"
   },
   "dependencies": {
