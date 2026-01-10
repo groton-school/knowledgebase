@@ -37,7 +37,7 @@
     "@battis/prettier-config": "^1.6.4",
     "@battis/qui-cli": "^2.1.6",
     "@commitlint/cli": "^19.8.1",
-    "@commitlint/config-conventional": "^19.8.1",
+    "@commitlint/config-conventional": "^20.3.1",
     "@commitlint/config-pnpm-scopes": "^19.8.1",
     "@groton/knowledgebase.config": "workspace:*",
     "@groton/knowledgebase.indexer": "workspace:*",
