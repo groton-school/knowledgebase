@@ -34,7 +34,7 @@
     "@battis/eslint-config": "^2.0.4",
     "@battis/prettier-config": "^1.6.4",
     "@battis/qui-cli": "^2.1.6",
-    "@battis/webpack": "^2.0.5",
+    "@battis/webpack": "^2.1.0",
     "@csstools/css-parser-algorithms": "^3.0.5",
     "@csstools/css-tokenizer": "^3.0.4",
     "@popperjs/core": "^2.11.8",
