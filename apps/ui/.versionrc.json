@@ -1,0 +1,5 @@
+{
+  "path": ".",
+  "tag-prefix": "ui/",
+  "releaseCommitMessageFormat": "chore: release @groton/knowledgebase.ui@{{currentTag}}"
+}

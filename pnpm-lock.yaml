@@ -329,6 +329,9 @@ importers:
       clean-webpack-plugin:
         specifier: ^4.0.0
         version: 4.0.0(webpack@5.100.2)
+      commit-and-tag-version:
+        specifier: ^12.6.1
+        version: 12.6.1
       copy-webpack-plugin:
         specifier: ^12.0.2
         version: 12.0.2(webpack@5.100.2)
