@@ -35,7 +35,7 @@ pnpm install
 
 ```sh
 cd path/to/repo
-npx tsx bin/setup.ts
+pnpm run setup
 ```
 
 # Configure
