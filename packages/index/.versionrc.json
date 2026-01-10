@@ -1,0 +1,5 @@
+{
+  "path": ".",
+  "tag-prefix": "index/",
+  "releaseCommitMessageFormat": "chore: release @groton/knowledgebase.index@{{currentTag}}"
+}
