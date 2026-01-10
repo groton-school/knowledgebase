@@ -1,0 +1,5 @@
+{
+  "path": ".",
+  "tag-prefix": "openid/",
+  "releaseCommitMessageFormat": "chore: release @groton/knowledgebase.openid@{{currentTag}}"
+}
