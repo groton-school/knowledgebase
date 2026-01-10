@@ -41,7 +41,7 @@
     "@tsconfig/recommended": "^1.0.10",
     "@types/bootstrap": "^5.2.10",
     "@types/gtag.js": "^0.0.20",
-    "@types/node": "^22.16.5",
+    "@types/node": "^25.0.5",
     "@types/path-browserify": "^1.0.3",
     "acorn": "^8.15.0",
     "add-peer-dependencies": "^0.1.13",
