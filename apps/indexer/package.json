@@ -1,6 +1,6 @@
 {
   "name": "@groton/knowledgebase.indexer",
-  "version": "0.0.0",
+  "version": "0.6.1",
   "description": "Knowledgebase website",
   "homepage": "https://github.com/groton-school/knowledgebase/tree/main/apps/indexer#readme",
   "repository": {
@@ -28,6 +28,7 @@
     "build:sync-config": "source .env && sync-config \"$CONFIG\" ./var/config.json",
     "build:index": "indexer sync",
     "build:groups": "indexer groups --silent --commands",
+    "release": "commit-and-tag-version",
     "deploy": "run-s deploy:*",
     "deploy:build": "run-s build",
     "deploy:cache": "indexer cache",
@@ -66,6 +67,7 @@
     "@types/mime-types": "^2.1.4",
     "@types/node": "^22.16.5",
     "@types/shelljs": "^0.8.17",
+    "commit-and-tag-version": "^12.6.1",
     "copyfiles": "^2.4.1",
     "del-cli": "^6.0.0",
     "npm-run-all": "^4.1.5",

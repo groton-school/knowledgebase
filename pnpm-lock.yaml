@@ -156,6 +156,9 @@ importers:
       '@types/shelljs':
         specifier: ^0.8.17
         version: 0.8.17
+      commit-and-tag-version:
+        specifier: ^12.6.1
+        version: 12.6.1
       copyfiles:
         specifier: ^2.4.1
         version: 2.4.1
