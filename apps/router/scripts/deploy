@@ -31,7 +31,7 @@ fs.writeFileSync(
   path.resolve(import.meta.dirname, '../package.json'),
   JSON.stringify(pkg)
 );
-await gcloud.batch.appEngineDeployAndCleanup({ retainVersions: 2 });
+await gcloud.batch.app.deploy({ retainVersions: 2 });
 fs.rmSync(path.resolve(import.meta.dirname, '../package.json'));
 fs.renameSync(
   path.resolve(import.meta.dirname, '../package.json.bak'),
