@@ -1,3 +1,14 @@
 packages:
-  - 'apps/*'
-  - 'packages/*'
+  - apps/*
+  - packages/*
+
+ignoredBuiltDependencies:
+  - '@parcel/watcher'
+
+onlyBuiltDependencies:
+  - gifsicle
+  - jpegtran-bin
+  - nx
+  - optipng-bin
+  - protobufjs
+  - sharp
