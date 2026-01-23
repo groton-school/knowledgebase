@@ -28,7 +28,7 @@ const {
   }
 });
 
-function quoted(key: string, value: string = '') {
+function quoted(key, value = '') {
   switch (key) {
     case 'primaryColor':
       return value;
@@ -57,7 +57,7 @@ if (config.ui?.site) {
         (key) =>
           `$${key}: ${quoted(
             key,
-            config.ui!.site![key as keyof typeof config.ui.site]
+            config.ui.site[key]
           )};`
       )
       .join('\n')
