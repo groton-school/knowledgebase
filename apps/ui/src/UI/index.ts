@@ -20,7 +20,7 @@ import { LockImageWidth } from './LockImgWidth';
  */
 export function UI() {
   HideHeaderAndFooter();
-  TitleCaseAllCapsHeaders();
+  // TitleCaseAllCapsHeaders();
   LinkLabelByGroup();
   TOC();
   Search();
